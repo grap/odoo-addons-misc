@@ -181,7 +181,7 @@
         <record id="view_product_product_food_tree" model="ir.ui.view">
             <field name="model">product.product</field>
             <field name="arch" type="xml">
-                <tree string="Products (Food Information)" editable="bottom">
+                <tree string="Products (Food)" editable="bottom">
                     <field name="name"/>
                     <field name="pricetag_type_id"/>
                     <field name="label_ids" widget="many2many_tags"/>
@@ -193,7 +193,7 @@
         <record id="view_product_product_origin_tree" model="ir.ui.view">
             <field name="model">product.product</field>
             <field name="arch" type="xml">
-                <tree string="Products (Origin Information)" editable="bottom">
+                <tree string="Products (Origin)" editable="bottom">
                     <field name="name" width="200px"/>
                     <field name="country_id" 
                         options="{'quick_create':false}"

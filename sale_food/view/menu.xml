@@ -45,12 +45,12 @@
 
 <!-- Model: product.product -->
         <menuitem id="menu_product_product_food" 
-            name="Products (Food View)" 
+            name="Products (Food)" 
             parent="base.menu_product" sequence="2" 
             action="action_product_product_food"/>
 
         <menuitem id="menu_product_product_origin" 
-            name="Products (Origin View)" 
+            name="Products (Origin)" 
             parent="base.menu_product" sequence="3" 
             action="action_product_product_origin"/>
 

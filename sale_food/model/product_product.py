@@ -35,6 +35,9 @@ from openerp.addons.sale_food.template import radar_template
 class product_product(Model):
     _inherit = 'product.product'
 
+#    def _needaction_domain_get(self, cr, uid, context=None):
+#        return [('pricetag_state', 'in', ('1', '2'))]
+
     # Constant Section
     _FRESH_CATEGORY_KEYS = [
         ('extra', 'Extra'),

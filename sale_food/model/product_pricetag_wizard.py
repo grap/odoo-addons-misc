@@ -27,7 +27,14 @@ from openerp.osv import fields
 
 class product_pricetag_wizard(TransientModel):
     _name = 'product.pricetag.wizard'
+    _inherit = 'ir.needaction_mixin'
     _rec_name = 'offset'
+
+    def _needaction_count(self, cr, uid, domain=None, context=None):
+        pp_obj = self.pool['product.product']
+        pp_ids = pp_obj.search(cr, uid, [
+            ('pricetag_state', 'in', ('1', '2'))], context=context)
+        return len(pp_ids)
 
     # Fields Function Section
     def _get_line_ids(self, cr, uid, context=None):
