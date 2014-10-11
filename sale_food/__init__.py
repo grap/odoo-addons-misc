@@ -22,4 +22,4 @@
 ##############################################################################
 
 from . import model
-from . import template
+from . import lib

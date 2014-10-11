@@ -29,7 +29,7 @@ from openerp.osv.orm import Model
 from openerp.osv import fields
 from openerp.tools.translate import _
 
-from openerp.addons.sale_food.template import radar_template
+from openerp.addons.sale_food.lib import radar_template
 
 
 class product_product(Model):

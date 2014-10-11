@@ -26,9 +26,9 @@
     name: Agriculture Biologique
     code: AB
 
-- !record {model: product.label, id: label_energystar}:
-    name: Energy Star
-    code: ES
+- !record {model: product.label, id: label_max_havelaar}:
+    name: Max Havelaar
+    code: MH
 
 - !record {model: product.label, id: label_gluten_free}:
     name: Gluten Free

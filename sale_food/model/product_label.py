@@ -21,8 +21,10 @@
 #
 ##############################################################################
 
+
 from openerp.osv.orm import Model
 from openerp.osv import fields
+from openerp.addons.sale_food.lib import demo_image
 
 
 class product_label(Model):
@@ -57,3 +59,9 @@ class product_label(Model):
         'active': True,
         'mandatory_on_invoice': False,
     }
+
+    # Demo Function Section
+    def _demo_init_image(self, cr, uid, ids=None, context=None):
+        demo_image.init_image(
+            self.pool, cr, uid, 'product.label',
+            '/../static/src/img/demo/product_label/', context=context)

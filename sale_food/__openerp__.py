@@ -74,9 +74,10 @@ sudo chmod 755 wkhtmltopdf.sh
         'demo/product_label.yml',
         'demo/product_pricetag_type.yml',
         #        'demo/product_product.yml',
+        'demo/function.xml',
     ],
     'css': [
-        'static/css/css.css',
+        'static/src/css/css.css',
     ],
     'external_dependencies': {
         'python': ['cairosvg'],
