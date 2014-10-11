@@ -30,3 +30,9 @@
     name: Manager
     implied_ids:
         - group_food_user
+    users:
+        - base.user_root
+
+- !record {model: res.groups, id: base.group_sale_manager}:
+    users:
+        - base.user_root
