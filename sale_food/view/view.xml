@@ -24,7 +24,6 @@
 <!-- Model: product.pricetag.type -->
         <record id="view_product_pricetag_type_form" model="ir.ui.view">
             <field name="model">product.pricetag.type</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Price Tag Type" version="7.0">
                     <sheet>
@@ -42,7 +41,6 @@
 
         <record id="view_product_pricetag_type_tree" model="ir.ui.view">
             <field name="model">product.pricetag.type</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Price Tag Type">
                     <field name="name"/>
@@ -55,7 +53,6 @@
 <!-- Model: product.label -->
         <record id="view_product_label_tree" model="ir.ui.view">
             <field name="model">product.label</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Label">
                     <field name="code"/>
@@ -66,7 +63,6 @@
 
         <record id="view_product_label_form" model="ir.ui.view">
             <field name="model">product.label</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Label" version="7.0">
                     <sheet>
@@ -102,7 +98,6 @@
 
         <record id="view_product_label_kanban" model="ir.ui.view">
             <field name="model">product.label</field>
-            <field name="type">kanban</field>
             <field name="arch" type="xml">
                 <kanban>
                     <field name="image"/>
@@ -129,7 +124,6 @@
 <!-- Model: product.pricetag.wizard -->
         <record id="view_product_pricetag_wizard_form" model="ir.ui.view">
               <field name="model">product.pricetag.wizard</field>
-              <field name="type">form</field>
               <field name="arch" type="xml">
                 <form string="Print Price Tags">
                     <separator colspan="4" string="Print Parameters"/>
@@ -149,7 +143,6 @@
 <!-- Model: product.pricetag.wizard.line -->
         <record id="view_product_pricetag_wizard_line_tree" model="ir.ui.view">
             <field name="model">product.pricetag.wizard.line</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Products" editable="top">
                     <field name="product_id"/>
@@ -187,7 +180,6 @@
 <!-- Model: product.product -->
         <record id="view_product_product_food_tree" model="ir.ui.view">
             <field name="model">product.product</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Products (Food Information)" editable="bottom">
                     <field name="name"/>
@@ -200,7 +192,6 @@
         
         <record id="view_product_product_origin_tree" model="ir.ui.view">
             <field name="model">product.product</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Products (Origin Information)" editable="bottom">
                     <field name="name" width="200px"/>
