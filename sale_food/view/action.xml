@@ -39,6 +39,14 @@
             <field name="view_mode">kanban,tree,form</field>
         </record>
 
+        <record id="action_product_pricetag_wizard" model="ir.actions.act_window">
+            <field name="name">Print Price Tag</field>
+            <field name="res_model">product.pricetag.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
 <!-- Model: product.product -->
         <record id="action_product_product_food" model="ir.actions.act_window">
             <field name="name">Products (Food Information)</field>

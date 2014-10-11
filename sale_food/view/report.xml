@@ -18,41 +18,17 @@
 <!--You should have received a copy of the GNU Affero General Public License-->
 <!--along with this program.  If not, see <http://www.gnu.org/licenses/>.   -->
 <!-- ********************************************************************** -->
+
 <openerp>
     <data>
-<!-- menuitem for specific action of module 'sale_food' -->
-        <menuitem id="menu_sale_food" 
-            name="Sale Food"
-            parent="base.menu_base_partner" sequence="60"/>
-
-<!-- Model: product.pricetag.type -->
-        <menuitem id="menu_product_pricetag_type" 
-            name="Price Tag Types"
-            parent="menu_sale_food" sequence="1" 
-            action="action_product_pricetag_type"/>
-
-<!-- Model: product.label -->
-        <menuitem id="menu_product_label" 
-            name="Labels"
-            parent="menu_sale_food" sequence="2" 
-            action="action_product_label"/>
-
-<!-- Model: 'product.pricetag.wizard' -->
-        <menuitem id="menu_product_pricetag_wizard"
-            name="Print Price Tags"
-            parent="menu_sale_food" sequence="3"
-            action="action_product_pricetag_wizard"/>
-
-<!-- Model: product.product -->
-        <menuitem id="menu_product_product_food" 
-            name="Products (Food View)" 
-            parent="base.menu_product" sequence="2" 
-            action="action_product_product_food"/>
-
-        <menuitem id="menu_product_product_origin" 
-            name="Products (Origin View)" 
-            parent="base.menu_product" sequence="3" 
-            action="action_product_product_origin"/>
-
+        <report id="report_pricetag"
+            name="report.pricetag"
+            model="product.pricetag.wizard"
+            report_type="webkit"
+            file="sale_food/view/report_pricetag.mako"
+            header="False"
+            auto="False"
+            string="Print Price Tags"
+            />
     </data>
 </openerp>

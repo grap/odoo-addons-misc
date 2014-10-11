@@ -1,0 +1,63 @@
+# -*- encoding: utf-8 -*-
+##############################################################################
+#
+#    Sale - Food Module for Odoo
+#    Copyright (C) 2012-Today GRAP (http://www.grap.coop)
+#    @author Julien WESTE
+#    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Affero General Public License for more details.
+#
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
+
+from openerp.osv.orm import TransientModel
+from openerp.osv import fields
+
+
+class product_pricetag_wizard(TransientModel):
+    _name = 'product.pricetag.wizard'
+    _rec_name = 'offset'
+
+    # Fields Function Section
+    def _get_line_ids(self, cr, uid, context=None):
+        res = []
+        pp_obj = self.pool['product.product']
+        pp_ids = pp_obj.search(cr, uid, [
+            ('pricetag_state', 'in', ['1', '2'])],
+            order='pricetag_state desc',
+            limit=14,
+            )
+        for pp_id in pp_ids:
+            res.append((0, 0, {
+                'product_id': pp_id,
+                'quantity': 1,
+                'print_unit_price': True,
+                }))
+        return res
+
+    # Columns Section
+    _columns = {
+        'offset': fields.integer(
+            'Offset : Price Tag number not to print', required=True),
+        'border': fields.boolean('Design a border for Price Tags'),
+        'line_ids': fields.one2many(
+            'product.pricetag.wizard.line', 'wizard_id', 'Products'),
+    }
+
+    # Default values Section
+    _defaults = {
+        'border': True,
+        'offset': 0,
+        'line_ids': _get_line_ids,
+    }

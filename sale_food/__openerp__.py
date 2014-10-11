@@ -63,6 +63,10 @@ sudo chmod 755 wkhtmltopdf.sh
         'report_webkit',
         ],
     'data': [
+        'security/ir_module_category.yml',
+        'security/res_groups.yml',
+        'security/ir_model_access.yml',
+        'view/report.xml',
         'view/view.xml',
         'view/action.xml',
         'view/menu.xml',

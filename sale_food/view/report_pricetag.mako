@@ -1,6 +1,6 @@
 <html>
     <head>
-	<meta http-equiv="Content-Type" content="application/xhtml+xml;charset=utf-8" />
+    <meta http-equiv="Content-Type" content="application/xhtml+xml;charset=utf-8" />
         <style type="text/css">
             body{
                 font-family: arial, verdana, sans-serif;

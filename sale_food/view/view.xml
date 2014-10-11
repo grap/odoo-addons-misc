@@ -126,6 +126,39 @@
             </field>
         </record>
 
+<!-- Model: product.pricetag.wizard -->
+        <record id="view_product_pricetag_wizard_form" model="ir.ui.view">
+              <field name="model">product.pricetag.wizard</field>
+              <field name="type">form</field>
+              <field name="arch" type="xml">
+                <form string="Print Price Tags">
+                    <separator colspan="4" string="Print Parameters"/>
+                    <field name="offset" colspan="2" />
+                    <field name="border" colspan="2" />
+                    <separator colspan="4" string="Products"/>
+                    <field colspan="4" name="line_ids" nolabel="1"/>
+                    <separator colspan="4"/>
+                    <group colspan="4" col="6">
+                        <button icon="gtk-cancel" special="cancel" string="Cancel"/>
+                        <button name="%(report_pricetag)d" string="Print" type="action" icon="gtk-print"/>
+                   </group>
+                </form>
+              </field>
+        </record>
+
+<!-- Model: product.pricetag.wizard.line -->
+        <record id="view_product_pricetag_wizard_line_tree" model="ir.ui.view">
+            <field name="model">product.pricetag.wizard.line</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Products" editable="top">
+                    <field name="product_id"/>
+                    <field name="quantity"/>
+                    <field name="print_unit_price"/>
+                </tree>
+            </field>
+        </record>
+
 <!-- Model: product.uom.categ -->
         <record id="view_product_uom_categ_form" model="ir.ui.view">
             <field name="model">product.uom.categ</field>
