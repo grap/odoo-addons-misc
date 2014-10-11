@@ -218,7 +218,7 @@
             <field name="inherit_id" ref="product.product_normal_form_view" />
             <field name="arch" type="xml">
                 <notebook position="inside">
-                    <page string="Food Informations" groups="sale_food.group_user">
+                    <page string="Food Informations" groups="sale_food.group_food_user">
                         <group colspan="4">
                             <group>
                                 <separator string="Origin" colspan="2"/>
