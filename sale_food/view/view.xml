@@ -54,11 +54,11 @@
 
 <!-- Model: product.label -->
         <record id="view_product_label_tree" model="ir.ui.view">
-            <field name="model">product_label</field>
+            <field name="model">product.label</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Label">
-                    <field name="short_name"/>
+                    <field name="code"/>
                     <field name="name"/>
                 </tree>
             </field>
@@ -158,7 +158,7 @@
             <field name="arch" type="xml">
                 <tree string="Products (Food Information)" editable="bottom">
                     <field name="name"/>
-                    <field name="pricetag_category_id"/>
+                    <field name="pricetag_type_id"/>
                     <field name="label_ids" widget="many2many_tags"/>
                     <field name="organic_notation" />
                 </tree>

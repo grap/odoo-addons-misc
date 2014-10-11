@@ -31,7 +31,7 @@ class product_pricetag_type(Model):
         'company_id': fields.many2one(
             'res.company', 'Company', required=True, readonly=True),
         'name': fields.char('Type Name', required=True, size=64),
-        'pricetag_color': fields.char(
+        'color': fields.char(
             'Price Tag Color', required=True, size=7,
             help="Color of the Price Tag by default. Format #RRGGBB"),
     }

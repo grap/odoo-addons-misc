@@ -138,8 +138,8 @@ class product_product(Model):
             self, cr, uid, ids, field_name, arg, context=None):
         res = {}
         for pp in self.browse(cr, uid, ids, context):
-            if pp.pricetag_type:
-                res[pp.id] = pp.pricetag_type.pricetag_color
+            if pp.pricetag_type_id:
+                res[pp.id] = pp.pricetag_type_id.pricetag_color
             else:
                 res[pp.id] = pp.company_id.pricetag_color
         return res
@@ -175,7 +175,7 @@ class product_product(Model):
         'label_ids': fields.many2many(
             'product.label', 'product_label_product_rel',
             'product_id', 'label_id', 'Labels'),
-        'pricetag_type': fields.many2one(
+        'pricetag_type_id': fields.many2one(
             'product.pricetag.type', 'Price Tag Type'),
         'pricetag_color': fields.function(
             _get_pricetag_color, type='char',
