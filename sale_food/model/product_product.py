@@ -57,7 +57,7 @@ class product_product(Model):
         'label_ids',
         ]
     """Fields list wich modification change edition_state to 'mandatory'."""
-    __PRICETAG_MANDATORY_FIELDS = [
+    _PRICETAG_MANDATORY_FIELDS = [
         'list_price',
         'volume',
         'weight_net',
