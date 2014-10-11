@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    GRAP - Ethical Labels for Odoo
+#    Sale - Food Module for Odoo
 #    Copyright (C) 2012-Today GRAP (http://www.grap.coop)
 #    @author Julien WESTE
 #    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
@@ -55,34 +55,40 @@ sudo chmod 755 wkhtmltopdf.sh
     'website': 'http://www.grap.coop',
     'license': 'AGPL-3',
     'depends': [
+        'product',
+        'l10n_fr_department',
+        # OK
         'account',
         'sale',
         'report_webkit',
-        'l10n_fr_res_department',
-        'account_fiscal_company',
         ],
     'data': [
-        'data/ir_header_webkit.xml',
-        'data/product_data.xml',
-        'security/ir_module_category_data.xml',
-        'security/res_groups_data.xml',
-        'security/ir_rule_data.xml',
-        'security/ir.model.access.csv',
-        'view/account_action.xml',
-        'view/product_view.xml',
-        'view/res_company_view.xml',
-        'view/grap_ethiquette_view.xml',
-        'view/grap_ethiquette_action.xml',
-        'view/grap_ethiquette_menu.xml',
-        'report/grap_ethiquette_report_html.xml',
-        'wizard/grap_ethiquette_print_wizard_view.xml',
-        'wizard/grap_ethiquette_print_wizard_action.xml',
-        'wizard/grap_ethiquette_print_wizard_menu.xml',
-        'data/ir_property.xml',
+        'view/view.xml',
+        'view/action.xml',
+        'view/menu.xml',
+        #        'data/ir_header_webkit.xml',
+        #        'data/product_data.xml',
+        #        'security/ir_module_category_data.xml',
+        #        'security/res_groups_data.xml',
+        #        'security/ir_rule_data.xml',
+        #        'security/ir.model.access.csv',
+
+        #        'report/grap_ethiquette_report_html.xml',
+        #        'wizard/grap_ethiquette_print_wizard_view.xml',
+        #        'wizard/grap_ethiquette_print_wizard_action.xml',
+        #        'wizard/grap_ethiquette_print_wizard_menu.xml',
+        #        'data/ir_property.xml',
         ],
     'demo': [
-        'demo/grap_ethiquette_label.yml',
-        'demo/grap_ethiquette_type.yml',
-        'demo/product_product.yml',
+        #        'demo/grap_ethiquette_label.yml',
+        #        'demo/grap_ethiquette_type.yml',
+        #        'demo/product_product.yml',
     ],
+    'css': [
+        'static/css/css.css',
+    ],
+    'external_dependencies': {
+        'python': ['cairosvg'],
+        'bin': ['wkhtmltopdf'],
+    },
 }

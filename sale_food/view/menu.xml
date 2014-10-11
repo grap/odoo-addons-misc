@@ -33,7 +33,7 @@
 
 <!-- Model: product.label -->
         <menuitem id="menu_product_label" 
-            name="Labels" 
+            name="Labels"
             parent="menu_sale_food" sequence="2" 
             action="action_product_label"/>
 

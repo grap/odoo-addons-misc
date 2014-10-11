@@ -21,23 +21,9 @@
 #
 ##############################################################################
 
-from openerp.osv.orm import Model
-from openerp.osv import fields
-
-
-class res_company(Model):
-    _inherit = 'res.company'
-
-    _columns = {
-        'pricetag_image': fields.binary(
-            'Price Tag Image',
-            help="""This field will be printed on Price Tag. """
-            """Size : 210px * 210px"""),
-        'pricetag_color': fields.char(
-            'Price Tag Color', required=True, size=7,
-            help="Color of the Price Tag by default. Format #RRGGBB"),
-    }
-
-    _defaults = {
-        'pricetag_color': '#FFFFFF',
-    }
+from . import account_invoice
+from . import product_label
+from . import product_pricetag_type
+from . import product_product
+from . import product_uom_categ
+from . import res_company
