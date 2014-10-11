@@ -21,12 +21,12 @@
 #
 ##############################################################################
 {
-    'name': 'GRAP - Ethical labels for products',
+    'name': 'Sale - Food Information for Products',
     'version': '2.0',
     'category': 'Sales',
     'description': """
-Allow users to put ethical notations on products and print labels.
-==================================================================
+Allow users to put ethical notations on products and print pricetags
+====================================================================
 
 Functionnalities :
 ------------------
@@ -34,7 +34,7 @@ Functionnalities :
     to labels ;
     * Add notation on products and various information about origin, makers,
     etc...
-    * Possibility to print products label, with suggestion about wich products
+    * Possibility to print price tags, with suggestion about wich products
     to print. (when price change for exemple) according to legal obligation.
 
 Python librairies required :
@@ -57,9 +57,6 @@ sudo chmod 755 wkhtmltopdf.sh
     'depends': [
         'product',
         'l10n_fr_department',
-        # OK
-        'account',
-        'sale',
         'report_webkit',
         ],
     'data': [
@@ -72,21 +69,10 @@ sudo chmod 755 wkhtmltopdf.sh
         'view/menu.xml',
         'data/ir_header_webkit.xml',
         'data/ir_property.xml',
-        #        'data/product_data.xml',
-        #        'security/ir_module_category_data.xml',
-        #        'security/res_groups_data.xml',
-        #        'security/ir_rule_data.xml',
-        #        'security/ir.model.access.csv',
-
-        #        'report/grap_ethiquette_report_html.xml',
-        #        'wizard/grap_ethiquette_print_wizard_view.xml',
-        #        'wizard/grap_ethiquette_print_wizard_action.xml',
-        #        'wizard/grap_ethiquette_print_wizard_menu.xml',
-
         ],
     'demo': [
-        #        'demo/grap_ethiquette_label.yml',
-        #        'demo/grap_ethiquette_type.yml',
+        'demo/product_label.yml',
+        'demo/product_pricetag_type.yml',
         #        'demo/product_product.yml',
     ],
     'css': [

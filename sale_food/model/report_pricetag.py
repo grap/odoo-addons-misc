@@ -5,6 +5,7 @@ from report import report_sxw
 
 class report_pricetag(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
+        import pdb; pdb.set_trace()
         sql_req = """
             UPDATE product_product
             SET pricetag_state=0

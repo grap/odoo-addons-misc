@@ -147,6 +147,26 @@ class product_product(Model):
                 res[pp.id] = pp.company_id.pricetag_color
         return res
 
+    def _get_extra_food_info(self, cr, uid, ids, name, arg, context=None):
+        """Return extra information about food for legal documents"""
+        res = {}
+        if context is None:
+            context = {}
+        for pp in self.browse(cr, uid, ids, context=context):
+            if pp.country_id:
+                res[pp.id] += _(' - Country: ')\
+                    + pp.country_id.name
+            if pp.fresh_category:
+                res[pp.id] += _(" - Category: ") + pp.fresh_category
+            label = False
+            for label in pp.label_ids:
+                if label.mandatory_on_invoice:
+                    if label:
+                        label = True
+                        res[pp.id] += _(" - Label: ")
+                    res[pp.id] += label.name
+        return res
+
     _columns = {
         'price_volume': fields.function(
             _get_price_volume, type='char',
@@ -213,6 +233,9 @@ class product_product(Model):
         'pricetag_image': fields.function(
             _get_pricetag_image, type='binary',
             string='Image on the label printed'),
+        'extra_food_info': fields.function(
+            _get_extra_food_info, type='char',
+            string='Extra information for invoices'),
     }
 
     # Default Section

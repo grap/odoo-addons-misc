@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    GRAP - Ethical Labels for Odoo
+#    Sale - Food Module for Odoo
 #    Copyright (C) 2012-Today GRAP (http://www.grap.coop)
 #    @author Julien WESTE
 #    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
@@ -21,12 +21,12 @@
 #
 ##############################################################################
 
-- !record {model: grap.ethiquette.type, id: type_discount}:
+- !record {model: product.pricetag.type, id: type_discount}:
     company_id: base.main_company
-    ethiquette_color: '#FFFFDD'
+    color: '#FFFFDD'
     name: Discount
 
-- !record {model: grap.ethiquette.type, id: type_local_product}:
+- !record {model: product.pricetag.type, id: type_local_product}:
     company_id: base.main_company
-    ethiquette_color: '#FF9999'
+    color: '#FF9999'
     name: Local Product
