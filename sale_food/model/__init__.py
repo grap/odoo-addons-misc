@@ -29,4 +29,4 @@ from . import product_uom_categ
 from . import res_company
 from . import product_pricetag_wizard
 from . import product_pricetag_wizard_line
-# from . import report_pricetag
+from . import report_pricetag

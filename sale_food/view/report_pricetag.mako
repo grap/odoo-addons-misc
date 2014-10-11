@@ -1,4 +1,6 @@
-<html>
+## -*- coding: utf-8 -*-
+<!DOCTYPE html SYSTEM "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
     <head>
     <meta http-equiv="Content-Type" content="application/xhtml+xml;charset=utf-8" />
         <style type="text/css">
@@ -65,7 +67,7 @@
         %endfor
 
         <!-- Product labels -->
-        %for line in wizard.wizard_line_ids:
+        %for line in wizard.line_ids:
             %for i in range(0,line.quantity):
         <div class="label_container">
                 %if wizard.border:
@@ -75,51 +77,51 @@
                 %endif
                     <div class="label">
                         <div class="label_left">
-                            <div class="product_name" style="background-color:${line.product_id.ethiquette_color};">
+                            <div class="product_name" style="background-color:${line.product_id.pricetag_color};">
                             ${line.product_id.name}
                             </div>
                             <div class="product_informations" >
-                                R&eacute;f&eacute;rence : <b>${line.product_id.code}</b>
-                %if line.product_id.ethiquette_category:
-                            &nbsp;-&nbsp;Cat&eacute;gorie : <b>${line.product_id.ethiquette_category}</b>
+                                ${_('Code: ')}<b>${line.product_id.code}</b>
+                %if line.product_id.fresh_category:
+                                &nbsp;-&nbsp;${_('Category: ')}<b>${line.product_id.fresh_category}</b>
                 %endif
                                 <br />
                 %if line.product_id.volume:
-                                Prix au litre : <b>${line.product_id.ethiquette_price_volume} &#128;</b>
+                                ${_('Price Per Liter: ')}<b>${line.product_id.price_volume} &#128;</b>
                 %elif line.product_id.weight_net:
-                                Prix au kilo : <b>${line.product_id.ethiquette_price_weight_net} &#128;</b>
+                                ${_('Price Per Kilo: ')}<b>${line.product_id.price_weight_net} &#128;</b>
                 %else:
-                                Prix à la pi&egrave;ce : <b>${line.product_id.list_price} &#128;</b>
+                                ${_('Unit Price: ')}<b>${line.product_id.list_price} &#128;</b>
                 %endif
                                 <br />
-                %if line.product_id.ethiquette_printed_origin:
-                            Origine : <b>${line.product_id.ethiquette_printed_origin}</b>
-                %endif
+                %if line.product_id.pricetag_origin:
+                                ${_('Origin: ')}<b>${line.product_id.pricetag_origin}</b>
                                 <br />
-                %if line.product_id.ethiquette_origin:
-                                Producteur : <b>${line.product_id.ethiquette_maker}</b>
+                %endif
+                %if line.product_id.maker_description:
+                                ${_('Maker: ')}<b>${line.product_id.maker_description}</b>
                 %endif
                                 <br />
                             </div>
                             <div class="product_labels">
-                %for label in line.product_id.ethiquette_label_ids:
-                                <img class="product_label" src="data:image/png;base64,${label.logo}"/>
+                %for label in line.product_id.label_ids:
+                                <img class="product_label" src="data:image/png;base64,${label.image}"/>
                 %endfor
                             </div>
                         </div>
                         <div class="label_right">
-                            <div class="product_price" style="background-color:${line.product_id.ethiquette_color};">
+                            <div class="product_price" style="background-color:${line.product_id.pricetag_color};">
                 %if line.print_unit_price:
                                 ${line.product_id.list_price} &#128;
                 %else:
                                 &nbsp;&nbsp;&nbsp;&nbsp; &#128;
                 %endif
-                %if line.product_id.uom_id.category_id.ethiquette_printable:
+                %if line.product_id.uom_id.category_id.pricetag_printable:
 &nbsp;/&nbsp;${line.product_id.uom_id.name}
                 %endif
                             </div>
                             <div class="product_image">
-                                <img class="product_image" src="data:image/png;base64,${line.product_id.ethiquette_image}"/>
+                                <img class="product_image" src="data:image/png;base64,${line.product_id.pricetag_image}"/>
                             </div>
                         </div>
                     </div>

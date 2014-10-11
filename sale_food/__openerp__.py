@@ -70,7 +70,8 @@ sudo chmod 755 wkhtmltopdf.sh
         'view/view.xml',
         'view/action.xml',
         'view/menu.xml',
-        #        'data/ir_header_webkit.xml',
+        'data/ir_header_webkit.xml',
+        'data/ir_property.xml',
         #        'data/product_data.xml',
         #        'security/ir_module_category_data.xml',
         #        'security/res_groups_data.xml',
@@ -81,7 +82,7 @@ sudo chmod 755 wkhtmltopdf.sh
         #        'wizard/grap_ethiquette_print_wizard_view.xml',
         #        'wizard/grap_ethiquette_print_wizard_action.xml',
         #        'wizard/grap_ethiquette_print_wizard_menu.xml',
-        #        'data/ir_property.xml',
+
         ],
     'demo': [
         #        'demo/grap_ethiquette_label.yml',

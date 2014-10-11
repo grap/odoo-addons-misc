@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
-        <record id="ir_header_webkit_grap_ethiquette" model="ir.header_webkit">
-            <field name="name">Webkit template for grap ethiquette (2 x 7)</field>
+        <record id="ir_header_webkit_report_pricetag" model="ir.header_webkit">
+            <field name="name">Webkit Header for Price Tag Report</field>
             <field name="orientation">Portrait</field>
             <field name="format">A4</field>
             <field name="margin_top" eval="0.01" />
