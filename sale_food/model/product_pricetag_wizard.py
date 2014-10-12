@@ -56,8 +56,11 @@ class product_pricetag_wizard(TransientModel):
     # Columns Section
     _columns = {
         'offset': fields.integer(
-            'Offset : Price Tag number not to print', required=True),
-        'border': fields.boolean('Design a border for Price Tags'),
+            'Offset', required=True, help="Price Tag number not to print"),
+        'border': fields.boolean(
+            'Border', help="Design a border on Price Tags"),
+        'radar_chart': fields.boolean(
+            'Radar Chart', help="Display Radar Chart if available"),
         'line_ids': fields.one2many(
             'product.pricetag.wizard.line', 'wizard_id', 'Products'),
     }
@@ -65,6 +68,7 @@ class product_pricetag_wizard(TransientModel):
     # Default values Section
     _defaults = {
         'border': True,
+        'radar_chart': True,
         'offset': 0,
         'line_ids': _get_line_ids,
     }

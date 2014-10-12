@@ -126,30 +126,28 @@
               <field name="model">product.pricetag.wizard</field>
               <field name="arch" type="xml">
                 <form string="Print Price Tags">
-                    <separator colspan="4" string="Print Parameters"/>
-                    <field name="offset" colspan="2" />
-                    <field name="border" colspan="2" />
-                    <separator colspan="4" string="Products"/>
-                    <field colspan="4" name="line_ids" nolabel="1"/>
-                    <separator colspan="4"/>
-                    <group colspan="4" col="6">
-                        <button icon="gtk-cancel" special="cancel" string="Cancel"/>
-                        <button name="%(report_pricetag_report)d" string="Print" type="action" icon="gtk-print"/>
-                   </group>
+                    <group colspan="2">
+                        <group string="Print Parameters" col="6" colspan="2">
+                            <field name="offset"/>
+                            <field name="border"/>
+                            <field name="radar_chart"/>
+                        </group>
+                        <group col="4" colspan="2">
+                            <button icon="gtk-cancel" special="cancel" string="Cancel"/>
+                            <button name="%(report_pricetag_report)d" string="Print" type="action" icon="gtk-print"/>
+                       </group>
+                        <group string="Products" col="4" colspan="2">
+                            <field name="line_ids" options="{'reload_on_button': true}">
+                                <tree string="Products" editable="top">
+                                    <field name="product_id"/>
+                                    <field name="quantity"/>
+                                    <field name="print_unit_price"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </group>
                 </form>
               </field>
-        </record>
-
-<!-- Model: product.pricetag.wizard.line -->
-        <record id="view_product_pricetag_wizard_line_tree" model="ir.ui.view">
-            <field name="model">product.pricetag.wizard.line</field>
-            <field name="arch" type="xml">
-                <tree string="Products" editable="top">
-                    <field name="product_id"/>
-                    <field name="quantity"/>
-                    <field name="print_unit_price"/>
-                </tree>
-            </field>
         </record>
 
 <!-- Model: product.uom.categ -->
@@ -178,23 +176,47 @@
         </record>
 
 <!-- Model: product.product -->
+        <record id="view_product_product_search" model="ir.ui.view">
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_search_form_view"/>
+            <field name="arch" type="xml">
+                <filter name="filter_to_sell" position="after">
+                    <separator/>
+                    <filter string="Print to do" name="print_todo" domain="[('pricetag_state', 'in', ('1', '2'))]"/>
+                    <filter string="Print Up To Date" name="print_uptodate" domain="[('pricetag_state', '=', '0')]"/>
+                    <filter string="Print Ignored" name="print_never" domain="[('pricetag_state', '=', '3')]"/>
+                </filter>
+            </field>
+        </record>
+
         <record id="view_product_product_food_tree" model="ir.ui.view">
             <field name="model">product.product</field>
             <field name="arch" type="xml">
                 <tree string="Products (Food)" editable="bottom">
-                    <field name="name"/>
-                    <field name="pricetag_type_id"/>
+                    <field name="name" readonly="1"/>
+                    <field name="fresh_category"/>
                     <field name="label_ids" widget="many2many_tags"/>
-                    <field name="organic_notation" />
+                    <field name="organic_notation"/>
                 </tree>
             </field>
         </record>
-        
+
+        <record id="view_product_product_pricetag_tree" model="ir.ui.view">
+            <field name="model">product.product</field>
+            <field name="arch" type="xml">
+                <tree string="Products (Price Tag)" editable="bottom">
+                    <field name="name" readonly="1"/>
+                    <field name="pricetag_type_id"/>
+                    <field name="pricetag_state" />
+                </tree>
+            </field>
+        </record>
+
         <record id="view_product_product_origin_tree" model="ir.ui.view">
             <field name="model">product.product</field>
             <field name="arch" type="xml">
                 <tree string="Products (Origin)" editable="bottom">
-                    <field name="name" width="200px"/>
+                    <field name="name" readonly="1"/>
                     <field name="country_id" 
                         options="{'quick_create':false}"
                         on_change="onchange_country_id(

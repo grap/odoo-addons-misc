@@ -8,7 +8,7 @@
             file="sale_food/report/pricetag_report.mako"
             header="False"
             auto="False"
-            string="GRAP Ethiquette"
+            string="Price Tag"
             />
     </data>
 </openerp>

@@ -40,7 +40,7 @@
 <!-- Model: 'product.pricetag.wizard' -->
         <menuitem id="menu_product_pricetag_wizard"
             name="Print Price Tags"
-            parent="menu_sale_food" sequence="3"
+            parent="menu_sale_food" sequence="4"
             action="action_product_pricetag_wizard"/>
 
 <!-- Model: product.product -->
@@ -53,6 +53,11 @@
             name="Products (Origin)" 
             parent="base.menu_product" sequence="3" 
             action="action_product_product_origin"/>
+
+        <menuitem id="menu_product_product_pricetag"
+            name="Products (Price Tag)"
+            parent="menu_sale_food" sequence="3"
+            action="action_product_product_pricetag"/>
 
     </data>
 </openerp>

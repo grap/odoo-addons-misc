@@ -58,12 +58,23 @@
         </record>
 
         <record id="action_product_product_origin" model="ir.actions.act_window">
-            <field name="name">Products (Origin )</field>
+            <field name="name">Products (Origin)</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">product.product</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree</field>
             <field name="view_id" ref="view_product_product_origin_tree"/>
+        </record>
+
+        <record id="action_product_product_pricetag" model="ir.actions.act_window">
+            <field name="name">Products (Price Tag)</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.product</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="context">{'search_default_print_todo':1}</field>
+            <field name="search_view_id" ref="view_product_product_search"/>
+            <field name="view_id" ref="view_product_product_pricetag_tree"/>
         </record>
 
     </data>

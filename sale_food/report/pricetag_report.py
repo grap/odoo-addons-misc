@@ -5,10 +5,8 @@ from report import report_sxw
 
 class report_webkit_html(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
-        print "**************************************"
         super(report_webkit_html, self).__init__(
             cr, uid, name, context=context)
-        print "**************************************"
         # updating product to update edition_state to the value 'OK'
         sql_req = """
             UPDATE product_product
@@ -18,7 +16,6 @@ class report_webkit_html(report_sxw.rml_parse):
                 FROM product_pricetag_wizard_line
                 WHERE wizard_id = %s)"""
         cr.execute(sql_req % (context['active_id']))
-        print "**************************************"
         self.localcontext.update({
             'time': time,
             'cr': cr,
@@ -30,5 +27,3 @@ report_sxw.report_sxw(
     'product.pricetag.wizard',
     'addons/sale_food/report/pricetag_report.mako',
     parser=report_webkit_html)
-
-

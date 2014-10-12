@@ -21,5 +21,6 @@
 <openerp>
     <data>
         <function model="product.label" name="_demo_init_image"/>
+        <function model="res.company" name="_demo_init_image"/>
     </data>
 </openerp>

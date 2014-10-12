@@ -24,6 +24,8 @@
 from openerp.osv.orm import Model
 from openerp.osv import fields
 
+from openerp.addons.sale_food.lib import demo_image
+
 
 class res_company(Model):
     _inherit = 'res.company'
@@ -31,7 +33,7 @@ class res_company(Model):
     _columns = {
         'pricetag_image': fields.binary(
             'Price Tag Image',
-            help="""This field will be printed on Price Tag. """
+            help="""This field will be printed on Price Tag."""
             """Size : 210px * 210px"""),
         'pricetag_color': fields.char(
             'Price Tag Color', required=True, size=7,
@@ -41,3 +43,9 @@ class res_company(Model):
     _defaults = {
         'pricetag_color': '#FFFFFF',
     }
+
+    # Demo Function Section
+    def _demo_init_image(self, cr, uid, ids=None, context=None):
+        demo_image.init_image(
+            self.pool, cr, uid, 'res.company', 'pricetag_image',
+            '/../static/src/img/demo/res_company/', context=context)
