@@ -121,7 +121,11 @@
                 %endif
                             </div>
                             <div class="product_image">
+                %if wizard.radar_chart:
                                 <img class="product_image" src="data:image/png;base64,${line.product_id.pricetag_image}"/>
+                %else:
+                                <img class="product_image" src="data:image/png;base64,${line.product_id.company_id.pricetag_image}"/>
+                %endif
                             </div>
                         </div>
                     </div>

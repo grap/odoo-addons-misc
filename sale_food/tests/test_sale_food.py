@@ -24,8 +24,6 @@
 from openerp.tests.common import TransactionCase
 import openerp.netsvc as netsvc
 
-from report import report_sxw
-
 
 class TestSaleFood(TransactionCase):
     """Tests for 'Sale Food' Module"""
@@ -41,7 +39,6 @@ class TestSaleFood(TransactionCase):
     def test_01_wizard(self):
         """Test the behaviour of wizard pricetag"""
         cr, uid = self.cr, self.uid
-
         pp_ids = self.pp_obj.search(cr, uid, [
             ('pricetag_state', 'in', ('1', '2'))], context=None)
         self.assertEqual(
@@ -49,19 +46,13 @@ class TestSaleFood(TransactionCase):
             "Incorrect computation of Needed Pricetag Quantity.")
 
         ppw_id = self.ppw_obj.create(cr, uid, {}, context=None)
-#        iarx = self.imd_obj.get_object(
-#            cr, uid, 'sale_food', 'report_pricetag_report')
-
         context = {  # noqa
             'active_model': u'product.pricetag.wizard',
             'active_ids': [ppw_id],
             'active_id': ppw_id}
-
         report_obj = netsvc.LocalService('report.pricetag.report')
         report_obj.create(
             cr, uid, [ppw_id], {'report_type': u'webkit'}, context)
-
         self.assertEqual(
             len(pp_ids) - 14, self.ppw_obj._needaction_count(cr, uid),
             "Printing pricetag must decrease the number of products to print.")
-

@@ -24,7 +24,7 @@
 
 from openerp.osv.orm import Model
 from openerp.osv import fields
-from openerp.addons.sale_food.lib import demo_image
+from openerp.addons.sale_food import demo_image
 
 
 class product_label(Model):

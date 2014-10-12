@@ -21,31 +21,21 @@
 #
 ##############################################################################
 
-from openerp.osv.orm import Model
-from openerp.osv import fields
-
-from openerp.addons.sale_food import demo_image
+import os
+import base64
 
 
-class res_company(Model):
-    _inherit = 'res.company'
-
-    _columns = {
-        'pricetag_image': fields.binary(
-            'Price Tag Image',
-            help="""This field will be printed on Price Tag."""
-            """Size : 210px * 210px"""),
-        'pricetag_color': fields.char(
-            'Price Tag Color', required=True, size=7,
-            help="Color of the Price Tag by default. Format #RRGGBB"),
-    }
-
-    _defaults = {
-        'pricetag_color': '#FFFFFF',
-    }
-
-    # Demo Function Section
-    def _demo_init_image(self, cr, uid, ids=None, context=None):
-        demo_image.init_image(
-            self.pool, cr, uid, 'res.company', 'pricetag_image',
-            '/../static/src/img/demo/res_company/', context=context)
+def init_image(pool, cr, uid, model, field, path, context=None):
+    imd_obj = pool['ir.model.data']
+    obj_obj = pool[model]
+    currpath = os.path.dirname(os.path.abspath(__file__))
+    imgpath = currpath + path
+    if os.path.exists(imgpath):
+        for filename in os.listdir(imgpath):
+            module = filename.split('.')[0]
+            xml_id = filename.split('.')[1]
+            obj = imd_obj.get_object(cr, uid, module, xml_id)
+            image_file = open(imgpath + filename, "rb")
+            encoded_image = base64.b64encode(image_file.read())
+            obj_obj.write(cr, uid, [obj.id], {
+                field: encoded_image}, context=context)

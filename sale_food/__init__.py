@@ -22,5 +22,6 @@
 ##############################################################################
 
 from . import model
-from . import lib
+from . import demo_image
+from . import radar_template
 from . import report
