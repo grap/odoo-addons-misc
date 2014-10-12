@@ -21,6 +21,19 @@
 #
 ##############################################################################
 
-from . import model
-from . import lib
-from . import report
+from openerp.tests.common import TransactionCase
+
+
+class TestSaleFood(TransactionCase):
+    """Tests for 'Sale Food' Module"""
+
+    def setUp(self):
+        super(TestSaleFood, self).setUp()
+#        self.imm_obj = self.registry('ir.module.module')
+
+#    # Test Section
+#    def test_01_module_update_list(self):
+#        """Test the correct process when the user click on 'update"""
+#        """ module list' button."""
+#        cr, uid = self.cr, self.uid
+#        self.imm_obj.update_list(cr, uid)

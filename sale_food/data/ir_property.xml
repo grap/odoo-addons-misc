@@ -1,13 +1,15 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
+
         <record id="ir_property_report_report_pricetag" model="ir.property">
             <field name="name">WebKit Property Header for Price Tag Report</field>
             <field name="fields_id" model="ir.model.fields" 
                 search="[('name', '=', u'webkit_header'),('model', '=', u'ir.actions.report.xml')]"/>
             <field name="type">many2one</field>
-            <field name="res_id" model="ir.actions.report.xml" ref="report_pricetag"/>
+            <field name="res_id" model="ir.actions.report.xml" ref="report_grap_ethiquette_report_html"/>
             <field name="value_reference" model="ir.header_webkit" ref="ir_header_webkit_report_pricetag"/>
         </record>
+
     </data>
 </openerp>

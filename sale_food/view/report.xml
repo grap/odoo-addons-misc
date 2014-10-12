@@ -21,6 +21,7 @@
 
 <openerp>
     <data>
+<!--
         <report id="report_pricetag"
             name="report.pricetag"
             model="product.pricetag.wizard"
@@ -30,5 +31,17 @@
             auto="False"
             string="Print Price Tags"
             />
+-->
+       <record id="action_report_pricetag" model="ir.actions.report.xml">
+            <field name="report_type">webkit</field>
+            <field name="report_name">report.pricetag</field>
+            <field name="auto" eval="0"/>
+            <field name="header" eval="0"/>
+            <field name="model">product.pricetag.wizard</field>
+            <field name="type">ir.actions.report.xml</field>
+            <field name="name">PriceTags</field>
+            <field name="report_rml">sale_food/view/report_pricetag.mako</field>
+            <field name="report_file">sale_food/view/report_pricetag.mako</field>
+        </record>
     </data>
 </openerp>

@@ -21,6 +21,4 @@
 #
 ##############################################################################
 
-from . import model
-from . import lib
-from . import report
+from . import grap_ethiquette_report_html

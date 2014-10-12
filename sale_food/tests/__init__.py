@@ -21,6 +21,9 @@
 #
 ##############################################################################
 
-from . import model
-from . import lib
-from . import report
+
+from . import test_sale_food
+
+fast_suite = [
+    test_sale_food,
+]
