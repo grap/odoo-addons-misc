@@ -37,19 +37,13 @@ Functionnalities :
     * Possibility to print price tags, with suggestion about wich products
     to print. (when price change for exemple) according to legal obligation.
 
-Python librairies required :
-----------------------------
-* **cairosvg** : (to generate graphical notation)
-apt-get install python-cairo python-cairosvg
-
-* **wkhtmltopdf** : (to print label only)
-sudo apt-get install wkhtmltopdf
-On Debian system :
-sudo apt-get install xvfb
-sudo nano /usr/bin/wkhtmltopdf.sh
-  #!/usr/bin/env sh
-  xvfb-run -a -s "-screen 0 640x480x16" wkhtmltopdf $*
-sudo chmod 755 wkhtmltopdf.sh
+Python librairies required on Debian System:
+--------------------------------------------
+    * sudo apt-get install xvfb
+    * sudo nano /usr/bin/wkhtmltopdf.sh
+        * #!/usr/bin/env sh
+        * xvfb-run -a -s "-screen 0 640x480x16" wkhtmltopdf $*
+    * sudo chmod 755 wkhtmltopdf.sh
     """,
     'author': 'GRAP',
     'website': 'http://www.grap.coop',
@@ -71,7 +65,6 @@ sudo chmod 755 wkhtmltopdf.sh
         'data/ir_property.xml',
         ],
     'demo': [
-        'demo/ir_config_parameter.yml',
         'demo/product_label.yml',
         'demo/product_pricetag_type.yml',
         'demo/function.xml',
