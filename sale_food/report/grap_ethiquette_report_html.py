@@ -10,8 +10,6 @@ class report_webkit_html(report_sxw.rml_parse):
             cr, uid, name, context=context)
         print "**************************************"
         # updating product to update edition_state to the value 'OK'
-
-    def tachat(self, cr, uid, name, context):
         sql_req = """
             UPDATE product_product
             SET pricetag_state=0
