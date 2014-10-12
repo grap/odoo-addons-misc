@@ -20,5 +20,21 @@
 #
 ##############################################################################
 
-from . import model
-from . import demo_image
+import os
+import base64
+
+
+def init_image(pool, cr, uid, model, field, path, context=None):
+    imd_obj = pool['ir.model.data']
+    obj_obj = pool[model]
+    currpath = os.path.dirname(os.path.abspath(__file__))
+    imgpath = currpath + path
+    if os.path.exists(imgpath):
+        for filename in os.listdir(imgpath):
+            module = filename.split('.')[0]
+            xml_id = filename.split('.')[1]
+            obj = imd_obj.get_object(cr, uid, module, xml_id)
+            image_file = open(imgpath + filename, "rb")
+            encoded_image = base64.b64encode(image_file.read())
+            obj_obj.write(cr, uid, [obj.id], {
+                field: encoded_image}, context=context)

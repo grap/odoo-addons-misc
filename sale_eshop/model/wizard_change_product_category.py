@@ -43,7 +43,8 @@ class wizard_change_product_category(TransientModel):
             readonly=True),
         'new_eshop_category_id': fields.many2one(
             'eshop.category', 'New eShop Category', required=True,
-            domain="""[('id', '!=', old_eshop_category_id)]"""),
+            domain="""[('type', '=', 'normal'),
+                ('id', '!=', old_eshop_category_id)]"""),
     }
 
     _defaults = {

@@ -42,6 +42,10 @@ TODO:
 -----
     * Add a button move into other category on eshop.category;
 
+BUG:
+----
+    * It is possible to link product to view category;
+
 Copyright, Authors and Licence:
 -------------------------------
     * Copyright: 2014, GRAP: Groupement Régional Alimentaire de Proximité;
@@ -63,7 +67,9 @@ Copyright, Authors and Licence:
         'view/menu.xml',
     ],
     'demo': [
+        'demo/res_partner.yml',
         'demo/eshop_category.yml',
         'demo/product_product.yml',
+        'demo/function.xml',
     ],
 }

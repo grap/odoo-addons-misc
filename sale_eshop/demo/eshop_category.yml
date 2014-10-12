@@ -20,35 +20,18 @@
 #
 ##############################################################################
 
-- !record {model: eshop.category, id: category_hardware}:
-    name: Hardware
+- !record {model: eshop.category, id: category_fruit_vegetable}:
+    name: Fruits and Vegetables
     type: view
 
 
-- !record {model: eshop.category, id: category_computer}:
-    name: Computers
+- !record {model: eshop.category, id: category_fruit}:
+    name: Fruits
     type: normal
-    parent_id: category_hardware
+    parent_id: category_fruit_vegetable
 
 
-- !record {model: eshop.category, id: category_screen}:
-    name: Screens
+- !record {model: eshop.category, id: category_vegetable}:
+    name: Vegetables
     type: normal
-    parent_id: category_hardware
-
-
-- !record {model: eshop.category, id: category_device}:
-    name: Devices
-    type: normal
-    parent_id: category_hardware
-
-
-- !record {model: eshop.category, id: category_service}:
-    name: Services
-    type: normal
-
-
-- !record {model: eshop.category, id: category_software}:
-    name: Software
-    type: normal
-
+    parent_id: category_fruit_vegetable

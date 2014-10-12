@@ -20,5 +20,6 @@
 #
 ##############################################################################
 
-from . import model
-from . import demo_image
+- !record {model: res.partner, id: base.partner_root}:
+    eshop_active: True
+    eshop_password: admin

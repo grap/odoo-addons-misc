@@ -25,6 +25,8 @@ from openerp.osv import fields, osv
 from openerp.osv.orm import Model
 from openerp.tools.translate import _
 
+from openerp.addons.sale_eshop import demo_image
+
 
 class eshop_category(Model):
     _name = 'eshop.category'
@@ -200,3 +202,9 @@ class eshop_category(Model):
                         ec.name, ec.product_qty))
         return super(eshop_category, self).unlink(
             cr, uid, ids, context=context)
+
+    # Demo Function Section
+    def _demo_init_image(self, cr, uid, ids=None, context=None):
+        demo_image.init_image(
+            self.pool, cr, uid, 'eshop.category', 'image',
+            '/static/src/img/demo/eshop_category/', context=context)

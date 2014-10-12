@@ -20,70 +20,107 @@
 #
 ##############################################################################
 
-- !record {model: product.product, id: product.product_product_48}:
-    eshop_category_id: category_device
+- !record {model: product.product, id: product_banana}:
+    name: Banana
+    categ_id: product.product_category_all
+    list_price: 2.45
+    eshop_category_id: category_fruit
+    eshop_minimum_qty: 0.5
+    eshop_rounded_qty: 0.1
+    uom_id: product.product_uom_kgm
+    uos_id: product.product_uom_kgm
+    description_sale: Description of Banana
+    sale_ok: True
     eshop_ok: True
+    type: consu
 
-- !record {model: product.product, id: product.product_product_32}:
-    eshop_category_id: category_device
+- !record {model: product.product, id: product_strawberry}:
+    name: Strawberry (250 gr)
+    categ_id: product.product_category_all
+    list_price: 3.10
+    eshop_category_id: category_fruit
+    uom_id: product.product_uom_unit
+    uos_id: product.product_uom_unit
+    description_sale: Description of Strawberry. 250 gram container
+    sale_ok: True
     eshop_ok: True
+    type: consu
 
-- !record {model: product.product, id: product.product_product_33}:
-    eshop_category_id: category_device
+- !record {model: product.product, id: product_apple}:
+    name: Apple
+    list_price: 2.45
+    eshop_category_id: category_fruit
+    eshop_minimum_qty: 1.0
+    eshop_rounded_qty: 0.2
+    uom_id: product.product_uom_kgm
+    uos_id: product.product_uom_kgm
+    description_sale: Description of Apple
+    sale_ok: True
     eshop_ok: True
+    type: consu
 
-- !record {model: product.product, id: product.product_product_9}:
-    eshop_category_id: category_device
-    eshop_ok: True
 
-- !record {model: product.product, id: product.product_product_8}:
-    eshop_category_id: category_device
+- !record {model: product.product, id: product_potato}:
+    name: Potato
+    list_price: 1.95
+    eshop_category_id: category_vegetable
+    eshop_minimum_qty: 1.0
+    eshop_rounded_qty: 0.5
+    uom_id: product.product_uom_kgm
+    uos_id: product.product_uom_kgm
+    description_sale: Description of Potato
+    sale_ok: True
     eshop_ok: True
+    type: consu
 
-- !record {model: product.product, id: product.product_product_27}:
-    eshop_category_id: category_computer
+- !record {model: product.product, id: product_leek}:
+    name: Leek
+    list_price: 2.90
+    eshop_category_id: category_vegetable
+    eshop_minimum_qty: 0.4
+    eshop_rounded_qty: 0.2
+    uom_id: product.product_uom_kgm
+    uos_id: product.product_uom_kgm
+    description_sale: Description of Leek
+    sale_ok: True
     eshop_ok: True
+    type: consu
 
-- !record {model: product.product, id: product.product_product_25}:
-    eshop_category_id: category_computer
+- !record {model: product.product, id: product_onion}:
+    name: Onion
+    list_price: 3.00
+    eshop_category_id: category_vegetable
+    eshop_minimum_qty: 0.5
+    eshop_rounded_qty: 0.1
+    uom_id: product.product_uom_kgm
+    uos_id: product.product_uom_kgm
+    description_sale: Description of Onions
+    sale_ok: True
     eshop_ok: True
+    type: consu
 
-- !record {model: product.product, id: product.product_product_26}:
-    eshop_category_id: category_computer
+- !record {model: product.product, id: product_garlic}:
+    name: Garlic
+    list_price: 7.00
+    eshop_category_id: category_vegetable
+    eshop_minimum_qty: 0.1
+    eshop_rounded_qty: 0.02
+    uom_id: product.product_uom_kgm
+    uos_id: product.product_uom_kgm
+    description_sale: Description of Garlic
+    sale_ok: True
     eshop_ok: True
+    type: consu
 
-- !record {model: product.product, id: product.product_product_6}:
-    eshop_category_id: category_screen
+- !record {model: product.product, id: product_pepper}:
+    name: Pepper
+    list_price: 7.00
+    eshop_category_id: category_vegetable
+    eshop_minimum_qty: 0.4
+    eshop_rounded_qty: 0.1
+    uom_id: product.product_uom_kgm
+    uos_id: product.product_uom_kgm
+    description_sale: Description of Pepper
+    sale_ok: True
     eshop_ok: True
-
-- !record {model: product.product, id: product.product_product_7}:
-    eshop_category_id: category_screen
-    eshop_ok: True
-
-- !record {model: product.product, id: product.product_product_11}:
-    eshop_category_id: category_device
-    eshop_ok: True
-
-- !record {model: product.product, id: product.product_product_31}:
-    eshop_category_id: category_device
-    eshop_ok: True
-
-- !record {model: product.product, id: product.product_product_10}:
-    eshop_category_id: category_device
-    eshop_ok: True
-
-- !record {model: product.product, id: product.product_product_12}:
-    eshop_category_id: category_device
-    eshop_ok: True
-
-- !record {model: product.product, id: product.product_product_42}:
-    eshop_category_id: category_software
-    eshop_ok: True
-
-- !record {model: product.product, id: product.product_product_3}:
-    eshop_category_id: category_computer
-    eshop_ok: True
-
-- !record {model: product.product, id: product.product_product_4}:
-    eshop_category_id: category_computer
-    eshop_ok: True
+    type: consu

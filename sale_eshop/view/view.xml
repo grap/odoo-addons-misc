@@ -21,6 +21,17 @@
     <data>
 
 <!-- Model: product.product -->
+        <record id="view_product_product_search" model="ir.ui.view">
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_search_form_view"/>
+            <field name="arch" type="xml">
+                <filter name="filter_to_sell" position="after">
+                    <separator/>
+                    <filter string="Available On eShop" name="eshop_available" domain="[('eshop_ok', '=', True)]"/>
+                </filter>
+            </field>
+        </record>
+
         <record id="view_product_product_tree" model="ir.ui.view">
             <field name="name">view.product.product.tree</field>
             <field name="model">product.product</field>

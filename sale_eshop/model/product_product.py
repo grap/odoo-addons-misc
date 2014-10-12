@@ -24,6 +24,8 @@
 from openerp.osv import fields
 from openerp.osv.orm import Model
 
+from openerp.addons.sale_eshop import demo_image
+
 
 class product_product(Model):
     _inherit = 'product.product'
@@ -53,7 +55,7 @@ class product_product(Model):
                 ('type', '=', 'normal')]),
         'eshop_ok': fields.boolean('Can be Sold on eShop'),
         'eshop_state': fields.function(
-            _get_eshop_state, type='selection', string='eShop Stat',
+            _get_eshop_state, type='selection', string='eShop State',
             selection=_ESHOP_STATE_SELECTION, store={
                 'product.product': (
                     lambda self, cr, uid, ids, context=None: ids,
@@ -95,3 +97,9 @@ class product_product(Model):
         if not eshop_category_id:
             return {'value': {'eshop_ok': False}}
         return {}
+
+    # Demo Function Section
+    def _demo_init_image(self, cr, uid, ids=None, context=None):
+        demo_image.init_image(
+            self.pool, cr, uid, 'product.product', 'image',
+            '/static/src/img/demo/product_product/', context=context)
