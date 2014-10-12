@@ -64,7 +64,6 @@ sudo chmod 755 wkhtmltopdf.sh
         'security/res_groups.yml',
         'security/ir_model_access.yml',
         'report/grap_ethiquette_report_html.xml',
-        #'view/report.xml',
         'view/view.xml',
         'view/action.xml',
         'view/menu.xml',
@@ -74,7 +73,6 @@ sudo chmod 755 wkhtmltopdf.sh
     'demo': [
         'demo/product_label.yml',
         'demo/product_pricetag_type.yml',
-        #        'demo/product_product.yml',
         'demo/function.xml',
     ],
     'css': [
