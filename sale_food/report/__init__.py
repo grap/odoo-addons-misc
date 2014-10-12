@@ -21,4 +21,4 @@
 #
 ##############################################################################
 
-from . import grap_ethiquette_report_html
+from . import pricetag_report

@@ -26,9 +26,9 @@ class report_webkit_html(report_sxw.rml_parse):
         })
 
 report_sxw.report_sxw(
-    'report.grap.ethiquette.report.html',
+    'report.pricetag.report',
     'product.pricetag.wizard',
-    'addons/sale_food/report/grap_ethiquette_report_html.mako',
+    'addons/sale_food/report/pricetag_report.mako',
     parser=report_webkit_html)
 
 

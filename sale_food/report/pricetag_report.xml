@@ -2,10 +2,10 @@
 <openerp>
     <data>
         <report id="report_pricetag_report"
-            name="grap.ethiquette.report.html"
+            name="pricetag.report"
             model="product.pricetag.wizard"
             report_type="webkit"
-            file="sale_food/report/grap_ethiquette_report_html.mako"
+            file="sale_food/report/pricetag_report.mako"
             header="False"
             auto="False"
             string="GRAP Ethiquette"

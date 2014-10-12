@@ -63,7 +63,7 @@ sudo chmod 755 wkhtmltopdf.sh
         'security/ir_module_category.yml',
         'security/res_groups.yml',
         'security/ir_model_access.yml',
-        'report/grap_ethiquette_report_html.xml',
+        'report/pricetag_report.xml',
         'view/view.xml',
         'view/action.xml',
         'view/menu.xml',
