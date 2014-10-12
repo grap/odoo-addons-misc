@@ -71,6 +71,7 @@ sudo chmod 755 wkhtmltopdf.sh
         'data/ir_property.xml',
         ],
     'demo': [
+        'demo/ir_config_parameter.yml',
         'demo/product_label.yml',
         'demo/product_pricetag_type.yml',
         'demo/function.xml',
