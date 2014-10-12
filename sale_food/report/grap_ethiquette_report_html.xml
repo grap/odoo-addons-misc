@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-        <report id="report_grap_ethiquette_report_html"
+        <report id="report_pricetag_report"
             name="grap.ethiquette.report.html"
             model="product.pricetag.wizard"
             report_type="webkit"

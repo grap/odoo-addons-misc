@@ -134,7 +134,7 @@
                     <separator colspan="4"/>
                     <group colspan="4" col="6">
                         <button icon="gtk-cancel" special="cancel" string="Cancel"/>
-                        <button name="%(report_grap_ethiquette_report_html)d" string="Print" type="action" icon="gtk-print"/>
+                        <button name="%(report_pricetag_report)d" string="Print" type="action" icon="gtk-print"/>
                    </group>
                 </form>
               </field>
