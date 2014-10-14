@@ -74,7 +74,6 @@
             </field>
         </record>
 
-
 <!-- Model: res.partner -->
         <record id="view_res_partner_form" model="ir.ui.view">
             <field name="model">res.partner</field>
@@ -91,6 +90,19 @@
             </field>
         </record>
 
+<!-- Model: sale.shop -->
+        <record id="view_sale_shop_form" model="ir.ui.view">
+            <field name="model">sale.shop</field>
+            <field name="inherit_id" ref="sale.view_shop_form" />
+            <field name="arch" type="xml">
+                <group name="shop" position="after">
+                    <group name="eshop" string="eShop">
+                        <field name="eshop_minimum_price"/>
+                        <field name="eshop_home_text"/>
+                    </group>
+                </group>
+            </field>
+        </record>
 
 <!-- Model: eshop.category -->
         <record id="view_eshop_category_search" model="ir.ui.view">

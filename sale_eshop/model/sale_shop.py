@@ -20,8 +20,18 @@
 #
 ##############################################################################
 
-from . import eshop_category
-from . import product_product
-from . import wizard_change_product_category
-from . import res_partner
-from . import sale_shop
+
+from openerp.osv import fields
+from openerp.osv.orm import Model
+
+
+class sale_shop(Model):
+    _inherit = 'sale.shop'
+
+    # Columns Section
+    _columns = {
+        'eshop_minimum_price': fields.float(
+            'Minimum Price'),
+        'eshop_home_text': fields.html(
+            'Text for Home Page'),
+    }
