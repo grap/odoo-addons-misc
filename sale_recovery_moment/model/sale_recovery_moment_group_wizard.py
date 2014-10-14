@@ -48,7 +48,7 @@ class sale_recovery_moment_group_wizard(TransientModel):
             ('order_id', 'in', so_ids)], context=context)
         res_pp = {}
         for sol in sol_obj.browse(cr, uid, sol_ids, context=context):
-            if not sol.product_id.id in res_pp.keys():
+            if sol.product_id.id not in res_pp.keys():
                 res_pp[sol.product_id.id] = 0.0
                 res_pp[sol.product_id.id] += sol.product_uom_qty
             pass
