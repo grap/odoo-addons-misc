@@ -264,7 +264,7 @@
                                         label_ids,
                                         social_notation,
                                         local_notation,
-                                        notation_organic,
+                                        organic_notation,
                                         packaging_notation)"/>
                             </group>
                         </group>

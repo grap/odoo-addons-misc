@@ -311,7 +311,7 @@ class product_product(Model):
     def onchange_department_id(
             self, cr, uid, ids, country_id, department_id, context=None):
         res = {}
-        rcd_obj = self.pool.get['res.country.department']
+        rcd_obj = self.pool['res.country.department']
         if department_id:
             rcd = rcd_obj.browse(cr, uid, department_id, context=context)
             res = {'value': {'country_id': rcd.country_id.id}}
@@ -320,7 +320,7 @@ class product_product(Model):
     def onchange_country_id(
             self, cr, uid, ids, country_id, department_id, context=None):
         res = {}
-        rcd_obj = self.pool.get['res.country.department']
+        rcd_obj = self.pool['res.country.department']
         if not country_id:
             res = {'value': {'department_id': None}}
         elif department_id:

@@ -64,4 +64,4 @@ class product_label(Model):
     def _demo_init_image(self, cr, uid, ids=None, context=None):
         demo_image.init_image(
             self.pool, cr, uid, 'product.label', 'image',
-            '/../static/src/img/demo/product_label/', context=context)
+            '/static/src/img/demo/product_label/', context=context)
