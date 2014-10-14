@@ -123,8 +123,6 @@ class sale_recovery_moment(Model):
             'sale.order', 'moment_id', 'Sale Orders', readonly=True),
         'order_qty': fields.function(
             _get_order_qty, type='integer', string='Sale Orders Quantity'),
-        #        'picking_ids': fields.one2many(
-        #            'stock.picking', 'moment_id', 'Stock Picking', readonly=True),
         'picking_ids': fields.function(
             _get_picking, type='one2many', multi='picking',
             relation='stock.picking.out', string='Stock Picking Quantity'),

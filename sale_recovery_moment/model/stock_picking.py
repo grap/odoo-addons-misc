@@ -37,6 +37,7 @@ class stock_picking(Model):
             relation='sale.recovery.moment.group', string='Recovery Group'),
     }
 
+
 # FIXME: Actually it doesn't work if you don't redefine in stock_picking
 # the field defined in stock.picking.out
 class stock_picking_out(Model):

@@ -34,7 +34,6 @@ class sale_order(Model):
         res['moment_id'] = order.moment_id.id
         return res
 
-
     # Column Section
     _columns = {
         'moment_id': fields.many2one(
@@ -44,4 +43,3 @@ class sale_order(Model):
             relation='sale.recovery.moment.group', string='Recovery Group',
             readonly=True),
     }
-
