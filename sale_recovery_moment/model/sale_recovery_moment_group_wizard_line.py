@@ -1,8 +1,9 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Tools - Repository of Modules for Odoo
-#    Copyright (C) 2014 GRAP (http://www.grap.coop)
+#    Sale - Food Module for Odoo
+#    Copyright (C) 2012-Today GRAP (http://www.grap.coop)
+#    @author Julien WESTE
 #    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -20,33 +21,26 @@
 #
 ##############################################################################
 
-
+from openerp.osv.orm import TransientModel
 from openerp.osv import fields
-from openerp.osv.orm import Model
 
 
-class stock_picking(Model):
-    _inherit = 'stock.picking'
+class sale_recovery_moment_group_wizard_line(TransientModel):
+    _name = 'sale.recovery.moment.group.wizard.line'
+    _rec_name = 'product_id'
 
-    # Column Section
+    # Columns Section
     _columns = {
-        'moment_id': fields.many2one(
-            'sale.recovery.moment', 'Recovery Moment'),
-        'group_id': fields.related(
-            'moment_id', 'group_id', type='many2one',
-            relation='sale.recovery.moment.group', string='Recovery Group'),
+        'wizard_id': fields.many2one(
+            'sale.recovery.moment.group.wizard', 'Wizard', select=True),
+        'product_id': fields.many2one(
+            'product.product', 'Product', readonly=True),
+        'confirmed_qty': fields.float('Confirmed Quantity', readonly=True),
+        'qty_available': fields.float('Quantity On Hand', readonly=True),
+        'incoming_qty': fields.float('Incoming Quantity', readonly=True),
+        'outgoing_qty': fields.float('Outgoing Quantity', readonly=True),
     }
 
-# FIXME: Actually it doesn't work if you don't redefine in stock_picking
-# the field defined in stock.picking.out
-class stock_picking_out(Model):
-    _inherit = 'stock.picking.out'
-
-    # Column Section
-    _columns = {
-        'moment_id': fields.many2one(
-            'sale.recovery.moment', 'Recovery Moment'),
-        'group_id': fields.related(
-            'moment_id', 'group_id', type='many2one',
-            relation='sale.recovery.moment.group', string='Recovery Group'),
+    # Defaults Section
+    _defaults = {
     }

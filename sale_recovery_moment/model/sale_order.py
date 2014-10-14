@@ -28,11 +28,20 @@ from openerp.osv.orm import Model
 class sale_order(Model):
     _inherit = 'sale.order'
 
+    def _prepare_order_picking(self, cr, uid, order, context=None):
+        res = super(sale_order, self)._prepare_order_picking(
+            cr, uid, order, context=None)
+        res['moment_id'] = order.moment_id.id
+        return res
+
+
     # Column Section
     _columns = {
         'moment_id': fields.many2one(
             'sale.recovery.moment', 'Recovery Moment'),
         'group_id': fields.related(
             'moment_id', 'group_id', type='many2one',
-            relation='sale.recovery.moment.group', string='Recovery Group'),
+            relation='sale.recovery.moment.group', string='Recovery Group',
+            readonly=True),
     }
+

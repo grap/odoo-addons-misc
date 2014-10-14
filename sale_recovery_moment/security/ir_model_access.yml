@@ -21,7 +21,7 @@
 ##############################################################################
 
 - !record {model: ir.model.access, id: ir_model_access_recovery_moment_reader}:
-    group_id: sale_recovery_moment.res_groups_recovery_user
+    group_id: sale_recovery_moment.recovery_user
     model_id: sale_recovery_moment.model_sale_recovery_moment
     name: Recovery Moment Reader
     perm_read: true
@@ -30,7 +30,7 @@
     perm_unlink: false
 
 - !record {model: ir.model.access, id: ir_model_access_recovery_moment_manager}:
-    group_id: sale_recovery_moment.res_groups_recovery_manager
+    group_id: sale_recovery_moment.recovery_manager
     model_id: sale_recovery_moment.model_sale_recovery_moment
     name: Recovery Moment Manager
     perm_read: true
@@ -40,7 +40,7 @@
 
 
 - !record {model: ir.model.access, id: ir_model_access_recovery_moment_group_reader}:
-    group_id: sale_recovery_moment.res_groups_recovery_user
+    group_id: sale_recovery_moment.recovery_user
     model_id: sale_recovery_moment.model_sale_recovery_moment_group
     name: Recovery Moment Group Reader
     perm_read: true
@@ -49,7 +49,7 @@
     perm_unlink: false
 
 - !record {model: ir.model.access, id: ir_model_access_recovery_moment_group_manager}:
-    group_id: sale_recovery_moment.res_groups_recovery_manager
+    group_id: sale_recovery_moment.recovery_manager
     model_id: sale_recovery_moment.model_sale_recovery_moment_group
     name: Recovery Moment Group Manager
     perm_read: true
@@ -60,7 +60,7 @@
 
 
 - !record {model: ir.model.access, id: ir_model_access_recovery_moment_place_reader}:
-    group_id: sale_recovery_moment.res_groups_recovery_user
+    group_id: sale_recovery_moment.recovery_user
     model_id: sale_recovery_moment.model_sale_recovery_place
     name: Recovery Place Reader
     perm_read: true
@@ -69,7 +69,7 @@
     perm_unlink: false
 
 - !record {model: ir.model.access, id: ir_model_access_recovery_moment_place_manager}:
-    group_id: sale_recovery_moment.res_groups_recovery_manager
+    group_id: sale_recovery_moment.recovery_manager
     model_id: sale_recovery_moment.model_sale_recovery_place
     name: Recovery Place Manager
     perm_read: true

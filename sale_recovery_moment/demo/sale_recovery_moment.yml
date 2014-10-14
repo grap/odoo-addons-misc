@@ -24,14 +24,24 @@
 - !record {model: sale.recovery.moment, id: recovery_moment_1}:
     group_id: recovery_moment_group_1
     place_id: recovery_place_elysee
-    min_recovery_date: '2014-01-25 08:00:00'
-    max_recovery_date: '2014-01-25 12:00:00'
+    recovery_date: '2016-01-25'
+    min_recovery_time: 8.0
+    max_recovery_time: 16.5
     description: 'Thank you to be polite to the guards'
 
 - !record {model: sale.recovery.moment, id: recovery_moment_2}:
     group_id: recovery_moment_group_1
     place_id: recovery_place_white_house
-    min_recovery_date: '2014-01-26 08:00:00'
-    max_recovery_date: '2014-01-26 16:00:00'
+    recovery_date: '2016-01-26'
+    min_recovery_time: 12.0
+    max_recovery_time: 15.0
     description: 'Some Description'
+
+- !record {model: sale.recovery.moment, id: recovery_moment_2}:
+    group_id: recovery_moment_group_1
+    place_id: recovery_place_white_house
+    recovery_date: '2016-01-27'
+    min_recovery_time: 08.0
+    max_recovery_time: 15.0
+    description: 'Some Other Description'
 

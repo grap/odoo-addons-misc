@@ -65,8 +65,8 @@ Copyright, Authors and Licence:
     'website': 'http://www.grap.coop',
     'license': 'AGPL-3',
     'depends': [
-        'sale',
-        'stock',
+        'sale_stock',
+        'report_webkit',
     ],
     'data': [
         'security/ir_module_category.yml',
@@ -74,8 +74,11 @@ Copyright, Authors and Licence:
         'security/ir_model_access.yml',
         'data/ir_sequence_type.yml',
         'data/ir_sequence.yml',
-        'view/action.xml',
+        'report/moment_group_report.xml',
+        'view/view_related.xml',
+        'view/action_related.xml',
         'view/view.xml',
+        'view/action.xml',
         'view/menu.xml',
     ],
     'demo': [

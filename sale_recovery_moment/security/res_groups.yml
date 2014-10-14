@@ -20,12 +20,14 @@
 #
 ##############################################################################
 
-- !record {model: res.groups, id: res_groups_recovery_user}:
+- !record {model: res.groups, id: recovery_user}:
     name: User
     category_id: sale_recovery_moment.module_category_recovery
 
-- !record {model: res.groups, id: res_groups_recovery_manager}:
+- !record {model: res.groups, id: recovery_manager}:
     name: Manager
     category_id: sale_recovery_moment.module_category_recovery
+    users:
+        - base.user_root
     implied_ids:
-        - res_groups_recovery_user
+        - recovery_user

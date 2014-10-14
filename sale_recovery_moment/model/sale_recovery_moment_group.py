@@ -135,18 +135,16 @@ class sale_recovery_moment_group(Model):
 
     def _get_picking(self, cr, uid, ids, field_name, arg, context=None):
         res = {}
+        spo_obj = self.pool['stock.picking']
         for srmg in self.browse(cr, uid, ids, context):
-            picking_ids = []
-            picking_qty = 0
-#            for srm in srmg.moment_ids:
-#                order_ids.extend([order.id for order in srm.order_ids])
-#                order_qty += len(srm.order_ids)
-#                for order in srm.order_ids:
-#                    excl_total += order.amount_untaxed
-#                    incl_total += order.amount_total
+            order_ids = []
+            for srm in srmg.moment_ids:
+                order_ids.extend([x.id for x in srm.order_ids])
+            picking_ids = spo_obj.search(cr, uid, [
+                ('sale_id', 'in', order_ids)], context=context)
             res[srmg.id] = {
                 'picking_ids': picking_ids,
-                'picking_qty': picking_qty,
+                'picking_qty': len(picking_ids),
             }
         return res
 

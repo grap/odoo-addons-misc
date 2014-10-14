@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report id="report_moment_group_report"
+            name="moment.group.report"
+            model="sale.recovery.moment.group.wizard"
+            report_type="webkit"
+            file="sale_recovery_moment/report/moment_group_report.mako"
+            header="False"
+            auto="False"
+            string="Moment Group"
+            />
+    </data>
+</openerp>

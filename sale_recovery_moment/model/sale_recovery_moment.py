@@ -20,7 +20,7 @@
 #
 ##############################################################################
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from openerp.osv import fields
 from openerp.osv.orm import Model
@@ -29,28 +29,37 @@ from openerp.osv.orm import Model
 class sale_recovery_moment(Model):
     _description = 'Recovery Moment'
     _name = 'sale.recovery.moment'
-    _order = 'min_recovery_date, place_id'
+    _order = 'recovery_date, min_recovery_time, place_id'
 
     # Field Functions Section
     def _get_duration(self, cr, uid, ids, field_name, arg, context=None):
         res = {}
-        txt = '%Y-%m-%d %H:%M:%S'
         for srm in self.browse(cr, uid, ids, context):
-            d1 = datetime.strptime(srm.min_recovery_date, txt)
-            d2 = datetime.strptime(srm.max_recovery_date, txt)
-            res[srm.id] = (d2 - d1).seconds / (60 ** 2)
+            res[srm.id] = srm.max_recovery_time - srm.min_recovery_time
+        return res
+
+    def _get_min_recovery_date(
+            self, cr, uid, ids, field_name, arg, context=None):
+        res = {}
+        for srm in self.browse(cr, uid, ids, context):
+            date = datetime.strptime(srm.recovery_date, '%Y-%m-%d')
+            res[srm.id] = date + timedelta(
+                hours=srm.min_recovery_time)
+        return res
+
+    def _get_max_recovery_date(
+            self, cr, uid, ids, field_name, arg, context=None):
+        res = {}
+        for srm in self.browse(cr, uid, ids, context):
+            date = datetime.strptime(srm.recovery_date, '%Y-%m-%d')
+            res[srm.id] = date + timedelta(
+                hours=srm.max_recovery_time)
         return res
 
     def _get_order_qty(self, cr, uid, ids, field_name, arg, context=None):
         res = {}
         for srm in self.browse(cr, uid, ids, context):
             res[srm.id] = len(srm.order_ids)
-        return res
-
-    def _get_picking_qty(self, cr, uid, ids, field_name, arg, context=None):
-        res = {}
-        for srm in self.browse(cr, uid, ids, context):
-            res[srm.id] = len(srm.picking_ids)
         return res
 
     def _get_complete_name(self, cr, uid, ids, field_name, arg, context=None):
@@ -74,6 +83,18 @@ class sale_recovery_moment(Model):
                 + (address_format % args).replace('\n', ' ')
         return res
 
+    def _get_picking(self, cr, uid, ids, field_name, arg, context=None):
+        res = {}
+        spo_obj = self.pool['stock.picking.out']
+        for srm in self.browse(cr, uid, ids, context):
+            order_ids = [x.id for x in srm.order_ids]
+            picking_ids = spo_obj.search(cr, uid, [
+                ('sale_id', 'in', order_ids)], context=context)
+            res[srm.id] = {
+                'picking_ids': picking_ids,
+                'picking_qty': len(picking_ids)}
+        return res
+
     # Columns Section
     _columns = {
         'name': fields.char(
@@ -83,21 +104,33 @@ class sale_recovery_moment(Model):
         'group_id': fields.many2one(
             'sale.recovery.moment.group', 'Recovery Moment Group',
             ondelete='cascade'),
-        'min_recovery_date': fields.datetime(
-            'Minimum date for the Recovery', required=True),
-        'max_recovery_date': fields.datetime(
-            'Maximum date for the Recovery', required=True),
+        'recovery_date': fields.date(
+            'Date for the Recovery', required=True),
+        'min_recovery_time': fields.float(
+            'Minimum Recovery Time', required=True),
+        'max_recovery_time': fields.float(
+            'Maximum Recovery Time', required=True),
+        'min_recovery_date': fields.function(
+            _get_min_recovery_date, type='datetime',
+            string='Minimum date for the Recovery'),
+        'max_recovery_date': fields.function(
+            _get_max_recovery_date, type='datetime',
+            string='Minimum date for the Recovery'),
         'duration': fields.function(
-            _get_duration, type='integer', string='Duration (Hour)'),
+            _get_duration, type='float', string='Duration (Hour)'),
         'description': fields.text('Description'),
         'order_ids': fields.one2many(
             'sale.order', 'moment_id', 'Sale Orders', readonly=True),
         'order_qty': fields.function(
             _get_order_qty, type='integer', string='Sale Orders Quantity'),
-        'picking_ids': fields.one2many(
-            'stock.picking', 'moment_id', 'Stock Picking', readonly=True),
+        #        'picking_ids': fields.one2many(
+        #            'stock.picking', 'moment_id', 'Stock Picking', readonly=True),
+        'picking_ids': fields.function(
+            _get_picking, type='one2many', multi='picking',
+            relation='stock.picking.out', string='Stock Picking Quantity'),
         'picking_qty': fields.function(
-            _get_picking_qty, type='integer', string='Stock Picking Quantity'),
+            _get_picking, type='integer', multi='picking',
+            string='Stock Picking Quantity'),
     }
 
     # Defaults Section
@@ -106,19 +139,21 @@ class sale_recovery_moment(Model):
             lambda obj, cr, uid, context:
             obj.pool.get('ir.sequence').get(
                 cr, uid, 'sale.recovery.moment')),
+        'min_recovery_time': 8.0,
+        'max_recovery_time': 16.0,
     }
 
     # Constraint Section
-    def _check_recovery_dates(self, cr, uid, ids, context=None):
+    def _check_recovery_times(self, cr, uid, ids, context=None):
         for srm in self.browse(cr, uid, ids, context=context):
-            if srm.min_recovery_date >= srm.max_recovery_date:
+            if srm.min_recovery_time >= srm.max_recovery_time:
                 return False
         return True
 
     _constraints = [
         (
-            _check_recovery_dates,
-            'Error ! The minimum date of Recovery must be before the maximum'
-            ' date of Recovery.',
-            ['min_recovery_date', 'max_recovery_date']),
+            _check_recovery_times,
+            'Error ! The minimum Time of Recovery must be before the maximum'
+            ' Time of Recovery.',
+            ['min_recovery_time', 'max_recovery_time']),
     ]
