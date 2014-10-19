@@ -52,7 +52,7 @@ Python librairies required on Debian System:
         'product',
         'l10n_fr_department',
         'report_webkit',
-        ],
+    ],
     'data': [
         'security/ir_module_category.yml',
         'security/res_groups.yml',
@@ -63,7 +63,7 @@ Python librairies required on Debian System:
         'view/menu.xml',
         'data/ir_header_webkit.xml',
         'data/ir_property.xml',
-        ],
+    ],
     'demo': [
         'demo/product_label.yml',
         'demo/product_pricetag_type.yml',

@@ -58,14 +58,14 @@ class product_product(Model):
         'origin_description',
         'maker_description',
         'label_ids',
-        ]
+    ]
     """Fields list wich modification change edition_state to 'mandatory'."""
     _PRICETAG_MANDATORY_FIELDS = [
         'list_price',
         'volume',
         'weight_net',
         'uom_id',
-        ]
+    ]
 
     # Columns section
     def _get_price_volume(
@@ -86,7 +86,7 @@ class product_product(Model):
         for product in self.browse(cr, uid, ids, context=context):
             if product.list_price and product.weight_net:
                 res[product.id] = "%.2f" % round(
-                    product.list_price/product.weight_net, 2)
+                    product.list_price / product.weight_net, 2)
             else:
                 res[product.id] = ""
         return res
@@ -104,7 +104,7 @@ class product_product(Model):
                 'local_name': _('local'),
                 'packaging_name': _('packaging'),
                 'social_name': _('social'),
-                }
+            }
             output = StringIO.StringIO()
             cairosvg.svg2png(bytestring=codeSVG, write_to=output)
             res[pp.id] = base64.b64encode(output.getvalue())
@@ -229,7 +229,7 @@ class product_product(Model):
                         'organic_notation',
                         'packaging_notation',
                     ], 10)}
-            ),
+        ),
         'pricetag_image': fields.function(
             _get_pricetag_image, type='binary',
             string='Image on the label printed'),
@@ -282,7 +282,7 @@ class product_product(Model):
                     values['pricetag_state'] = str(max(
                         minimum_value,
                         int(product.pricetag_state),
-                        ))
+                    ))
                 super(product_product, self).write(
                     cr, uid, [product.id], values, context=context)
         return True
@@ -306,7 +306,7 @@ class product_product(Model):
             'local_notation': str(local_notation),
             'organic_notation': str(organic_notation),
             'packaging_notation': str(packaging_notation),
-            }}
+        }}
 
     def onchange_department_id(
             self, cr, uid, ids, country_id, department_id, context=None):

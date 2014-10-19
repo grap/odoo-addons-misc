@@ -60,7 +60,7 @@ class sale_recovery_moment_group_wizard(TransientModel):
                 'qty_available': pp.qty_available,
                 'incoming_qty': pp.incoming_qty,
                 'outgoing_qty': pp.outgoing_qty,
-                }))
+            }))
         return res
 
     # Columns Section

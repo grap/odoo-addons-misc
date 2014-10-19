@@ -44,13 +44,13 @@ class product_pricetag_wizard(TransientModel):
             ('pricetag_state', 'in', ['1', '2'])],
             order='pricetag_state desc',
             limit=14,
-            )
+        )
         for pp_id in pp_ids:
             res.append((0, 0, {
                 'product_id': pp_id,
                 'quantity': 1,
                 'print_unit_price': True,
-                }))
+            }))
         return res
 
     # Columns Section
