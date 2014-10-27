@@ -115,7 +115,7 @@ class product_product(Model):
         res = {}
         for pp in self.browse(cr, uid, ids, context):
             if (pp.social_notation + pp.organic_notation
-                    + pp.packaging_notation + pp.local_notation) == 0:
+                    + pp.packaging_notation + pp.local_notation) != 0:
                 res[pp.id] = pp.spider_chart_image
             else:
                 res[pp.id] = pp.company_id.pricetag_image
