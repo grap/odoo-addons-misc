@@ -24,7 +24,7 @@
     'name': 'Point Of Sale - Improve Header',
     'summary': 'Improve the header page of the Point Of Sale module',
     'version': '0.1',
-    'category': 'sale',
+    'category': 'Point Of Sale',
     'description': """
 Improve the header page of the Point Of Sale module
 ===================================================
