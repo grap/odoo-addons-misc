@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-02 21:23+0000\n"
-"PO-Revision-Date: 2014-09-02 21:23+0000\n"
+"POT-Creation-Date: 2014-10-29 11:18+0000\n"
+"PO-Revision-Date: 2014-10-29 11:18+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -56,26 +56,6 @@ msgstr "Société"
 #: field:tax.group,customer_tax_ids:0
 msgid "Customer Taxes"
 msgstr "Taxes à la vente"
-
-#. module: product_taxes_group
-#: model:account.tax,name:product_taxes_group.account_tax_purchase_1
-msgid "Demo Purchase Tax 10%"
-msgstr "Demo Purchase Tax 10%"
-
-#. module: product_taxes_group
-#: model:account.tax,name:product_taxes_group.account_tax_sale_1
-msgid "Demo Sale Tax 10%"
-msgstr "Demo Sale Tax 10%"
-
-#. module: product_taxes_group
-#: model:account.tax,name:product_taxes_group.account_tax_sale_2
-msgid "Demo Sale Tax 3%"
-msgstr "Demo Sale Tax 3%"
-
-#. module: product_taxes_group
-#: model:product.template,name:product_taxes_group.product_product_1_product_template
-msgid "Demo Service Product With Tax Group"
-msgstr "Demo Service Product With Tax Group"
 
 #. module: product_taxes_group
 #: help:tax.group,active:0
@@ -166,7 +146,7 @@ msgstr "Taxes à l'achat"
 #: field:product.template,tax_group_id:0
 #, python-format
 msgid "Tax Group"
-msgstr "Group de Taxe"
+msgstr "Groupe de Taxe"
 
 #. module: product_taxes_group
 #: view:tax.group:0
@@ -179,6 +159,11 @@ msgstr "Taxes"
 #: view:tax.group:0
 msgid "Taxes Group"
 msgstr "Groupe de Taxes"
+
+#. module: product_taxes_group
+#: view:product.product:0
+msgid "True"
+msgstr "True"
 
 #. module: product_taxes_group
 #: code:addons/product_taxes_group/model/product_template.py:60
@@ -200,5 +185,18 @@ msgstr "Vous ne pouvez pas supprimer ce groupe de taxe '%s' car il contient %s p
 
 #. module: product_taxes_group
 #: view:wizard.change.tax.group:0
+msgid "_Apply"
+msgstr "_Apply"
+
+#. module: product_taxes_group
+#: view:wizard.change.tax.group:0
 msgid "or"
 msgstr "ou"
+
+#. module: product_taxes_group
+#: code:_description:0
+#: model:ir.model,name:product_taxes_group.model_wizard_change_tax_group
+#, python-format
+msgid "wizard.change.tax.group"
+msgstr "wizard.change.tax.group"
+
