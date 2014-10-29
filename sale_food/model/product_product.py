@@ -93,6 +93,8 @@ class product_product(Model):
 
     def _get_spider_chart_image(
             self, cr, uid, ids, field_name, arg, context=None):
+        # FIXME: Translation doesn't work when installing module
+        # So FR text hard-coded;
         res = {}
         for pp in self.browse(cr, uid, ids, context):
             codeSVG = radar_template.CodeSVG % {
@@ -100,9 +102,9 @@ class product_product(Model):
                 'x_organic': 105 + (15 * int(pp.organic_notation)),
                 'y_packaging': 105 + (15 * int(pp.packaging_notation)),
                 'x_local': 105 - (15 * int(pp.local_notation)),
-                'organic_name': _('organic'),
+                'organic_name': _('AE'),
                 'local_name': _('local'),
-                'packaging_name': _('packaging'),
+                'packaging_name': _('emballage'),
                 'social_name': _('social'),
             }
             output = StringIO.StringIO()
@@ -142,7 +144,7 @@ class product_product(Model):
         res = {}
         for pp in self.browse(cr, uid, ids, context):
             if pp.pricetag_type_id:
-                res[pp.id] = pp.pricetag_type_id.pricetag_color
+                res[pp.id] = pp.pricetag_type_id.color
             else:
                 res[pp.id] = pp.company_id.pricetag_color
         return res
@@ -155,7 +157,7 @@ class product_product(Model):
             for pl in pp.label_ids:
                 if pl.is_organic:
                     organic = True
-            if organic:
+            if organic or pp.pricetag_organic_text_ignore:
                 res[pp.id] = ""
             else:
                 res[pp.id] = _("Not From Organic Farming")
@@ -220,6 +222,11 @@ class product_product(Model):
         'pricetag_organic_text': fields.function(
             _get_pricetag_organic_text, type='char',
             string="Extra Text about organic origin, present on Price Tag"),
+        'pricetag_organic_text_ignore': fields.boolean(
+            'Ignore Organic Text on Price Tag',
+            help="""If checked, the organic warning text will not be"""
+            """ displayed on Price Tag, even if no organic labels are"""
+            """ selected."""),
         'pricetag_state': fields.selection([
             ('0', 'Up to date'), ('1', 'Recommended'), ('2', 'Compulsory'),
             ('3', 'Do not print')], 'Price Tag State', required=True),

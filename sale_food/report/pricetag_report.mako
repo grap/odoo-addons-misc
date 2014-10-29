@@ -28,10 +28,11 @@
                 width:6.7cm; height:4.2cm; float:left;
                 }
             div.product_name{
-                width:6.7cm; height:1.2cm;
-                font-size:18px; font-weight:bold;
+                width:6.7cm; height:1.3cm;
+                font-size:17px; font-weight:bold;
                 }
             div.product_informations{
+                background-color: rgba(255, 255, 255, 1);
                 width:6.7cm;height:2.0cm;
                 font-size:11px;
                 }
@@ -83,7 +84,7 @@
                 %endif
                     <div class="label">
                         <div class="label_left">
-                            <div class="product_name" style="background-color:${line.product_id.color};">
+                            <div class="product_name" style="background-color:${line.product_id.pricetag_color};">
                             ${line.product_id.name}
                             </div>
                             <div class="product_informations" >
