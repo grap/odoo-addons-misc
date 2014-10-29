@@ -291,7 +291,7 @@ class product_product(Model):
     def onchange_label_ids(
             self, cr, uid, ids, label_ids, social_notation, local_notation,
             organic_notation, packaging_notation, context=None):
-        ppl_obj = self.pool['product.product.label']
+        ppl_obj = self.pool['product.label']
         for label in ppl_obj.browse(cr, uid, label_ids[0][2], context=context):
             social_notation = max(
                 int(social_notation), int(label.minimum_social_notation))
