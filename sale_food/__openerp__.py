@@ -52,6 +52,7 @@ Python librairies required on Debian System:
         'product',
         'l10n_fr_department',
         'report_webkit',
+        'web_color',
     ],
     'data': [
         'security/ir_module_category.yml',
