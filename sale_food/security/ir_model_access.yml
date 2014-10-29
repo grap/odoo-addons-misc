@@ -38,6 +38,14 @@
     perm_unlink: grue
     group_id: group_food_manager
 
+- !record {model: ir.model.access, id: ir_model_access_product_pricetag_type_all}:
+    model_id: sale_food.model_product_pricetag_type
+    name: Product Price Tag Access
+    perm_read: true
+    perm_create: false
+    perm_write: false
+    perm_unlink: false
+
 - !record {model: ir.model.access, id: ir_model_access_product_pricetag_type_manager}:
     model_id: sale_food.model_product_pricetag_type
     name: Product Price Tag Manager Access
@@ -45,5 +53,5 @@
     perm_create: true
     perm_write: true
     perm_unlink: grue
-    group_id: group_food_manager
+    group_id: group_food_user
 
