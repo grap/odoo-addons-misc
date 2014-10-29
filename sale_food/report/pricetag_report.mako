@@ -35,7 +35,15 @@
                 width:6.7cm;height:2.0cm;
                 font-size:11px;
                 }
+            div.organic_text{
+                width:4cm;height:1.0cm;
+                font-weight:bold;
+                font-size:11px;
+                background-color:red;
+                float:left;
+            }
             div.product_labels{
+                background-color:yellow;
                 width:6.7cm; height:1cm;
                 }
             img.product_label{
@@ -109,6 +117,9 @@
                 %for label in line.product_id.label_ids:
                                 <img class="product_label" src="data:image/png;base64,${label.image}"/>
                 %endfor
+                %if line.product_id.pricetag_organic_text:
+                                <div class="organic_text">${line.product_id.pricetag_organic_text}</div>
+                %endif
                             </div>
                         </div>
                         <div class="label_right">

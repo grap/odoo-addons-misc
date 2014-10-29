@@ -53,6 +53,11 @@ class product_label(Model):
             'Minimum Organic Notation'),
         'minimum_packaging_notation': fields.integer(
             'Minimum Packaging Notation'),
+        'is_organic': fields.boolean(
+            'Is Organic',
+            help="""Check this box if this label is an organic label."""
+            """ If products has no organic label, a text will be displayed"""
+            """ on Price Tag."""),
     }
 
     _defaults = {

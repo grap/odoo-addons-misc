@@ -80,6 +80,7 @@
                                         <separator string="General" colspan="2"/>
                                         <field name="active"/>
                                         <field name="mandatory_on_invoice"/>
+                                        <field name="is_organic"/>
                                     </group>
                                     <group>
                                         <separator string="Notation" colspan="2"/>

@@ -147,6 +147,20 @@ class product_product(Model):
                 res[pp.id] = pp.company_id.pricetag_color
         return res
 
+    def _get_pricetag_organic_text(
+            self, cr, uid, ids, field_name, arg, context=None):
+        res = {}
+        for pp in self.browse(cr, uid, ids, context):
+            organic = False
+            for pl in pp.label_ids:
+                if pl.is_organic:
+                    organic = True
+            if organic:
+                res[pp.id] = ""
+            else:
+                res[pp.id] = _("Not From Organic Farming")
+        return res
+
     def _get_extra_food_info(self, cr, uid, ids, name, arg, context=None):
         """Return extra information about food for legal documents"""
         res = {}
@@ -203,6 +217,9 @@ class product_product(Model):
         'pricetag_color': fields.function(
             _get_pricetag_color, type='char',
             string="Color of the background of the Price Tag"),
+        'pricetag_organic_text': fields.function(
+            _get_pricetag_organic_text, type='char',
+            string="Extra Text about organic origin, present on Price Tag"),
         'pricetag_state': fields.selection([
             ('0', 'Up to date'), ('1', 'Recommended'), ('2', 'Compulsory'),
             ('3', 'Do not print')], 'Price Tag State', required=True),
