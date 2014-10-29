@@ -81,7 +81,9 @@
                             ${line.product_id.name}
                             </div>
                             <div class="product_informations" >
+                %if line.product_id.code:
                                 ${_('Code: ')}<b>${line.product_id.code}</b>
+                %endif
                 %if line.product_id.fresh_category:
                                 &nbsp;-&nbsp;${_('Category: ')}<b>${line.product_id.fresh_category}</b>
                 %endif
