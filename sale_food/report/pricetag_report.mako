@@ -77,7 +77,7 @@
                 %endif
                     <div class="label">
                         <div class="label_left">
-                            <div class="product_name" style="background-color:${line.product_id.pricetag_color};">
+                            <div class="product_name" style="background-color:${line.product_id.color};">
                             ${line.product_id.name}
                             </div>
                             <div class="product_informations" >
