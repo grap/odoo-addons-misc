@@ -97,7 +97,8 @@ class internal_use(Model):
 
     # Overload Section
     def create(self, cr, uid, vals, context=None):
-        vals['name'] = self.pool.get('ir.sequence').get(cr, uid, 'internal.use')
+        vals['name'] = self.pool.get('ir.sequence').get(
+            cr, uid, 'internal.use')
         return super(internal_use, self).create(cr, uid, vals, context=context)
 
     def copy_data(self, cr, uid, id, default=None, context=None):
