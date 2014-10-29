@@ -39,11 +39,9 @@
                 width:4cm;height:1.0cm;
                 font-weight:bold;
                 font-size:11px;
-                background-color:red;
                 float:left;
             }
             div.product_labels{
-                background-color:yellow;
                 width:6.7cm; height:1cm;
                 }
             img.product_label{
