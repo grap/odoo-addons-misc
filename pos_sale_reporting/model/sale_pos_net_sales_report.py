@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Sale / Point Of Sale Report module for OpenERP
-#    Copyright (C) 2013-2014 GRAP (http://www.grap.coop)
+#    Point Of Sale / Sale Reporting module for Odoo
+#    Copyright (C) 2014 GRAP (http://www.grap.coop)
 #    @author Julien WESTE
 #    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
 #
@@ -26,11 +26,10 @@ from openerp.osv import fields
 from openerp.osv.orm import Model
 
 
-class sale_pos_report(Model):
-    _name = "sale.pos.report"
+class pos_sale_net_sales_report(Model):
+    _name = "pos.sale.net.sales.report"
     _auto = False
-    _description = "Sale and Point Of Sale Analysis"
-    _table_name = 'sale_pos_report'
+    _table_name = 'pos_sale_net_sales_report'
 
     _LINE_TYPE = [
         ('01_invoice_sale', 'Invoice - Via Sale'),

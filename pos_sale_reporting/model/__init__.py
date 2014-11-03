@@ -1,8 +1,9 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Authentification with Admin Password module for OpenERP
-#    Copyright (C) 2013-2014 GRAP (http://www.grap.coop)
+#    Point Of Sale / Sale Reporting module for Odoo
+#    Copyright (C) 2014 GRAP (http://www.grap.coop)
+#    @author Julien WESTE
 #    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -20,4 +21,4 @@
 #
 ##############################################################################
 
-from . import report
+from . import sale_pos_net_sales_report

@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Sale / Point Of Sale Report module for OpenERP
+#    Point Of Sale / Sale Reporting module for Odoo
 #    Copyright (C) 2014 GRAP (http://www.grap.coop)
 #    @author Julien WESTE
 #    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
@@ -22,14 +22,14 @@
 ##############################################################################
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* sale_pos_report
+#	* pos_sale_reporting
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-26 16:18+0000\n"
-"PO-Revision-Date: 2014-04-26 16:18+0000\n"
+"POT-Creation-Date: 2014-11-03 22:18+0000\n"
+"PO-Revision-Date: 2014-11-03 22:18+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -37,56 +37,49 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: sale_pos_report
-#: field:sale.pos.report,company_id:0
+#. module: pos_sale_reporting
+#: field:pos.sale.net.sales.report,company_id:0
 msgid "Company"
 msgstr "Société"
 
-#. module: sale_pos_report
-#: selection:sale.pos.report,line_type:0
+#. module: pos_sale_reporting
+#: selection:pos.sale.net.sales.report,line_type:0
 msgid "Invoice - Via Point Of Sale"
 msgstr "Facture - Via Point de Vente"
 
-#. module: sale_pos_report
-#: selection:sale.pos.report,line_type:0
+#. module: pos_sale_reporting
+#: selection:pos.sale.net.sales.report,line_type:0
 msgid "Invoice - Via Sale"
 msgstr "Facture - Via Vente"
 
-#. module: sale_pos_report
-#: field:sale.pos.report,month_date:0
+#. module: pos_sale_reporting
+#: field:pos.sale.net.sales.report,month_date:0
 msgid "Month Date"
 msgstr "Mois"
 
-#. module: sale_pos_report
-#: selection:sale.pos.report,line_type:0
+#. module: pos_sale_reporting
+#: model:ir.actions.act_window,name:pos_sale_reporting.action_pos_sale_net_sales_report
+#: model:ir.ui.menu,name:pos_sale_reporting.menu_pos_sale_net_sales_report
+#: view:pos.sale.net.sales.report:0
+msgid "Net Sales"
+msgstr "Chiffre d'Affaires"
+
+#. module: pos_sale_reporting
+#: selection:pos.sale.net.sales.report,line_type:0
 msgid "Point of Sale - Normal"
 msgstr "Point de Vente - Normal"
 
-#. module: sale_pos_report
-#: model:ir.actions.act_window,name:sale_pos_report.action_sale_pos_report
-#: model:ir.ui.menu,name:sale_pos_report.menu_sale_pos_report
-msgid "Sale / Point Of Sale"
-msgstr "Vente / Point de Vente"
+#. module: pos_sale_reporting
+#: model:ir.ui.menu,name:pos_sale_reporting.menu_pos_sale_report
+msgid "Sale + Point of Sale"
+msgstr "Vente + Point de Vente"
 
-#. module: sale_pos_report
-#: view:sale.pos.report:0
-msgid "Sale / Point of Sale Graph"
-msgstr "Graphique des Ventes et du Point de Vente"
-
-#. module: sale_pos_report
-#: code:_description:0
-#: model:ir.model,name:sale_pos_report.model_sale_pos_report
-#, python-format
-msgid "Sale and Point Of Sale Analysis"
-msgstr "Analyse des ventes et du Point de Vente"
-
-#. module: sale_pos_report
-#: field:sale.pos.report,total:0
+#. module: pos_sale_reporting
+#: field:pos.sale.net.sales.report,total:0
 msgid "Total"
 msgstr "Total"
 
-#. module: sale_pos_report
-#: field:sale.pos.report,line_type:0
+#. module: pos_sale_reporting
+#: field:pos.sale.net.sales.report,line_type:0
 msgid "Type"
 msgstr "Type"
-

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- ********************************************************************** -->
-<!--Sale / Point Of Sale Report module for OpenERP                          -->
+<!--Point Of Sale / Sale Reporting module for Odoo                          -->
 <!--Copyright (C) 2013-2014 GRAP (http://www.grap.coop)                     -->
 <!--@author Julien WESTE                                                    -->
 <!--@author Sylvain LE GAL (https://twitter.com/legalsylvain)               -->
@@ -21,9 +21,18 @@
 
 <openerp>
     <data>
-        <menuitem id="menu_sale_pos_report"
-            parent="base.menu_reporting_dashboard"
-            action="action_sale_pos_report"
-            sequence="16"/>
+       <record id="action_pos_sale_net_sales_report" model="ir.actions.act_window">
+            <field name="name">Net Sales</field>
+            <field name="res_model">pos.sale.net.sales.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">graph</field>
+        </record>
+
+<!--       <record model="ir.actions.act_window.view" id="action_pos_sale_net_sales_report_graph">-->
+<!--            <field name="view_mode">graph</field>-->
+<!--            <field name="view_id" ref="view_pos_sale_net_sales_report_graph"/>-->
+<!--            <field name="act_window_id" ref="action_pos_sale_net_sales_report"/>-->
+<!--       </record>-->
+
     </data>
 </openerp>

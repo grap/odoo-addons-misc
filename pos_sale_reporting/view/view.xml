@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- ********************************************************************** -->
-<!--Sale / Point Of Sale Report module for OpenERP                          -->
+<!--Point Of Sale / Sale Reporting module for Odoo                          -->
 <!--Copyright (C) 2013-2014 GRAP (http://www.grap.coop)                     -->
 <!--@author Julien WESTE                                                    -->
 <!--@author Sylvain LE GAL (https://twitter.com/legalsylvain)               -->
@@ -22,11 +22,11 @@
 <openerp>
     <data>
 
-        <record id="view_sale_pos_report_graph" model="ir.ui.view">
-            <field name="name">sale.pos.report.graph</field>
-            <field name="model">sale.pos.report</field>
+        <record id="view_pos_sale_net_sales_report_graph" model="ir.ui.view">
+            <field name="name">pos.sale.net.sales.reportgraph</field>
+            <field name="model">pos.sale.net.sales.report</field>
             <field name="arch" type="xml">
-                <graph orientation="vertical" string="Sale / Point of Sale Graph" type="bar">
+                <graph orientation="vertical" string="Net Sales" type="bar">
                     <field name="month_date"/>
                     <field name="total" operator="+"/>
                     <field group="True" name="line_type"/>

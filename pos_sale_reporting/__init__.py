@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    Sale / Point Of Sale Report module for OpenERP
-#    Copyright (C) 2013-2014 GRAP (http://www.grap.coop)
+#    Copyright (C) 2014 GRAP (http://www.grap.coop)
 #    @author Julien WESTE
 #    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
 #
@@ -21,4 +21,4 @@
 #
 ##############################################################################
 
-from . import sale_pos_report
+from . import model

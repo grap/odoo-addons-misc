@@ -22,10 +22,10 @@
 ##############################################################################
 
 {
-    'name': 'Sale Point Of Sale - Report',
+    'name': 'Point Of Sale & Sale Reporting',
     'summary': 'Add reports merging sale and point of sale informations',
-    'version': '0.1',
-    'category': 'sale',
+    'version': '0.2',
+    'category': 'Point Of Sale',
     'description': """
 Add reports merging sale and point of sale informations
 =======================================================
@@ -33,7 +33,7 @@ Add reports merging sale and point of sale informations
 Functionality:
 --------------
     * Add a graph report view in the Report menu to merge sale and point"""
-    """of sale Information.
+    """of sale Net Sales informations;
 
 Copyright, Authors and Licence:
 -------------------------------
@@ -52,9 +52,9 @@ Copyright, Authors and Licence:
     'data': [
         'security/ir_model_access.yml',
         'security/ir_rule_data.xml',
-        'report/sale_pos_report_view.xml',
-        'report/sale_pos_report_action.xml',
-        'report/sale_pos_report_menu.xml',
+        'view/view.xml',
+        'view/action.xml',
+        'view/menu.xml',
     ],
     'images': [
         'static/src/img/screenshots/1.png'
