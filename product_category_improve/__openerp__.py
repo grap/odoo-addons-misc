@@ -49,8 +49,8 @@ Copyright, Author and Licence:
         'product',
     ],
     'data': [
-        'view/view_1.xml',
-        'view/action.xml',
         'view/view_2.xml',
+        'view/action.xml',
+        'view/view_1.xml',
     ],
 }
