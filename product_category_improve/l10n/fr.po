@@ -1,13 +1,13 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* mail_send_bcc
+#	* product_category_improve
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-24 18:59+0000\n"
-"PO-Revision-Date: 2014-03-24 18:59+0000\n"
+"POT-Creation-Date: 2014-11-03 14:48+0000\n"
+"PO-Revision-Date: 2014-11-03 14:48+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,12 +15,62 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: mail_send_bcc
-#: help:res.users,mail_send_bcc:0
-msgid "If checked, you will receive each mail in bcc mode for each mail you will send using OpenERP."
-msgstr "Si cette case est cochée, vous recevrez chaque mail en copie cachée à chaque fois que vous enverrez un mail via OpenERP."
+#. module: product_category_improve
+#: view:wizard.product.category.change:0
+msgid "Apply"
+msgstr "Appliquer"
 
-#. module: mail_send_bcc
-#: field:res.users,mail_send_bcc:0
-msgid "Send Email Bcc"
-msgstr "Envoyer les mails en Copie Cachée"
+#. module: product_category_improve
+#: field:wizard.product.category.change,categ_id_to:0
+msgid "Category Destination"
+msgstr "Catégorie de destination"
+
+#. module: product_category_improve
+#: field:wizard.product.category.change,categ_id_from:0
+msgid "Category Origin"
+msgstr "Catégorie d'Origine"
+
+#. module: product_category_improve
+#: view:wizard.product.category.change:0
+msgid "Change Category"
+msgstr "Changer la Catégorie"
+
+#. module: product_category_improve
+#: model:ir.actions.act_window,name:product_category_improve.action_wizard_product_category_change
+msgid "Change category"
+msgstr "Changer la catégorie"
+
+#. module: product_category_improve
+#: field:wizard.product.category.change,is_mass_change:0
+msgid "Mass change"
+msgstr "Déplacement de masse"
+
+#. module: product_category_improve
+#: view:product.category:0
+msgid "Move All Products"
+msgstr "Déplacer tous les produits"
+
+#. module: product_category_improve
+#: code:_description:0
+#: model:ir.model,name:product_category_improve.model_product_category
+#, python-format
+msgid "Product Category"
+msgstr "Catégorie d'articles"
+
+#. module: product_category_improve
+#: field:product.category,product_ids:0
+msgid "Products"
+msgstr "Produits"
+
+#. module: product_category_improve
+#: field:product.category,product_qty:0
+msgid "Products Quantity"
+msgstr "Nombre de Produits"
+
+#. module: product_category_improve
+#: code:_description:0
+#: model:ir.model,name:product_category_improve.model_wizard_product_category_change
+#, python-format
+msgid "wizard.product.category.change"
+msgstr "wizard.product.category.change"
+
