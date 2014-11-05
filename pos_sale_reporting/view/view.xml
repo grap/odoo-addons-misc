@@ -34,5 +34,59 @@
             </field>
         </record>
 
+<!--                <field name="year" invisible="1"/>-->
+<!--                <field name="day" invisible="1"/>-->
+<!--                <field name="month" invisible="1"/>-->
+<!--                <field name="shop_id" invisible="1"/>-->
+<!--                <field name="partner_id" invisible="1"/>-->
+<!--                <field name="nbr" sum="# of Lines"/>-->
+<!--                <field name="delay" sum="Commitment Delay"/>-->
+<!--                <field name="state" invisible="1"/>-->
+<!--                <field name="analytic_account_id" invisible="1" groups="analytic.group_analytic_accounting"/>-->
+<!--                <field name="average_price"/>-->
+    <record id="view_pos_sale_category_report_tree" model="ir.ui.view">
+        <field name="name">pos.sale.category.report.tree</field>
+        <field name="model">pos.sale.category.report</field>
+        <field name="arch" type="xml">
+            <tree string="Sales by Category" create="false">
+                <field name="date" invisible="1"/>
+                <field name="type" invisible="1"/>
+                <field name="company_id" invisible="1" groups="base.group_multi_company"/>
+                <field name="product_id"/>
+                <field name="categ_id_1"/>
+                <field name="product_uom_qty" sum="# of Qty"/>
+                <field name="product_uom"/>
+                <field name="price_total_vat_excl" sum="Total Price"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_pos_sale_category_report_search" model="ir.ui.view">
+        <field name="name">pos.sale.category.report.search</field>
+        <field name="model">pos.sale.category.report</field>
+        <field name="arch" type="xml">
+            <search string="Sales Analysis">
+                <field name="date"/>
+                <filter string="From Point Of Sale" domain="[('type','in',('point_of_sale'))]"/>
+                <filter string="From Invoice" domain="[('type','in',('invoice'))]"/>
+                <field name="product_id"/>
+                <group expand="0" string="Extended Filters...">
+                    <field name="categ_id_1"/>
+                    <field name="categ_id_2"/>
+                    <field name="categ_id_3"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                </group>
+                <group expand="1" string="Group By...">
+                    <filter string="Product" context="{'group_by':'product_id'}"/>
+                    <filter string="Reference Unit of Measure" context="{'group_by':'product_uom'}"/>
+                    <filter string="Category of Product" context="{'group_by':'categ_id_1'}"/>
+                    <filter string="Middle Category of Product" context="{'group_by':'categ_id_2'}"/>
+                    <filter string="Shop" icon="terp-go-home" context="{'group_by':'shop_id'}"/>
+                    <filter string="Company" groups="base.group_multi_company" context="{'group_by':'company_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
     </data>
 </openerp>

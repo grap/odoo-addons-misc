@@ -22,3 +22,4 @@
 ##############################################################################
 
 from . import sale_pos_net_sales_report
+from . import sale_pos_category_report

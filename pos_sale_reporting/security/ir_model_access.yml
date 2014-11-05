@@ -21,7 +21,7 @@
 #
 ##############################################################################
 
-- !record {model: ir.model.access, id: access_sale_pos_report_sale}:
+- !record {model: ir.model.access, id: access_pos_sale_net_sales_report_sale}:
     name: pos.sale.net.sales.report Sale
     model_id: model_pos_sale_net_sales_report
     group_id: point_of_sale.group_pos_user
@@ -30,9 +30,27 @@
     perm_create: 0
     perm_unlink: 0
 
-- !record {model: ir.model.access, id: access_sale_pos_report_pos}:
+- !record {model: ir.model.access, id: access_pos_sale_net_sales_report_pos}:
     name: pos.sale.net.sales.report Point Of Sale
     model_id: model_pos_sale_net_sales_report
+    group_id: base.group_sale_salesman
+    perm_read: 1
+    perm_write: 0
+    perm_create: 0
+    perm_unlink: 0
+
+- !record {model: ir.model.access, id: access_pos_sale_category_report_sale}:
+    name: pos.sale.category.report Sale
+    model_id: model_pos_sale_category_report
+    group_id: point_of_sale.group_pos_user
+    perm_read: 1
+    perm_write: 0
+    perm_create: 0
+    perm_unlink: 0
+
+- !record {model: ir.model.access, id: access_pos_sale_category_report_sale}:
+    name: pos.sale.category.report Point Of Sale
+    model_id: model_pos_sale_category_report
     group_id: base.group_sale_salesman
     perm_read: 1
     perm_write: 0

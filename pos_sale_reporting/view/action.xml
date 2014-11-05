@@ -22,17 +22,18 @@
 <openerp>
     <data>
        <record id="action_pos_sale_net_sales_report" model="ir.actions.act_window">
-            <field name="name">Net Sales</field>
+            <field name="name">Net Sales Evolution</field>
             <field name="res_model">pos.sale.net.sales.report</field>
             <field name="view_type">form</field>
             <field name="view_mode">graph</field>
         </record>
 
-<!--       <record model="ir.actions.act_window.view" id="action_pos_sale_net_sales_report_graph">-->
-<!--            <field name="view_mode">graph</field>-->
-<!--            <field name="view_id" ref="view_pos_sale_net_sales_report_graph"/>-->
-<!--            <field name="act_window_id" ref="action_pos_sale_net_sales_report"/>-->
-<!--       </record>-->
+       <record id="action_pos_sale_category_report" model="ir.actions.act_window">
+            <field name="name">Sales by Category</field>
+            <field name="res_model">pos.sale.category.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
 
     </data>
 </openerp>
