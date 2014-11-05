@@ -29,53 +29,59 @@ from openerp.osv.orm import Model
 class pos_sale_category_report(Model):
     _name = 'pos.sale.category.report'
     _auto = False
+    _log_access = False
     _table_name = 'pos_sale_category_report'
 
-    _LINE_TYPE = [
+    _LINE_SELECTION = [
         ('invoice', 'Invoice'),
         ('point_of_sale', 'Point Of Sale'),
+    ]
+
+    _MONTH_SELECTION = [
+        ('01', 'January'),
+        ('02', 'February'),
+        ('03', 'March'),
+        ('04', 'April'),
+        ('05', 'May'),
+        ('06', 'June'),
+        ('07', 'July'),
+        ('08', 'August'),
+        ('09', 'September'),
+        ('10', 'October'),
+        ('11', 'November'),
+        ('12', 'December'),
     ]
 
     _columns = {
         'company_id': fields.many2one(
             'res.company', 'Company', readonly=True),
         'type': fields.selection(
-            _LINE_TYPE, 'Type', readonly=True),
+            _LINE_SELECTION, 'Type', readonly=True),
         'date': fields.date('Date Order', readonly=True),
+        'year': fields.char(
+            'Year', size=4, readonly=True),
+        'month': fields.selection(
+            _MONTH_SELECTION, 'Month', readonly=True),
+        'day': fields.char(
+            'Day', size=128, readonly=True),
         'product_id': fields.many2one(
             'product.product', 'Product', readonly=True),
-        'product_uom': fields.many2one(
-            'product.uom', 'Unit of Measure', readonly=True),
-        'product_uom_qty': fields.float(
-            '# of Qty', readonly=True),
         'categ_id_1': fields.many2one(
             'product.category', 'Category of Product', readonly=True),
         'categ_id_2': fields.many2one(
             'product.category', 'Middle Category of Product', readonly=True),
         'categ_id_3': fields.many2one(
             'product.category', 'Root Category of Product', readonly=True),
+        'product_uom': fields.many2one(
+            'product.uom', 'Unit of Measure', readonly=True),
+        'product_uom_qty': fields.float(
+            '# of Qty', readonly=True),
+        'average_price_vat_excl': fields.float(
+            'Average Price VAT Excl.', readonly=True),
         'price_total_vat_excl': fields.float(
             'Total Price VAT Excl.', readonly=True),
-
-
-#        'year': fields.char('Year', size=4, readonly=True),
-#        'month': fields.selection([('01', 'January'), ('02', 'February'), ('03', 'March'), ('04', 'April'),
-#            ('05', 'May'), ('06', 'June'), ('07', 'July'), ('08', 'August'), ('09', 'September'),
-#            ('10', 'October'), ('11', 'November'), ('12', 'December')], 'Month', readonly=True),
-#        'day': fields.char('Day', size=128, readonly=True),
-#        'delay': fields.float('Commitment Delay', digits=(16,2), readonly=True),
-#        'nbr': fields.integer('# of Lines', readonly=True),
-#        'state': fields.selection([
-#            ('draft', 'Quotation'),
-#            ('waiting_date', 'Waiting Schedule'),
-#            ('manual', 'Manual In Progress'),
-#            ('progress', 'In Progress'),
-#            ('invoice_except', 'Invoice Exception'),
-#            ('done', 'Done'),
-#            ('cancel', 'Cancelled')
-#            ], 'Order Status', readonly=True),
-#        'pricelist_id': fields.many2one('product.pricelist', 'Pricelist', readonly=True),
-#        'analytic_account_id': fields.many2one('account.analytic.account', 'Analytic Account', readonly=True),
+        'nbr': fields.integer(
+            '# of Lines', readonly=True),
     }
 
     def init(self, cr):
@@ -83,17 +89,32 @@ class pos_sale_category_report(Model):
         cr.execute("""
 CREATE OR REPLACE VIEW %s AS (
     SELECT
-        row_number() OVER () as id, *
+/* Invoice Not From Point Of Sale And not in 'draft' state ***************** */
+        row_number() OVER () AS id,
+        lines.company_id,
+        lines.type,
+        lines.date,
+        lines.product_id,
+        lines.categ_id_1,
+        pc_parent.id AS categ_id_2,
+        pc_parent.parent_id AS categ_id_3,
+        lines.product_uom,
+        sum(lines.product_uom_qty) AS product_uom_qty,
+        sum(lines.price_total_vat_excl) AS price_total_vat_excl,
+        CASE WHEN sum(lines.product_uom_qty) != 0 THEN
+            sum(lines.price_total_vat_excl) / sum(lines.product_uom_qty)
+        ELSE
+            0
+        END AS average_price_vat_excl,
+        count(*) as nbr
     FROM (
         SELECT
             ai.company_id,
-            'invoice' as type,
-            ai.date_invoice as date,
+            'invoice' AS type,
+            date_trunc('day', ai.date_invoice)::date AS date,
             ail.product_id,
-            pt.categ_id as categ_id_1,
-            pc_parent.id as categ_id_2,
-            pc_parent.parent_id as categ_id_3,
-            pt.uom_id as product_uom,
+            pt.categ_id AS categ_id_1,
+            pt.uom_id AS product_uom,
             CASE WHEN ai.type = 'out_invoice' THEN
                 ail.quantity / uom_ail.factor * uom_pt.factor
             ELSE
@@ -103,60 +124,59 @@ CREATE OR REPLACE VIEW %s AS (
                 ail.price_subtotal
             ELSE
                 - (ail.price_subtotal)
-            END as price_total_vat_excl,
-            CASE WHEN ail.discount = 100 THEN
-                CASE WHEN ai.type = 'out_invoice' THEN
-                    ail.price_unit  -- TODO FIXME if vat_include
-                ELSE
-                    - ail.price_unit -- TODO FIXME if vat_include
-                END
-            ELSE
-                CASE WHEN ai.type = 'out_invoice' THEN
-                    ail.price_subtotal * (ail.discount / (100.0 - ail.discount))
-                ELSE
-                    - (ail.price_subtotal * (ail.discount /
-                        (100.0 - ail.discount)))
-                END
-            END::decimal(16, 2)  as total_discount_vat_excl
-
+            END AS price_total_vat_excl
         FROM account_invoice_line ail
-        INNER JOIN account_invoice ai on ail.invoice_id = ai.id
-        LEFT JOIN product_product pp on ail.product_id = pp.id
-        INNER JOIN product_template pt on pp.product_tmpl_id = pt.id
-        LEFT JOIN product_category pc on pc.id = pt.categ_id
-        LEFT JOIN product_category pc_parent on pc_parent.id = pc.parent_id
-        LEFT JOIN product_uom uom_ail on uom_ail.id = ail.uos_id
-        LEFT JOIN product_uom uom_pt on uom_pt.id = pt.uom_id
+        INNER JOIN account_invoice ai
+            ON ail.invoice_id = ai.id
+        INNER JOIN product_product pp
+            ON ail.product_id = pp.id
+        INNER JOIN product_template pt
+            ON pp.product_tmpl_id = pt.id
+        INNER JOIN product_uom uom_ail
+            ON uom_ail.id = ail.uos_id
+        INNER JOIN product_uom uom_pt
+            ON uom_pt.id = pt.uom_id
         WHERE
-        ai.type IN ('out_invoice', 'out_refund')
-        AND ail.quantity != 0
-        AND ai.id NOT IN (
-            SELECT invoice_id
-            FROM pos_order
-            WHERE invoice_id IS NOT NULL)
+            ai.state NOT IN ('draft', 'cancel')
+            AND ai.type IN ('out_invoice', 'out_refund')
+            AND ail.quantity != 0
+            AND ai.id NOT IN (
+                SELECT invoice_id
+                FROM pos_order
+                WHERE invoice_id IS NOT NULL)
     UNION
+/* Pos Order not in 'draft' state ****************************************** */
         SELECT
             po.company_id,
-            'point_of_sale' as type,
-            po.date_order as date,
+            'point_of_sale' AS type,
+            date_trunc('day', po.date_order)::date AS date,
             pol.product_id,
             pt.categ_id as categ_id_1,
-            pc_parent.id as categ_id_2,
-            pc_parent.parent_id as categ_id_3,
             pt.uom_id as product_uom,
             pol.qty as product_uom_qty,
-            pol.price_subtotal as price_total_vat_excl,
-                CASE WHEN pol.discount = 100 THEN
-                    pol.price_unit  -- TODO FIXME if vat_include
-                ELSE
-                    pol.price_subtotal * (pol.discount /
-                        (100.0 - pol.discount))
-                END::decimal(16, 2)  as total_discount_vat_excl
+            pol.price_subtotal as price_total_vat_excl
         FROM pos_order_line pol
-        INNER JOIN pos_order po on pol.order_id = po.id
-        INNER join product_product pp on pol.product_id = pp.id
-        INNER join product_template pt on pp.product_tmpl_id = pt.id
-        INNER join product_category pc on pc.id = pt.categ_id
-        INNER join product_category pc_parent on pc_parent.id = pc.parent_id
+        INNER JOIN pos_order po
+            ON pol.order_id = po.id
+        INNER join product_product pp
+            ON pol.product_id = pp.id
+        INNER join product_template pt
+            ON pp.product_tmpl_id = pt.id
+        WHERE
+            po.state not IN ('draft')
+            AND pol.qty != 0
     ) as lines
+INNER JOIN product_category pc
+    ON pc.id = categ_id_1
+INNER JOIN product_category pc_parent
+    ON pc_parent.id = pc.parent_id
+GROUP BY
+     lines.company_id,
+     lines.type,
+     lines.date,
+     lines.product_id,
+     lines.categ_id_1,
+     categ_id_2,
+     categ_id_3,
+     lines.product_uom
 )""" % (self._table_name))
