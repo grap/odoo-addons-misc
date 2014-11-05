@@ -27,7 +27,7 @@ from openerp.osv.orm import Model
 
 
 class pos_sale_net_sales_report(Model):
-    _name = "pos.sale.net.sales.report"
+    _name = 'pos.sale.net.sales.report'
     _auto = False
     _table_name = 'pos_sale_net_sales_report'
 
@@ -52,7 +52,7 @@ CREATE OR REPLACE VIEW %s AS (
         row_number() OVER () as id,
         *
     FROM (
-/* Draft / Paid / Done Pos Order ******************************************* */
+/* Paid / Done Pos Order *************************************************** */
         SELECT
             month_table.month_date,
             month_table.company_id,
@@ -90,7 +90,7 @@ CREATE OR REPLACE VIEW %s AS (
                 GROUP BY order_id
             ) pol
             ON po.id = pol.order_id
-            WHERE state in ('draft', 'paid', 'done')
+            WHERE state in ('paid', 'done')
             GROUP BY company_id, month_date
         ) as result
         ON result.company_id = month_table.company_id
