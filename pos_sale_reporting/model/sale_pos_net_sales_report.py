@@ -21,12 +21,11 @@
 #
 ##############################################################################
 
-from openerp import SUPERUSER_ID
 from openerp.osv import fields
-from openerp.osv.orm import Model
+from materialized_model import MaterializedModel
 
 
-class pos_sale_net_sales_report(Model):
+class pos_sale_net_sales_report(MaterializedModel):
     _name = 'pos.sale.net.sales.report'
     _auto = False
     _table_name = 'pos_sale_net_sales_report'
@@ -44,22 +43,9 @@ class pos_sale_net_sales_report(Model):
         'total': fields.float('Total', digits=(16, 2), readonly=True),
     }
 
-    def init(self, cr):
-        cr.execute("SELECT version();")
-        print cr.fetchall()
-        imm_obj = self.pool['ir.module.module']
-        imm_id = imm_obj.search(cr, SUPERUSER_ID, [
-            ('name', '=', 'pos_sale_reporting'),
-            ('state', '=', 'to install')])
-        if len(imm_id) != 0:
-            self.create_view(cr, SUPERUSER_ID)
+    _materialized_module_name = 'pos_sale_reporting'
 
-    def refesh_view(self, cr, uid, context=None):
-        cr.execute("REFRESH MATERIALIZED VIEW %s;" % (self._table_name))
-
-    def create_view(self, cr, uid, context=None):
-        cr.execute("""
-CREATE OR REPLACE VIEW %s AS (
+    _materialized_sql = """
     SELECT
         row_number() OVER () as id,
         *
@@ -236,4 +222,4 @@ CREATE OR REPLACE VIEW %s AS (
 
     ) as result_tmp
     ORDER BY month_date, company_id
-)""" % (self._table_name))
+"""

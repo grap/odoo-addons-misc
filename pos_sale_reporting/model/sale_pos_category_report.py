@@ -21,12 +21,12 @@
 #
 ##############################################################################
 
-from openerp import SUPERUSER_ID
+
 from openerp.osv import fields
-from openerp.osv.orm import Model
+from materialized_model import MaterializedModel
 
 
-class pos_sale_category_report(Model):
+class pos_sale_category_report(MaterializedModel):
     _name = 'pos.sale.category.report'
     _auto = False
     _log_access = False
@@ -84,23 +84,9 @@ class pos_sale_category_report(Model):
             '# of Lines', readonly=True),
     }
 
-    def init(self, cr):
-        cr.execute("SELECT version();")
-        print cr.fetchall()
-        imm_obj = self.pool['ir.module.module']
-        imm_id = imm_obj.search(cr, SUPERUSER_ID, [
-            ('name', '=', 'pos_sale_reporting'),
-            ('state', '=', 'to install')])
-        if len(imm_id) != 0:
-            self.create_view(cr, SUPERUSER_ID)
+    _materialized_module_name = 'pos_sale_reporting'
 
-    def refesh_view(self, cr, uid, context=None):
-        cr.execute("REFRESH MATERIALIZED VIEW %s;" % (self._table_name))
-
-    def create_view(self, cr, uid, context=None):
-        cr.execute("""
-DROP MATERIALIZED VIEW IF EXISTS %s;
-CREATE MATERIALIZED VIEW %s AS (
+    _materialized_sql = """
     SELECT
 /* Invoice Not From Point Of Sale And not in 'draft' state ***************** */
         row_number() OVER () AS id,
@@ -192,4 +178,4 @@ GROUP BY
      categ_id_2,
      categ_id_3,
      lines.product_uom
-);""" % (self._table_name, self._table_name))
+"""
