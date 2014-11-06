@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-03 22:18+0000\n"
-"PO-Revision-Date: 2014-11-03 22:18+0000\n"
+"POT-Creation-Date: 2014-11-06 10:16+0000\n"
+"PO-Revision-Date: 2014-11-06 10:16+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -38,9 +38,87 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: pos_sale_reporting
+#: field:pos.sale.category.report,nbr:0
+msgid "# of Lines"
+msgstr "Nb. Lignes"
+
+#. module: pos_sale_reporting
+#: field:pos.sale.category.report,product_uom_qty:0
+msgid "# of Qty"
+msgstr "Total Qté"
+
+#. module: pos_sale_reporting
+#: selection:pos.sale.category.report,month:0
+msgid "April"
+msgstr "Avril"
+
+#. module: pos_sale_reporting
+#: selection:pos.sale.category.report,month:0
+msgid "August"
+msgstr "Aout"
+
+#. module: pos_sale_reporting
+#: field:pos.sale.category.report,average_price_vat_excl:0
+msgid "Average Price VAT Excl."
+msgstr "Prix Moyen (HT)"
+
+#. module: pos_sale_reporting
+#: view:pos.sale.category.report:0
+#: field:pos.sale.category.report,categ_id_1:0
+msgid "Category of Product"
+msgstr "Catégorie de Produit"
+
+#. module: pos_sale_reporting
+#: view:pos.sale.category.report:0
+#: field:pos.sale.category.report,company_id:0
 #: field:pos.sale.net.sales.report,company_id:0
 msgid "Company"
 msgstr "Société"
+
+#. module: pos_sale_reporting
+#: field:pos.sale.category.report,date:0
+msgid "Date Order"
+msgstr "Date"
+
+#. module: pos_sale_reporting
+#: field:pos.sale.category.report,day:0
+msgid "Day"
+msgstr "Jour"
+
+#. module: pos_sale_reporting
+#: selection:pos.sale.category.report,month:0
+msgid "December"
+msgstr "Décembre"
+
+#. module: pos_sale_reporting
+#: view:pos.sale.category.report:0
+msgid "Extended Filters..."
+msgstr "Filtres avancés ..."
+
+#. module: pos_sale_reporting
+#: selection:pos.sale.category.report,month:0
+msgid "February"
+msgstr "Février"
+
+#. module: pos_sale_reporting
+#: view:pos.sale.category.report:0
+msgid "From Invoice"
+msgstr "Depuis Facture"
+
+#. module: pos_sale_reporting
+#: view:pos.sale.category.report:0
+msgid "From Point Of Sale"
+msgstr "Depuis Point de Vente"
+
+#. module: pos_sale_reporting
+#: view:pos.sale.category.report:0
+msgid "Group By..."
+msgstr "Regrouper Par ..."
+
+#. module: pos_sale_reporting
+#: selection:pos.sale.category.report,type:0
+msgid "Invoice"
+msgstr "Facture"
 
 #. module: pos_sale_reporting
 #: selection:pos.sale.net.sales.report,line_type:0
@@ -53,6 +131,67 @@ msgid "Invoice - Via Sale"
 msgstr "Facture - Via Vente"
 
 #. module: pos_sale_reporting
+#: selection:pos.sale.category.report,month:0
+msgid "January"
+msgstr "Janvier"
+
+#. module: pos_sale_reporting
+#: selection:pos.sale.category.report,month:0
+msgid "July"
+msgstr "Juillet"
+
+#. module: pos_sale_reporting
+#: selection:pos.sale.category.report,month:0
+msgid "June"
+msgstr "Juin"
+
+#. module: pos_sale_reporting
+#: view:pos.sale.category.report:0
+msgid "Last 12 Months"
+msgstr "12 Derniers Mois"
+
+#. module: pos_sale_reporting
+#: view:pos.sale.category.report:0
+msgid "Last 3 Months"
+msgstr "3 Derniers Mois"
+
+#. module: pos_sale_reporting
+#: view:pos.sale.category.report:0
+msgid "Last 30 Days"
+msgstr "30 Derniers Jours"
+
+#. module: pos_sale_reporting
+#: view:pos.sale.category.report:0
+msgid "Last 7 Days"
+msgstr "7 Derniers Jours"
+
+#. module: pos_sale_reporting
+#: view:pos.sale.category.report:0
+msgid "Lines Total"
+msgstr "Total Lignes"
+
+#. module: pos_sale_reporting
+#: selection:pos.sale.category.report,month:0
+msgid "March"
+msgstr "Mars"
+
+#. module: pos_sale_reporting
+#: selection:pos.sale.category.report,month:0
+msgid "May"
+msgstr "Mai"
+
+#. module: pos_sale_reporting
+#: view:pos.sale.category.report:0
+#: field:pos.sale.category.report,categ_id_2:0
+msgid "Middle Category of Product"
+msgstr "Catégorie de Produit Intermédiaire"
+
+#. module: pos_sale_reporting
+#: field:pos.sale.category.report,month:0
+msgid "Month"
+msgstr "Mois"
+
+#. module: pos_sale_reporting
 #: field:pos.sale.net.sales.report,month_date:0
 msgid "Month Date"
 msgstr "Mois"
@@ -60,9 +199,39 @@ msgstr "Mois"
 #. module: pos_sale_reporting
 #: model:ir.actions.act_window,name:pos_sale_reporting.action_pos_sale_net_sales_report
 #: model:ir.ui.menu,name:pos_sale_reporting.menu_pos_sale_net_sales_report
+msgid "Net Sales Evolution"
+msgstr "Evolution du CA"
+
+#. module: pos_sale_reporting
 #: view:pos.sale.net.sales.report:0
-msgid "Net Sales"
-msgstr "Chiffre d'Affaires"
+msgid "Net Sales Evolution (VAT Excl.)"
+msgstr "Evolution du Chiffre d'Affaire (HT)"
+
+#. module: pos_sale_reporting
+#: model:ir.actions.act_window,name:pos_sale_reporting.action_pos_sale_category_report
+#: model:ir.ui.menu,name:pos_sale_reporting.menu_pos_sale_category_report
+msgid "Net Sales by Category"
+msgstr "CA par Catégorie"
+
+#. module: pos_sale_reporting
+#: view:pos.sale.category.report:0
+msgid "Net Sales by Category (VAT Excl.)"
+msgstr "Chiffre d'Affaires par Catégorie (HT)"
+
+#. module: pos_sale_reporting
+#: selection:pos.sale.category.report,month:0
+msgid "November"
+msgstr "Novembre"
+
+#. module: pos_sale_reporting
+#: selection:pos.sale.category.report,month:0
+msgid "October"
+msgstr "Octobre"
+
+#. module: pos_sale_reporting
+#: selection:pos.sale.category.report,type:0
+msgid "Point Of Sale"
+msgstr "Point de Vente"
 
 #. module: pos_sale_reporting
 #: selection:pos.sale.net.sales.report,line_type:0
@@ -70,9 +239,41 @@ msgid "Point of Sale - Normal"
 msgstr "Point de Vente - Normal"
 
 #. module: pos_sale_reporting
+#: view:pos.sale.category.report:0
+msgid "Price Total (VAT Excl)"
+msgstr "Prix Total (HT)"
+
+#. module: pos_sale_reporting
+#: view:pos.sale.category.report:0
+#: field:pos.sale.category.report,product_id:0
+msgid "Product"
+msgstr "Produit"
+
+#. module: pos_sale_reporting
+#: view:pos.sale.category.report:0
+msgid "Qty Total"
+msgstr "Qté Total"
+
+#. module: pos_sale_reporting
+#: view:pos.sale.category.report:0
+msgid "Reference Unit of Measure"
+msgstr "Unité de Mesure de Référence"
+
+#. module: pos_sale_reporting
+#: view:pos.sale.category.report:0
+#: field:pos.sale.category.report,categ_id_3:0
+msgid "Root Category of Product"
+msgstr "Catégorie de Produit Racine"
+
+#. module: pos_sale_reporting
 #: model:ir.ui.menu,name:pos_sale_reporting.menu_pos_sale_report
 msgid "Sale + Point of Sale"
 msgstr "Vente + Point de Vente"
+
+#. module: pos_sale_reporting
+#: selection:pos.sale.category.report,month:0
+msgid "September"
+msgstr "Septembre"
 
 #. module: pos_sale_reporting
 #: field:pos.sale.net.sales.report,total:0
@@ -80,6 +281,37 @@ msgid "Total"
 msgstr "Total"
 
 #. module: pos_sale_reporting
+#: field:pos.sale.category.report,price_total_vat_excl:0
+msgid "Total Price VAT Excl."
+msgstr "Prix Total (HT)"
+
+#. module: pos_sale_reporting
+#: field:pos.sale.category.report,type:0
 #: field:pos.sale.net.sales.report,line_type:0
 msgid "Type"
 msgstr "Type"
+
+#. module: pos_sale_reporting
+#: field:pos.sale.category.report,product_uom:0
+msgid "Unit of Measure"
+msgstr "Unité de Mesure"
+
+#. module: pos_sale_reporting
+#: field:pos.sale.category.report,year:0
+msgid "Year"
+msgstr "Année"
+
+#. module: pos_sale_reporting
+#: code:_description:0
+#: model:ir.model,name:pos_sale_reporting.model_pos_sale_category_report
+#, python-format
+msgid "pos.sale.category.report"
+msgstr "pos.sale.category.report"
+
+#. module: pos_sale_reporting
+#: code:_description:0
+#: model:ir.model,name:pos_sale_reporting.model_pos_sale_net_sales_report
+#, python-format
+msgid "pos.sale.net.sales.report"
+msgstr "pos.sale.net.sales.report"
+

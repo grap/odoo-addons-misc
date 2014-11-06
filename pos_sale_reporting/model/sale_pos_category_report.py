@@ -21,7 +21,7 @@
 #
 ##############################################################################
 
-from openerp import tools
+from openerp import SUPERUSER_ID
 from openerp.osv import fields
 from openerp.osv.orm import Model
 
@@ -54,7 +54,7 @@ class pos_sale_category_report(Model):
 
     _columns = {
         'company_id': fields.many2one(
-            'res.company', 'Company', readonly=True),
+            'res.company', 'Company', readonly=True, select=1),
         'type': fields.selection(
             _LINE_SELECTION, 'Type', readonly=True),
         'date': fields.date('Date Order', readonly=True),
@@ -85,9 +85,20 @@ class pos_sale_category_report(Model):
     }
 
     def init(self, cr):
-        tools.drop_view_if_exists(cr, self._table_name)
+        imm_obj = self.pool['ir.module.module']
+        imm_id = imm_obj.search(cr, SUPERUSER_ID, [
+            ('name', '=', 'pos_sale_reporting'),
+            ('state', '=', 'to install')])
+        if len(imm_id) != 0:
+            self.create_view(cr, SUPERUSER_ID)
+
+    def refesh_view(self, cr, uid, context=None):
+        cr.execute("REFRESH MATERIALIZED VIEW %s;" % (self._table_name))
+
+    def create_view(self, cr, uid, context=None):
         cr.execute("""
-CREATE OR REPLACE VIEW %s AS (
+DROP MATERIALIZED VIEW IF EXISTS %s;
+CREATE MATERIALIZED VIEW %s AS (
     SELECT
 /* Invoice Not From Point Of Sale And not in 'draft' state ***************** */
         row_number() OVER () AS id,
@@ -102,7 +113,7 @@ CREATE OR REPLACE VIEW %s AS (
         sum(lines.product_uom_qty) AS product_uom_qty,
         sum(lines.price_total_vat_excl) AS price_total_vat_excl,
         CASE WHEN sum(lines.product_uom_qty) != 0 THEN
-            sum(lines.price_total_vat_excl) / sum(lines.product_uom_qty)
+            (sum(lines.price_total_vat_excl) / sum(lines.product_uom_qty))
         ELSE
             0
         END AS average_price_vat_excl,
@@ -179,4 +190,4 @@ GROUP BY
      categ_id_2,
      categ_id_3,
      lines.product_uom
-)""" % (self._table_name))
+);""" % (self._table_name, self._table_name))

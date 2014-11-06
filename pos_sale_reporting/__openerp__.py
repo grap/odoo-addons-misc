@@ -32,8 +32,23 @@ Add reports merging sale and point of sale informations
 
 Functionality:
 --------------
-    * Add a graph report view in the Report menu to merge sale and point"""
-    """of sale Net Sales informations;
+    * Add a graph report view in the Report menu to merge sale and point
+      of sale Net informations;
+        * Net Sales Evolution;
+        * Net Sales by Category (3 levels);
+
+Technical Information:
+----------------------
+    * As this module merge point of sale and sale information, the sql views
+      are using UNION statement; So, performance are very bad, and to avoid
+      that this module create MATERIALIZED view;
+    * So information doesn't take into account, last day sales;
+    * A cron Task update the materialized view each night;
+
+Ref:
+----
+http://stackoverflow.com/questions/18134798/why-does-my-view-in-postgresql"""
+    """-not-use-the-index
 
 Copyright, Authors and Licence:
 -------------------------------
@@ -50,8 +65,9 @@ Copyright, Authors and Licence:
         'point_of_sale',
     ],
     'data': [
+        'data/ir_cron.xml',
         'security/ir_model_access.yml',
-        'security/ir_rule_data.xml',
+        'security/ir_rule.xml',
         'view/view.xml',
         'view/action.xml',
         'view/menu.xml',

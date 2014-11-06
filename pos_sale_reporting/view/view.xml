@@ -47,7 +47,7 @@
                 <field name="nbr" sum="Lines Total"/>
                 <field name="product_uom"/>
                 <field name="product_uom_qty" sum="Qty Total"/>
-                <field name="average_price_vat_excl" sum="Average Price (VAT Excl)"/>
+                <field name="average_price_vat_excl" avg="Average Price (VAT Excl)"/>
                 <field name="price_total_vat_excl" sum="Price Total (VAT Excl)"/>
             </tree>
         </field>

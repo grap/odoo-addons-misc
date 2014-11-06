@@ -21,7 +21,7 @@
 #
 ##############################################################################
 
-from openerp import tools
+from openerp import SUPERUSER_ID
 from openerp.osv import fields
 from openerp.osv.orm import Model
 
@@ -45,7 +45,17 @@ class pos_sale_net_sales_report(Model):
     }
 
     def init(self, cr):
-        tools.drop_view_if_exists(cr, self._table_name)
+        imm_obj = self.pool['ir.module.module']
+        imm_id = imm_obj.search(cr, SUPERUSER_ID, [
+            ('name', '=', 'pos_sale_reporting'),
+            ('state', '=', 'to install')])
+        if len(imm_id) != 0:
+            self.create_view(cr, SUPERUSER_ID)
+
+    def refesh_view(self, cr, uid, context=None):
+        cr.execute("REFRESH MATERIALIZED VIEW %s;" % (self._table_name))
+
+    def create_view(self, cr, uid, context=None):
         cr.execute("""
 CREATE OR REPLACE VIEW %s AS (
     SELECT
