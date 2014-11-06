@@ -105,7 +105,7 @@ class sale_recovery_moment(Model):
             'sale.recovery.moment.group', 'Recovery Moment Group',
             ondelete='cascade'),
         'company_id': fields.related(
-            'group_id', 'company_id', type='many2one',relation='res.company',
+            'group_id', 'company_id', type='many2one', relation='res.company',
             string='Company', store=True, readonly=True),
         'recovery_date': fields.date(
             'Date for the Recovery', required=True),
