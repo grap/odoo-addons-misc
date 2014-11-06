@@ -45,6 +45,8 @@ class pos_sale_net_sales_report(Model):
     }
 
     def init(self, cr):
+        cr.execute("SELECT version();")
+        print cr.fetchall()
         imm_obj = self.pool['ir.module.module']
         imm_id = imm_obj.search(cr, SUPERUSER_ID, [
             ('name', '=', 'pos_sale_reporting'),
