@@ -194,9 +194,8 @@ msgstr "Informations Alimentaires"
 
 #. module: sale_food
 #: field:product.product,fresh_category:0
-msgid "Food category of the product:\n"
-""
-msgstr "Catégorie Alimentaire du produit :"
+msgid "Food category of the product"
+msgstr "Catégorie Alimentaire du produit"
 
 #. module: sale_food
 #: view:product.label:0

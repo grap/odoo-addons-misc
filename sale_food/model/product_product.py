@@ -205,7 +205,7 @@ class product_product(Model):
             _get_pricetag_origin, type='char',
             string='Text about origin'),
         'fresh_category': fields.selection(
-            _FRESH_CATEGORY_KEYS, 'Food category of the product:\n',
+            _FRESH_CATEGORY_KEYS, 'Food category of the product',
             help="""Extra - Hight Quality : product without default ;\n"""
             """Quality I - Good Quality : Product with little defaults ;\n"""
             """Quality II - Normal Quality : Product with default ;\n"""
