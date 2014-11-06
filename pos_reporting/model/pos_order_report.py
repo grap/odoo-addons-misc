@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Point of Sale Board module for OpenERP
+#    Point of Sale - Reporting for Odoo
 #    Copyright (C) 2013-2014 GRAP (http://www.grap.coop)
 #    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
 #
@@ -27,6 +27,7 @@ from openerp import tools
 
 class pos_order_report(Model):
     _inherit = 'report.pos.order'
+    _table = 'report_pos_order'
 
     _columns = {
         'categ_id': fields.many2one(
@@ -38,9 +39,9 @@ class pos_order_report(Model):
     }
 
     def init(self, cr):
-        tools.drop_view_if_exists(cr, 'report_pos_order')
+        tools.drop_view_if_exists(cr, self._table)
         cr.execute("""
-            create or replace view report_pos_order as (
+            create or replace view %s as (
                 select
                     min(l.id) as id,
                     count(*) as nbr,
@@ -85,4 +86,5 @@ class pos_order_report(Model):
                     pc2.parent_id, s.user_id,s.shop_id, s.company_id,
                     s.sale_journal, l.product_id, s.create_date
                 having
-                    sum(l.qty * u.factor) != 0)""")
+                    sum(l.qty * u.factor) != 0
+        )""" % (self._table))

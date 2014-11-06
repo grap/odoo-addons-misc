@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Point of Sale Board module for OpenERP
+#    Point of Sale - Reporting for Odoo
 #    Copyright (C) 2013-2014 GRAP (http://www.grap.coop)
 #    @author Julien WESTE
 #    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
@@ -21,9 +21,9 @@
 #
 ##############################################################################
 
-from . import pos_board_load_daily
-from . import pos_board_load_daily_simple
-from . import pos_board_load_monthly
-from . import pos_board_load_weekly
-from . import pos_board_payment_report
+from . import pos_daily_report
+from . import pos_daily_simple_report
+from . import pos_monthly_report
+from . import pos_weekly_report
+from . import pos_payment_type_report
 from . import pos_order_report

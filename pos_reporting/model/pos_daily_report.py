@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Point of Sale Board module for OpenERP
+#    Point of Sale - Reporting for Odoo
 #    Copyright (C) 2013-2014 GRAP (http://www.grap.coop)
 #    @author Julien WESTE
 #    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
@@ -26,11 +26,11 @@ from openerp.osv import fields
 from openerp import tools
 
 
-class pos_board_load_daily(Model):
-    _name = 'pos.board.load.daily'
-    _description = "POS Board Load Daily"
+class pos_daily_report(Model):
+    _name = 'pos.daily.report'
     _auto = False
-    _log_access = False
+    _table = 'pos_daily_report'
+
     _columns = {
         'date': fields.date('Date'),
         'date_string': fields.char('Date', size=64, required=True),
@@ -39,9 +39,9 @@ class pos_board_load_daily(Model):
     }
 
     def init(self, cr):
-        tools.drop_view_if_exists(cr, 'pos_board_load_daily')
+        tools.drop_view_if_exists(cr, self._table)
         cr.execute("""
-            create or replace view pos_board_load_daily as (
+            create or replace view %s as (
                     SELECT
                         min(po.id) as id,
                         to_char(po.date_order,'YY/MM/DD Dy') as date_string,
@@ -57,5 +57,5 @@ class pos_board_load_daily(Model):
                     GROUP BY
                         po.company_id,
                         date,
-                        date_string)
-            """)
+                        date_string
+        )""" % (self._table))
