@@ -60,7 +60,7 @@ class MaterializedModel(Model):
             if len(imm_id) != 0:
                 self._create_view(cr, SUPERUSER_ID)
         else:
-            self.create_view(cr, SUPERUSER_ID)
+            self._create_view(cr, SUPERUSER_ID)
 
     def _create_view(self, cr, uid, context=None):
         if self._is_materialized:

@@ -29,7 +29,7 @@
             <field name="doall" eval="False"/>
             <field name="active" eval="False" />
             <field name="model" eval="'pos.sale.category.report'" />
-            <field name="function" eval="'refesh_view'"/>
+            <field name="function" eval="'_refesh_view'"/>
             <field eval="'()'" name="args"/>
         </record>
 
@@ -42,7 +42,7 @@
             <field name="doall" eval="False"/>
             <field name="active" eval="False" />
             <field name="model" eval="'pos.sale.net.sales.report'" />
-            <field name="function" eval="'refesh_view'"/>
+            <field name="function" eval="'_refesh_view'"/>
             <field eval="'()'" name="args"/>
         </record>
     </data>
