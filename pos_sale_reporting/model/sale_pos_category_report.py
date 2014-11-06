@@ -21,12 +21,11 @@
 #
 ##############################################################################
 
-
 from openerp.osv import fields
 from materialized_model import MaterializedModel
 
 
-class pos_sale_category_report(MaterializedModel):
+class pos_sale_net_sales_report(MaterializedModel):
     _name = 'pos.sale.category.report'
     _auto = False
     _log_access = False
