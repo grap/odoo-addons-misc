@@ -12,10 +12,10 @@ virtualenv:
 
 before_install:
   - sudo pip install GitPython bzr
-  - sudo apt-get install bzr
-  - sudo apt-get install postgresql-9.3
-  - sudo apt-get update
-  - sudo apt-get dist-upgrade
+  - sudo apt-get -y remove postgresql-9.1
+  - sudo apt-get -y install bzr postgresql-9.3
+  - sudo apt-get -y update
+  - sudo apt-get -y dist-upgrade
   
 
 install:
