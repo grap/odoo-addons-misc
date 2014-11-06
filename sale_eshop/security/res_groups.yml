@@ -29,3 +29,5 @@
     category_id: sale_eshop.module_category_eshop
     implied_ids:
         - res_groups_eshop_user
+    users:
+        - base.user_root
