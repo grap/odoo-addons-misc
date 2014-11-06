@@ -106,22 +106,22 @@ msgstr "Manager"
 #. module: sale_recovery_moment
 #: field:sale.recovery.moment,max_recovery_date:0
 msgid "Maximum date for the Recovery"
-msgstr "Date de fin de récupération"
+msgstr "Date de Fin de Récupération"
 
 #. module: sale_recovery_moment
 #: field:sale.recovery.moment.group,max_sale_date:0
 msgid "Maximum date for the Sale"
-msgstr "Date de fin de vente"
+msgstr "Date de Fin de Vente"
 
 #. module: sale_recovery_moment
 #: field:sale.recovery.moment,min_recovery_date:0
 msgid "Minimum date for the Recovery"
-msgstr "Date de début de récupération"
+msgstr "Date de Début de Récupération"
 
 #. module: sale_recovery_moment
 #: field:sale.recovery.moment.group,min_sale_date:0
 msgid "Minimum date for the Sale"
-msgstr "Date de début de récupération"
+msgstr "Date de Début de Vente"
 
 #. module: sale_recovery_moment
 #: view:sale.recovery.moment.group:0
