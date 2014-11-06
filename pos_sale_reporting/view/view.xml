@@ -40,6 +40,9 @@
         <field name="arch" type="xml">
             <tree string="Net Sales by Category (VAT Excl.)" create="false">
                 <field name="date" invisible="1"/>
+                <field name="year" invisible="1"/>
+                <field name="day" invisible="1"/>
+                <field name="month" invisible="1"/>
                 <field name="type" invisible="1"/>
                 <field name="company_id" invisible="1" groups="base.group_multi_company"/>
                 <field name="categ_id_1"/>
@@ -47,7 +50,7 @@
                 <field name="nbr" sum="Lines Total"/>
                 <field name="product_uom"/>
                 <field name="product_uom_qty" sum="Qty Total"/>
-                <field name="average_price_vat_excl" avg="Average Price (VAT Excl)"/>
+<!--TODO: FIX ME                <field name="average_price_vat_excl" avg="Average Price (VAT Excl)"/>-->
                 <field name="price_total_vat_excl" sum="Price Total (VAT Excl)"/>
             </tree>
         </field>
@@ -80,6 +83,10 @@
                     <filter string="Middle Category of Product" context="{'group_by':'categ_id_2'}"/>
                     <filter string="Root Category of Product" context="{'group_by':'categ_id_3'}"/>
                     <filter string="Company" groups="base.group_multi_company" context="{'group_by':'company_id'}"/>
+                    <filter string="Day" context="{'group_by':'day'}"/>
+                    <filter string="Month" context="{'group_by':'month'}"/>
+                    <filter string="Year" context="{'group_by':'year'}"/>
+
                 </group>
             </search>
         </field>

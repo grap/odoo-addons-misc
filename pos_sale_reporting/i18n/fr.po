@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-06 10:16+0000\n"
-"PO-Revision-Date: 2014-11-06 10:16+0000\n"
+"POT-Creation-Date: 2014-11-06 20:03+0000\n"
+"PO-Revision-Date: 2014-11-06 20:03+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -81,6 +81,7 @@ msgid "Date Order"
 msgstr "Date"
 
 #. module: pos_sale_reporting
+#: view:pos.sale.category.report:0
 #: field:pos.sale.category.report,day:0
 msgid "Day"
 msgstr "Jour"
@@ -187,6 +188,7 @@ msgid "Middle Category of Product"
 msgstr "Catégorie de Produit Intermédiaire"
 
 #. module: pos_sale_reporting
+#: view:pos.sale.category.report:0
 #: field:pos.sale.category.report,month:0
 msgid "Month"
 msgstr "Mois"
@@ -297,6 +299,7 @@ msgid "Unit of Measure"
 msgstr "Unité de Mesure"
 
 #. module: pos_sale_reporting
+#: view:pos.sale.category.report:0
 #: field:pos.sale.category.report,year:0
 msgid "Year"
 msgstr "Année"
