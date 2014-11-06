@@ -14,7 +14,7 @@ before_install:
   - sudo pip install GitPython bzr
   - sudo apt-get -y remove postgresql-9.1
   - sudo apt-get -y install bzr postgresql-9.3
-  
+  - sudo service postgresql start
 
 install:
   - git clone https://github.com/OCA/web.git $HOME/web -b 7.0

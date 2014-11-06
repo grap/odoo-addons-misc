@@ -45,6 +45,10 @@ Technical Information:
     * So information doesn't take into account, last day sales;
     * A cron Task update the materialized view each night;
 
+Specific Version:
+-----------------
+    * you so need Postgresql 9.3+ to install this module;
+
 Ref:
 ----
 http://stackoverflow.com/questions/18134798/why-does-my-view-in-postgresql"""
