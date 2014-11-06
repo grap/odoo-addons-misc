@@ -13,6 +13,10 @@ virtualenv:
 before_install:
   - sudo pip install GitPython bzr
   - sudo apt-get install bzr
+  - sudo apt-get install postgresql-9.3
+  - sudo apt-get update
+  - sudo apt-get dist-upgrade
+  
 
 install:
   - git clone https://github.com/OCA/web.git $HOME/web -b 7.0
