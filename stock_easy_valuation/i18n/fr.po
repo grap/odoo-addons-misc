@@ -1,0 +1,51 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* stock_easy_valuation
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-11-06 22:55+0000\n"
+"PO-Revision-Date: 2014-11-06 22:55+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_easy_valuation
+#: code:_description:0
+#: model:ir.model,name:stock_easy_valuation.model_product_product
+#, python-format
+msgid "Product"
+msgstr "Produit"
+
+#. module: stock_easy_valuation
+#: model:ir.actions.act_window,name:stock_easy_valuation.action_product_product
+#: model:ir.ui.menu,name:stock_easy_valuation.menu_product_product
+#: view:product.product:0
+msgid "Products (Stock)"
+msgstr "Produits (Stock)"
+
+#. module: stock_easy_valuation
+#: view:product.product:0
+msgid "Total Valuation On Hand"
+msgstr "Valeur Total du Stock Physique"
+
+#. module: stock_easy_valuation
+#: view:product.product:0
+msgid "Total Virtual Valuation"
+msgstr "Valeur Total du Stock Prévu"
+
+#. module: stock_easy_valuation
+#: field:product.product,valuation_qty_available:0
+msgid "Valuation of Quantity on Hand"
+msgstr "Valeur du Stock Physique"
+
+#. module: stock_easy_valuation
+#: field:product.product,valuation_virtual_available:0
+msgid "Valuation of Virtual Quantity"
+msgstr "Valeur du Stock Prévu"
+
