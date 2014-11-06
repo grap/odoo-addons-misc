@@ -57,6 +57,7 @@ Copyright, Authors and Licence:
         'sale',
     ],
     'data': [
+        'security/ir_rule.xml',
         'security/ir_module_category.yml',
         'security/res_groups.yml',
         'security/ir_model_access.yml',
