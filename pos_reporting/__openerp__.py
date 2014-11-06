@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Point of Sale Board module for Odoo
+#    Point of Sale - Reporting for Odoo
 #    Copyright (C) 2013-2014 GRAP (http://www.grap.coop)
 #    @author Julien WESTE
 #    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
@@ -22,7 +22,7 @@
 ##############################################################################
 
 {
-    'name': 'Point of Sale Board',
+    'name': 'Point of Sale Reporting',
     'version': '3.0',
     'category': 'Point of Sale',
     'description': """
@@ -48,7 +48,7 @@ Copyright, Authors and Licence:
         'view/view2.xml',
         'view/action2.xml',
         'view/menu.xml',
-        'security/ir.model.access.csv',
+        'security/ir_model_access.yml',
         'security/ir_rule.xml',
     ],
 }

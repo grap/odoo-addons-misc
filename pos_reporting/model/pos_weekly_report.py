@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Point of Sale Board module for OpenERP
+#    Point of Sale - Reporting for Odoo
 #    Copyright (C) 2013-2014 GRAP (http://www.grap.coop)
 #    @author Julien WESTE
 #    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
@@ -26,11 +26,11 @@ from openerp.osv import fields
 from openerp import tools
 
 
-class pos_board_load_weekly(Model):
-    _name = 'pos.board.load.weekly'
-    _description = 'POS Board Load Weekly'
+class pos_weekly_report(Model):
+    _name = 'pos.weekly.report'
     _auto = False
-    _log_access = False
+    _table = 'pos_weekly_report'
+
     _columns = {
         'date': fields.date('Date'),
         'week': fields.char('Week', size=64, required=True),
@@ -39,9 +39,9 @@ class pos_board_load_weekly(Model):
     }
 
     def init(self, cr):
-        tools.drop_view_if_exists(cr, 'pos_board_load_weekly')
+        tools.drop_view_if_exists(cr, self._table)
         cr.execute("""
-            create or replace view pos_board_load_weekly as (
+            create or replace view %s as (
                 SELECT
                     min(po.id) as id,
                     min(date_trunc('day',po.date_order)) as date,
@@ -57,4 +57,4 @@ class pos_board_load_weekly(Model):
                 GROUP BY
                     po.company_id,
                     week
-            )""")
+        )""" % (self._table))

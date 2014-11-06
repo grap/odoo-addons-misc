@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- ********************************************************************** -->
-<!--    Point of Sale Board module for Odoo                                 -->
+<!--    Point of Sale - Reporting module for Odoo                           -->
 <!--    Copyright (C) 2014 GRAP (http://www.grap.coop)                      -->
 <!--    @author Julien WESTE                                                -->
 <!--    @author Sylvain LE GAL (https://twitter.com/legalsylvain)           -->
@@ -20,13 +20,12 @@
 <!-- ********************************************************************** -->
 <openerp>
     <data>
-<!--______________________Model report.pos.order_________________________-->
+<!-- Model: pos.order.report                                                -->
         <record id="point_of_sale.action_report_pos_order_all" model="ir.actions.act_window">
             <field name="context">{'search_default_year':1,'group_by_no_leaf':1,'group_by':['categ_id2','categ_id']}</field>
         </record>
 
-        <record id="view_report_pos_order_tree_inherit" model="ir.ui.view">
-            <field name="name">report.pos.order.tree.inherit</field>
+        <record id="view_report_pos_order_tree" model="ir.ui.view">
             <field name="model">report.pos.order</field>
             <field name="inherit_id" ref="point_of_sale.view_report_pos_order_tree"/>
             <field name="arch" type="xml">
@@ -36,8 +35,7 @@
             </field>
         </record>
 
-        <record id="view_report_pos_order_search_inherit" model="ir.ui.view">
-            <field name="name">report.pos.order.search.inherit</field>
+        <record id="view_report_pos_order_search" model="ir.ui.view">
             <field name="model">report.pos.order</field>
             <field name="inherit_id" ref="point_of_sale.view_report_pos_order_search"/>
             <field name="arch" type="xml">
@@ -54,76 +52,78 @@
             </field>
         </record>
 
-<!--______________________Models pos.board.X_________________________-->
-        <record id="pos_sale_by_day_graph" model="ir.ui.view">
-            <field name="name">pos.sale.by.day.graph</field>
-            <field name="model">pos.board.load.daily</field>
+<!-- Model: pos.daily.simple.report                                         -->
+        <record id="view_pos_daily_simple_sales_report_graph" model="ir.ui.view">
+            <field name="model">pos.daily.simple.report</field>
             <field name="arch" type="xml">
-                <graph string="POS Sales by day" type="bar">
+                <graph string="Net Sales by Days (VAT Excl)" type="bar">
                     <field name="date_string"/>
                     <field name="amount_tax_excluded" operator="+"/>
                 </graph>
             </field>
         </record>
-        <record id="pos_sale_by_week_graph" model="ir.ui.view">
-            <field name="name">pos.sale.by.week.graph</field>
-            <field name="model">pos.board.load.weekly</field>
+        <record id="view_pos_daily_simple_number_report_graph" model="ir.ui.view">
+            <field name="model">pos.daily.simple.report</field>
             <field name="arch" type="xml">
-                <graph string="POS Sales by week" type="bar">
-                    <field name="week"/>
-                    <field name="amount_tax_excluded" operator="+"/>
-                </graph>
-            </field>
-        </record>
-        <record id="pos_sale_by_month_graph" model="ir.ui.view">
-            <field name="name">pos.sale.by.month.graph</field>
-            <field name="model">pos.board.load.monthly</field>
-            <field name="arch" type="xml">
-                <graph string="POS Sales by month" type="bar">
-                    <field name="month" group="True"/>
-                    <field name="amount_tax_excluded" operator="+"/>
-                </graph>
-            </field>
-        </record>
-        <record id="pos_sale_by_day_graph_simple" model="ir.ui.view">
-            <field name="name">pos.sale.by.day.graph.simple</field>
-            <field name="model">pos.board.load.daily.simple</field>
-            <field name="arch" type="xml">
-                <graph string="POS Sales by day simple" type="bar">
-                    <field name="date_string"/>
-                    <field name="amount_tax_excluded" operator="+"/>
-                </graph>
-            </field>
-        </record>
-        <record id="pos_nb_sale_by_day_graph" model="ir.ui.view">
-            <field name="name">pos.sale.by.day.graph.simple</field>
-            <field name="model">pos.board.load.daily.simple</field>
-            <field name="arch" type="xml">
-                <graph string="POS Number of Sales by day" type="bar">
+                <graph string="Number of Sales by Days" type="bar">
                     <field name="date_string"/>
                     <field name="nb_orders" operator="+"/>
                 </graph>
             </field>
         </record>
-        <record id="pos_avg_amount_by_day_graph" model="ir.ui.view">
-            <field name="name">pos.sale.by.day.graph.simple</field>
-            <field name="model">pos.board.load.daily.simple</field>
+        <record id="view_pos_daily_simple_average_report_graph" model="ir.ui.view">
+            <field name="model">pos.daily.simple.report</field>
             <field name="arch" type="xml">
-                <graph string="POS Average amount by day" type="bar">
+                <graph string="Average Sale by Days (VAT Excl)" type="bar">
                     <field name="date_string"/>
                     <field name="avg_amount" operator="+"/>
                 </graph>
             </field>
         </record>
 
-<!--______________________Models pos.board.payment.report_________________________-->
-    <record id="view_pos_board_payment_report_search" model="ir.ui.view">
-        <field name="name">pos.board.payment.report.search</field>
-        <field name="model">pos.board.payment.report</field>
+
+<!-- Model: pos.daily.report                                                -->
+        <record id="view_pos_daily_report_graph" model="ir.ui.view">
+            <field name="model">pos.daily.report</field>
+            <field name="arch" type="xml">
+                <graph string="Net Sales by Day (VAT Excl)" type="bar">
+                    <field name="date_string"/>
+                    <field name="amount_tax_excluded" operator="+"/>
+                </graph>
+            </field>
+        </record>
+
+<!-- Model: pos.weekly.report                                               -->
+        <record id="view_pos_weekly_report_graph" model="ir.ui.view">
+            <field name="model">pos.weekly.report</field>
+            <field name="arch" type="xml">
+                <graph string="Net Sales by Week (VAT Excl)" type="bar">
+                    <field name="week"/>
+                    <field name="amount_tax_excluded" operator="+"/>
+                </graph>
+            </field>
+        </record>
+
+<!-- Model: pos.monthly.report                                              -->
+        <record id="view_pos_monthly_report_graph" model="ir.ui.view">
+            <field name="model">pos.monthly.report</field>
+            <field name="arch" type="xml">
+                <graph string="Net Sales by Month (VAT Excl)" type="bar">
+                    <field name="month" group="True"/>
+                    <field name="amount_tax_excluded" operator="+"/>
+                </graph>
+            </field>
+        </record>
+
+
+<!-- Model: pos.payment.type.report                                         -->
+    <record id="view_pos_payment_type_report_search" model="ir.ui.view">
+        <field name="model">pos.payment.type.report</field>
         <field name="arch" type="xml">
             <search string="Payment Analysis">
                 <group expand="1" string="Group By...">
-                    <filter name="group_by_company_id" string="Company" context="{'group_by':'company_id'}" groups="base.group_multi_company" />
+                    <filter name="group_by_company_id" 
+                        string="Company" context="{'group_by':'company_id'}" groups="base.group_multi_company" />
                     <filter name="group_by_journal_id" string="Journal" context="{'group_by':'journal_id'}"/>
                     <filter name="group_by_month" string="Month" context="{'group_by':'month'}"/>
                 </group>
@@ -131,10 +131,9 @@
         </field>
     </record>
 
-    <record id="view_pos_board_payment_report_tree" model="ir.ui.view">
+    <record id="view_pos_payment_type_report_tree" model="ir.ui.view">
         <field eval="1" name="priority"/>
-        <field name="name">pos.board.payment.report.tree</field>
-        <field name="model">pos.board.payment.report</field>
+        <field name="model">pos.payment.type.report</field>
         <field name="arch" type="xml">
             <tree string="Payment Analysis" create="false">
                 <field name="company_id" groups="base.group_multi_company"/>
@@ -147,9 +146,8 @@
         </field>
     </record>
 
-    <record id="view_pos_board_payment_report_graph" model="ir.ui.view">
-         <field name="name">pos.board.payment.report.graph</field>
-         <field name="model">pos.board.payment.report</field>
+    <record id="view_pos_payment_type_report_graph" model="ir.ui.view">
+        <field name="model">pos.payment.type.report</field>
          <field name="arch" type="xml">
                 <graph string="Payment Analysis" type="pie">
                     <field name="journal_id"/>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- ********************************************************************** -->
-<!--    Point of Sale Board module for Odoo                                 -->
+<!--    Point of Sale - Reporting module for Odoo                           -->
 <!--    Copyright (C) 2014 GRAP (http://www.grap.coop)                      -->
 <!--    @author Julien WESTE                                                -->
 <!--    @author Sylvain LE GAL (https://twitter.com/legalsylvain)           -->
@@ -20,38 +20,40 @@
 <!-- ********************************************************************** -->
 <openerp>
     <data>
-<!--______________________Models pos.board.X_________________________-->
-        <record id="board_pos" model="ir.ui.view">
-            <field name="name">board.pos.form</field>
+
+        <record id="view_pos_daily_simple_report_agregate" model="ir.ui.view">
+            <field name="name">pos.daily.simple.report.agregate</field>
             <field name="model">board.board</field>
             <field name="arch" type="xml">
-                <form string="Point of Sale board">
-                    <board style="1-1">
-                        <column>
-                            <action name="%(pos_sale_by_day)d" string="Sales by day"/>
-                            <action name="%(pos_sale_by_week)d" string="Sales by week"/>
-                        </column>
-                        <column>
-                            <action name="%(pos_sale_by_month)d" string="Sales by month"/>
-                        </column>
-                    </board>
-                </form>
-            </field>
-        </record>
-        <record id="board_pos_simple" model="ir.ui.view">
-            <field name="name">board.pos.form</field>
-            <field name="model">board.board</field>
-            <field name="arch" type="xml">
-                <form string="Point of Sale board simple">
+                <form string="Daily Analysis">
                     <board style="1">
                         <column>
-                            <action name="%(pos_sale_by_day_simple)d" string="Sales by day"/>
-                            <action name="%(pos_nb_sale_by_day)d" string="Nb of sales by day"/>
-                            <action name="%(pos_avg_amount_by_day)d" string="Average Amount by day"/>
+                            <action name="%(action_pos_daily_simple_sales_report)d" string="Net Sales by Day (VAT Excl)"/>
+                            <action name="%(action_pos_daily_simple_number_report)d" string="Number of Sales by Day"/>
+                            <action name="%(action_pos_daily_simple_average_report)d" string="Average Sale by Day (VAT Excl)"/>
                         </column>
                     </board>
                 </form>
             </field>
         </record>
+
+        <record id="view_pos_periodic_report_agregate" model="ir.ui.view">
+            <field name="name">pos.periodic.report.agregate</field>
+            <field name="model">board.board</field>
+            <field name="arch" type="xml">
+                <form string="Periodic Analysis">
+                    <board style="1-1">
+                        <column>
+                            <action name="%(action_pos_daily_report)d" string="Net Sales by Day (VAT Excl)"/>
+                            <action name="%(action_pos_weekly_report)d" string="Net Sales by Week (VAT Excl)"/>
+                        </column>
+                        <column>
+                            <action name="%(action_pos_monthly_report)d" string="Net Sales by Month (VAT Excl)"/>
+                        </column>
+                    </board>
+                </form>
+            </field>
+        </record>
+
     </data>
 </openerp>

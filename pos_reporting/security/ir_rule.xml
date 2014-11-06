@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- ********************************************************************** -->
-<!--    Point of Sale Board module for Odoo                                 -->
+<!--    Point of Sale - Reporting module for Odoo                           -->
 <!--    Copyright (C) 2014 GRAP (http://www.grap.coop)                      -->
 <!--    @author Julien WESTE                                                -->
 <!--    @author Sylvain LE GAL (https://twitter.com/legalsylvain)           -->
@@ -20,35 +20,35 @@
 <!-- ********************************************************************** -->
 <openerp>
     <data noupdate="0">
-        <record id="rule_pos_report_multi_company" model="ir.rule">
-            <field name="name">Pos Order Report</field>
+        <record id="rule_report_pos_order" model="ir.rule">
+            <field name="name">Pos Order Report Rule</field>
             <field name="model_id" ref="point_of_sale.model_report_pos_order" />
             <field name="global" eval="True" />
             <field name="domain_force">[('company_id', '=', user.company_id.id)]</field>
         </record>
-        <record id="pos_board_rule_daily" model="ir.rule">
-            <field name="name" >POS Board Multi Company Daily</field>
-            <field model="ir.model" name="model_id" search="[('model', '=', u'pos.board.load.daily')]"/>
+        <record id="rule_pos_daily_simple_report" model="ir.rule">
+            <field name="name" >POS Daily Simple Report Rule</field>
+            <field name="model_id" ref="pos_reporting.model_pos_daily_simple_report"/>
             <field name="domain_force">[('company_id', '=', user.company_id.id)]</field>
         </record>
-        <record id="pos_board_rule_weekly" model="ir.rule">
-            <field name="name" >POS Board Multi Company Weekly</field>
-            <field model="ir.model" name="model_id" search="[('model', '=', u'pos.board.load.weekly')]"/>
+        <record id="rule_pos_daily_report" model="ir.rule">
+            <field name="name" >POS Daily Report Rule</field>
+            <field name="model_id" ref="pos_reporting.model_pos_daily_report"/>
             <field name="domain_force">[('company_id', '=', user.company_id.id)]</field>
         </record>
-        <record id="pos_board_rule_monthly" model="ir.rule">
-            <field name="name" >POS Board Multi Company Monthly</field>
-            <field model="ir.model" name="model_id" search="[('model', '=', u'pos.board.load.monthly')]"/>
+        <record id="rule_pos_weekly_report" model="ir.rule">
+            <field name="name" >POS Weekly Report Rule</field>
+            <field name="model_id" ref="pos_reporting.model_pos_weekly_report"/>
             <field name="domain_force">[('company_id', '=', user.company_id.id)]</field>
         </record>
-        <record id="pos_board_rule_daily_simple" model="ir.rule">
-            <field name="name" >POS Board Multi Company Daily Simple</field>
-            <field model="ir.model" name="model_id" search="[('model', '=', u'pos.board.load.daily.simple')]"/>
+        <record id="rule_pos_monthly_report" model="ir.rule">
+            <field name="name" >POS Monthly Report Rule</field>
+            <field name="model_id" ref="pos_reporting.model_pos_monthly_report"/>
             <field name="domain_force">[('company_id', '=', user.company_id.id)]</field>
         </record>
-        <record id="pos_board_rule_payment_report" model="ir.rule">
-            <field name="name" >POS Board Multi Company Payment Report</field>
-            <field model="ir.model" name="model_id" search="[('model', '=', u'pos.board.payment.report')]"/>
+        <record id="rule_pos_payment_type_report" model="ir.rule">
+            <field name="name" >POS Daily Payment Type Report Rule</field>
+            <field name="model_id" ref="pos_reporting.model_pos_payment_type_report"/>
             <field name="domain_force">[('company_id', '=', user.company_id.id)]</field>
         </record>
     </data>
