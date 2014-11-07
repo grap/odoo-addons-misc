@@ -130,7 +130,8 @@ class account_merge_pattern(Model):
     def cron_merge_account_moves(self, cr, uid, ids, context=None):
         """
             Public function call by cron task to merge account moves.
-            This function change user company in each call to avoid bad context.
+            This function change user company in each call to avoid bad
+            context.
         """
         for amp in self.browse(cr, uid, ids, context=context):
             # Changing company_id of the user
@@ -290,13 +291,13 @@ class account_merge_pattern(Model):
                                 'merged_move_quantity':
                                     len(account_move_ids_to_merge),
                             }, context=context)
-#                            am_obj.button_validate(
-#                                cr, uid, [account_move_id], context=context)
+                            am_obj.button_validate(
+                                cr, uid, [account_move_id], context=context)
                         else:
                             # updating existing merge account move
-#                            am_obj.button_cancel(
-#                                cr, uid, [merge_account_move.id],
-#                                context=context)
+                            am_obj.button_cancel(
+                                cr, uid, [merge_account_move.id],
+                                context=context)
                             line_id = []
                             for am_id in amp.credit_account_ids:
                                 aml = self._get_account_move_line(
@@ -343,9 +344,9 @@ class account_merge_pattern(Model):
                             am_obj.write(
                                 cr, uid, [merge_account_move.id], vals,
                                 context=context)
-#                            am_obj.button_validate(
-#                                cr, uid, [merge_account_move.id],
-#                                context=context)
+                            am_obj.button_validate(
+                                cr, uid, [merge_account_move.id],
+                                context=context)
 
                         # delete obsolete account move
                         _logger.info(
