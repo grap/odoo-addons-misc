@@ -1,12 +1,45 @@
-<?xml version="1.0"?>
-<!-- *********************************************************************** -->
-<!-- See __openerp__.py file for Copyright and Licence Informations.         -->
-<!-- *********************************************************************** -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ********************************************************************** -->
+<!--    Sale - Merge Moves By Patterns for Odoo                             -->
+<!--    Copyright (C) 2014- Today GRAP (http://www.grap.coop)               -->
+<!--    @author Sylvain LE GAL (https://twitter.com/legalsylvain)           -->
+
+<!--This program is free software: you can redistribute it and/or modify    -->
+<!--it under the terms of the GNU Affero General Public License as          -->
+<!--published by the Free Software Foundation, either version 3 of the      -->
+<!--License, or (at your option) any later version.                         -->
+
+<!--This program is distributed in the hope that it will be useful,         -->
+<!--but WITHOUT ANY WARRANTY; without even the implied warranty of          -->
+<!--MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           -->
+<!--GNU Affero General Public License for more details.                     -->
+
+<!--You should have received a copy of the GNU Affero General Public License-->
+<!--along with this program.  If not, see <http://www.gnu.org/licenses/>.   -->
+<!-- ********************************************************************** -->
 <openerp>
     <data>
 
-<!-- Model : account.merge.pattern -->
+<!-- Model : account.move -->
+        <record id="view_account_move_form" model="ir.ui.view">
+            <field name="name">account.move.form</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form" />
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Merge Informations" attrs="{'invisible':[('merged_move_quantity','=',0)]}">
+                        <group>
+                            <field name="merged_move_quantity" />
+                        </group>
+                        <group>
+                            <field name="merged_narration" nolabel="1"/>
+                        </group>
+                    </page>
+                </notebook>
+            </field>
+        </record>
 
+<!-- Model : account.merge.pattern -->
         <record id="view_account_merge_pattern_tree" model="ir.ui.view">
             <field name="name">account.merge.pattern.tree</field>
             <field name="model">account.merge.pattern</field>

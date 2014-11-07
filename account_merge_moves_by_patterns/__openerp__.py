@@ -65,7 +65,6 @@ Copyright, Authors and Licence:
         'security/ir_rule.xml',
         'security/res_groups.yml',
         'security/ir_model_access.yml',
-        'view/account_move_view.xml',
         'view/view.xml',
         'view/action.xml',
         'view/menu.xml',
