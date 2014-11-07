@@ -36,20 +36,12 @@ Features :
         * a Period;
     * The 'Merged' move will be at 'draft' state during all the period,
       and will be validated at the end of the period;
+    * Possibility to batch the merge process;
 
 Use Case :
 ----------
     * This module can be used for exemple if OpenERP is set to generated
       account moves at each stock moves in real time;
-
-Improve Possibilities :
------------------------
-    * Create a Batch;
-
-Copyright and Licence :
------------------------
-    * 2014, Groupement Régional Alimentaire de Proximité (http://www.grap.coop/)
-    * Licence : AGPL-3 (http://www.gnu.org/licenses/)
 
 Copyright, Authors and Licence:
 -------------------------------
