@@ -20,10 +20,13 @@
 #
 ##############################################################################
 
+import logging
 from openerp.osv.orm import Model
 from openerp.osv import fields
 from openerp.osv import osv
 from openerp.tools.translate import _
+
+_logger = logging.getLogger(__name__)
 
 
 class account_merge_pattern(Model):
@@ -150,19 +153,27 @@ class account_merge_pattern(Model):
         return None
 
     def _merge_account_moves(self, cr, uid, ids, context=None):
-        am_obj = self.pool.get('account.move')
-        rc_obj = self.pool.get('res.company')
+        am_obj = self.pool['account.move']
+        ap_obj = self.pool['account.period']
+        rc_obj = self.pool['res.company']
         for amp in self.browse(cr, uid, ids, context=context):
-            company_ids = rc_obj.search(
-                cr, uid, [
-                    '|',
-                    ('parent_id', '=', amp.company_id.id),
-                    ('id', '=', amp.company_id.id)],
+            rc_ids = rc_obj.search(cr, uid, [
+                '|',
+                ('parent_id', '=', amp.company_id.id),
+                ('id', '=', amp.company_id.id)],
                 context=context)
             # Merging by company_id
-            for company_id in company_ids:
-                # merging by Period
-                for ap in amp.period_ids:
+            for rc in rc_obj.browse(cr, uid, rc_ids, context=context):
+                # merging by Opened Period
+                all_ap_ids = [x.id for x in amp.period_ids]
+                ap_ids = ap_obj.search(cr, uid, [
+                    ('id', 'in', all_ap_ids),
+                    ('state', '=', 'draft')],
+                    context=context)
+                for ap in ap_obj.browse(cr, uid, ap_ids, context=context):
+                    _logger.info(
+                        """Merging Moves. Pattern '%s'; Company '%s';"""
+                        """ Period: '%s'""" % (amp.name, rc.name, ap.name))
                     narration = ''
                     account_move_ids_to_merge = []
                     account_move_lines = []
@@ -182,7 +193,7 @@ class account_merge_pattern(Model):
                         cr, uid, [
                             ('journal_id', '=', amp.journal_id.id),
                             ('period_id', '=', ap.id),
-                            ('company_id', '=', company_id),
+                            ('company_id', '=', rc.id),
                             ('state', '=', 'posted'), ], context=context)
                     for am in am_obj.browse(cr, uid, am_ids, context=context):
                         match = True
@@ -219,7 +230,7 @@ class account_merge_pattern(Model):
                         cr, uid, [
                             ('journal_id', '=', amp.output_journal_id.id),
                             ('period_id', '=', ap.id),
-                            ('company_id', '=', company_id),
+                            ('company_id', '=', rc.id),
                             ('merged_move_quantity', '!=', 0)],
                         context=context)
                     for am in am_obj.browse(cr, uid, am_ids, context=context):
@@ -246,7 +257,7 @@ class account_merge_pattern(Model):
                                 amp.output_journal_id.name))
 
                     print "%s %s %s" % (
-                        company_id, ap.name, len(account_move_ids_to_merge))
+                        rc.id, ap.name, len(account_move_ids_to_merge))
                     if account_move_ids_to_merge:
                         if not merge_account_move:
                             # creating new merge account move
@@ -269,7 +280,7 @@ class account_merge_pattern(Model):
                                     'credit': credit_account_values[am_id.id],
                                 }))
                             account_move_id = am_obj.create(cr, uid, {
-                                'company_id': company_id,
+                                'company_id': rc.id,
                                 'date': max_date,
                                 'period_id': ap.id,
                                 'journal_id': amp.output_journal_id.id,
@@ -279,13 +290,13 @@ class account_merge_pattern(Model):
                                 'merged_move_quantity':
                                     len(account_move_ids_to_merge),
                             }, context=context)
-                            am_obj.button_validate(
-                                cr, uid, [account_move_id], context=context)
+#                            am_obj.button_validate(
+#                                cr, uid, [account_move_id], context=context)
                         else:
                             # updating existing merge account move
-                            am_obj.button_cancel(
-                                cr, uid, [merge_account_move.id],
-                                context=context)
+#                            am_obj.button_cancel(
+#                                cr, uid, [merge_account_move.id],
+#                                context=context)
                             line_id = []
                             for am_id in amp.credit_account_ids:
                                 aml = self._get_account_move_line(
@@ -332,11 +343,16 @@ class account_merge_pattern(Model):
                             am_obj.write(
                                 cr, uid, [merge_account_move.id], vals,
                                 context=context)
-                            am_obj.button_validate(
-                                cr, uid, [merge_account_move.id],
-                                context=context)
+#                            am_obj.button_validate(
+#                                cr, uid, [merge_account_move.id],
+#                                context=context)
 
                         # delete obsolete account move
+                        _logger.info(
+                            """Cancelling and deleting %s Moves."""
+                            """ Pattern '%s'; Company '%s'; Period: '%s'""" % (
+                                len(account_move_ids_to_merge), amp.name,
+                                rc.name, ap.name))
                         am_obj.button_cancel(
                             cr, uid, account_move_ids_to_merge,
                             context=context)
