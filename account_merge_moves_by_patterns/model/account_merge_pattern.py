@@ -136,9 +136,9 @@ class account_merge_pattern(Model):
         for amp in self.browse(cr, uid, ids, context=context):
             # Changing company_id of the user
             self.pool.get('res.users').write(
-                cr, uid, [uid], {'company_id': amp.company_id},
+                cr, uid, [uid], {'company_id': amp.company_id.id},
                 context=context)
-            self._merge_account_moves(self, cr, uid, amp.id, context=context)
+            self._merge_account_moves(cr, uid, [amp.id], context=context)
 
     # Actions Section
     def action_merge_account_moves(self, cr, uid, ids, context=None):
