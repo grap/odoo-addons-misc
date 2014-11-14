@@ -28,3 +28,5 @@
     standard_price: 20.0
     list_price: 30.0
     tax_group_id: product_taxes_group.tax_group_1
+    uom_id: product.product_uom_unit
+    uom_po_id: product.product_uom_unit
