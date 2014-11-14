@@ -146,12 +146,12 @@ class tax_group(Model):
     def _get_product_ids(self, cr, uid, ids, name, args, context=None):
         res = dict([(x, []) for x in ids])
         pp_obj = self.pool['product.product']
-        for id in ids:
+        for tg_id in ids:
             pp_ids = pp_obj.search(
                 cr, uid, [
-                    ('tax_group_id', '=', id), '|', ('active', '=', False),
+                    ('tax_group_id', '=', tg_id), '|', ('active', '=', False),
                     ('active', '=', True)], context=context)
-            res[id] = pp_ids
+            res[tg_id] = pp_ids
         return res
 
     _columns = {
