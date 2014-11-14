@@ -104,12 +104,12 @@ class internal_use_case(Model):
         'Case of Internal uses name must be unique by company!')]
 
     # Overload Section
-    def copy_data(self, cr, uid, id, default=None, context=None):
+    def copy_data(self, cr, uid, record_id, default=None, context=None):
         if not default:
             default = {}
         default.update({
             'name': '%s (copy)' % (self.browse(
-                cr, uid, id, context=context).name)
+                cr, uid, record_id, context=context).name)
         })
         return super(internal_use_case, self).copy_data(
-            cr, uid, id, default, context=context)
+            cr, uid, record_id, default, context=context)

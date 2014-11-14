@@ -79,7 +79,6 @@ class sale_recovery_moment_group(Model):
             SELECT id
             FROM sale_recovery_moment_group
             WHERE %s;""" % (where)
-        print sql_req
         cr.execute(sql_req)
         res = cr.fetchall()
         return [('id', 'in', map(lambda x:x[0], res))]

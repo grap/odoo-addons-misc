@@ -119,16 +119,16 @@ class ir_module_repository(Model):
             module_path = modules.get_module_path(module.name)
             if module_path:
                 path = module_path.rstrip(module.name)
-                id = imr_curr.get(path, False)
-                if not id:
+                imr_id = imr_curr.get(path, False)
+                if not imr_id:
                     # Create new repository
-                    id = self.create(cr, uid, {
+                    imr_id = self.create(cr, uid, {
                         'name': 'TEMPORARY NAME',
                         'path': path,
                     }, context=context)
-                    imr_curr[path] = id
+                    imr_curr[path] = imr_id
                 imm_obj.write(
-                    cr, uid, [module.id], {'repository_id': id},
+                    cr, uid, [module.id], {'repository_id': imr_id},
                     context=context)
 
         # Update information of All repositories

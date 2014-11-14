@@ -37,7 +37,7 @@ class product_product(Model):
     ]
 
     # Field function Section
-    def _get_eshop_state(self, cr, uid, ids, fields, args, context=None):
+    def _get_eshop_state(self, cr, uid, ids, fields_name, args, context=None):
         res = {}
         for pp in self.browse(cr, uid, ids, context=context):
             if not pp.eshop_category_id:

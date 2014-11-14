@@ -132,7 +132,7 @@ class tax_group(Model):
                         list_res.values().index(res)]})
 
     def _get_product_qty(self, cr, uid, ids, name, args, context=None):
-        res = dict([(id, 0) for id in ids])
+        res = dict([(x, 0) for x in ids])
         pp_obj = self.pool['product.product']
         result = pp_obj.read_group(
             cr, uid, [
@@ -144,7 +144,7 @@ class tax_group(Model):
         return res
 
     def _get_product_ids(self, cr, uid, ids, name, args, context=None):
-        res = dict([(id, []) for id in ids])
+        res = dict([(x, []) for x in ids])
         pp_obj = self.pool['product.product']
         for id in ids:
             pp_ids = pp_obj.search(

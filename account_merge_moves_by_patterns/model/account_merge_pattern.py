@@ -257,8 +257,6 @@ class account_merge_pattern(Model):
                                 amp.company_id.name, ap.name,
                                 amp.output_journal_id.name))
 
-                    print "%s %s %s" % (
-                        rc.id, ap.name, len(account_move_ids_to_merge))
                     if account_move_ids_to_merge:
                         if not merge_account_move:
                             # creating new merge account move

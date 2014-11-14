@@ -20,8 +20,8 @@
 #
 ##############################################################################
 
-import internal_use
-import internal_use_line
-import internal_use_case
-import product
-import stock
+from . import internal_use
+from . import internal_use_line
+from . import internal_use_case
+from . import product
+from . import stock

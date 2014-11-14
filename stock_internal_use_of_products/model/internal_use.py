@@ -101,12 +101,12 @@ class internal_use(Model):
             cr, uid, 'internal.use')
         return super(internal_use, self).create(cr, uid, vals, context=context)
 
-    def copy_data(self, cr, uid, id, default=None, context=None):
+    def copy_data(self, cr, uid, record_id, default=None, context=None):
         if not default:
             default = {}
         default.update({'move_ids': [], 'line_ids': []})
         return super(internal_use, self).copy_data(
-            cr, uid, id, default, context=context)
+            cr, uid, record_id, default, context=context)
 
     def unlink(self, cr, uid, ids, context=None):
         if context is None:

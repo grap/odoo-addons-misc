@@ -52,7 +52,7 @@ class eshop_category(Model):
         return res
 
     # Field function Section
-    def _get_complete_name(self, cr, uid, ids, fields, args, context=None):
+    def _get_complete_name(self, cr, uid, ids, pFields, args, context=None):
         res = {}
         for ec in self.browse(cr, uid, ids, context=context):
             res[ec.id] = self._compute_complete_name(
@@ -83,9 +83,9 @@ class eshop_category(Model):
                 obj.image, avoid_resize_medium=True)
         return result
 
-    def _set_image_multi(self, cr, uid, id, name, value, args, context=None):
+    def _set_image_multi(self, cr, uid, pId, name, value, args, context=None):
         return self.write(
-            cr, uid, [id], {'image': tools.image_resize_image_big(value)},
+            cr, uid, [pId], {'image': tools.image_resize_image_big(value)},
             context=context)
 
     _columns = {
@@ -163,8 +163,8 @@ class eshop_category(Model):
     ]
 
     # Private Function
-    def _compute_complete_name(self, cr, uid, id, context=None):
-        pc = self.browse(cr, uid, id, context=context)
+    def _compute_complete_name(self, cr, uid, pId, context=None):
+        pc = self.browse(cr, uid, pId, context=context)
         if pc.parent_id:
             res = self._compute_complete_name(
                 cr, uid, pc.parent_id.id, context=context) \

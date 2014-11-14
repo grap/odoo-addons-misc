@@ -20,5 +20,5 @@
 #
 ##############################################################################
 
-import account_merge_pattern
-import account_move
+from . import account_merge_pattern
+from . import account_move
