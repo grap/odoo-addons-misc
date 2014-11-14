@@ -28,6 +28,7 @@
     eshop_minimum_qty: 0.5
     eshop_rounded_qty: 0.1
     uom_id: product.product_uom_kgm
+    uom_po_id: product.product_uom_kgm
     uos_id: product.product_uom_kgm
     description_sale: Description of Banana
     sale_ok: True
@@ -40,6 +41,7 @@
     list_price: 3.10
     eshop_category_id: category_fruit
     uom_id: product.product_uom_unit
+    uom_po_id: product.product_uom_unit
     uos_id: product.product_uom_unit
     description_sale: Description of Strawberry. 250 gram container
     sale_ok: True
@@ -53,6 +55,7 @@
     eshop_minimum_qty: 1.0
     eshop_rounded_qty: 0.2
     uom_id: product.product_uom_kgm
+    uom_po_id: product.product_uom_kgm
     uos_id: product.product_uom_kgm
     description_sale: Description of Apple
     sale_ok: True
@@ -67,6 +70,7 @@
     eshop_minimum_qty: 1.0
     eshop_rounded_qty: 0.5
     uom_id: product.product_uom_kgm
+    uom_po_id: product.product_uom_kgm
     uos_id: product.product_uom_kgm
     description_sale: Description of Potato
     sale_ok: True
@@ -80,6 +84,7 @@
     eshop_minimum_qty: 0.4
     eshop_rounded_qty: 0.2
     uom_id: product.product_uom_kgm
+    uom_po_id: product.product_uom_kgm
     uos_id: product.product_uom_kgm
     description_sale: Description of Leek
     sale_ok: True
@@ -93,6 +98,7 @@
     eshop_minimum_qty: 0.5
     eshop_rounded_qty: 0.1
     uom_id: product.product_uom_kgm
+    uom_po_id: product.product_uom_kgm
     uos_id: product.product_uom_kgm
     description_sale: Description of Onions
     sale_ok: True
@@ -106,6 +112,7 @@
     eshop_minimum_qty: 0.1
     eshop_rounded_qty: 0.02
     uom_id: product.product_uom_kgm
+    uom_po_id: product.product_uom_kgm
     uos_id: product.product_uom_kgm
     description_sale: Description of Garlic
     sale_ok: True
@@ -119,6 +126,7 @@
     eshop_minimum_qty: 0.4
     eshop_rounded_qty: 0.1
     uom_id: product.product_uom_kgm
+    uom_po_id: product.product_uom_kgm
     uos_id: product.product_uom_kgm
     description_sale: Description of Pepper
     sale_ok: True
