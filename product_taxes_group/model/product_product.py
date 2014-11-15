@@ -39,8 +39,9 @@ class product_product(Model):
             toolbar=toolbar, submenu=False)
         if view_type == 'form':
             doc = etree.XML(res['arch'])
-            node = doc.xpath("//field[@name='tax_group_id']")[0]
-            node.set('required', '1')
-            setup_modifiers(node, res['fields']['tax_group_id'])
-            res['arch'] = etree.tostring(doc)
+            nodes = doc.xpath("//field[@name='tax_group_id']")
+            if nodes:
+                nodes[0].set('required', '1')
+                setup_modifiers(nodes[0], res['fields']['tax_group_id'])
+                res['arch'] = etree.tostring(doc)
         return res
