@@ -41,7 +41,7 @@ class product_template(Model):
 
     def check_coherent_vals(self, cr, uid, ids, vals, context=None):
         tg_obj = self.pool['tax.group']
-        if 'tax_group_id' in vals:
+        if vals.get('tax_group_id', False):
             # update or replace 'taxes_id' and 'supplier_taxes_id'
             tg = tg_obj.browse(cr, uid, vals['tax_group_id'], context=context)
             vals['supplier_taxes_id'] = [[6, 0, [
@@ -52,8 +52,14 @@ class product_template(Model):
             if not ids:
                 # product template creation mode
                 company_id = vals.get('company_id', False)
-                supplier_tax_ids = vals.get('supplier_taxes_id', [])
-                customer_tax_ids = vals.get('taxes_id', [])
+                if 'supplier_taxes_id' in vals.keys():
+                    supplier_tax_ids = vals['supplier_taxes_id'][0][2]
+                else:
+                    supplier_tax_ids = []
+                if 'taxes_id' in vals.keys():
+                    customer_tax_ids = vals['taxes_id'][0][2]
+                else:
+                    customer_tax_ids = []
             else:
                 # product template Single update mode
                 if len(ids) != 1:

@@ -51,7 +51,7 @@ class TestProductTaxesGroup(TransactionCase):
 
     # Test Section
     def test_01_change_group(self):
-        """Test if the behaviour when when we change tax group for products."""
+        """Test if the behaviour when we change tax group for products."""
         cr, uid = self.cr, self.uid
         wctg_id = self.wctg_obj.create(cr, uid, {
             'old_tax_group_id': self.tg1_id, 'new_tax_group_id': self.tg2_id})
@@ -68,8 +68,8 @@ class TestProductTaxesGroup(TransactionCase):
         vals = {
             'name': 'Product Product Name',
             'company_id': self.main_company_id,
-            'supplier_taxes_id': [self.at_purchase_1_id],
-            'taxes_id': [self.at_sale_1_id, self.at_sale_2_id],
+            'supplier_taxes_id': [[6, 0, [self.at_purchase_1_id]]],
+            'taxes_id': [[6, 0, [self.at_sale_1_id, self.at_sale_2_id]]],
         }
         pp_id = self.pp_obj.create(cr, uid, vals)
         pp = self.pp_obj.browse(cr, uid, pp_id)
@@ -86,15 +86,16 @@ class TestProductTaxesGroup(TransactionCase):
             pp.tax_group_id.id, self.tg2_id,
             "Recovery of Correct Tax Group failed during update.")
 
-    def test_03_check_coherent_vals_tax_group_doesnt_exist(self):
+    def test_03_check_coherent_vals_tax_group_doesnt_exist_single(self):
         """Test if the behaviour of the function product.template
-        check_coherent_vals() when the combination doesn't exist."""
+        check_coherent_vals() when the combination doesn't exist.
+        (Single Tax)"""
         cr, uid = self.cr, self.uid
         vals = {
             'name': 'Product Product Name',
             'company_id': self.main_company_id,
-            'supplier_taxes_id': [self.at_purchase_1_id],
-            'taxes_id': [self.at_sale_1_id],
+            'supplier_taxes_id': [[6, 0, [self.at_purchase_1_id]]],
+            'taxes_id': [[6, 0, [self.at_sale_1_id]]],
         }
         count_1 = len(self.tg_obj.search(cr, uid, []))
         self.pp_obj.create(cr, uid, vals)
@@ -103,7 +104,25 @@ class TestProductTaxesGroup(TransactionCase):
             count_1 + 1, count_2,
             "New combination must create new Tax Group.")
 
-    def test_04_update_tax_group(self):
+    def test_04_check_coherent_vals_tax_group_doesnt_exist_multi(self):
+        """Test if the behaviour of the function product.template
+        check_coherent_vals() when the combination doesn't exist.
+        (Multiple Taxes)"""
+        cr, uid = self.cr, self.uid
+        vals = {
+            'name': 'Product Product Name',
+            'company_id': self.main_company_id,
+            'supplier_taxes_id': [[6, False, []]],
+            'taxes_id': [[6, False, [self.at_sale_1_id, self.at_sale_2_id]]],
+        }
+        count_1 = len(self.tg_obj.search(cr, uid, []))
+        self.pp_obj.create(cr, uid, vals)
+        count_2 = len(self.tg_obj.search(cr, uid, []))
+        self.assertEqual(
+            count_1 + 1, count_2,
+            "New combination must create new Tax Group.")
+
+    def test_05_update_tax_group(self):
         """Test if changing a Tax Group change the product."""
         cr, uid = self.cr, self.uid
         self.tg_obj.write(cr, uid, [self.tg1_id], {
@@ -116,7 +135,7 @@ class TestProductTaxesGroup(TransactionCase):
             [[self.at_sale_1_id], [self.at_purchase_1_id]],
             "Update taxes in Tax Group must update associated Products.")
 
-    def test_05_unlink_tax_group(self):
+    def test_06_unlink_tax_group(self):
         """Test if unlinking a Tax Group with product fails."""
         cr, uid = self.cr, self.uid
         try:
