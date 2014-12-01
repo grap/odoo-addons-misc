@@ -47,10 +47,13 @@ class MaterializedModel(Model):
 
     _is_materialized = False
 
-    def init(self, cr):
+    def __init__(self, pool, cr):
+        super(MaterializedModel, self).__init__(pool, cr)
         cr.execute("SELECT version();")
         res = cr.fetchall()
         self._is_materialized = res[0][0].split(" ")[1] >= '9.3'
+
+    def init(self, cr):
         if self._is_materialized:
             # Creating materialized view only if module state is 'to install'
             imm_obj = self.pool['ir.module.module']
