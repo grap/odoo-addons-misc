@@ -70,6 +70,12 @@ Copyright, Authors and Licence:
         'view/internal_uses_action.xml',
         'view/internal_uses_menu.xml',
     ],
+    'demo': [
+        'demo/stock_location.yml',
+        'demo/res_groups.yml',
+        'demo/internal_use_case.yml',
+        'demo/internal_use.yml',
+    ],
     'css': [
         'static/src/css/css.css'
     ],

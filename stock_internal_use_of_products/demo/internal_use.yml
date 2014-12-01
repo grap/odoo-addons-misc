@@ -1,0 +1,38 @@
+# -*- encoding: utf-8 -*-
+##############################################################################
+#
+#    Stock - Internal Use Of Products for Odoo
+#    Copyright (C) 2014 GRAP (http://www.grap.coop)
+#    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Affero General Public License for more details.
+#
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
+
+- !record {model: internal.use, id: internal_use}:
+    internal_use_case: internal_use_case
+
+- !record {model: internal.use.line, id: internal_use_line_1}:
+    internal_use: internal_use
+    product_id: product.product_product_48
+    product_qty: 3
+    product_uom_id: product.product_uom_unit
+    price_unit: 13
+
+- !record {model: internal.use.line, id: internal_use_line_2}:
+    internal_use: internal_use
+    product_id: product.product_product_24
+    product_qty: 1
+    product_uom_id: product.product_uom_unit
+    price_unit:  876
