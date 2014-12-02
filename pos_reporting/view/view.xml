@@ -20,38 +20,6 @@
 <!-- ********************************************************************** -->
 <openerp>
     <data>
-<!-- Model: pos.order.report                                                -->
-        <record id="point_of_sale.action_report_pos_order_all" model="ir.actions.act_window">
-            <field name="context">{'search_default_year':1,'group_by_no_leaf':1,'group_by':['categ_id2','categ_id']}</field>
-        </record>
-
-        <record id="view_report_pos_order_tree" model="ir.ui.view">
-            <field name="model">report.pos.order</field>
-            <field name="inherit_id" ref="point_of_sale.view_report_pos_order_tree"/>
-            <field name="arch" type="xml">
-                <data>
-                    <field name="delay_validation" position="replace"/>
-                </data>
-            </field>
-        </record>
-
-        <record id="view_report_pos_order_search" model="ir.ui.view">
-            <field name="model">report.pos.order</field>
-            <field name="inherit_id" ref="point_of_sale.view_report_pos_order_search"/>
-            <field name="arch" type="xml">
-                <data>
-                    <filter string="Year" context="{'group_by':'year'}" position="after">
-                        <filter string="Category" icon="terp-go-year" context="{'group_by':'categ_id'}" help="Category"/>
-                        <filter string="Category2" icon="terp-go-year" context="{'group_by':'categ_id2'}" help="Category 2"/>
-                        <filter string="Category3" icon="terp-go-year" context="{'group_by':'categ_id3'}" help="Category 3"/>
-                    </filter>
-                    <filter string="Year" name="year" position="replace">
-                        <filter icon="terp-go-year" string="This Year" name="year" domain="[('year','=',time.strftime('%%Y'))]" help="POS ordered created during current year"/>
-                    </filter>
-                </data>
-            </field>
-        </record>
-
 <!-- Model: pos.daily.simple.report                                         -->
         <record id="view_pos_daily_simple_sales_report_graph" model="ir.ui.view">
             <field name="model">pos.daily.simple.report</field>
