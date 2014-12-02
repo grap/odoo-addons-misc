@@ -63,8 +63,8 @@ class pos_daily_simple_report(Model):
                     FROM
                         pos_order po
                     WHERE
-                        date_order > now() - 3 * interval '1 month' AND
-                        po.state <> 'invoiced'
+                        po.state not in ('draft')
+                        AND date_order > now() - 3 * interval '1 month'
                     GROUP BY
                         company_id,
                         date,
@@ -81,8 +81,8 @@ class pos_daily_simple_report(Model):
                         INNER JOIN pos_order_line pol
                             ON po.id = pol.order_id
                     WHERE
-                        po.date_order > now() - 3 * interval '1 month' AND
-                        po.state <> 'invoiced'
+                        po.state not in ('draft')
+                        AND po.date_order > now() - 3 * interval '1 month'
                     GROUP BY
                         po.company_id,
                         date_trunc('day',po.date_order)

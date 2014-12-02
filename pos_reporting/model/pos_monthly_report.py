@@ -53,7 +53,8 @@ class pos_monthly_report(Model):
                     INNER JOIN pos_order_line pol
                         ON po.id = pol.order_id
                 WHERE
-                    po.create_date > now() - 14 * interval '1 month'
+                    po.state not in ('draft')
+                    AND po.create_date > now() - 14 * interval '1 month'
                 GROUP BY
                     po.company_id,
                     month

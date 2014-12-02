@@ -53,7 +53,8 @@ class pos_weekly_report(Model):
                     INNER JOIN pos_order_line pol
                         ON po.id = pol.order_id
                 WHERE
-                    po.create_date > now() - interval '1 year'
+                    po.state not in ('draft')
+                    AND po.create_date > now() - interval '1 year'
                 GROUP BY
                     po.company_id,
                     week
