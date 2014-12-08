@@ -24,6 +24,8 @@ from datetime import datetime
 
 from openerp.osv import fields
 from openerp.osv.orm import Model
+from openerp.osv.orm import except_orm
+from openerp.tools.translate import _
 
 from openerp.addons.sale_eshop import demo_image
 
@@ -75,6 +77,14 @@ class product_product(Model):
             sql_lst.append(
                 """(eshop_start_date is null
                     AND eshop_end_date is null)""")
+            for i in range(0, len(sql_lst)):
+                sql_lst[i] = """(
+                    eshop_category_id IS NOT NULL
+                    AND id in (select pp.id from product_product pp
+                    inner join product_template pt on pp.product_tmpl_id = pt.id
+                        and pt.sale_ok is true)
+                    AND active is true
+                    AND (%s))""" % (sql_lst[i])
         else:
             raise except_orm(
                 _("This arg %s is not implemented !") % (lst.join(', ')),
@@ -89,8 +99,10 @@ class product_product(Model):
             WHERE %s;""" % (where)
         cr.execute(sql_req)
         res = cr.fetchall()
-        return [('id', 'in', map(lambda x:x[0], res))]
-
+        print where
+        result = [('id', 'in', map(lambda x:x[0], res))]
+        print result
+        return result
 
     # Field function Section
     def _get_eshop_state(self, cr, uid, ids, fields_name, args, context=None):
@@ -110,12 +122,12 @@ class product_product(Model):
                     if pp.eshop_start_date <= dateNow:
                         res[pp.id] = 'available'
                     else:
-                        res[pp.id] = 'disabled' 
+                        res[pp.id] = 'disabled'
                 elif pp.eshop_end_date:
                     if dateNow <= pp.eshop_end_date:
                         res[pp.id] = 'available'
                     else:
-                        res[pp.id] = 'disabled' 
+                        res[pp.id] = 'disabled'
                 else:
                     res[pp.id] = 'available'
         return res
@@ -131,7 +143,7 @@ class product_product(Model):
             'End Date of Sale'),
         'eshop_state': fields.function(
             _get_eshop_state, type='selection', string='eShop State',
-            fnct_search= _eshop_state, selection=_ESHOP_STATE_SELECTION),
+            fnct_search=_eshop_state, selection=_ESHOP_STATE_SELECTION),
         'eshop_minimum_qty': fields.float(
             'Minimum Quantity for eShop', required=True),
         'eshop_rounded_qty': fields.float(

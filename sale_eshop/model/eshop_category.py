@@ -66,7 +66,7 @@ class eshop_category(Model):
             pp_ids = [pp.id for pp in ec.product_ids]
             available_pp_ids = pp_ids
             available_pp_ids = pp_obj.search(cr, uid, [
-                    ('id', 'in', pp_ids), ('eshop_state', '=', 'available')],
+                ('id', 'in', pp_ids), ('eshop_state', '=', 'available')],
                 context=context)
             res[ec.id] = {
                 'product_qty': len(pp_ids),
