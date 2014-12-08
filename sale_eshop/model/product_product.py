@@ -20,6 +20,7 @@
 #
 ##############################################################################
 
+from datetime import datetime
 
 from openerp.osv import fields
 from openerp.osv.orm import Model
@@ -32,20 +33,91 @@ class product_product(Model):
 
     _ESHOP_STATE_SELECTION = [
         ('available', 'Available for Sale'),
-        ('disabled', 'Disabled'),
+        ('disabled', 'Temporarily Disabled'),
         ('unavailable', 'Unavailable for Sale'),
     ]
+
+    def _eshop_state(self, cr, uid, obj, name, arg, context=None):
+        dateNow = datetime.now().strftime('%Y-%m-%d')
+        if arg[0][1] not in ('=', 'in'):
+            raise except_orm(
+                _("The Operator %s is not implemented !") % (arg[0][1]),
+                str(arg))
+        if arg[0][1] == '=':
+            lst = [arg[0][2]]
+        else:
+            lst = arg[0][2]
+        sql_lst = []
+        if 'available' in lst and len(lst) == 1:
+            sql_lst.append(
+                """((
+                        eshop_start_date is not null
+                        AND eshop_end_date is not null)
+                    AND (
+                        eshop_start_date <= '%s'
+                        AND '%s' <= eshop_end_date
+                    )
+                )""" % (dateNow, dateNow))
+            sql_lst.append(
+                """((
+                        eshop_start_date is null
+                        AND eshop_end_date is not null)
+                    AND ('%s' <= eshop_end_date)
+                )""" % (dateNow))
+            sql_lst.append(
+                """((
+                        eshop_start_date is not null
+                        AND eshop_end_date is null)
+                    AND (
+                        eshop_start_date <= '%s'
+                    )
+                )""" % (dateNow))
+            sql_lst.append(
+                """(eshop_start_date is null
+                    AND eshop_end_date is null)""")
+        else:
+            raise except_orm(
+                _("This arg %s is not implemented !") % (lst.join(', ')),
+                str(arg))
+
+        where = sql_lst[0]
+        for item in sql_lst[1:]:
+            where += " OR %s" % (item)
+        sql_req = """
+            SELECT id
+            FROM product_product
+            WHERE %s;""" % (where)
+        cr.execute(sql_req)
+        res = cr.fetchall()
+        return [('id', 'in', map(lambda x:x[0], res))]
+
 
     # Field function Section
     def _get_eshop_state(self, cr, uid, ids, fields_name, args, context=None):
         res = {}
         for pp in self.browse(cr, uid, ids, context=context):
-            if not pp.eshop_category_id:
+            if not (pp.eshop_category_id and pp.sale_ok and pp.active):
                 res[pp.id] = 'unavailable'
-            elif pp.eshop_ok:
-                res[pp.id] = 'available'
             else:
-                res[pp.id] = 'disabled'
+                dateNow = datetime.now().strftime('%Y-%m-%d')
+                if pp.eshop_start_date and pp.eshop_end_date:
+                    if pp.eshop_start_date <= dateNow \
+                            and dateNow <= pp.eshop_end_date:
+                        res[pp.id] = 'available'
+                    else:
+                        res[pp.id] = 'disabled'
+                elif pp.eshop_start_date:
+                    if pp.eshop_start_date <= dateNow:
+                        res[pp.id] = 'available'
+                    else:
+                        res[pp.id] = 'disabled' 
+                elif pp.eshop_end_date:
+                    if dateNow <= pp.eshop_end_date:
+                        res[pp.id] = 'available'
+                    else:
+                        res[pp.id] = 'disabled' 
+                else:
+                    res[pp.id] = 'available'
         return res
 
     # Columns Section
@@ -53,13 +125,13 @@ class product_product(Model):
         'eshop_category_id': fields.many2one(
             'eshop.category', 'eShop Category', domain=[
                 ('type', '=', 'normal')]),
-        'eshop_ok': fields.boolean('Can be Sold on eShop'),
+        'eshop_start_date': fields.date(
+            'Start Date of Sale'),
+        'eshop_end_date': fields.date(
+            'End Date of Sale'),
         'eshop_state': fields.function(
             _get_eshop_state, type='selection', string='eShop State',
-            selection=_ESHOP_STATE_SELECTION, store={
-                'product.product': (
-                    lambda self, cr, uid, ids, context=None: ids,
-                    ['eshop_category_id', 'eshop_ok'], 10)}),
+            fnct_search= _eshop_state, selection=_ESHOP_STATE_SELECTION),
         'eshop_minimum_qty': fields.float(
             'Minimum Quantity for eShop', required=True),
         'eshop_rounded_qty': fields.float(
@@ -68,35 +140,9 @@ class product_product(Model):
 
     # Defaults Section
     _defaults = {
-        'eshop_ok': False,
         'eshop_minimum_qty': 1,
         'eshop_rounded_qty': 1,
     }
-
-    # Constraints Section
-    def _check_eshop_category(self, cr, uid, ids, context=None):
-        for pp in self.browse(cr, uid, ids, context=context):
-            if not pp.eshop_category_id and pp.eshop_ok:
-                return False
-        return True
-
-    _constraints = [
-        (_check_eshop_category,
-            """Error ! You must set an eshop category if you want this"""
-            """ product can be sold on eShop.""",
-            ['eshop_category_id', 'eshop_ok']),
-    ]
-
-    # View Section
-    def onchange_sale_ok(self, cr, uid, ids, sale_ok):
-        if not sale_ok:
-            return {'value': {'eshop_ok': False}}
-        return {}
-
-    def onchange_eshop_category_id(self, cr, uid, ids, eshop_category_id):
-        if not eshop_category_id:
-            return {'value': {'eshop_ok': False}}
-        return {}
 
     # Demo Function Section
     def _demo_init_image(self, cr, uid, ids=None, context=None):

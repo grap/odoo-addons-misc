@@ -32,7 +32,6 @@
     uos_id: product.product_uom_kgm
     description_sale: Description of Banana
     sale_ok: True
-    eshop_ok: True
     type: consu
 
 - !record {model: product.product, id: product_strawberry}:
@@ -45,7 +44,6 @@
     uos_id: product.product_uom_unit
     description_sale: Description of Strawberry. 250 gram container
     sale_ok: True
-    eshop_ok: True
     type: consu
 
 - !record {model: product.product, id: product_apple}:
@@ -59,7 +57,6 @@
     uos_id: product.product_uom_kgm
     description_sale: Description of Apple
     sale_ok: True
-    eshop_ok: True
     type: consu
 
 
@@ -74,7 +71,6 @@
     uos_id: product.product_uom_kgm
     description_sale: Description of Potato
     sale_ok: True
-    eshop_ok: True
     type: consu
 
 - !record {model: product.product, id: product_leek}:
@@ -88,7 +84,6 @@
     uos_id: product.product_uom_kgm
     description_sale: Description of Leek
     sale_ok: True
-    eshop_ok: True
     type: consu
 
 - !record {model: product.product, id: product_onion}:
@@ -102,7 +97,6 @@
     uos_id: product.product_uom_kgm
     description_sale: Description of Onions
     sale_ok: True
-    eshop_ok: True
     type: consu
 
 - !record {model: product.product, id: product_garlic}:
@@ -116,7 +110,6 @@
     uos_id: product.product_uom_kgm
     description_sale: Description of Garlic
     sale_ok: True
-    eshop_ok: True
     type: consu
 
 - !record {model: product.product, id: product_pepper}:
@@ -130,5 +123,4 @@
     uos_id: product.product_uom_kgm
     description_sale: Description of Pepper
     sale_ok: True
-    eshop_ok: True
     type: consu
