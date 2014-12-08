@@ -80,9 +80,12 @@ class product_product(Model):
             for i in range(0, len(sql_lst)):
                 sql_lst[i] = """(
                     eshop_category_id IS NOT NULL
-                    AND id in (select pp.id from product_product pp
-                    inner join product_template pt on pp.product_tmpl_id = pt.id
-                        and pt.sale_ok is true)
+                    AND id in (
+                        SELECT pp.id
+                        FROM product_product pp
+                        INNER JOIN product_template pt
+                            ON pp.product_tmpl_id = pt.id
+                            AND pt.sale_ok is true)
                     AND active is true
                     AND (%s))""" % (sql_lst[i])
         else:
