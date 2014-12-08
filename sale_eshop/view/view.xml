@@ -33,9 +33,7 @@
         </record>
 
         <record id="view_product_product_tree" model="ir.ui.view">
-            <field name="name">view.product.product.tree</field>
             <field name="model">product.product</field>
-            <field eval="5" name="priority"/>
             <field name="arch" type="xml">
                 <tree string="Products" editable="bottom"
                         colors="black:eshop_state == 'available'; blue:eshop_state == 'disabled'; gray: eshop_state == 'unavailable'">
