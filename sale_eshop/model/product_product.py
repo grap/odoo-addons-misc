@@ -99,10 +99,7 @@ class product_product(Model):
             WHERE %s;""" % (where)
         cr.execute(sql_req)
         res = cr.fetchall()
-        print where
-        result = [('id', 'in', map(lambda x:x[0], res))]
-        print result
-        return result
+        return [('id', 'in', map(lambda x:x[0], res))]
 
     # Field function Section
     def _get_eshop_state(self, cr, uid, ids, fields_name, args, context=None):
