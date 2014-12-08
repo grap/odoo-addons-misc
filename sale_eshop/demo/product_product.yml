@@ -124,3 +124,16 @@
     description_sale: Description of Pepper
     sale_ok: True
     type: consu
+
+
+- !record {model: product.product, id: product_without_image}:
+    name: Product Without Image
+    list_price: 100.00
+    eshop_category_id: category_without_image
+    eshop_minimum_qty: 1.0
+    eshop_rounded_qty: 1.0
+    uom_id: product.product_uom_unit
+    uom_po_id: product.product_uom_unit
+    uos_id: product.product_uom_unit
+    sale_ok: True
+    type: consu

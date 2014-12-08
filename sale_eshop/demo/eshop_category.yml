@@ -20,6 +20,10 @@
 #
 ##############################################################################
 
+- !record {model: eshop.category, id: category_without_image}:
+    name: Category without Image
+    type: normal
+
 - !record {model: eshop.category, id: category_fruit_vegetable}:
     name: Fruits and Vegetables
     type: view
