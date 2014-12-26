@@ -30,7 +30,6 @@ class product_product(Model):
     def _search_ean_duplicates_exist(
             self, cr, uid, obj, name, arg, context=None):
         pp_ids = self.search(cr, uid, [], context=context)
-        print arg
         tmp = self._get_ean_duplicates(
             cr, uid, pp_ids, None, None, context=context)
         res = []
