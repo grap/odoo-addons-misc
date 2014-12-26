@@ -46,8 +46,8 @@ Copyright, Authors and Licence:
         'product',
     ],
     'data': [
-        'view/action.xml',
         'view/view.xml',
+        'view/action.xml',
         'view/menu.xml',
     ],
     'demo': [
