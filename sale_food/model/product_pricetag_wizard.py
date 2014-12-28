@@ -25,6 +25,7 @@ from openerp.osv.orm import TransientModel
 from openerp.osv import fields
 from openerp.tools.translate import _
 
+
 class product_pricetag_wizard(TransientModel):
     _name = 'product.pricetag.wizard'
     _inherit = 'ir.needaction_mixin'
