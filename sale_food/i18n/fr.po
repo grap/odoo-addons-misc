@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-30 00:04+0000\n"
-"PO-Revision-Date: 2014-10-30 00:04+0000\n"
+"POT-Creation-Date: 2014-12-28 14:47+0000\n"
+"PO-Revision-Date: 2014-12-28 14:47+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -228,6 +228,11 @@ msgid "Information"
 msgstr "Information"
 
 #. module: sale_food
+#: view:product.pricetag.wizard:0
+msgid "Initialize Products"
+msgstr "Initialiser les Produits"
+
+#. module: sale_food
 #: field:product.label,is_organic:0
 msgid "Is Organic"
 msgstr "Est biologique"
@@ -431,8 +436,10 @@ msgid "Print Price Tag"
 msgstr "Imprimer Etiquette"
 
 #. module: sale_food
+#: code:addons/sale_food/model/product_pricetag_wizard.py:42
 #: model:ir.ui.menu,name:sale_food.menu_product_pricetag_wizard
 #: view:product.pricetag.wizard:0
+#, python-format
 msgid "Print Price Tags"
 msgstr "Imprimer Etiquettes"
 
@@ -462,7 +469,7 @@ msgstr "Imprimer le prix unitaire"
 #: field:product.pricetag.wizard.line,product_id:0
 #, python-format
 msgid "Product"
-msgstr "Article"
+msgstr "Produit"
 
 #. module: sale_food
 #: code:_description:0

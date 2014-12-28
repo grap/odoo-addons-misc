@@ -23,7 +23,7 @@
 
 from openerp.osv.orm import TransientModel
 from openerp.osv import fields
-
+from openerp.tools.translate import _
 
 class product_pricetag_wizard(TransientModel):
     _name = 'product.pricetag.wizard'
@@ -36,21 +36,34 @@ class product_pricetag_wizard(TransientModel):
             ('pricetag_state', 'in', ('1', '2'))], context=context)
         return len(pp_ids)
 
+    def initialize_product(self, cr, uid, ids, context=None):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Print Price Tags'),
+            'view_mode': 'form',
+            'view_type': 'form',
+            'res_model': 'product.pricetag.wizard',
+            'res_id': None,
+            'target': 'new',
+            'context': context,
+        }
+
     # Fields Function Section
     def _get_line_ids(self, cr, uid, context=None):
         res = []
-        pp_obj = self.pool['product.product']
-        pp_ids = pp_obj.search(cr, uid, [
-            ('pricetag_state', 'in', ['1', '2'])],
-            order='pricetag_state desc',
-            limit=14,
-        )
-        for pp_id in pp_ids:
-            res.append((0, 0, {
-                'product_id': pp_id,
-                'quantity': 1,
-                'print_unit_price': True,
-            }))
+        if context.get('active_id', False):
+            pp_obj = self.pool['product.product']
+            pp_ids = pp_obj.search(cr, uid, [
+                ('pricetag_state', 'in', ['1', '2'])],
+                order='pricetag_state desc',
+                limit=14,
+            )
+            for pp_id in pp_ids:
+                res.append((0, 0, {
+                    'product_id': pp_id,
+                    'quantity': 1,
+                    'print_unit_price': True,
+                }))
         return res
 
     # Columns Section
