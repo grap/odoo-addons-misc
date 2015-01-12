@@ -70,6 +70,7 @@ Python librairies required on Debian System:
         'demo/product_label.yml',
         'demo/product_pricetag_type.yml',
         'demo/function.xml',
+        'demo/res_groups.yml',
     ],
     'css': [
         'static/src/css/css.css',
