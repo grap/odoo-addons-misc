@@ -72,5 +72,6 @@ Copyright, Authors and Licence:
         'demo/eshop_category.yml',
         'demo/product_product.yml',
         'demo/function.xml',
+        'demo/res_groups.yml',
     ],
 }
