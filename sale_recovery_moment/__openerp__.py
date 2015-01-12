@@ -87,6 +87,7 @@ Copyright, Authors and Licence:
         'demo/sale_recovery_moment_group.yml',
         'demo/sale_recovery_moment.yml',
         'demo/sale_order.yml',
+        'demo/res_groups.yml',
     ],
     'css': [
         'static/src/css/css.css',
