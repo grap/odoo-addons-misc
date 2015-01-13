@@ -47,7 +47,7 @@ Copyright, Author and Licence :
     'license': 'AGPL-3',
     'depends': [
         'product',
-        'sale',
+        'sale_stock',
     ],
     'data': [
         'data/product_price_type.yml',

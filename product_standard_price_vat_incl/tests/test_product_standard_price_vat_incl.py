@@ -53,7 +53,6 @@ class TestProductStandardPriceVATIncluded(TransactionCase):
             'partner_invoice_id': self.partner_id,
             'partner_shipping_id': self.partner_id,
             'pricelist_id': self.pricelist_id,
-            'picking_policy': 'direct',
         })
 
         res = self.sol_obj.product_id_change(
