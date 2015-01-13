@@ -22,8 +22,9 @@
 <openerp>
     <data>
 
+<!-- Model: pos.sale.net.sales.report -->
         <record id="view_pos_sale_net_sales_report_graph" model="ir.ui.view">
-            <field name="name">pos.sale.net.sales.reportgraph</field>
+            <field name="name">pos.sale.net.sales.report.graph</field>
             <field name="model">pos.sale.net.sales.report</field>
             <field name="arch" type="xml">
                 <graph orientation="vertical" string="Net Sales Evolution (VAT Excl.)" type="bar">
@@ -34,6 +35,8 @@
             </field>
         </record>
 
+
+<!-- Model: pos.sale.category.report -->
     <record id="view_pos_sale_category_report_tree" model="ir.ui.view">
         <field name="name">pos.sale.category.report.tree</field>
         <field name="model">pos.sale.category.report</field>
@@ -62,8 +65,8 @@
         <field name="arch" type="xml">
             <search string="Net Sales by Category (VAT Excl.)">
                 <field name="date"/>
-                <filter string="From Point Of Sale" domain="[('type','in',('point_of_sale'))]"/>
-                <filter string="From Invoice" domain="[('type','in',('invoice'))]"/>
+                <filter string="From Point Of Sale" domain="[('type','in', ['point_of_sale'])]"/>
+                <filter string="From Invoice" domain="[('type','in', ['invoice'])]"/>
                 <filter string="Last 7 Days" name="last_week" domain="[('date','&gt;=', (context_today()-relativedelta(days=7)).strftime('%%Y-%%m-%%d'))]"/>
                 <filter string="Last 30 Days" name="last_month" domain="[('date','&gt;=', (context_today()-relativedelta(months=1)).strftime('%%Y-%%m-%%d'))]"/>
                 <filter string="Last 3 Months" name="last_3_month" domain="[('date','&gt;=', (context_today()-relativedelta(months=3)).strftime('%%Y-%%m-%%d'))]"/>
