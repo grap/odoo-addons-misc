@@ -24,7 +24,6 @@
 
 <!-- Model: pos.sale.net.sales.report -->
         <record id="view_pos_sale_net_sales_report_graph" model="ir.ui.view">
-            <field name="name">pos.sale.net.sales.report.graph</field>
             <field name="model">pos.sale.net.sales.report</field>
             <field name="arch" type="xml">
                 <graph orientation="vertical" string="Net Sales Evolution (VAT Excl.)" type="bar">
@@ -35,6 +34,22 @@
             </field>
         </record>
 
+        <record id="view_pos_sale_net_sales_report_search" model="ir.ui.view">
+            <field name="model">pos.sale.net.sales.report</field>
+            <field name="arch" type="xml">
+                <search string="Net Sales Evolution (VAT Excl.)">
+                    <group expand="0" string="Extended Filters...">
+                        <field name="pricelist_id"/>
+                        <field name="partner_id"/>
+                    </group>
+                    <group expand="1" string="Group By...">
+                        <filter string="Month" context="{'group_by':'month_date'}"/>
+                        <filter string="Price List" context="{'group_by':'pricelist_id'}"/>
+                        <filter string="Partner" context="{'group_by':'partner_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
 
 <!-- Model: pos.sale.category.report -->
     <record id="view_pos_sale_category_report_tree" model="ir.ui.view">
@@ -64,20 +79,19 @@
         <field name="model">pos.sale.category.report</field>
         <field name="arch" type="xml">
             <search string="Net Sales by Category (VAT Excl.)">
-                <field name="date"/>
-                <filter string="From Point Of Sale" domain="[('type','in', ['point_of_sale'])]"/>
-                <filter string="From Invoice" domain="[('type','in', ['invoice'])]"/>
-                <filter string="Last 7 Days" name="last_week" domain="[('date','&gt;=', (context_today()-relativedelta(days=7)).strftime('%%Y-%%m-%%d'))]"/>
-                <filter string="Last 30 Days" name="last_month" domain="[('date','&gt;=', (context_today()-relativedelta(months=1)).strftime('%%Y-%%m-%%d'))]"/>
-                <filter string="Last 3 Months" name="last_3_month" domain="[('date','&gt;=', (context_today()-relativedelta(months=3)).strftime('%%Y-%%m-%%d'))]"/>
-                <filter string="Last 12 Months" name="last_year" domain="[('date','&gt;=', (context_today()-relativedelta(months=12)).strftime('%%Y-%%m-%%d'))]"/>
-                
-                <field name="product_id"/>
                 <group expand="0" string="Extended Filters...">
+                    <field name="date"/>
+                    <field name="product_id"/>
                     <field name="categ_id_1"/>
                     <field name="categ_id_2"/>
                     <field name="categ_id_3"/>
                     <field name="company_id" groups="base.group_multi_company"/>
+                    <filter string="From Point Of Sale" domain="[('type','in', ['point_of_sale'])]"/>
+                    <filter string="From Invoice" domain="[('type','in', ['invoice'])]"/>
+                    <filter string="Last 7 Days" name="last_week" domain="[('date','&gt;=', (context_today()-relativedelta(days=7)).strftime('%%Y-%%m-%%d'))]"/>
+                    <filter string="Last 30 Days" name="last_month" domain="[('date','&gt;=', (context_today()-relativedelta(months=1)).strftime('%%Y-%%m-%%d'))]"/>
+                    <filter string="Last 3 Months" name="last_3_month" domain="[('date','&gt;=', (context_today()-relativedelta(months=3)).strftime('%%Y-%%m-%%d'))]"/>
+                    <filter string="Last 12 Months" name="last_year" domain="[('date','&gt;=', (context_today()-relativedelta(months=12)).strftime('%%Y-%%m-%%d'))]"/>
                 </group>
                 <group expand="1" string="Group By...">
                     <filter string="Product" context="{'group_by':'product_id'}"/>

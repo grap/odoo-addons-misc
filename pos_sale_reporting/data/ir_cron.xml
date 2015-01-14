@@ -21,7 +21,7 @@
 <openerp>
     <data noupdate="1">
         <record id="ir_cron_scheduler_refresh_view_sale_pos_category_report" model="ir.cron">
-            <field name="name">Refresh Materialized view sale_pos_category_report</field>
+            <field name="name">Refresh Materialized view pos_sale_category_report</field>
             <field name="user_id" ref="base.user_root"/>
             <field name="interval_number">1</field>
             <field name="interval_type">days</field>
@@ -34,7 +34,7 @@
         </record>
 
         <record id="ir_cron_scheduler_refresh_view_sale_pos_net_sales_report" model="ir.cron">
-            <field name="name">Refresh Materialized view sale_pos_net_sales_report</field>
+            <field name="name">Refresh Materialized view pos_sale_net_sales_report</field>
             <field name="user_id" ref="base.user_root"/>
             <field name="interval_number">1</field>
             <field name="interval_type">days</field>

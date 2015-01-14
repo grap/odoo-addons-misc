@@ -21,7 +21,7 @@
 #
 ##############################################################################
 
-from openerp import tools
+from openerp import SUPERUSER_ID, tools
 from openerp.osv import fields
 from . import materialized_model
 
@@ -38,36 +38,41 @@ class pos_sale_net_sales_report(materialized_model.MaterializedModel):
     ]
 
     def init(self, cr):
-        tools.drop_view_if_exists(cr, 'pos_sale_month_date')
-        cr.execute("""
-        CREATE VIEW pos_sale_month_date AS (
-            SELECT month_date, company_id, partner_id, pricelist_id
-            FROM (
-                SELECT
-                    date(date_trunc('month', date_order)) AS month_date,
-                    company_id,
-                    coalesce (partner_id, 0) as partner_id,
-                    pricelist_id
-                FROM pos_order
-                WHERE state in ('paid', 'done')
+        imm_obj = self.pool['ir.module.module']
+        imm_id = imm_obj.search(cr, SUPERUSER_ID, [
+            ('name', '=', 'pos_sale_reporting'),
+            ('state', '=', 'to install')])
+        if len(imm_id) != 0:
+            tools.drop_view_if_exists(cr, 'pos_sale_month_date')
+            cr.execute("""
+            CREATE VIEW pos_sale_month_date AS (
+                SELECT month_date, company_id, partner_id, pricelist_id
+                FROM (
+                    SELECT
+                        date(date_trunc('month', date_order)) AS month_date,
+                        company_id,
+                        coalesce (partner_id, 0) as partner_id,
+                        pricelist_id
+                    FROM pos_order
+                    WHERE state in ('paid', 'done')
+                    GROUP BY month_date, company_id, partner_id, pricelist_id
+                UNION
+                    SELECT
+                        date(date_trunc('month', date_invoice)) AS month_date,
+                        company_id,
+                        partner_id,
+                        partner_pricelist_id as pricelist_id
+                    FROM account_invoice
+                    WHERE date_invoice IS NOT NULL
+                    AND type IN ('out_invoice', 'out_refund')
+                    AND state NOT IN ('draft', 'cancel')
+                    GROUP BY
+                        month_date,company_id,
+                        partner_id,
+                        partner_pricelist_id
+                ) AS month_temp
                 GROUP BY month_date, company_id, partner_id, pricelist_id
-            UNION
-                SELECT
-                    date(date_trunc('month', date_invoice)) AS month_date,
-                    company_id,
-                    partner_id,
-                    partner_pricelist_id as pricelist_id
-                FROM account_invoice
-                WHERE date_invoice IS NOT NULL
-                AND type IN ('out_invoice', 'out_refund')
-                AND state NOT IN ('draft', 'cancel')
-                GROUP BY
-                    month_date,company_id,
-                    partner_id,
-                    partner_pricelist_id
-            ) AS month_temp
-            GROUP BY month_date, company_id, partner_id, pricelist_id
-        )""")
+            )""")
         super(pos_sale_net_sales_report, self).init(cr)
 
     _columns = {
@@ -132,7 +137,6 @@ class pos_sale_net_sales_report(materialized_model.MaterializedModel):
         AND result.month_date = pos_sale_month_date.month_date
         AND result.partner_id = pos_sale_month_date.partner_id
         AND result.pricelist_id = pos_sale_month_date.pricelist_id
-
 
 /* Invoice from Point Of Sale Module ************************************** */
     UNION

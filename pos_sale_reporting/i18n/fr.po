@@ -1,25 +1,3 @@
-# -*- encoding: utf-8 -*-
-##############################################################################
-#
-#    Point Of Sale / Sale Reporting module for Odoo
-#    Copyright (C) 2014 GRAP (http://www.grap.coop)
-#    @author Julien WESTE
-#    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
 #	* pos_sale_reporting
@@ -28,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-06 20:03+0000\n"
-"PO-Revision-Date: 2014-11-06 20:03+0000\n"
+"POT-Creation-Date: 2015-01-14 17:43+0000\n"
+"PO-Revision-Date: 2015-01-14 17:43+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -93,6 +71,7 @@ msgstr "Décembre"
 
 #. module: pos_sale_reporting
 #: view:pos.sale.category.report:0
+#: view:pos.sale.net.sales.report:0
 msgid "Extended Filters..."
 msgstr "Filtres avancés ..."
 
@@ -113,6 +92,7 @@ msgstr "Depuis Point de Vente"
 
 #. module: pos_sale_reporting
 #: view:pos.sale.category.report:0
+#: view:pos.sale.net.sales.report:0
 msgid "Group By..."
 msgstr "Regrouper Par ..."
 
@@ -149,22 +129,22 @@ msgstr "Juin"
 #. module: pos_sale_reporting
 #: view:pos.sale.category.report:0
 msgid "Last 12 Months"
-msgstr "12 Derniers Mois"
+msgstr "12 Derniers Mois (365j)"
 
 #. module: pos_sale_reporting
 #: view:pos.sale.category.report:0
 msgid "Last 3 Months"
-msgstr "3 Derniers Mois"
+msgstr "3 Derniers Mois (90j)"
 
 #. module: pos_sale_reporting
 #: view:pos.sale.category.report:0
 msgid "Last 30 Days"
-msgstr "30 Derniers Jours"
+msgstr "30 Derniers Jours (30j)"
 
 #. module: pos_sale_reporting
 #: view:pos.sale.category.report:0
 msgid "Last 7 Days"
-msgstr "7 Derniers Jours"
+msgstr "7 Derniers Jours (7j)"
 
 #. module: pos_sale_reporting
 #: view:pos.sale.category.report:0
@@ -190,6 +170,7 @@ msgstr "Catégorie de Produit Intermédiaire"
 #. module: pos_sale_reporting
 #: view:pos.sale.category.report:0
 #: field:pos.sale.category.report,month:0
+#: view:pos.sale.net.sales.report:0
 msgid "Month"
 msgstr "Mois"
 
@@ -231,6 +212,12 @@ msgid "October"
 msgstr "Octobre"
 
 #. module: pos_sale_reporting
+#: view:pos.sale.net.sales.report:0
+#: field:pos.sale.net.sales.report,partner_id:0
+msgid "Partner"
+msgstr "Client"
+
+#. module: pos_sale_reporting
 #: selection:pos.sale.category.report,type:0
 msgid "Point Of Sale"
 msgstr "Point de Vente"
@@ -241,9 +228,19 @@ msgid "Point of Sale - Normal"
 msgstr "Point de Vente - Normal"
 
 #. module: pos_sale_reporting
+#: view:pos.sale.net.sales.report:0
+msgid "Price List"
+msgstr "Liste de prix"
+
+#. module: pos_sale_reporting
 #: view:pos.sale.category.report:0
 msgid "Price Total (VAT Excl)"
 msgstr "Prix Total (HT)"
+
+#. module: pos_sale_reporting
+#: field:pos.sale.net.sales.report,pricelist_id:0
+msgid "Pricelist"
+msgstr "Liste de prix"
 
 #. module: pos_sale_reporting
 #: view:pos.sale.category.report:0
