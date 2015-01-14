@@ -24,6 +24,7 @@ from openerp.osv import fields, osv
 from openerp.osv.orm import Model
 from openerp.tools.translate import _
 
+
 class account_invoice(Model):
     _inherit = 'account.invoice'
 
@@ -39,9 +40,8 @@ class account_invoice(Model):
                 res[ai.id] = ai.partner_id.property_product_pricelist_purchase\
                     and ai.partner_id.property_product_pricelist_purchase.id
             else:
-                raise osv.except_osv(
-                    _('Not Implemented!'),
-                    _("""Can not compute Partner Pricelist for this"""
+                raise osv.except_osv(_('Not Implemented!'), _(
+                    """Can not compute Partner Pricelist for this"""
                     """ type of invoice: '%s'.""" % (ai.type)))
         return res
 
