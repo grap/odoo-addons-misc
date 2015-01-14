@@ -67,6 +67,7 @@ Copyright, Authors and Licence:
     'depends': [
         'sale',
         'point_of_sale',
+        'account_invoice_pricelist',
     ],
     'data': [
         'data/ir_cron.xml',
