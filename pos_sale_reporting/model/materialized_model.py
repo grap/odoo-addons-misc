@@ -70,10 +70,9 @@ class MaterializedModel(Model):
             _logger.info("Creating MATERIALIZED VIEW %s" % (
                 self._table_name))
             cr.execute("""
-                DROP VIEW IF EXISTS %s;
                 DROP MATERIALIZED VIEW IF EXISTS %s;
                 CREATE MATERIALIZED VIEW %s AS (%s);""" % (
-                self._table_name, self._table_name, self._table_name,
+                self._table_name, self._table_name,
                 self._materialized_sql))
         else:
             cr.execute("""
