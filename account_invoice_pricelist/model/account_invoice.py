@@ -20,6 +20,7 @@
 #
 ##############################################################################
 
+from openerp import SUPERUSER_ID    
 from openerp.osv import fields, osv
 from openerp.osv.orm import Model
 from openerp.tools.translate import _
@@ -31,18 +32,34 @@ class account_invoice(Model):
     def _get_partner_pricelist_id(
             self, cr, uid, ids, name, arg, context=None):
         res = {}
-        for ai in self.browse(cr, uid, ids, context=context):
-            res[ai.id] = False
-            if ai.type in ('out_invoice', 'out_refund'):
-                res[ai.id] = ai.partner_id.property_product_pricelist\
-                    and ai.partner_id.property_product_pricelist.id
-            elif ai.type in ('in_invoice', 'in_refund'):
-                res[ai.id] = ai.partner_id.property_product_pricelist_purchase\
-                    and ai.partner_id.property_product_pricelist_purchase.id
-            else:
-                raise osv.except_osv(_('Not Implemented!'), _(
-                    """Can not compute Partner Pricelist for this"""
-                    """ type of invoice: '%s'.""" % (ai.type)))
+        if context == {}:
+            results = self.read(cr, uid, ids, ['company_id'])
+            for result in results:
+                print result
+                context['force_company'] = result['company_id'][0]
+                ai = self.browse(cr, uid, result['id'], context=context)
+                if ai.type in ('out_invoice', 'out_refund'):
+                    res[ai.id] =\
+                        ai.partner_id.property_product_pricelist.id
+                elif ai.type in ('in_invoice', 'in_refund'):
+                    res[ai.id] =\
+                        ai.partner_id.property_product_pricelist_purchase.id
+                else:
+                    raise osv.except_osv(_('Not Implemented!'), _(
+                        """Can not compute Partner Pricelist for this"""
+                        """ type of invoice: '%s'.""" % (ai.type)))
+        else:
+            for ai in self.browse(cr, uid, ids, context=context):
+                if ai.type in ('out_invoice', 'out_refund'):
+                    res[ai.id] =\
+                        ai.partner_id.property_product_pricelist.id
+                elif ai.type in ('in_invoice', 'in_refund'):
+                    res[ai.id] =\
+                        ai.partner_id.property_product_pricelist_purchase.id
+                else:
+                    raise osv.except_osv(_('Not Implemented!'), _(
+                        """Can not compute Partner Pricelist for this"""
+                        """ type of invoice: '%s'.""" % (ai.type)))
         return res
 
     # Columns Section
