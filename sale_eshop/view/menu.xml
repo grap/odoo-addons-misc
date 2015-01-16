@@ -33,6 +33,7 @@
         <menuitem id="menu_product_product"
             parent="base.menu_product"
             name="Products (eShop)" sequence="5"
+            groups="sale_eshop.res_groups_eshop_user"
             action="action_product_product"/>
 
     </data>
