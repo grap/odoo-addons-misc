@@ -20,7 +20,6 @@
 #
 ##############################################################################
 
-from openerp import SUPERUSER_ID    
 from openerp.osv import fields, osv
 from openerp.osv.orm import Model
 from openerp.tools.translate import _
