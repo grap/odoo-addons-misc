@@ -132,8 +132,6 @@ class internal_use(Model):
             context = {}
 
         for iu in self.browse(cr, uid, ids, context=context):
-            stock_move_ids = []
-
             # Create picking
             picking_value = {
                 'type': 'out',
@@ -172,13 +170,11 @@ class internal_use(Model):
                             'location_dest_id':
                                 iu.internal_use_case.location_from.id,
                         })
+                stock_move_obj.create(cr, uid, stock_move_value)
 
-                stock_move_ids.append(
-                    stock_move_obj.create(cr, uid, stock_move_value))
-
+            # Create account move
             period_id = period_obj.find(
                 cr, uid, dt=iu.date_done, context=context)[0]
-            # Create account move
             aml_values = {
                 'name': iu.name,
                 'date': iu.date_done,
@@ -224,7 +220,7 @@ class internal_use(Model):
                 'line_id': account_move_lines,
                 'date': iu.date_done,
                 'period_id': period_id,
-                'ref': iu.name + ' - Expense Transfert',
+                'ref': _('Expense Transfert (%s)') % (iu.name),
             }, context=context)
             account_move_obj.button_validate(
                 cr, uid, [account_move_id], context=context)
