@@ -92,8 +92,10 @@ class sale_recovery_moment_group(Model):
                 min_date = None
                 max_date = None
             else:
-                min_date = min([x.min_recovery_date for x in srmg.moment_ids])
-                max_date = max([x.max_recovery_date for x in srmg.moment_ids])
+                min_date = min([x.min_recovery_date for x in srmg.moment_ids])\
+                    .strftime('%Y-%m-%d %H:%M:%S')
+                max_date = max([x.max_recovery_date for x in srmg.moment_ids])\
+                    .strftime('%Y-%m-%d %H:%M:%S')
             if now < srmg.min_sale_date:
                 state = 'futur'
             elif now < srmg.max_sale_date:
