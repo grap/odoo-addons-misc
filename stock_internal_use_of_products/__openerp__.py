@@ -66,9 +66,9 @@ Copyright, Authors and Licence:
         'data/ir_sequence.xml',
         'security/ir_model_access_data.yml',
         'security/ir_rule_data.yml',
-        'view/internal_uses_view.xml',
-        'view/internal_uses_action.xml',
-        'view/internal_uses_menu.xml',
+        'view/view.xml',
+        'view/action.xml',
+        'view/menu.xml',
     ],
     'demo': [
         'demo/stock_location.yml',
