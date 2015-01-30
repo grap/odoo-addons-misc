@@ -21,7 +21,7 @@
 ##############################################################################
 
 {
-    'name': 'eShop',
+    'name': 'Sale - eShop',
     'version': '0.1',
     'summary': "Allow connection to Odoo eShop Project",
     'category': 'Sale',
@@ -32,15 +32,12 @@ Allow connection to Odoo eShop Project
 Functionality:
 --------------
     * Create a new category eshop_category for products;
-    * Add fields 'eShop Category' and 'eShop Available' on product;
-
-Technical Information:
-----------------------
-    * TODO
-
-TODO:
------
-    * Add a button move into other category on eshop.category;
+    * Add fields on product.product:
+        * 'eShop Category': category in the eShop;
+        * 'Min date' and 'Max Date' that make product available for sale;
+    * Add fields on res.partner:
+        * 'Can purchase on eShop';
+        * 'eShop password';
 
 BUG:
 ----

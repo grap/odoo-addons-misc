@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-08 14:03+0000\n"
-"PO-Revision-Date: 2014-12-08 14:03+0000\n"
+"POT-Creation-Date: 2015-01-30 10:57+0000\n"
+"PO-Revision-Date: 2015-01-30 10:57+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -19,11 +19,6 @@ msgstr ""
 #: help:eshop.category,type:0
 msgid "A category of the view type is a virtual category that can be used as the parent of another category to create a hierarchical structure."
 msgstr "Une catégorie de type 'vue' est une catégorie virtuelle qui peut être utilisée comme parent d'une autre catégorie, pour créer une architecture."
-
-#. module: sale_eshop
-#: model:product.template,name:sale_eshop.product_apple_product_template
-msgid "Apple"
-msgstr "Pomme"
 
 #. module: sale_eshop
 #: field:eshop.category,available_product_ids:0
@@ -39,11 +34,6 @@ msgstr "Nombre de produits disponibles"
 #: selection:product.product,eshop_state:0
 msgid "Available for Sale"
 msgstr "Disponible à la vente"
-
-#. module: sale_eshop
-#: model:product.template,name:sale_eshop.product_banana_product_template
-msgid "Banana"
-msgstr "Banane"
 
 #. module: sale_eshop
 #: field:res.partner,eshop_active:0
@@ -93,46 +83,6 @@ msgid "Company"
 msgstr "Société"
 
 #. module: sale_eshop
-#: model:product.template,description_sale:sale_eshop.product_apple_product_template
-msgid "Description of Apple"
-msgstr "Description of Apple"
-
-#. module: sale_eshop
-#: model:product.template,description_sale:sale_eshop.product_banana_product_template
-msgid "Description of Banana"
-msgstr "Description de Banane"
-
-#. module: sale_eshop
-#: model:product.template,description_sale:sale_eshop.product_garlic_product_template
-msgid "Description of Garlic"
-msgstr "Description de l'Ail"
-
-#. module: sale_eshop
-#: model:product.template,description_sale:sale_eshop.product_leek_product_template
-msgid "Description of Leek"
-msgstr "Description de Poireau"
-
-#. module: sale_eshop
-#: model:product.template,description_sale:sale_eshop.product_onion_product_template
-msgid "Description of Onions"
-msgstr "Description d'Oignon"
-
-#. module: sale_eshop
-#: model:product.template,description_sale:sale_eshop.product_pepper_product_template
-msgid "Description of Pepper"
-msgstr "Description de Poivron"
-
-#. module: sale_eshop
-#: model:product.template,description_sale:sale_eshop.product_potato_product_template
-msgid "Description of Potato"
-msgstr "Description de Pomme de Terre"
-
-#. module: sale_eshop
-#: model:product.template,description_sale:sale_eshop.product_strawberry_product_template
-msgid "Description of Strawberry. 250 gram container"
-msgstr "Description de Fraise. Contenant de 250 grammes"
-
-#. module: sale_eshop
 #: field:product.product,eshop_end_date:0
 msgid "End Date of Sale"
 msgstr "Date de Fin de Vente"
@@ -143,11 +93,6 @@ msgid "Error ! A 'view' Category can not belongs products;A 'normal' Category ca
 msgstr "Erreur ! Une catégorie 'vue' ne peut pas posséder de produits ; Une catégorie 'normale' ne peut pas possédér de catégories enfants."
 
 #. module: sale_eshop
-#: model:product.template,name:sale_eshop.product_garlic_product_template
-msgid "Garlic"
-msgstr "Ail"
-
-#. module: sale_eshop
 #: view:res.partner:0
 msgid "Generate Password"
 msgstr "Générer un mot de passe"
@@ -156,11 +101,6 @@ msgstr "Générer un mot de passe"
 #: field:eshop.category,image:0
 msgid "Image"
 msgstr "Image"
-
-#. module: sale_eshop
-#: model:product.template,name:sale_eshop.product_leek_product_template
-msgid "Leek"
-msgstr "Poireau"
 
 #. module: sale_eshop
 #: help:eshop.category,image:0
@@ -216,11 +156,6 @@ msgid "Old eShop Category"
 msgstr "Ancienne Catégorie de Boutique en ligne"
 
 #. module: sale_eshop
-#: model:product.template,name:sale_eshop.product_onion_product_template
-msgid "Onion"
-msgstr "Oignon"
-
-#. module: sale_eshop
 #: field:eshop.category,parent_id:0
 msgid "Parent Category"
 msgstr "Catégorie Parent"
@@ -238,16 +173,6 @@ msgid "Password on eShop"
 msgstr "Mot de Passe sur Boutique en ligne"
 
 #. module: sale_eshop
-#: model:product.template,name:sale_eshop.product_pepper_product_template
-msgid "Pepper"
-msgstr "Poivron"
-
-#. module: sale_eshop
-#: model:product.template,name:sale_eshop.product_potato_product_template
-msgid "Potato"
-msgstr "Pomme de terre"
-
-#. module: sale_eshop
 #: code:_description:0
 #: model:ir.model,name:sale_eshop.model_product_product
 #, python-format
@@ -257,20 +182,18 @@ msgstr "Produit"
 #. module: sale_eshop
 #: view:eshop.category:0
 #: field:eshop.category,product_ids:0
-#: view:product.product:0
 msgid "Products"
 msgstr "Produits"
-
-#. module: sale_eshop
-#: model:ir.actions.act_window,name:sale_eshop.action_product_product
-#: model:ir.ui.menu,name:sale_eshop.menu_product_product
-msgid "Products (eShop)"
-msgstr "Produits (Boutique en ligne)"
 
 #. module: sale_eshop
 #: field:eshop.category,product_qty:0
 msgid "Products Quantity"
 msgstr "Quantité de Produits"
+
+#. module: sale_eshop
+#: view:product.product:0
+msgid "Products eShop"
+msgstr "Produits eBoutique"
 
 #. module: sale_eshop
 #: field:product.product,eshop_rounded_qty:0
@@ -300,11 +223,6 @@ msgid "Start Date of Sale"
 msgstr "Date de Début de vente"
 
 #. module: sale_eshop
-#: model:product.template,name:sale_eshop.product_strawberry_product_template
-msgid "Strawberry (250 gr)"
-msgstr "Fraise (250 gr)"
-
-#. module: sale_eshop
 #: selection:product.product,eshop_state:0
 msgid "Temporarily Disabled"
 msgstr "Désactivé temporairement"
@@ -315,13 +233,13 @@ msgid "Text for Home Page"
 msgstr "Texte pour la page d'accueil"
 
 #. module: sale_eshop
-#: code:addons/sale_eshop/model/product_product.py:44
+#: code:addons/sale_eshop/model/product_product.py:46
 #, python-format
 msgid "The Operator %s is not implemented !"
 msgstr "L'opérateur %s n'est pas implémenté !"
 
 #. module: sale_eshop
-#: code:addons/sale_eshop/model/product_product.py:80
+#: code:addons/sale_eshop/model/product_product.py:93
 #, python-format
 msgid "This arg %s is not implemented !"
 msgstr "L'argument %s n'est pas implémenté !"
@@ -345,13 +263,13 @@ msgstr "Vue"
 #: code:addons/sale_eshop/model/eshop_category.py:192
 #, python-format
 msgid "You cannot delete the category '%s' because it contents %s child categories. Please move child categories to another Category First."
-msgstr "Vous ne pouvez pas supprimer la catégorie '%s' car elle contient %s catégorie enfant. Veuillez déplacer d'abord les catégories enfants dans une autre catégorie."
+msgstr "Vous ne pouvez pas supprimer la catégorie '%s' car elle contient %s catégories enfants. Veuillez déplacer d'abord les catégories enfants dans une autre catégorie."
 
 #. module: sale_eshop
 #: code:addons/sale_eshop/model/eshop_category.py:199
 #, python-format
 msgid "You cannot delete the category '%s' because it contents %s products. Please move products to another Category First."
-msgstr "Vous ne pouvez pas supprimer cette catégorie '%s' car elle contient %s produits.Veuillez déplacer d'abord les produits dans une autre catégorie."
+msgstr "Vous ne pouvez pas supprimer cette catégorie '%s' car elle contient %s produits. Veuillez déplacer d'abord les produits dans une autre catégorie."
 
 #. module: sale_eshop
 #: view:wizard.change.product.category:0
@@ -360,8 +278,6 @@ msgstr "_Apply"
 
 #. module: sale_eshop
 #: model:ir.module.category,name:sale_eshop.module_category_eshop
-#: model:ir.ui.menu,name:sale_eshop.menu_eshop
-#: view:sale.shop:0
 msgid "eShop"
 msgstr "Boutique en ligne"
 
@@ -370,12 +286,25 @@ msgstr "Boutique en ligne"
 #: model:ir.actions.act_window,name:sale_eshop.action_eshop_category
 #: model:ir.ui.menu,name:sale_eshop.menu_eshop_category
 msgid "eShop Categories"
-msgstr "Catégories de Boutique en ligne"
+msgstr "Catégories eBoutique"
 
 #. module: sale_eshop
 #: field:product.product,eshop_category_id:0
 msgid "eShop Category"
-msgstr "Catégorie de Boutique en ligne"
+msgstr "Catégorie eBoutique"
+
+#. module: sale_eshop
+#: model:ir.actions.act_window,name:sale_eshop.action_product_product
+#: model:ir.ui.menu,name:sale_eshop.menu_product_product
+msgid "eShop Products"
+msgstr "Produits eBoutique"
+
+#. module: sale_eshop
+#: model:ir.ui.menu,name:sale_eshop.menu_eshop
+#: view:res.partner:0
+#: view:sale.shop:0
+msgid "eShop Sale"
+msgstr "Vente eBoutique"
 
 #. module: sale_eshop
 #: field:product.product,eshop_state:0
