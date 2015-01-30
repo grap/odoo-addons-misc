@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- ********************************************************************** -->
-<!--    Tools - Repository of Modules for Odoo                              -->
+<!--    Sale - Recovery Moment Module for Odoo                              -->
 <!--    Copyright (C) 2014- Today GRAP (http://www.grap.coop)               -->
 <!--    @author Sylvain LE GAL (https://twitter.com/legalsylvain)           -->
 
@@ -23,10 +23,9 @@
 
 <!-- Model: sale.recovery.moment.group -->
         <record id="view_sale_recovery_moment_group_search" model="ir.ui.view">
-            <field name="name">view.sale.recovery.moment.group.search</field>
             <field name="model">sale.recovery.moment.group</field>
             <field name="arch" type="xml">
-                <search string="Search Recovery Moment Group">
+                <search string="Recovery Moment Group">
                     <field name="name"/>
                     <filter name="futur" string="Futur" domain="[('state','=','futur')]"/>
                     <filter name="pending" string="Pending" domain="[('state','in',('pending_sale', 'finished_sale', 'pending_recovery'))]"/>
@@ -36,7 +35,6 @@
         </record>
 
         <record id="view_sale_recovery_moment_group_tree" model="ir.ui.view">
-            <field name="name">view.sale.recovery.moment.group.tree</field>
             <field name="model">sale.recovery.moment.group</field>
             <field name="arch" type="xml">
                 <tree string="Recovery Moment Group" colors="blue:state == 'futur';black:state == 'pending_sale'; marron:state in ('finished_sale', 'pending_recovery');gray:state=='finished_recovery'">
@@ -53,16 +51,14 @@
             </field>
         </record>
 
-
-
-
         <record id="view_sale_recovery_moment_group_form" model="ir.ui.view">
-            <field name="name">view.sale.recovery.moment.group.form</field>
             <field name="model">sale.recovery.moment.group</field>
             <field name="arch" type="xml">
                 <form string="Recovery Moment Group" version="7.0">
                     <header>
-                        <button name="%(action_sale_recovery_moment_group_wizard)d" string="Products List" type="action"/>
+                        <button name="%(action_sale_recovery_moment_group_wizard_product_list)d" string="Products List" type="action"/>
+                        <button name="%(action_sale_recovery_moment_group_wizard_duplicate)d"
+                            string="Duplicate" type="action"/>
                         <field name="state" widget="statusbar"/>
                     </header>
                     <sheet>
@@ -72,12 +68,14 @@
                             </h1>
                         </div>
                         <group col="4">
+                            <field name="code"/>
+                            <field name="short_name"/>
                             <field name="min_sale_date"/>
                             <field name="max_sale_date"/>
                             <field name="shop_id"/>
                             <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="valid_order_qty"/>
                             <field name="order_qty"/>
-                            <field name="picking_qty"/>
                         </group>
                         <notebook>
                             <page string="Moments">
@@ -106,14 +104,13 @@
         </record>
 
         <record id="view_sale_recovery_moment_group_kanban" model="ir.ui.view">
-            <field name="name">view.sale.recovery.group.kanban</field>
             <field name="model">sale.recovery.moment.group</field>
             <field name="arch" type="xml">
                 <kanban>
                     <templates>
                         <field name="state"/>
+                        <field name="valid_order_qty"/>
                         <field name="order_qty"/>
-                        <field name="picking_qty"/>
                         <field name="excl_total"/>
                         <field name="incl_total"/>
                         <t t-name="kanban-box">
@@ -129,8 +126,8 @@
                                         </li>
                                         <li><t t-esc="record.excl_total.value"/> Total (VAT Excl.) / <t t-esc="record.incl_total.value"/> Total (VAT Incl.)</li>
                                         <li>
-                                            <a name="%(action_stock_picking_out_recovery_moment_group)d" type="action" t-if="record.picking_qty.value>0">
-                                                <t t-esc="record.picking_qty.value"/> Delivery Orders
+                                            <a name="%(action_stock_picking_out_recovery_moment_group)d" type="action" t-if="record.valid_order_qty.value>0">
+                                                <t t-esc="record.valid_order_qty.value"/> Delivery Orders
                                             </a>
                                         </li>
                                     </ul>
@@ -144,25 +141,65 @@
 
 <!-- Model: sale.recovery.moment -->
         <record id="view_sale_recovery_moment_tree" model="ir.ui.view">
-            <field name="name">Recovery Moment</field>
             <field name="model">sale.recovery.moment</field>
             <field name="arch" type="xml">
-                <tree string="Sale Recovery Moment" editable="bottom">
+                <tree string="Recovery Moment" editable="bottom">
                     <field name="place_id"/>
-                    <field name="recovery_date"/>
-                    <field name="min_recovery_time" widget="float_time" string="Begin"/>
-                    <field name="max_recovery_time" widget="float_time" string="End"/>
-                    <field name="duration" widget="float_time"/>
+                    <field name="max_order_qty"/>
+                    <field name="min_recovery_date"/>
+                    <field name="max_recovery_date"/>
                     <field name="description"/>
+                    <field name="valid_order_qty" string="V.S.O. Qty"/>
                     <field name="order_qty" string="S.O. Qty"/>
-                    <field name="picking_qty" string="P.O. Qty"/>
                 </tree>
+            </field>
+        </record>
+
+        <record id="view_sale_recovery_moment_calendar" model="ir.ui.view">
+            <field name="model">sale.recovery.moment</field>
+            <field name="arch" type="xml">
+            <calendar string="Recovery Moment"
+                    date_start="min_recovery_date" date_stop="max_recovery_date"
+                    color="group_id" mode="week" day_length="12">
+                <field name="place_id"/>
+                <field name="quota_description"/>
+            </calendar>
+            </field>
+        </record>
+
+        <record id="view_sale_recovery_moment_form" model="ir.ui.view">
+            <field name="model">sale.recovery.moment</field>
+            <field name="arch" type="xml">
+                <form string="Recovery Moment" version="7.0">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group col="4">
+                            <group col="4" colspan="4">
+                                <field name="code"/>
+                                <field name="group_id"/>
+                                <field name="place_id"/>
+                                <field name="max_order_qty"/>
+                                <field name="min_recovery_date"/>
+                                <field name="max_recovery_date"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                            </group>
+                            <group col="4" colspan="4">
+                                <field name="valid_order_qty"/>
+                                <field name="order_qty"/>
+                                <field name="description" colspan="4"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
             </field>
         </record>
 
 <!-- Model: sale.recovery.place -->
         <record id="view_sale_recovery_place_tree" model="ir.ui.view">
-            <field name="name">view.sale.recovery.place.tree</field>
             <field name="model">sale.recovery.place</field>
             <field name="arch" type="xml">
                 <tree string="Recovery Places" colors="gray:active == False;">
@@ -176,7 +213,6 @@
         </record>
 
         <record id="view_sale_recovery_place_form" model="ir.ui.view">
-            <field name="name">view.sale.recovery.place.form</field>
             <field name="model">sale.recovery.place</field>
             <field name="arch" type="xml">
                 <form string="Recovery Places" version="7.0">

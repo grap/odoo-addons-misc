@@ -28,10 +28,10 @@
     name: Sale Recovery Moment - Sequence
     code: sale.recovery.moment
     prefix: RM/
-    padding: 5
+    padding: 7
 
 - !record {model: ir.sequence, id: sequence_sale_recovery_moment_group}:
     name: Sale Recovery Moment Group - Sequence
     code: sale.recovery.moment.group
     prefix: RMG/
-    padding: 7
+    padding: 5

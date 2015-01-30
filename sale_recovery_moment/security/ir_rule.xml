@@ -19,7 +19,7 @@
 <!--along with this program.  If not, see <http://www.gnu.org/licenses/>.   -->
 <!-- ********************************************************************** -->
 <openerp>
-    <data noupdate="0">
+    <data>
         <record id="rule_sale_recovery_place" model="ir.rule">
             <field name="name">Recovery Place Rule</field>
             <field name="model_id" ref="sale_recovery_moment.model_sale_recovery_place" />
@@ -31,7 +31,7 @@
             <field name="name">Recovery Moment Rule</field>
             <field name="model_id" ref="sale_recovery_moment.model_sale_recovery_moment" />
             <field name="global" eval="True" />
-            <field name="domain_force">[('company_id', '=', user.company_id.id)]</field>
+            <field name="domain_force">['|', ('company_id', '=', user.company_id.id), ('company_id', '=', False)]</field>
         </record>
 
         <record id="rule_sale_recovery_moment_group" model="ir.rule">

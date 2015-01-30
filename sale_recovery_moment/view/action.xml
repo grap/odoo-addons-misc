@@ -20,18 +20,25 @@
 <openerp>
     <data>
 
-        <record id="action_sale_recovery_moment_group" model="ir.actions.act_window">
-            <field name="name">Recovery Moment Group</field>
-            <field name="res_model">sale.recovery.moment.group</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">kanban,tree,form</field>
-        </record>
-
         <record id="action_sale_recovery_place" model="ir.actions.act_window">
             <field name="name">Recovery Place</field>
             <field name="res_model">sale.recovery.place</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="action_sale_recovery_moment" model="ir.actions.act_window">
+            <field name="name">Recovery Moment</field>
+            <field name="res_model">sale.recovery.moment</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">calendar</field>
+        </record>
+
+        <record id="action_sale_recovery_moment_group" model="ir.actions.act_window">
+            <field name="name">Recovery Moment Group</field>
+            <field name="res_model">sale.recovery.moment.group</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form</field>
         </record>
 
     </data>

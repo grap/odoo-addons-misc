@@ -87,15 +87,13 @@ class sale_recovery_moment_group(Model):
     def _get_date(self, cr, uid, ids, field_name, arg, context=None):
         res = {}
         now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        for srmg in self.browse(cr, uid, ids, context):
+        for srmg in self.browse(cr, uid, ids, context=context):
             if len(srmg.moment_ids) == 0:
                 min_date = None
                 max_date = None
             else:
-                min_date = min([x.min_recovery_date for x in srmg.moment_ids])\
-                    .strftime('%Y-%m-%d %H:%M:%S')
-                max_date = max([x.max_recovery_date for x in srmg.moment_ids])\
-                    .strftime('%Y-%m-%d %H:%M:%S')
+                min_date = min([x.min_recovery_date for x in srmg.moment_ids])
+                max_date = max([x.max_recovery_date for x in srmg.moment_ids])
             if now < srmg.min_sale_date:
                 state = 'futur'
             elif now < srmg.max_sale_date:
@@ -115,44 +113,61 @@ class sale_recovery_moment_group(Model):
 
     def _get_order(self, cr, uid, ids, field_name, arg, context=None):
         res = {}
-        for srmg in self.browse(cr, uid, ids, context):
+        for srmg in self.browse(cr, uid, ids, context=context):
             order_ids = []
             order_qty = 0
+            valid_order_qty = 0
             incl_total = 0.0
             excl_total = 0.0
             for srm in srmg.moment_ids:
                 order_ids.extend([order.id for order in srm.order_ids])
                 order_qty += len(srm.order_ids)
                 for order in srm.order_ids:
-                    excl_total += order.amount_untaxed
-                    incl_total += order.amount_total
+                    if order.state not in ('draft', 'cancel'):
+                        valid_order_qty += 1
+                        excl_total += order.amount_untaxed
+                        incl_total += order.amount_total
             res[srmg.id] = {
                 'excl_total': excl_total,
                 'incl_total': incl_total,
                 'order_ids': order_ids,
                 'order_qty': order_qty,
+                'valid_order_qty': valid_order_qty,
             }
         return res
 
     def _get_picking(self, cr, uid, ids, field_name, arg, context=None):
         res = {}
         spo_obj = self.pool['stock.picking']
-        for srmg in self.browse(cr, uid, ids, context):
+        for srmg in self.browse(cr, uid, ids, context=context):
             order_ids = []
             for srm in srmg.moment_ids:
                 order_ids.extend([x.id for x in srm.order_ids])
             picking_ids = spo_obj.search(cr, uid, [
-                ('sale_id', 'in', order_ids)], context=context)
+                ('sale_id', 'in', order_ids),
+            ], context=context)
             res[srmg.id] = {
                 'picking_ids': picking_ids,
-                'picking_qty': len(picking_ids),
             }
+        return res
+
+    def _get_name(self, cr, uid, ids, field_name, arg, context=None):
+        res = {}
+        for srmg in self.browse(cr, uid, ids, context=context):
+            res[srmg.id] = srmg.code + ' - ' + srmg.short_name
         return res
 
     # Column Section
     _columns = {
-        'name': fields.char(
-            'Name', readonly=True, required=True),
+        'code': fields.char(
+            'Code', readonly=True, required=True),
+        'short_name': fields.char(
+            'Short Name', required=True),
+        'name': fields.function(
+            _get_name, type='char', store={
+                'sale.recovery.moment.group': (
+                    lambda self, cr, uid, ids, context=None: ids,
+                    ['code', 'short_name'], 10)}),
         'min_sale_date': fields.datetime(
             'Minimum date for the Sale', required=True),
         'max_sale_date': fields.datetime(
@@ -182,12 +197,12 @@ class sale_recovery_moment_group(Model):
         'order_qty': fields.function(
             _get_order, multi='order', type='integer',
             string='Sale Orders Quantity'),
+        'valid_order_qty': fields.function(
+            _get_order, multi='order', type='integer',
+            string='Valid Sale Orders Quantity'),
         'picking_ids': fields.function(
             _get_picking, multi='picking', type='one2many',
             relation='stock.picking', string='Stock Picking', readonly=True),
-        'picking_qty': fields.function(
-            _get_picking, multi='picking', type='integer',
-            string='Stock Picking Quantity'),
         'excl_total': fields.function(
             _get_order, multi='order', type='float',
             string='Total (VAT Exclude)'),
@@ -207,10 +222,11 @@ class sale_recovery_moment_group(Model):
         return shop_ids[0]
 
     _defaults = {
-        'name': (
+        'code': (
             lambda obj, cr, uid, context:
             obj.pool.get('ir.sequence').get(
                 cr, uid, 'sale.recovery.moment.group')),
+        'name': '/',
         'shop_id': _default_shop_id,
         'company_id': (
             lambda s, cr, uid, c: s.pool.get('res.users')._get_company(
@@ -241,3 +257,10 @@ class sale_recovery_moment_group(Model):
             ' date of Sale.',
             ['min_sale_date', 'max_sale_date']),
     ]
+
+    # Overload Section
+    def copy(self, cr, uid, id, default=None, context=None):
+        raise except_orm(
+            _('Error!'),
+            _("You can not duplicate by this way, please use the"
+                " Duplicate Button in the Form view."))

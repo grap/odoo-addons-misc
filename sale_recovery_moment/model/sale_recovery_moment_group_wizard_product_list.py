@@ -1,9 +1,8 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Sale - Food Module for Odoo
-#    Copyright (C) 2012-Today GRAP (http://www.grap.coop)
-#    @author Julien WESTE
+#    Sale - Recovery Moment Module for Odoo
+#    Copyright (C) 2015-Today GRAP (http://www.grap.coop)
 #    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -25,8 +24,8 @@ from openerp.osv.orm import TransientModel
 from openerp.osv import fields
 
 
-class sale_recovery_moment_group_wizard(TransientModel):
-    _name = 'sale.recovery.moment.group.wizard'
+class sale_recovery_moment_group_wizard_product_list(TransientModel):
+    _name = 'sale.recovery.moment.group.wizard.product.list'
 
     # Fields Function Section
     def _get_group_id(self, cr, uid, context=None):
@@ -69,7 +68,7 @@ class sale_recovery_moment_group_wizard(TransientModel):
         'group_id': fields.many2one(
             'sale.recovery.moment.group', 'Moment Group'),
         'line_ids': fields.one2many(
-            'sale.recovery.moment.group.wizard.line', 'wizard_id',
+            'sale.recovery.moment.group.wizard.product.list.line', 'wizard_id',
             'Products', readonly=True),
     }
 

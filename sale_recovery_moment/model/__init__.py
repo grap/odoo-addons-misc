@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    Sale - Recovery Moment Module for Odoo
-#    Copyright (C) 2014 GRAP (http://www.grap.coop)
+#    Copyright (C) 2014 - Today GRAP (http://www.grap.coop)
 #    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -25,5 +25,6 @@ from . import stock_picking
 from . import sale_recovery_moment
 from . import sale_recovery_place
 from . import sale_recovery_moment_group
-from . import sale_recovery_moment_group_wizard
-from . import sale_recovery_moment_group_wizard_line
+from . import sale_recovery_moment_group_wizard_product_list
+from . import sale_recovery_moment_group_wizard_product_list_line
+from . import sale_recovery_moment_group_wizard_duplicate
