@@ -164,7 +164,7 @@ class sale_recovery_moment_group(Model):
         'short_name': fields.char(
             'Short Name', required=True),
         'name': fields.function(
-            _get_name, type='char', store={
+            _get_name, type='char', string='Name', store={
                 'sale.recovery.moment.group': (
                     lambda self, cr, uid, ids, context=None: ids,
                     ['code', 'short_name'], 10)}),

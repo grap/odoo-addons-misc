@@ -22,5 +22,6 @@
 ##############################################################################
 
 - !record {model: sale.recovery.moment.group, id: recovery_moment_group_1}:
+    short_name: Test Group
     min_sale_date: '2014-01-01 00:00:00'
     max_sale_date: '2016-01-01 18:00:00'

@@ -109,7 +109,7 @@ class sale_recovery_moment(Model):
         'code': fields.char(
             'Code', readonly=True, required=True),
         'name': fields.function(
-            _get_name, type='char', store={
+            _get_name, type='char', string='Name', store={
                 'sale.recovery.moment': (
                     lambda self, cr, uid, ids, context=None: ids,
                     ['code', 'min_recovery_date'], 10),

@@ -21,7 +21,7 @@
     <data>
 
         <record id="action_sale_recovery_moment_group_wizard_duplicate" model="ir.actions.act_window">
-            <field name="name">Dupicate Group</field>
+            <field name="name">Duplicate Group</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">sale.recovery.moment.group.wizard.duplicate</field>
             <field name="view_type">form</field>

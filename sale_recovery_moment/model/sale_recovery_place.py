@@ -70,7 +70,7 @@ class sale_recovery_place(Model):
         'active': fields.boolean('Active'),
         'street': fields.char('Street'),
         'street2': fields.char('Street2'),
-        'zip': fields.char('Zip', change_default=True, size=24),
+        'zip': fields.char('ZIP', change_default=True, size=24),
         'city': fields.char('City'),
         'state_id': fields.many2one('res.country.state', 'State'),
         'country_id': fields.many2one('res.country', 'Country'),
