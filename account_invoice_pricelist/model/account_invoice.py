@@ -34,7 +34,6 @@ class account_invoice(Model):
         if context == {}:
             results = self.read(cr, uid, ids, ['company_id'])
             for result in results:
-                print result
                 context['force_company'] = result['company_id'][0]
                 ai = self.browse(cr, uid, result['id'], context=context)
                 if ai.type in ('out_invoice', 'out_refund'):
