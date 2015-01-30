@@ -21,7 +21,7 @@
     <data>
 
         <menuitem id="menu_product_ean_duplicates"
-            parent="base.menu_base_config"
+            parent="base.menu_product"
             action="action_product_ean_duplicates"
             sequence="15"/>
 

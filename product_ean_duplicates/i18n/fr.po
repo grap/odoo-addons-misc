@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-26 00:18+0000\n"
-"PO-Revision-Date: 2014-12-26 00:18+0000\n"
+"POT-Creation-Date: 2015-01-30 09:56+0000\n"
+"PO-Revision-Date: 2015-01-30 09:56+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,8 +16,6 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: product_ean_duplicates
-#: model:ir.actions.act_window,name:product_ean_duplicates.action_product_ean_duplicates
-#: model:ir.ui.menu,name:product_ean_duplicates.menu_product_ean_duplicates
 #: view:product.product:0
 msgid "EAN Duplicates"
 msgstr "Doublons EAN"
@@ -31,3 +29,18 @@ msgstr "Nombre de Doublons EAN"
 #: field:product.product,ean_duplicates_exist:0
 msgid "Has EAN Duplicates"
 msgstr "Possède des doublons EAN"
+
+#. module: product_ean_duplicates
+#: code:_description:0
+#: model:ir.model,name:product_ean_duplicates.model_product_product
+#, python-format
+msgid "Product"
+msgstr "Produit"
+
+#. module: product_ean_duplicates
+#: model:ir.actions.act_window,name:product_ean_duplicates.action_product_ean_duplicates
+#: model:ir.ui.menu,name:product_ean_duplicates.menu_product_ean_duplicates
+#: view:product.product:0
+msgid "Products (EAN Duplicates)"
+msgstr "Produits (Doublons EAN)"
+

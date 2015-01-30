@@ -24,7 +24,7 @@
         <record id="view_product_ean_duplicates" model="ir.ui.view">
             <field name="model">product.product</field>
             <field name="arch" type="xml">
-                <tree string="EAN Duplicates" editable="bottom">
+                <tree string="Products (EAN Duplicates)" editable="bottom">
                         <field name="name"/>
                         <field name="ean13"/>
                         <field name="ean_duplicates_qty"/>

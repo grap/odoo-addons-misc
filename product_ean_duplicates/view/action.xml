@@ -21,7 +21,7 @@
     <data>
 
         <record id="action_product_ean_duplicates" model="ir.actions.act_window">
-            <field name="name">EAN Duplicates</field>
+            <field name="name">Products (EAN Duplicates)</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">product.product</field>
             <field name="view_type">form</field>
