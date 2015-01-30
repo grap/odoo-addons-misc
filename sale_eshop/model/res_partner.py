@@ -64,3 +64,4 @@ class res_partner(Model):
                 self._PASSWORD_CHARS) for i in range(self._PASSWORD_LENGTH))
             self.write(cr, uid, ids, {
                 'eshop_password': password}, context=context)
+        return True

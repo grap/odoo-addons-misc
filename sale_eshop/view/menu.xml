@@ -29,8 +29,13 @@
             parent="menu_eshop" sequence="1"
             action="action_eshop_category"/>
 
+        <menuitem id="menu_res_partner" 
+            parent="menu_eshop" sequence="2"
+            groups="sale_eshop.res_groups_eshop_user"
+            action="action_res_partner"/>
+
         <menuitem id="menu_product_product"
-            parent="menu_eshop" sequence="5"
+            parent="menu_eshop" sequence="3"
             groups="sale_eshop.res_groups_eshop_user"
             action="action_product_product"/>
 

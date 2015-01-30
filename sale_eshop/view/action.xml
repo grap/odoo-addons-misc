@@ -20,13 +20,7 @@
 <openerp>
     <data>
 
-        <record id="action_eshop_category" model="ir.actions.act_window">
-            <field name="name">eShop Categories</field>
-            <field name="res_model">eshop.category</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-        </record>
-
+<!-- Model: product.product -->
         <record id="action_product_product" model="ir.actions.act_window">
             <field name="name">eShop Products</field>
             <field name="res_model">product.product</field>
@@ -34,6 +28,24 @@
             <field name="view_mode">tree</field>
             <field name="context">{'search_default_eshop_setup':1}</field>
             <field name="view_id" ref="view_product_product_tree" />
+        </record>
+
+<!-- Model: res.partner -->
+        <record id="action_res_partner" model="ir.actions.act_window">
+            <field name="name">eShop Customers</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="context">{'search_default_eshop_setup':1}</field>
+            <field name="view_id" ref="view_res_partner_tree" />
+        </record>
+
+<!-- Model: eshop.category -->
+        <record id="action_eshop_category" model="ir.actions.act_window">
+            <field name="name">eShop Categories</field>
+            <field name="res_model">eshop.category</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
         </record>
 
     </data>

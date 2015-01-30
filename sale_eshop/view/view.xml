@@ -79,12 +79,29 @@
                             <field name="eshop_active"/>
                             <field name="eshop_password"/>
                             <button name="button_generate_eshop_password"
-                                    string="Generate Password"
-                                    type="object" colspan="2"
-                                    attrs="{'invisible':[('eshop_active','=', False)]}"/>
+                                string="Generate Password"
+                                type="object" colspan="2" icon="gtk-ok"
+                                attrs="{'invisible':[('eshop_active','=', False)]}"/>
                         </group>
                     </page>
                 </notebook>
+            </field>
+        </record>
+
+        <record id="view_res_partner_tree" model="ir.ui.view">
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <tree string="eShop Customers" editable="bottom"
+                        colors="black:eshop_active == True; gray: eshop_active == False">
+                    <field name="name" readonly="1"/>
+                    <field name="eshop_active"/>
+                    <field name="email"/>
+                    <field name="eshop_password"/>
+                    <button name="button_generate_eshop_password"
+                        string="Generate Password"
+                        type="object" colspan="2" icon="gtk-ok"
+                        attrs="{'invisible':[('eshop_active','=', False)]}"/>
+                </tree>
             </field>
         </record>
 
