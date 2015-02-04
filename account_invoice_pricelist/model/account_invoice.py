@@ -32,6 +32,7 @@ class account_invoice(Model):
             self, cr, uid, ids, name, arg, context=None):
         res = {}
         if context == {}:
+            # Init, when installing the module
             results = self.read(cr, uid, ids, ['company_id'])
             for result in results:
                 context['force_company'] = result['company_id'][0]
@@ -47,7 +48,8 @@ class account_invoice(Model):
                         """Can not compute Partner Pricelist for this"""
                         """ type of invoice: '%s'.""" % (ai.type)))
         else:
-            for ai in self.browse(cr, uid, ids, context=context):
+            # Normal behaviour
+            for ai in self.browse(cr, context['uid'], ids, context=context):
                 if ai.type in ('out_invoice', 'out_refund'):
                     res[ai.id] =\
                         ai.partner_id.property_product_pricelist.id
