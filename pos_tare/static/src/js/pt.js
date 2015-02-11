@@ -62,6 +62,9 @@ openerp.pos_tare = function(instance){
             this._super();
             this.renderElement();
             var self = this;
+            this.gross_weight = 0;
+            this.tare_weight = 0;
+            this.net_weight = 0;
 
             // Add 'Cancel' Button
             this.add_action_button({
