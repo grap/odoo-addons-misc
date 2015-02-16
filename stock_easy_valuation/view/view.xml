@@ -25,10 +25,11 @@
             <field name="model">product.product</field>
             <field eval="5" name="priority"/>
             <field name="arch" type="xml">
-                <tree string="Products (Stock)" editable="bottom">
-                    <field name="name" readonly="1"/>
-                    <field name="uom_id" readonly="1"/>
-                    <field name="standard_price" readonly="1"/>
+                <tree string="Products (Stock)">
+                    <field name="name"/>
+                    <field name="categ_id"/>
+                    <field name="uom_id"/>
+                    <field name="standard_price"/>
                     <field name="qty_available"/>
                     <field name="valuation_qty_available" sum="Total Valuation On Hand"/>
                     <field name="virtual_available"/>
