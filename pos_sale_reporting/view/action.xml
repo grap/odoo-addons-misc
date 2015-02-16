@@ -33,10 +33,26 @@
             <field name="res_model">pos.sale.category.report</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_pos_sale_category_report_tree" />
+            <field name="search_id" ref="view_pos_sale_category_report_search" />
             <field name="context">{
                 'search_default_last_3_month': 1,
                 'group_by_no_leaf':1,
                 'group_by':['categ_id_2', 'categ_id_1', 'product_id'],
+            }</field>
+        </record>
+
+       <record id="action_pos_sale_category_top_product_report" model="ir.actions.act_window">
+            <field name="name">Top Products</field>
+            <field name="res_model">pos.sale.category.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_pos_sale_category_top_product_report_tree" />
+            <field name="search_id" ref="view_pos_sale_category_top_product_report_search" />
+            <field name="context">{
+                'search_default_last_3_month': 1,
+                'group_by_no_leaf':1,
+                'group_by':['product_id', 'product_active'],
             }</field>
         </record>
 

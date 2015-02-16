@@ -65,6 +65,8 @@ class pos_sale_category_report(materialized_model.MaterializedModel):
             'Day', size=128, readonly=True),
         'product_id': fields.many2one(
             'product.product', 'Product', readonly=True),
+        'product_active': fields.boolean(
+            'Active Product', readonly=True),
         'categ_id_1': fields.many2one(
             'product.category', 'Category of Product', readonly=True),
         'categ_id_2': fields.many2one(
@@ -96,6 +98,7 @@ class pos_sale_category_report(materialized_model.MaterializedModel):
         to_char(lines.date, 'MM') as month,
         to_char(lines.date, 'YYYY-MM-DD') as day,
         lines.product_id,
+        lines.product_active,
         lines.categ_id_1,
         pc_parent.id AS categ_id_2,
         pc_parent.parent_id AS categ_id_3,
@@ -109,11 +112,13 @@ class pos_sale_category_report(materialized_model.MaterializedModel):
         END AS average_price_vat_excl,
         count(*) as nbr
     FROM (
+/* Out Invoices not in 'draft / cancel' state ****************************** */
         SELECT
             ai.company_id,
             'invoice' AS type,
             date_trunc('day', ai.date_invoice)::date AS date,
             ail.product_id,
+            pp.active as product_active,
             pt.categ_id AS categ_id_1,
             pt.uom_id AS product_uom,
             CASE WHEN ai.type = 'out_invoice' THEN
@@ -152,6 +157,7 @@ class pos_sale_category_report(materialized_model.MaterializedModel):
             'point_of_sale' AS type,
             date_trunc('day', po.date_order)::date AS date,
             pol.product_id,
+            pp.active as product_active,
             pt.categ_id as categ_id_1,
             pt.uom_id as product_uom,
             pol.qty as product_uom_qty,
@@ -176,6 +182,7 @@ GROUP BY
      lines.type,
      lines.date,
      lines.product_id,
+     lines.product_active,
      lines.categ_id_1,
      categ_id_2,
      categ_id_3,

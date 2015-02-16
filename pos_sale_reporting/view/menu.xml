@@ -35,5 +35,10 @@
             parent="menu_pos_sale_report"
             action="action_pos_sale_category_report"
             sequence="2"/>
+
+        <menuitem id="menu_pos_sale_category_top_product_report"
+            parent="menu_pos_sale_report"
+            action="action_pos_sale_category_top_product_report"
+            sequence="3"/>
     </data>
 </openerp>

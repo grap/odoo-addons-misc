@@ -36,6 +36,7 @@ Functionality:
       of sale Net informations;
         * Net Sales Evolution;
         * Net Sales by Category (3 levels);
+        * Top Products saled;
 
 Technical Information:
 ----------------------

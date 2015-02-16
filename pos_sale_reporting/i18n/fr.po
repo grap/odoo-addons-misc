@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-14 17:43+0000\n"
-"PO-Revision-Date: 2015-01-14 17:43+0000\n"
+"POT-Creation-Date: 2015-02-13 12:42+0000\n"
+"PO-Revision-Date: 2015-02-13 12:42+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -24,6 +24,11 @@ msgstr "Nb. Lignes"
 #: field:pos.sale.category.report,product_uom_qty:0
 msgid "# of Qty"
 msgstr "Total Qté"
+
+#. module: pos_sale_reporting
+#: field:pos.sale.category.report,product_active:0
+msgid "Active Product"
+msgstr "Produit actif"
 
 #. module: pos_sale_reporting
 #: selection:pos.sale.category.report,month:0
@@ -129,7 +134,7 @@ msgstr "Juin"
 #. module: pos_sale_reporting
 #: view:pos.sale.category.report:0
 msgid "Last 12 Months"
-msgstr "12 Derniers Mois (365j)"
+msgstr "12 Derniers Mois (365,)"
 
 #. module: pos_sale_reporting
 #: view:pos.sale.category.report:0
@@ -139,12 +144,12 @@ msgstr "3 Derniers Mois (90j)"
 #. module: pos_sale_reporting
 #: view:pos.sale.category.report:0
 msgid "Last 30 Days"
-msgstr "30 Derniers Jours (30j)"
+msgstr "30 Derniers Jours"
 
 #. module: pos_sale_reporting
 #: view:pos.sale.category.report:0
 msgid "Last 7 Days"
-msgstr "7 Derniers Jours (7j)"
+msgstr "7 Derniers Jours"
 
 #. module: pos_sale_reporting
 #: view:pos.sale.category.report:0
@@ -273,6 +278,13 @@ msgstr "Vente + Point de Vente"
 #: selection:pos.sale.category.report,month:0
 msgid "September"
 msgstr "Septembre"
+
+#. module: pos_sale_reporting
+#: model:ir.actions.act_window,name:pos_sale_reporting.action_pos_sale_category_top_product_report
+#: model:ir.ui.menu,name:pos_sale_reporting.menu_pos_sale_category_top_product_report
+#: view:pos.sale.category.report:0
+msgid "Top Products"
+msgstr "Top Produits"
 
 #. module: pos_sale_reporting
 #: field:pos.sale.net.sales.report,total:0
