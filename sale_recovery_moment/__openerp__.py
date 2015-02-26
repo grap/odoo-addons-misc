@@ -31,7 +31,11 @@ Manage Recovery Moments and Places for Sale Order
 
 Functionality:
 --------------
-    * XXX;
+    * Add Recovery Moment Group that is a group of Recovery Moment;
+    * A recovery Moment is a moment during the customers have the possibility
+      to recover them sales; A recovery moment is described by:
+        * A min date and a max date;
+        * A place (sale.recovery.place);
 
 Technical Information:
 ----------------------
@@ -54,6 +58,7 @@ TODO:
     * ir group;
 
 Technical Limits:
+-----------------
     * This module displays some Total or sale Order; This amount will be wrong
     in a multicurrencies context for the instance;
 
