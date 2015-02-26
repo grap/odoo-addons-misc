@@ -23,3 +23,7 @@
 - !record {model: res.groups, id: res_groups_eshop_manager}:
     users:
         - base.user_root
+
+- !record {model: res.groups, id: base.group_no_one}:
+    users:
+        - base.user_root
