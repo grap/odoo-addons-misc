@@ -201,8 +201,9 @@ class account_merge_pattern(Model):
                         for aml in am.line_id:
                             match = (match and(
                                 (aml.credit and not aml.debit and
-                                    aml.account_id in amp.credit_account_ids)
-                                or (aml.debit and not aml.credit and
+                                    aml.account_id in
+                                    amp.credit_account_ids) or
+                                (aml.debit and not aml.credit and
                                     aml.account_id in amp.debit_account_ids)))
 
                         if match and not am.merged_move_quantity:
@@ -239,8 +240,9 @@ class account_merge_pattern(Model):
                         for aml in am.line_id:
                             match = (match and (
                                 (aml.credit and not aml.debit and
-                                    aml.account_id in amp.credit_account_ids)
-                                or (aml.debit and not aml.credit and
+                                    aml.account_id in
+                                    amp.credit_account_ids) or
+                                (aml.debit and not aml.credit and
                                     aml.account_id in amp.debit_account_ids)))
                         if match:
                             am_match_ids.append(am.id)
@@ -305,13 +307,13 @@ class account_merge_pattern(Model):
                                     'date': max(
                                         max_date, merge_account_move.date),
                                     'credit':
-                                        aml.credit
-                                        + credit_account_values[am_id.id],
+                                        aml.credit +
+                                        credit_account_values[am_id.id],
                                     'name': amp.name_line_pattern + _(
                                         '(%s Items)') % (
                                             merge_account_move
-                                            .merged_move_quantity
-                                            + len(account_move_ids_to_merge)),
+                                            .merged_move_quantity +
+                                            len(account_move_ids_to_merge)),
                                 }])
                             for am_id in amp.debit_account_ids:
                                 aml = self._get_account_move_line(
@@ -321,23 +323,23 @@ class account_merge_pattern(Model):
                                     'date': max(
                                         max_date, merge_account_move.date),
                                     'debit':
-                                        aml.debit
-                                        + debit_account_values[am_id.id],
+                                        aml.debit +
+                                        debit_account_values[am_id.id],
                                     'name': amp.name_line_pattern + _(
                                         '(%s Items)') % (
                                             merge_account_move
-                                            .merged_move_quantity
-                                            + len(account_move_ids_to_merge)),
+                                            .merged_move_quantity +
+                                            len(account_move_ids_to_merge)),
                                 }])
                             vals = {
                                 'line_id': line_id,
                                 'date': max(max_date, merge_account_move.date),
                                 'merged_narration':
-                                    merge_account_move.merged_narration
-                                    + '\n' + narration,
+                                    merge_account_move.merged_narration +
+                                    '\n' + narration,
                                 'merged_move_quantity':
-                                    merge_account_move.merged_move_quantity
-                                    + len(account_move_ids_to_merge),
+                                    merge_account_move.merged_move_quantity +
+                                    len(account_move_ids_to_merge),
                             }
                             am_obj.write(
                                 cr, uid, [merge_account_move.id], vals,

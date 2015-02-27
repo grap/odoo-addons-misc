@@ -58,16 +58,16 @@ class sale_recovery_moment_group(Model):
                 "('%s' < min_sale_date)" % (now))
         if 'pending_sale' in lst:
             sql_lst.append((
-                "(min_sale_date < '%s'"
-                + " AND '%s' < max_sale_date)") % (now, now))
+                "(min_sale_date < '%s'" +
+                " AND '%s' < max_sale_date)") % (now, now))
         if 'finished_sale' in lst:
             sql_lst.append((
-                "(max_sale_date < '%s'"
-                + " AND '%s'<min_recovery_date)") % (now, now))
+                "(max_sale_date < '%s'" +
+                " AND '%s'<min_recovery_date)") % (now, now))
         if 'pending_recovery' in lst:
             sql_lst.append((
-                "(min_recovery_date < '%s'"
-                + " AND '%s' < max_recovery_date)") % (now, now))
+                "(min_recovery_date < '%s'" +
+                " AND '%s' < max_recovery_date)") % (now, now))
         if 'finished_recovery' in lst:
             sql_lst.append(
                 "(max_recovery_date < '%s')" % (now))

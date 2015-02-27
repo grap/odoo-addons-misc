@@ -41,12 +41,12 @@ class sale_recovery_moment_group_wizard_duplicate(TransientModel):
             vals = {
                 'short_name': srmgwd.short_name,
                 'min_sale_date': (datetime.strptime(
-                    srmgwd.group_id.min_sale_date, '%Y-%m-%d %H:%M:%S')
-                    + relativedelta(days=srmgwd.day_delay)).strftime(
+                    srmgwd.group_id.min_sale_date, '%Y-%m-%d %H:%M:%S') +
+                    relativedelta(days=srmgwd.day_delay)).strftime(
                     '%Y-%m-%d %H:%M:%S'),
                 'max_sale_date': (datetime.strptime(
-                    srmgwd.group_id.max_sale_date, '%Y-%m-%d %H:%M:%S')
-                    + relativedelta(days=srmgwd.day_delay)).strftime(
+                    srmgwd.group_id.max_sale_date, '%Y-%m-%d %H:%M:%S') +
+                    relativedelta(days=srmgwd.day_delay)).strftime(
                     '%Y-%m-%d %H:%M:%S'),
                 'shop_id': srmgwd.group_id.shop_id.id,
                 'company_id': srmgwd.group_id.company_id.id,
@@ -57,12 +57,12 @@ class sale_recovery_moment_group_wizard_duplicate(TransientModel):
                 vals = {
                     'group_id': srmg_id,
                     'min_recovery_date': (datetime.strptime(
-                        srm.min_recovery_date, '%Y-%m-%d %H:%M:%S')
-                        + relativedelta(days=srmgwd.day_delay)).strftime(
+                        srm.min_recovery_date, '%Y-%m-%d %H:%M:%S') +
+                        relativedelta(days=srmgwd.day_delay)).strftime(
                         '%Y-%m-%d %H:%M:%S'),
                     'max_recovery_date': (datetime.strptime(
-                        srm.max_recovery_date, '%Y-%m-%d %H:%M:%S')
-                        + relativedelta(days=srmgwd.day_delay)).strftime(
+                        srm.max_recovery_date, '%Y-%m-%d %H:%M:%S') +
+                        relativedelta(days=srmgwd.day_delay)).strftime(
                         '%Y-%m-%d %H:%M:%S'),
                     'place_id': srm.place_id.id,
                     'max_order_qty': srm.max_order_qty,
