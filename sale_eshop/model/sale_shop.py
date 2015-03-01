@@ -32,6 +32,8 @@ class sale_shop(Model):
     _columns = {
         'eshop_minimum_price': fields.float(
             'Minimum Price'),
+        'eshop_website': fields.char(
+            'WebSite URL'),
         'eshop_home_text': fields.html(
             'Text for Home Page'),
     }

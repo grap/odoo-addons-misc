@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ********************************************************************** -->
+<!--Sale - eShop for Odoo                                                   -->
+<!--Copyright (C) 2015-Today GRAP (http://www.grap.coop)                    -->
+<!--@author Sylvain LE GAL (https://twitter.com/legalsylvain)               -->
+
+<!--This program is free software: you can redistribute it and/or modify    -->
+<!--it under the terms of the GNU Affero General Public License as          -->
+<!--published by the Free Software Foundation, either version 3 of the      -->
+<!--License, or (at your option) any later version.                         -->
+
+<!--This program is distributed in the hope that it will be useful,         -->
+<!--but WITHOUT ANY WARRANTY; without even the implied warranty of          -->
+<!--MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           -->
+<!--GNU Affero General Public License for more details.                     -->
+
+<!--You should have received a copy of the GNU Affero General Public License-->
+<!--along with this program.  If not, see <http://www.gnu.org/licenses/>.   -->
+<!-- ********************************************************************** -->
+<openerp>
+    <data>
+
+<!-- Model: email.template -->
+        <record model="email.template" id="eshop_password_template" >
+            <field name="name">Send Password</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="email_from"><![CDATA[${object.company_id.name} <${(object.company_id.email or user.email)|safe}>]]></field>
+            <field name="email_recipients">${object.id}</field>
+            <field name="subject">eShop Access</field>
+             <field name="lang">${object.lang}</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+    <p>Hello, ${object.name}</p>
+    <p>Here is your credentials to access to the eShop of ${object.company_id.name}:</p>
+    <p>
+        <ul>
+% if ctx.get('eshop_website', False):
+            <li>Web Site: ${ctx.get('eshop_website')}</li>
+% endif
+            <li>Login: ${object.email}</li>
+            <li>Password: ${object.eshop_password}</li>
+        </ul>
+    </p><p>Have a nice day</p>
+</div>
+            ]]></field>
+
+        </record>
+
+    </data>
+</openerp>
+
+
+<!--Hi,-->
+<!--Here is your credentials to access to the eShop of object.company_id.name:-->
+<!--<ul>-->
+<!--<li>Login : ${object.email}</li>-->
+<!--<li>Password : ${object.eshop_password}</li>-->
+<!--</ul>-->
+<!--Please, keep this credentials private.-->

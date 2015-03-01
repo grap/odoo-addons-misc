@@ -51,6 +51,7 @@ Copyright, Authors and Licence:
     'website': 'http://www.grap.coop',
     'license': 'AGPL-3',
     'depends': [
+        'mail',
         'sale',
     ],
     'data': [
@@ -58,6 +59,7 @@ Copyright, Authors and Licence:
         'security/ir_module_category.yml',
         'security/res_groups.yml',
         'security/ir_model_access.yml',
+        'data/email_template.xml',
         'view/wizard_view.xml',
         'view/wizard_action.xml',
         'view/view.xml',

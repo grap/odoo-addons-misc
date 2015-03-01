@@ -6,14 +6,47 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-30 10:57+0000\n"
-"PO-Revision-Date: 2015-01-30 10:57+0000\n"
+"POT-Creation-Date: 2015-03-01 01:57+0000\n"
+"PO-Revision-Date: 2015-03-01 01:57+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: sale_eshop
+#: model:email.template,body_html:sale_eshop.eshop_password_template
+msgid "\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"    <p>Hello, ${object.name}</p>\n"
+"    <p>Here is your credentials to access to the eShop of ${object.company_id.name}:</p>\n"
+"    <p>\n"
+"        <ul>\n"
+"% if ctx.get('eshop_website', False):\n"
+"            <li>Web Site: ${ctx.get('eshop_website')}</li>\n"
+"% endif\n"
+"            <li>Login: ${object.email}</li>\n"
+"            <li>Password: ${object.eshop_password}</li>\n"
+"        </ul>\n"
+"    </p><p>Have a nice day</p>\n"
+"</div>\n"
+"            "
+msgstr "\n"
+"<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
+"    <p>Bonjour, ${object.name}</p>\n"
+"    <p>Vous trouverez ci-dessous vos identifiants pour accéder à la boutique en ligne de ${object.company_id.name} :</p>\n"
+"    <p>\n"
+"        <ul>\n"
+"% if ctx.get('eshop_website', False):\n"
+"            <li>Site Web : ${ctx.get('eshop_website')}</li>\n"
+"% endif\n"
+"            <li>Login : ${object.email}</li>\n"
+"            <li>Mot de passe : ${object.eshop_password}</li>\n"
+"        </ul>\n"
+"    </p><p>Bonne Journée.</p>\n"
+"</div>\n"
+"            "
 
 #. module: sale_eshop
 #: help:eshop.category,type:0
@@ -208,7 +241,13 @@ msgid "Sales Shop"
 msgstr "Magasin"
 
 #. module: sale_eshop
+#: view:res.partner:0
+msgid "Send Credentials"
+msgstr "Envoyer les identifiants"
+
+#. module: sale_eshop
 #: view:product.product:0
+#: view:res.partner:0
 msgid "Set On eShop"
 msgstr "Paramétré dans la Boutique en Ligne"
 
@@ -260,6 +299,11 @@ msgid "View"
 msgstr "Vue"
 
 #. module: sale_eshop
+#: field:sale.shop,eshop_website:0
+msgid "WebSite URL"
+msgstr "URL du site web"
+
+#. module: sale_eshop
 #: code:addons/sale_eshop/model/eshop_category.py:192
 #, python-format
 msgid "You cannot delete the category '%s' because it contents %s child categories. Please move child categories to another Category First."
@@ -282,6 +326,11 @@ msgid "eShop"
 msgstr "Boutique en ligne"
 
 #. module: sale_eshop
+#: model:email.template,subject:sale_eshop.eshop_password_template
+msgid "eShop Access"
+msgstr "Accès à la boutique en ligne"
+
+#. module: sale_eshop
 #: view:eshop.category:0
 #: model:ir.actions.act_window,name:sale_eshop.action_eshop_category
 #: model:ir.ui.menu,name:sale_eshop.menu_eshop_category
@@ -292,6 +341,13 @@ msgstr "Catégories eBoutique"
 #: field:product.product,eshop_category_id:0
 msgid "eShop Category"
 msgstr "Catégorie eBoutique"
+
+#. module: sale_eshop
+#: model:ir.actions.act_window,name:sale_eshop.action_res_partner
+#: model:ir.ui.menu,name:sale_eshop.menu_res_partner
+#: view:res.partner:0
+msgid "eShop Customers"
+msgstr "eShop Customers"
 
 #. module: sale_eshop
 #: model:ir.actions.act_window,name:sale_eshop.action_product_product

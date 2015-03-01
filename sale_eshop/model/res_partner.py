@@ -57,6 +57,27 @@ class res_partner(Model):
             return False
 
     # View Function Section
+    def button_send_credentials(self, cr, uid, ids, context=None):
+        context = context or {}
+        imd_obj = self.pool['ir.model.data']
+        et_obj = self.pool['email.template']
+        ss_obj = self.pool['sale.shop']
+        et = imd_obj.get_object(
+            cr, uid, 'sale_eshop', 'eshop_password_template')
+
+        for rp in self.browse(cr, uid, ids, context=context):
+            ss_ids = ss_obj.search(cr, uid, [
+                ('company_id', '=', rp.company_id.id),
+                ('eshop_website', '!=', False),
+            ], context=context)
+            ctx = context.copy()
+            if ss_ids:
+                ctx['eshop_website'] = ss_obj.browse(
+                    cr, uid, ss_ids[0], context=context).eshop_website
+            et_obj.send_mail(
+                cr, uid, et.id, rp.id, True, context=ctx)
+        return True
+
     def button_generate_eshop_password(self, cr, uid, ids, context=None):
         for rp in self.browse(cr, uid, ids, context=context):
             random.seed = (os.urandom(1024))
