@@ -85,7 +85,7 @@
                                 attrs="{'invisible':[('eshop_active','=', False)]}"/>
                             <button name="button_send_credentials"
                                 string="Send Credentials"
-                                type="object" colspan="2" icon="gtk-ok"
+                                type="object" colspan="2" icon="terp-mail-message-new"
                                 attrs="{'invisible':[('eshop_active','=', False), ('eshop_password','!=', False)]}"/>
                         </group>
                     </page>
@@ -106,6 +106,10 @@
                         string="Generate Password"
                         type="object" colspan="2" icon="gtk-ok"
                         attrs="{'invisible':[('eshop_active','=', False)]}"/>
+                    <button name="button_send_credentials"
+                        string="Send Credentials"
+                        type="object" colspan="2" icon="terp-mail-message-new"
+                        attrs="{'invisible':[('eshop_active','=', False), ('eshop_password','!=', False)]}"/>
                 </tree>
             </field>
         </record>

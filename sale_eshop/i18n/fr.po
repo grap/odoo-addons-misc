@@ -347,7 +347,7 @@ msgstr "Catégorie eBoutique"
 #: model:ir.ui.menu,name:sale_eshop.menu_res_partner
 #: view:res.partner:0
 msgid "eShop Customers"
-msgstr "eShop Customers"
+msgstr "Client eBoutique"
 
 #. module: sale_eshop
 #: model:ir.actions.act_window,name:sale_eshop.action_product_product
