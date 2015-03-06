@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ********************************************************************** -->
+<!--Point Of Sale - Change Payment module for Odoo                          -->
+<!--Copyright (C) 2015-Today GRAP (http://www.grap.coop)                    -->
+<!--@author Sylvain LE GAL (https://twitter.com/legalsylvain)               -->
+
+<!--This program is free software: you can redistribute it and/or modify    -->
+<!--it under the terms of the GNU Affero General Public License as          -->
+<!--published by the Free Software Foundation, either version 3 of the      -->
+<!--License, or (at your option) any later version.                         -->
+
+<!--This program is distributed in the hope that it will be useful,         -->
+<!--but WITHOUT ANY WARRANTY; without even the implied warranty of          -->
+<!--MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           -->
+<!--GNU Affero General Public License for more details.                     -->
+
+<!--You should have received a copy of the GNU Affero General Public License-->
+<!--along with this program.  If not, see <http://www.gnu.org/licenses/>.   -->
+<!-- ********************************************************************** -->
+
+<openerp>
+    <data>
+
+<!-- Model: pos.order -->
+    <record id="view_pos_order_form" model="ir.ui.view">
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_pos_form" />
+        <field name="arch" type="xml">
+            <field name="journal_id" position="after">
+                <button name="%(action_pos_change_payment_wizard)d" string="Change Payment" type="action" icon="gtk-index"/>
+            </field>
+        </field>
+    </record>
+
+<!-- Model: account.bank.statement -->
+    <record id="view_account_bank_statement_form" model="ir.ui.view">
+        <field name="model">account.bank.statement</field>
+        <field name="inherit_id" ref="account.view_bank_statement_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='line_ids']/tree/field[@name='amount']" position="after">
+                <field name="pos_statement_id" invisible="1" />
+                <button name="%(action_pos_change_payment_wizard)d" string="Change Payment" type="action" icon="gtk-index" attrs="{'invisible':[('pos_statement_id', '=', False)]}"/>
+            </xpath>
+        </field>
+    </record>
+    
+<!--     -->
+
+<!--    Model: pos.change.payment.wizard-->
+        <record id="view_pos_change_payment_wizard_form" model="ir.ui.view">
+            <field name="model">pos.change.payment.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Change Point Order Payment" version="7.0">
+                    <group col="4">
+                        <field name="old_journal_id" />
+                        <field name="amount" />
+                        <field name="new_statement_id" />
+                    </group>
+                    <footer>
+                        <button name="button_change_payment" string="OK" type="object" class="oe_highlight"/>
+                        <label string="or" />
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</openerp>
