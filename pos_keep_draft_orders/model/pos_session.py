@@ -29,11 +29,7 @@ from openerp.tools.translate import _
 class pos_session(Model):
     _inherit = 'pos.session'
 
-    # Overload Section
-    def wkf_action_closing_control(self, cr, uid, ids, context=None):
-        """Remove all PoS Orders in 'draft' to the sessions we want
-        to close.
-        Check if there is Partial Paid Orders"""
+    def _remove_draft_orders(self, cr, uid, ids, context=None):
         po_obj = self.pool['pos.order']
         for ps in self.browse(cr, uid, ids, context=context):
             for po in ps.order_ids:
@@ -49,6 +45,13 @@ class pos_session(Model):
                 if po.state == 'draft' and ps.config_id.allow_slate:
                     po_obj.write(cr, uid, po.id, {
                         'session_id': None}, context=context)
+
+    # Overload Section
+    def wkf_action_closing_control(self, cr, uid, ids, context=None):
+        """Remove all PoS Orders in 'draft' to the sessions we want
+        to close.
+        Check if there is Partial Paid Orders"""
+        self._remove_draft_orders(cr, uid, ids, context=context)
         return super(pos_session, self).wkf_action_closing_control(
             cr, uid, ids, context=context)
 
