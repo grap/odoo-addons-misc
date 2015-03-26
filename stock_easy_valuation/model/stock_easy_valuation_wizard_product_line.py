@@ -1,9 +1,8 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Sale - Food Module for Odoo
-#    Copyright (C) 2012-Today GRAP (http://www.grap.coop)
-#    @author Julien WESTE
+#    Stock - Easy Valuation for Odoo
+#    Copyright (C) 2014-Today GRAP (http://www.grap.coop)
 #    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -21,12 +20,27 @@
 #
 ##############################################################################
 
-- !record {model: res.groups, id: group_food_user}:
-    category_id: module_category_food
-    name: User
+from openerp.osv.orm import TransientModel
+from openerp.osv import fields
 
-- !record {model: res.groups, id: group_food_manager}:
-    category_id: module_category_food
-    name: Manager
-    implied_ids:
-        - group_food_user
+
+class stock_easy_valuation_wizard_product_line(TransientModel):
+    _name = 'stock.easy.valuation.wizard.product.line'
+    _rec_name = 'product_id'
+
+    # Columns Section
+    _columns = {
+        'category_line_id': fields.many2one(
+            'stock.easy.valuation.wizard.category.line',
+            'Category', select=True),
+        'product_id': fields.many2one(
+            'product.product', 'Product', readonly=True),
+        'qty_available': fields.float(
+            'Brut Quantity', readonly=True),
+        'qty_variation': fields.float(
+            'Variation Quantity', readonly=True),
+        'qty_total': fields.float(
+            'Total Quantity', readonly=True),
+        'valuation': fields.float(
+            'Valuation', readonly=True),
+    }

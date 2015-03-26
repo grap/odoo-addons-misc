@@ -37,5 +37,28 @@
                 </tree>
             </field>
         </record>
+
+<!-- Model: stock.easy.valuation.wizard -->
+        <record id="view_stock_easy_valuation_wizard_form" model="ir.ui.view">
+            <field name="model">stock.easy.valuation.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Stock Valuation" version="7.0">
+                    <header>
+                        <field name="state" widget="statusbar" nolabel="1"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="valuation_date" attrs="{'readonly' : [('state', 'not in', ('draft'))]}"/>
+                            <field name="inventory_ids" attrs="{'readonly' : [('state', 'not in', ('draft'))]}"/>
+                        </group>
+                        <group col="6">
+                            <button icon="gtk-cancel" special="cancel" string="Cancel"/>
+                            <button name="compute" type="object" string="Compute" states='draft'/>
+                            <button name="%(report_stock_easy_valuation_report)d" string="Print" type="action" icon="gtk-print" states='done'/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
     </data>
 </openerp>

@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    Stock - Easy Valuation for Odoo
-#    Copyright (C) 2014 GRAP (http://www.grap.coop)
+#    Copyright (C) 2014-Today GRAP (http://www.grap.coop)
 #    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -22,15 +22,38 @@
 
 {
     'name': 'Stock - Easy Valuation',
-    'version': '1.0',
+    'version': '2.0',
     'category': 'Stock',
     'description': """
-Add a view to extract valuation of Product
-==========================================
+Add Extra Tools to valuate stock
+================================
+
+Pending valuation:
+------------------
+    * Add an extra menu item in 'stock' to have the valuation of all active
+      product instantly;
+
+Valuation at any date:
+----------------------
+    * Add an extra wizard to have the valuation of the stock for all product.
+      This feature is very usefull for accounting people that need to have the
+      valuation of the stock at the last day of the accounting year.
+      The wizard realize a document with the list of all product.
+        * Select products filtered by category_ids;
+        * Select values filtered by warehouse_id;
+        * Possibility to include changes of inventories realized after the
+          requested date. (Usefull if we want the valuation of the stock at
+          31/12/2014 but the inventory appended 15/01/2015.
+
+Limits / Known Issues:
+----------------------
+    * Doesn't manage multicurrency. the currency used is the currency of the
+      Current Company;
 
 Copyright, Authors and Licence:
 -------------------------------
-    * Copyright: 2014, GRAP: Groupement Régional Alimentaire de Proximité;
+    * Copyright:
+        * 2014-Today, GRAP: Groupement Régional Alimentaire de Proximité;
     * Author: Sylvain LE GAL (https://twitter.com/legalsylvain);""",
     'author': 'GRAP',
     'website': 'http://www.grap.coop',
@@ -39,6 +62,7 @@ Copyright, Authors and Licence:
         'stock',
     ],
     'data': [
+        'report/stock_easy_valuation_report.xml',
         'view/view.xml',
         'view/action.xml',
         'view/menu.xml',
