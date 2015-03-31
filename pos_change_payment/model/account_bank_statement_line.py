@@ -21,6 +21,8 @@
 ##############################################################################
 
 from openerp.osv.orm import Model
+from openerp.osv.osv import except_osv
+from openerp.tools.translate import _
 
 
 class account_bank_statement_line(Model):
@@ -41,11 +43,8 @@ class account_bank_statement_line(Model):
             * forbid deletion;"""
         context = context or {}
         values = vals.copy() if vals else {}
+        check_pos_order = False
         po_obj = self.pool['pos.order']
-
-        # Allow changes, if user use the wizard
-        if context.get('change_pos_payment', False):
-            return True
 
         if values:
             # Allow some write
@@ -55,12 +54,25 @@ class account_bank_statement_line(Model):
             if not values:
                 return True
 
+        # Allow changes, if user use the wizard
+        if context.get('change_pos_payment', False):
+            check_pos_order = True
+
         po_ids = []
         for absl in self.browse(cr, uid, ids, context=context):
             if absl.pos_statement_id and\
                     absl.pos_statement_id.id not in po_ids:
                 po_ids.append(absl.pos_statement_id.id)
-        po_obj._allow_change_payments(cr, uid, po_ids, context=context)
+        if po_ids and check_pos_order:
+            return po_obj._allow_change_payments(
+                cr, uid, po_ids, context=context)
+        else:
+            raise except_osv(
+                _('Error!'),
+                _("""You can not change payments of POS by this way."""
+                    """ Please use the regular wizard in POS view!"""))
+            
+        return po_ids == []
 
     # Overload Section
     def write(self, cr, uid, ids, vals, context=None):

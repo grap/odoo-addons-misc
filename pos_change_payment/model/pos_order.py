@@ -58,7 +58,10 @@ class pos_order(Model):
     # Overload Section
     def action_paid(self, cr, uid, ids, context=None):
         """ Merge all cash statement line of the Order"""
-        self._merge_cash_payment(cr, uid, ids, context=context)
+        context = context or {}
+        ctx = context.copy()
+        ctx['change_pos_payment'] = True
+        self._merge_cash_payment(cr, uid, ids, context=ctx)
         return super(pos_order, self).action_paid(
             cr, uid, ids, context=context)
 
@@ -74,3 +77,4 @@ class pos_order(Model):
                     _("""You can not change payments of the POS '%s' because"""
                         """ the associated session '%s' has been closed!""" % (
                             po.name, po.session_id.name)))
+        return True

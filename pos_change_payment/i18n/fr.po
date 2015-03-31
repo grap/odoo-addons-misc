@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-06 20:58+0000\n"
-"PO-Revision-Date: 2015-03-06 20:58+0000\n"
+"POT-Creation-Date: 2015-03-31 19:08+0000\n"
+"PO-Revision-Date: 2015-03-31 19:08+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,8 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: pos_change_payment
-#: field:pos.change.payment.wizard,amount:0
+#: field:pos.change.payments.wizard.line,amount:0
+#: field:pos.switch.journal.wizard,amount:0
 msgid "Amount"
 msgstr "Montant"
 
@@ -28,63 +29,114 @@ msgid "Bank Statement Line"
 msgstr "Ligne de relevé de banque"
 
 #. module: pos_change_payment
-#: view:pos.change.payment.wizard:0
+#: view:pos.change.payments.wizard:0
+#: view:pos.switch.journal.wizard:0
 msgid "Cancel"
 msgstr "Annuler"
 
 #. module: pos_change_payment
-#: view:account.bank.statement:0
+#: model:ir.actions.act_window,name:pos_change_payment.action_pos_change_payments_wizard
+#: view:pos.change.payments.wizard:0
 #: view:pos.order:0
-msgid "Change Payment"
-msgstr "Changer le paiement"
+msgid "Change Payments"
+msgstr "Changer les paiements"
 
 #. module: pos_change_payment
-#: model:ir.actions.act_window,name:pos_change_payment.action_pos_change_payment_wizard
-#: view:pos.change.payment.wizard:0
-msgid "Change Point Order Payment"
-msgstr "Changer le paiement de la vente en caisse"
-
-#. module: pos_change_payment
-#: code:addons/pos_change_payment/model/pos_change_payment_wizard.py:62
-#: code:addons/pos_change_payment/model/pos_change_payment_wizard.py:81
+#: code:addons/pos_change_payment/model/pos_change_payments_wizard.py:36
+#: code:addons/pos_change_payment/model/pos_change_payments_wizard.py:72
+#: code:addons/pos_change_payment/model/pos_order.py:73
+#: code:addons/pos_change_payment/model/pos_switch_journal_wizard.py:64
 #, python-format
 msgid "Error!"
 msgstr "Erreur !"
 
 #. module: pos_change_payment
-#: code:addons/pos_change_payment/model/pos_change_payment_wizard.py:62
+#: code:addons/pos_change_payment/model/pos_change_payments_wizard.py:36
+#: code:addons/pos_change_payment/model/pos_switch_journal_wizard.py:64
 #, python-format
 msgid "Incorrect Call!"
 msgstr "Appel incorrect !"
 
 #. module: pos_change_payment
-#: field:pos.change.payment.wizard,new_statement_id:0
+#: code:_description:0
+#: model:ir.model,name:pos_change_payment.model_account_journal
+#: field:pos.change.payments.wizard.line,journal_id:0
+#, python-format
+msgid "Journal"
+msgstr "Journal"
+
+#. module: pos_change_payment
+#: field:pos.switch.journal.wizard,new_statement_id:0
 msgid "New Journal"
-msgstr "Nouveau Journal"
+msgstr "Nouveau journal"
 
 #. module: pos_change_payment
-#: view:pos.change.payment.wizard:0
-msgid "OK"
-msgstr "OK"
-
-#. module: pos_change_payment
-#: field:pos.change.payment.wizard,old_journal_id:0
+#: field:pos.switch.journal.wizard,old_journal_id:0
 msgid "Old Journal"
-msgstr "Ancien Journal"
+msgstr "Ancien journal"
 
 #. module: pos_change_payment
-#: field:pos.change.payment.wizard,statement_line_id:0
+#: field:pos.change.payments.wizard,order_id:0
+msgid "POS Order"
+msgstr "Vente"
+
+#. module: pos_change_payment
+#: view:pos.order:0
+msgid "Payment"
+msgstr "Paiement"
+
+#. module: pos_change_payment
+#: view:pos.change.payments.wizard:0
+msgid "Payment Lines"
+msgstr "Lignes de paiement"
+
+#. module: pos_change_payment
+#: code:_description:0
+#: model:ir.model,name:pos_change_payment.model_pos_order
+#, python-format
+msgid "Point of Sale"
+msgstr "Point de Vente"
+
+#. module: pos_change_payment
+#: code:_description:0
+#: model:ir.model,name:pos_change_payment.model_pos_make_payment
+#, python-format
+msgid "Point of Sale Payment"
+msgstr "Paiement du ticket"
+
+#. module: pos_change_payment
+#: field:pos.switch.journal.wizard,statement_line_id:0
 msgid "Statement"
 msgstr "Relevé bancaire"
 
 #. module: pos_change_payment
-#: code:addons/pos_change_payment/model/pos_change_payment_wizard.py:82
-#, python-format
-msgid "You can only change statements of Draft or Paid Orders!"
-msgstr "Vous pouvez seulement changer les relevés des ventes en brouillon ou payée !"
+#: view:account.bank.statement:0
+#: model:ir.actions.act_window,name:pos_change_payment.action_pos_switch_journal_wizard
+#: view:pos.order:0
+#: view:pos.switch.journal.wizard:0
+msgid "Switch Journal"
+msgstr "Changer de Journal"
 
 #. module: pos_change_payment
-#: view:pos.change.payment.wizard:0
+#: code:addons/pos_change_payment/model/pos_change_payments_wizard.py:74
+#, python-format
+msgid "The total of all the new payments %d is different of the total of the POS Order '%s' %d!"
+msgstr "Le total de tous les nouveaux paiements %d est différents du total de la Vente '%s' %d!"
+
+#. module: pos_change_payment
+#: field:pos.change.payments.wizard,amount_total:0
+msgid "Total"
+msgstr "Total"
+
+#. module: pos_change_payment
+#: code:addons/pos_change_payment/model/pos_order.py:75
+#, python-format
+msgid "You can not change payments of the POS '%s' because the associated session '%s' has been closed!"
+msgstr "Vous ne pouvez pas changer les paiements de la Vente '%s' car la session associée '%s' a été clôturé !"
+
+#. module: pos_change_payment
+#: view:pos.change.payments.wizard:0
+#: view:pos.switch.journal.wizard:0
 msgid "or"
 msgstr "ou"
 
