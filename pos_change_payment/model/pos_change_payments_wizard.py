@@ -70,9 +70,9 @@ class pos_change_payments_wizard(TransientModel):
             if total != pcpw.amount_total:
                 raise except_osv(
                     _('Error!'),
-                    _("""The total of all the new payments %d is different
-                     of the total of the POS Order '%s' %d!""" % (
-                    total, po.name, po.amount_total)))
+                    _("""The total of all the new payments %d is different"""
+                        """of the total of the POS Order '%s' %d!""" % (
+                            total, po.name, po.amount_total)))
 
             # Check if change payments is allowed
             po_obj._allow_change_payments(
