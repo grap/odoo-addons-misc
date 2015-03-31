@@ -33,7 +33,7 @@ class pos_order(Model):
             self, cr, uid, ids, name, arg, context=None):
         res = {}
         for po in self.browse(cr, uid, ids, context=context):
-            res[po.id] = (po.state == 'draft') and len(po.statement_ids) != 0
+            res[po.id] = (po.state == 'draft') and len(po.statement_ids)
         return res
 
     # Column Section
