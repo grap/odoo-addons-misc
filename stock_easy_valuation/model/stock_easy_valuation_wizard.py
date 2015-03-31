@@ -20,6 +20,8 @@
 #
 ##############################################################################
 
+import time
+
 from openerp.osv.orm import TransientModel
 from openerp.osv import fields
 
@@ -46,9 +48,10 @@ class stock_easy_valuation_wizard(TransientModel):
             context=context)
 
         # Get all Product Category (order by parent_left)
-        pc_ids = pc_obj.search(cr, uid, [], order='parent_left',
-            context=context)
+        pc_ids = pc_obj.search(
+            cr, uid, [], order='parent_left', context=context)
 
+        pc_res = {x: {'valuation': 0} for x in pc_ids}
         for pc_id in pc_ids:
             sevwcl_obj.create(cr, uid, {
                 'wizard_id': sevw.id,
@@ -89,12 +92,7 @@ class stock_easy_valuation_wizard(TransientModel):
                 if pp.categ_id.id == pc_line.category_id.id:
                     current_pc_line = pc_line
                     break
-
-            # Update Category Line
-            sevwcl_obj.write(cr, uid, [current_pc_line.id], {
-                'valuation':\
-                    current_pc_line.valuation + current_valuation,
-            }, context=context)
+            pc_res[pc_line.category_id.id]['valuation'] += current_valuation
 
             # Create a Product Line
             sevwpl_obj.create(cr, uid, {
@@ -106,7 +104,13 @@ class stock_easy_valuation_wizard(TransientModel):
                 'valuation': current_valuation,
             }, context=context)
 
-        # Update General Valuation
+        # Update Category Lines Valuation
+        for pc_line in sevw.category_line_ids:
+            sevwcl_obj.write(cr, uid, [pc_line.id], {
+                'valuation': pc_res[pc_line.category_id.id]['valuation'],
+            }, context=context)
+
+        # Update Wizard Valuation
         self.write(cr, uid, [id], {
             'state': 'done',
             'total_valuation': wizard_valuation,
@@ -125,13 +129,12 @@ class stock_easy_valuation_wizard(TransientModel):
     _columns = {
         'state': fields.selection([
             ('draft', 'Draft Wizard'),
-            ('done', 'Compute Done'),],
+            ('done', 'Compute Done')],
             'State', required=True, readonly=True),
         'valuation_date': fields.datetime(
             'Valuation Date', required=True),
-#        'product_line_ids': fields.one2many(
-#            'stock.easy.valuation.wizard.product.line', 'wizard_id',
-#            'Products', readonly=True),
+        'print_date': fields.datetime(
+            'Print Date', required=True),
         'category_line_ids': fields.one2many(
             'stock.easy.valuation.wizard.category.line', 'wizard_id',
             'Category', readonly=True),
@@ -140,9 +143,14 @@ class stock_easy_valuation_wizard(TransientModel):
             'wizard_id', 'iventory_id', 'Inventories'),
         'total_valuation': fields.float(
             'Total Valuation', readonly=True),
+        'company_id': fields.many2one(
+            'res.company', 'Company', select=True),
     }
 
     # Default values Section
     _defaults = {
         'state': 'draft',
+        'print_date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
+        'company_id': lambda self, cr, uid, c: (
+            self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id),
     }

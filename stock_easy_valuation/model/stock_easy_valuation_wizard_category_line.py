@@ -28,6 +28,31 @@ class stock_easy_valuation_wizard_category_line(TransientModel):
     _name = 'stock.easy.valuation.wizard.category.line'
     _rec_name = 'category_id'
 
+    def _get_total(self, cr, uid, ids, field_names, args, context=None):
+        res = {}
+        for sevwcl in self.browse(cr, uid, ids, context):
+            # compute products valuation and quantity in the current category
+            total_valuation = sevwcl.valuation
+            total_product_qty = len(sevwcl.product_line_ids)
+
+            # Get category child of the current category
+            child_pc_ids = [x.id for x in sevwcl.category_id.child_id]
+
+            # Compute the valuation of each child
+            child_sevwcl_ids = self.search(cr, uid, [
+                ('wizard_id', '=', sevwcl.wizard_id.id),
+                ('category_id', 'in', child_pc_ids),
+            ], context=context)
+            for child_sevwcl in self.browse(
+                cr, uid, child_sevwcl_ids, context=context):
+                total_valuation += child_sevwcl.total_valuation
+                total_product_qty += child_sevwcl.total_product_qty
+            res[sevwcl.id] = {
+                'total_valuation': total_valuation,
+                'total_product_qty': total_product_qty,
+            }
+        return res
+
     # Columns Section
     _columns = {
         'wizard_id': fields.many2one(
@@ -40,4 +65,10 @@ class stock_easy_valuation_wizard_category_line(TransientModel):
             'Products', readonly=True),
         'valuation': fields.float(
             'Valuation', readonly=True),
+        'total_valuation': fields.function(
+            _get_total, type='float', multi="_get_total",
+            string='Total Valuation'),
+        'total_product_qty': fields.function(
+            _get_total, type='integer', multi="_get_total",
+            string='Total Product Quantity'),
     }
