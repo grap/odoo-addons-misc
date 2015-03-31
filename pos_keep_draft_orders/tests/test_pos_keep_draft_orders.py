@@ -30,7 +30,6 @@ class TestPosKeepDraftOrders(TransactionCase):
 
     def setUp(self):
         super(TestPosKeepDraftOrders, self).setUp()
-        cr, uid = self.cr, self.uid
 
         self.imd_obj = self.registry('ir.model.data')
         self.ps_obj = self.registry('pos.session')
@@ -116,6 +115,6 @@ class TestPosKeepDraftOrders(TransactionCase):
         })
 
         # Try Close Session (Must fail)
-        with self.assertRaises(except_osv) as cm:
+        with self.assertRaises(except_osv):
             self.wf_service.trg_validate(
                 uid, 'pos.session', ps_id, 'close', cr)
