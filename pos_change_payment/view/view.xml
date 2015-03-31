@@ -26,8 +26,18 @@
         <field name="model">pos.order</field>
         <field name="inherit_id" ref="point_of_sale.view_pos_pos_form" />
         <field name="arch" type="xml">
+            <button string="Payment" position="attributes">
+                <attribute name="context">{'pos_session_id' : session_id}</attribute>
+            </button>
+            <button name="refund" position="before">
+                <button name="%(action_pos_change_payments_wizard)d"
+                    context="{'pos_session_id' : session_id}"
+                    string="Change Payments" type="action" states="paid,invoiced"/>
+            </button>
+
             <field name="journal_id" position="after">
-                <button name="%(action_pos_change_payment_wizard)d" string="Change Payment" type="action" icon="gtk-index"/>
+                <button name="%(action_pos_switch_journal_wizard)d" string="Switch Journal"
+                    type="action" icon="gtk-index"/>
             </field>
         </field>
     </record>
@@ -39,25 +49,47 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='line_ids']/tree/field[@name='amount']" position="after">
                 <field name="pos_statement_id" invisible="1" />
-                <button name="%(action_pos_change_payment_wizard)d" string="Change Payment" type="action" icon="gtk-index" attrs="{'invisible':[('pos_statement_id', '=', False)]}"/>
+                <button name="%(action_pos_switch_journal_wizard)d" string="Switch Journal" type="action" icon="gtk-index" attrs="{'invisible':[('pos_statement_id', '=', False)]}"/>
             </xpath>
         </field>
     </record>
-    
-<!--     -->
 
-<!--    Model: pos.change.payment.wizard-->
-        <record id="view_pos_change_payment_wizard_form" model="ir.ui.view">
-            <field name="model">pos.change.payment.wizard</field>
+<!-- Model: pos.switch.journal.wizard-->
+        <record id="view_pos_switch_journal_wizard_form" model="ir.ui.view">
+            <field name="model">pos.switch.journal.wizard</field>
             <field name="arch" type="xml">
-                <form string="Change Point Order Payment" version="7.0">
+                <form string="Switch Journal" version="7.0">
                     <group col="4">
                         <field name="old_journal_id" />
-                        <field name="amount" />
                         <field name="new_statement_id" />
+                        <field name="amount" />
                     </group>
                     <footer>
-                        <button name="button_change_payment" string="OK" type="object" class="oe_highlight"/>
+                        <button name="button_switch_journal" string="Switch Journal" type="object" class="oe_highlight"/>
+                        <label string="or" />
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+<!-- Model: pos.switch.journal.wizard-->
+        <record id="view_pos_change_payments_wizard_form" model="ir.ui.view">
+            <field name="model">pos.change.payments.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Change Payments" version="7.0">
+                    <group col="4">
+                        <field name="order_id" />
+                        <field name="amount_total" />
+                        <field name="line_ids" colspan="4">
+                            <tree string="Payment Lines" editable="bottom">
+                                <field name="journal_id" />
+                                <field name="amount" />
+                            </tree>
+                        </field>
+                    </group>
+                    <footer>
+                        <button name="button_change_payments" string="Change Payments" type="object" class="oe_highlight"/>
                         <label string="or" />
                         <button string="Cancel" class="oe_link" special="cancel" />
                     </footer>

@@ -20,11 +20,26 @@
 #
 ##############################################################################
 
-from . import account_journal
-from . import pos_order
-from . import account_bank_statement_line
-from . import pos_make_payment
+from openerp.osv import fields
+from openerp.osv.osv import except_osv
+from openerp.osv.orm import TransientModel
+from openerp.tools.translate import _
 
-from . import pos_switch_journal_wizard
-from . import pos_change_payments_wizard
-from . import pos_change_payments_wizard_line
+
+class pos_change_payments_wizard_line(TransientModel):
+    _name = 'pos.change.payments.wizard.line'
+
+    # Selection Section
+    def _select_journals(self, cr, uid, context=None):
+        aj_obj = self.pool['account.journal']
+        return aj_obj._get_pos_journal_selection(cr, uid, context=context)
+
+    # Column Section
+    _columns = {
+        'wizard_id': fields.many2one(
+            'pos.change.payments.wizard', 'Wizard Ref', ondelete='cascade'),
+        'journal_id': fields.selection(
+            _select_journals, 'Journal', required=True),
+        'amount': fields.float(
+            'Amount'),
+    }

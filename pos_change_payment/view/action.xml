@@ -20,9 +20,19 @@
 
 <openerp>
     <data>
-        <record id="action_pos_change_payment_wizard" model="ir.actions.act_window">
-            <field name="name">Change Point Order Payment</field>
-            <field name="res_model">pos.change.payment.wizard</field>
+<!-- Model: pos.switch.journal.wizard-->
+        <record id="action_pos_switch_journal_wizard" model="ir.actions.act_window">
+            <field name="name">Switch Journal</field>
+            <field name="res_model">pos.switch.journal.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+<!-- Model: pos.change.payments.wizard-->
+        <record id="action_pos_change_payments_wizard" model="ir.actions.act_window">
+            <field name="name">Change Payments</field>
+            <field name="res_model">pos.change.payments.wizard</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="target">new</field>

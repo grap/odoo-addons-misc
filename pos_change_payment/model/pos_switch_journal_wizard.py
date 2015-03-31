@@ -26,8 +26,8 @@ from openerp.osv.orm import TransientModel
 from openerp.tools.translate import _
 
 
-class pos_change_payment_wizard(TransientModel):
-    _name = 'pos.change.payment.wizard'
+class pos_switch_journal_wizard(TransientModel):
+    _name = 'pos.switch.journal.wizard'
 
     def _get_new_statement_id(self, cr, uid, context=None):
         absl_obj = self.pool['account.bank.statement.line']
@@ -62,7 +62,7 @@ class pos_change_payment_wizard(TransientModel):
         absl_obj = self.pool['account.bank.statement.line']
         if context.get('active_model', False) != 'account.bank.statement.line':
             raise except_osv(_('Error!'), _('Incorrect Call!'))
-        res = super(pos_change_payment_wizard, self).default_get(
+        res = super(pos_switch_journal_wizard, self).default_get(
             cr, uid, fields, context=context)
         absl = absl_obj.browse(
             cr, uid, context.get('active_id'), context=context)
@@ -72,27 +72,32 @@ class pos_change_payment_wizard(TransientModel):
         return res
 
     # Action section
-    def button_change_payment(self, cr, uid, ids, context=None):
+    def button_switch_journal(self, cr, uid, ids, context=None):
+        po_obj = self.pool['pos.order']
         absl_obj = self.pool['account.bank.statement.line']
-        pcpw = self.browse(cr, uid, ids[0], context=context)
+        psjw = self.browse(cr, uid, ids[0], context=context)
         absl = absl_obj.browse(
-            cr, uid, pcpw.statement_line_id.id, context=context)
-        if absl.pos_statement_id.state not in ('draft', 'paid'):
-            raise except_osv(
-                _('Error!'),
-                _('You can only change statements of Draft or Paid Orders!'))
-        amount = absl.amount
+            cr, uid, psjw.statement_line_id.id, context=context)
+        if absl.pos_statement_id:
+            po_obj._allow_change_payments(
+                cr, uid, [absl.pos_statement_id.id], context=context)
+
+        # TODO : FIXME when upstream is fixed.
         # We do 2 write, one in the old statement, one in the new, with
         # 'amount' value each time to recompute all the functional fields
-        # of the account.bank.statement object
+        # of the Account Bank Statements
+        amount = absl.amount
+        ctx = context.copy()
+        ctx['change_pos_payment'] = True
         absl_obj.write(cr, uid, [absl.id], {
             'amount': 0,
-        }, context=context)
+        }, context=ctx)
         # Change statement of the statement line
         absl_obj.write(cr, uid, [absl.id], {
             'amount': amount,
-            'statement_id': int(pcpw.new_statement_id),
-        }, context=context)
+            'statement_id': int(psjw.new_statement_id),
+        }, context=ctx)
+
         return {
             'type': 'ir.actions.client',
             'tag': 'reload',
