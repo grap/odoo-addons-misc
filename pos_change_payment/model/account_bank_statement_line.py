@@ -71,7 +71,6 @@ class account_bank_statement_line(Model):
                 _('Error!'),
                 _("""You can not change payments of POS by this way."""
                     """ Please use the regular wizard in POS view!"""))
-            
         return po_ids == []
 
     # Overload Section
