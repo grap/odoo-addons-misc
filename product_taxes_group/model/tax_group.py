@@ -209,5 +209,5 @@ class tax_group(Model):
                     _("""You cannot delete The tax Group '%s' because"""
                         """ it contents %s products. Please move products"""
                         """ to another Tax Group.""") % (
-                            tg.name, tg.product_qty))
+                        tg.name, tg.product_qty))
         return super(tax_group, self).unlink(cr, uid, ids, context=context)

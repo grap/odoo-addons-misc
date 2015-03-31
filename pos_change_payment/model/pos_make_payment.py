@@ -22,7 +22,7 @@
 ##############################################################################
 
 from openerp.osv.orm import TransientModel
-from openerp.osv import osv, fields
+from openerp.osv import fields
 from openerp import netsvc
 
 

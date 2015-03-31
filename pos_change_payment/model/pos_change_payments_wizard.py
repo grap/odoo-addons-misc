@@ -44,7 +44,7 @@ class pos_change_payments_wizard(TransientModel):
 
     # Column Section
     _columns = {
-        'order_id':fields.many2one(
+        'order_id': fields.many2one(
             'pos.order', 'POS Order', required=True, readonly=True),
         'line_ids': fields.one2many(
             'pos.change.payments.wizard.line', 'wizard_id', 'Wizard Lines'),
@@ -72,7 +72,7 @@ class pos_change_payments_wizard(TransientModel):
                     _('Error!'),
                     _("""The total of all the new payments %d is different
                      of the total of the POS Order '%s' %d!""" % (
-                        total, po.name, po.amount_total)))
+                    total, po.name, po.amount_total)))
 
             # Check if change payments is allowed
             po_obj._allow_change_payments(
@@ -84,8 +84,7 @@ class pos_change_payments_wizard(TransientModel):
 
             # Create new payment
             for line in pcpw.line_ids:
-                po_obj.add_payment(
-                    cr, uid, po.id, {
+                po_obj.add_payment(cr, uid, po.id, {
                     'journal': int(line.journal_id),
                     'amount': line.amount,
                 }, context=context)

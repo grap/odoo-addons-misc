@@ -44,7 +44,7 @@ class stock_easy_valuation_wizard_category_line(TransientModel):
                 ('category_id', 'in', child_pc_ids),
             ], context=context)
             for child_sevwcl in self.browse(
-                cr, uid, child_sevwcl_ids, context=context):
+                    cr, uid, child_sevwcl_ids, context=context):
                 total_valuation += child_sevwcl.total_valuation
                 total_product_qty += child_sevwcl.total_product_qty
             res[sevwcl.id] = {

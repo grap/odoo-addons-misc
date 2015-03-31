@@ -33,9 +33,7 @@ _INTERNAL_USE_STATE = [
 
 
 class internal_use(Model):
-    _name = "internal.use"
-    _description = "Internal uses declared so far"
-
+    _name = 'internal.use'
     _order = "date_done desc"
 
     # Columns section
@@ -158,17 +156,17 @@ class internal_use(Model):
                         stock_move_value.update({
                             'product_qty': qty,
                             'location_id':
-                                iu.internal_use_case.location_from.id,
+                            iu.internal_use_case.location_from.id,
                             'location_dest_id':
-                                iu.internal_use_case.location_to.id,
+                            iu.internal_use_case.location_to.id,
                         })
                     else:
                         stock_move_value.update({
                             'product_qty': -qty,
                             'location_id':
-                                iu.internal_use_case.location_to.id,
+                            iu.internal_use_case.location_to.id,
                             'location_dest_id':
-                                iu.internal_use_case.location_from.id,
+                            iu.internal_use_case.location_from.id,
                         })
                 stock_move_obj.create(cr, uid, stock_move_value)
 
@@ -200,9 +198,9 @@ class internal_use(Model):
                     'product_uom_id': line.product_uom_id.id,
                     'quantity': line.product_qty,
                     'account_id':
-                        product_obj.get_product_income_expense_accounts(
-                            cr, uid, line.product_id.id,
-                            context)['account_expense']
+                    product_obj.get_product_income_expense_accounts(
+                        cr, uid, line.product_id.id,
+                        context)['account_expense']
                 }
                 amount = line.subtotal
                 if amount >= 0:

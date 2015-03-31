@@ -20,9 +20,7 @@
 #
 ##############################################################################
 
-from openerp.osv.osv import except_osv
 from openerp.osv.orm import Model
-from openerp.tools.translate import _
 
 
 class account_bank_statement_line(Model):
@@ -41,7 +39,7 @@ class account_bank_statement_line(Model):
             * otherwise:
                 * allow write of some fields only;
             * forbid deletion;"""
-        context=context or {}
+        context = context or {}
         values = vals.copy() if vals else {}
         po_obj = self.pool['pos.order']
 

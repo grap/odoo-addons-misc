@@ -23,7 +23,7 @@
 {
     'name': 'Point Of Sale - Change Payment',
     'summary': """Improve payment changes when user did a mistake and"""
-        """ disable some actions on POS Bank Statement Line""",
+            """ disable some actions on POS Bank Statement Line""",
     'version': '0.2',
     'category': 'Point Of Sale',
     'description': """

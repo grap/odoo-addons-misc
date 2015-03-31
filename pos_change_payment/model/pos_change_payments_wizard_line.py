@@ -21,9 +21,7 @@
 ##############################################################################
 
 from openerp.osv import fields
-from openerp.osv.osv import except_osv
 from openerp.osv.orm import TransientModel
-from openerp.tools.translate import _
 
 
 class pos_change_payments_wizard_line(TransientModel):

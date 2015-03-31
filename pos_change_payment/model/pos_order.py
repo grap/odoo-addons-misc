@@ -23,6 +23,8 @@
 
 from openerp.osv.orm import Model
 from openerp.osv.osv import except_osv
+from openerp.tools.translate import _
+
 
 class pos_order(Model):
     _inherit = 'pos.order'
@@ -30,7 +32,8 @@ class pos_order(Model):
     def _merge_cash_payment(self, cr, uid, ids, context=None):
         absl_obj = self.pool['account.bank.statement.line']
         for po in self.browse(cr, uid, ids, context=context):
-            absl_cash_ids = [x.id for x in po.statement_ids\
+            absl_cash_ids = [
+                x.id for x in po.statement_ids
                 if x.statement_id.journal_id.type == 'cash']
             new_payments = {}
             for line in absl_obj.read(
@@ -44,7 +47,7 @@ class pos_order(Model):
 
             # Delete all obsolete account bank statement line
             absl_obj.unlink(cr, uid, absl_cash_ids, context=context)
-            
+
             # Create a new ones
             for k, v in new_payments.items():
                 self.add_payment(cr, uid, po.id, {
@@ -69,6 +72,5 @@ class pos_order(Model):
                 raise except_osv(
                     _('Error!'),
                     _("""You can not change payments of the POS '%s' because"""
-                    """ the associated session '%s' has been closed!""" % (
-                        po.name, po.session_id.name)))
-
+                        """ the associated session '%s' has been closed!""" % (
+                            po.name, po.session_id.name)))
