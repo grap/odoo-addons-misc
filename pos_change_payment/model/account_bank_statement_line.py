@@ -57,8 +57,8 @@ class account_bank_statement_line(Model):
 
         po_ids = []
         for absl in self.browse(cr, uid, ids, context=context):
-            if absl.pos_statement_id and not\
-                    absl.pos_statement_id.id in po_ids:
+            if absl.pos_statement_id and\
+                    absl.pos_statement_id.id not in po_ids:
                 po_ids.append(absl.pos_statement_id.id)
         po_obj._allow_change_payments(cr, uid, po_ids, context=context)
 
