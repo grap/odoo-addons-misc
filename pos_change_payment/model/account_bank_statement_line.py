@@ -46,6 +46,9 @@ class account_bank_statement_line(Model):
         check_pos_order = False
         po_obj = self.pool['pos.order']
 
+        if not ids:
+            return True
+
         if values:
             # Allow some write
             for key in self._POS_PAYMENT_ALLOW_WRITE:
@@ -58,20 +61,25 @@ class account_bank_statement_line(Model):
         if context.get('change_pos_payment', False):
             check_pos_order = True
 
-        po_ids = []
         for absl in self.browse(cr, uid, ids, context=context):
-            if absl.pos_statement_id and\
-                    absl.pos_statement_id.id not in po_ids:
-                po_ids.append(absl.pos_statement_id.id)
-        if po_ids and check_pos_order:
-            return po_obj._allow_change_payments(
-                cr, uid, po_ids, context=context)
-        else:
-            raise except_osv(
-                _('Error!'),
-                _("""You can not change payments of POS by this way."""
-                    """ Please use the regular wizard in POS view!"""))
-        return po_ids == []
+            if absl.pos_statement_id:
+                if absl.pos_statement_id.state != 'draft':
+                    if check_pos_order:
+                        po_obj._allow_change_payments(
+                            cr, uid, [absl.pos_statement_id.id],
+                            context=context)
+                    else:
+                        if values.keys() == ['partner_id']:
+                            po_obj._allow_change_payments(
+                                cr, uid, [absl.pos_statement_id.id],
+                                context=context)
+                        else:
+                            raise except_osv(
+                                _('Error!'),
+                                _("""You can not change payments of POS by"""
+                                """ this way. Please use the regular wizard"""
+                                """ in POS view!"""))
+        return True
 
     # Overload Section
     def write(self, cr, uid, ids, vals, context=None):

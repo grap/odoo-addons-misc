@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-31 19:08+0000\n"
-"PO-Revision-Date: 2015-03-31 19:08+0000\n"
+"POT-Creation-Date: 2015-04-01 14:25+0000\n"
+"PO-Revision-Date: 2015-04-01 14:25+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -42,9 +42,26 @@ msgid "Change Payments"
 msgstr "Changer les paiements"
 
 #. module: pos_change_payment
+#: code:addons/pos_change_payment/model/pos_change_payments_wizard.py:77
+#, python-format
+msgid "Differences between the two values for the POS Order '%s':\n"
+"\n"
+" * Total of all the new payments %s;\n"
+" * Total of the POS Order %s;\n"
+"\n"
+"Please change the payments."
+msgstr "Différences entre les deux valeurs pour la vente '%s':\n"
+"\n"
+" * Total des nouveaux paiements %s;\n"
+" * Total de la vente %s;\n"
+"\n"
+"Veuillez changer les paiements."
+
+#. module: pos_change_payment
+#: code:addons/pos_change_payment/model/account_bank_statement_line.py:78
 #: code:addons/pos_change_payment/model/pos_change_payments_wizard.py:36
 #: code:addons/pos_change_payment/model/pos_change_payments_wizard.py:72
-#: code:addons/pos_change_payment/model/pos_order.py:73
+#: code:addons/pos_change_payment/model/pos_order.py:76
 #: code:addons/pos_change_payment/model/pos_switch_journal_wizard.py:64
 #, python-format
 msgid "Error!"
@@ -118,18 +135,28 @@ msgid "Switch Journal"
 msgstr "Changer de Journal"
 
 #. module: pos_change_payment
-#: code:addons/pos_change_payment/model/pos_change_payments_wizard.py:74
-#, python-format
-msgid "The total of all the new payments %d is different of the total of the POS Order '%s' %d!"
-msgstr "Le total de tous les nouveaux paiements %d est différents du total de la Vente '%s' %d!"
-
-#. module: pos_change_payment
 #: field:pos.change.payments.wizard,amount_total:0
 msgid "Total"
 msgstr "Total"
 
 #. module: pos_change_payment
-#: code:addons/pos_change_payment/model/pos_order.py:75
+#: field:pos.change.payments.wizard,line_ids:0
+msgid "Wizard Lines"
+msgstr "Lignes"
+
+#. module: pos_change_payment
+#: field:pos.change.payments.wizard.line,wizard_id:0
+msgid "Wizard Ref"
+msgstr "Référence"
+
+#. module: pos_change_payment
+#: code:addons/pos_change_payment/model/account_bank_statement_line.py:79
+#, python-format
+msgid "You can not change payments of POS by this way. Please use the regular wizard in POS view!"
+msgstr "Vous ne pouvez pas changer les paiements de cette vente de cette façon. Veuillez utiliser l'interface prévue à cet effet dans la vue de la vente !"
+
+#. module: pos_change_payment
+#: code:addons/pos_change_payment/model/pos_order.py:78
 #, python-format
 msgid "You can not change payments of the POS '%s' because the associated session '%s' has been closed!"
 msgstr "Vous ne pouvez pas changer les paiements de la Vente '%s' car la session associée '%s' a été clôturé !"
@@ -139,4 +166,3 @@ msgstr "Vous ne pouvez pas changer les paiements de la Vente '%s' car la session
 #: view:pos.switch.journal.wizard:0
 msgid "or"
 msgstr "ou"
-
