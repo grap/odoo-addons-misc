@@ -77,8 +77,8 @@ class account_bank_statement_line(Model):
                             raise except_osv(
                                 _('Error!'),
                                 _("""You can not change payments of POS by"""
-                                """ this way. Please use the regular wizard"""
-                                """ in POS view!"""))
+                                    """ this way. Please use the regular"""
+                                    """ wizard in POS view!"""))
         return True
 
     # Overload Section
