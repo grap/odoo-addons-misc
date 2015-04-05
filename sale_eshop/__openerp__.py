@@ -43,7 +43,7 @@ BUG:
 ----
     * It is possible to link product to view category;
     * TODO :
-        * Remove dependencies to sale_recovery_moment; 
+        * Remove dependencies to sale_recovery_moment;
         * move email template from sale_eshop into a custom module;
 
 Copyright, Authors and Licence:

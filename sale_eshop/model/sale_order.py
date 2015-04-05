@@ -21,7 +21,6 @@
 ##############################################################################
 
 
-from openerp.osv import fields
 from openerp.osv.orm import Model
 
 
@@ -35,6 +34,5 @@ class SaleOrder(Model):
         et = imd_obj.get_object(
             cr, uid, 'sale_eshop', 'email_template_eshop_sale_order')
         for so in self.browse(cr, uid, ids, context=context):
-            mail_id = et_obj.send_mail(
-                cr, uid, et.id, so.id, True, context=context)
+            et_obj.send_mail(cr, uid, et.id, so.id, True, context=context)
         return {}

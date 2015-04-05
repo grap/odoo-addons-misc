@@ -28,7 +28,7 @@ from openerp.tools.translate import _
 from openerp.addons.sale_eshop import demo_image
 
 
-class eshop_category(Model):
+class EshopCategory(Model):
     _name = 'eshop.category'
     _rec_name = 'complete_name'
     _order = 'complete_name'
@@ -175,7 +175,7 @@ class eshop_category(Model):
 
     # Overload Section
     def write(self, cr, uid, ids, values, context=None):
-        res = super(eshop_category, self).write(
+        res = super(EshopCategory, self).write(
             cr, uid, ids, values, context=context)
         for ec in self.browse(cr, uid, ids, context=context):
             for ec in ec.child_ids:
@@ -200,7 +200,7 @@ class eshop_category(Model):
                         """ it contents %s products. Please move"""
                         """ products to another Category First.""") % (
                         ec.name, ec.product_qty))
-        return super(eshop_category, self).unlink(
+        return super(EshopCategory, self).unlink(
             cr, uid, ids, context=context)
 
     # Demo Function Section

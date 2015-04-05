@@ -25,7 +25,7 @@ from openerp.osv import fields
 from openerp.osv.orm import Model
 
 
-class sale_shop(Model):
+class SaleShop(Model):
     _inherit = 'sale.shop'
 
     # Columns Section

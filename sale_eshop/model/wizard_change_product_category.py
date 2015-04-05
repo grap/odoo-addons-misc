@@ -24,7 +24,7 @@ from openerp.osv import fields
 from openerp.osv.orm import TransientModel
 
 
-class wizard_change_product_category(TransientModel):
+class WizardChangeProductCategory(TransientModel):
     """Wizard to allow to change the eShop Category of products."""
     _name = 'wizard.change.product.category'
 

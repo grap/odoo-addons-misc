@@ -30,7 +30,7 @@ from openerp.tools.translate import _
 from openerp.addons.sale_eshop import demo_image
 
 
-class product_product(Model):
+class ProductProduct(Model):
     _inherit = 'product.product'
 
     _ESHOP_STATE_SELECTION = [

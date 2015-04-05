@@ -28,7 +28,7 @@ from openerp.osv import fields
 from openerp.osv.orm import Model
 
 
-class res_partner(Model):
+class ResPartner(Model):
     _inherit = 'res.partner'
 
     _PASSWORD_LENGTH = 6
@@ -50,7 +50,7 @@ class res_partner(Model):
         res = self.search(cr, uid, [
             ('email', '=', login),
             ('eshop_password', '=', password),
-                ('eshop_active', '=', True),
+            ('eshop_active', '=', True),
         ], context=context)
         if len(res) == 1:
             return res[0]
