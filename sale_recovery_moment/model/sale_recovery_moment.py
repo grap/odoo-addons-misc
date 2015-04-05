@@ -27,7 +27,7 @@ from openerp.osv.orm import except_orm
 from openerp.tools.translate import _
 
 
-class sale_recovery_moment(Model):
+class SaleRecoveryMoment(Model):
     _description = 'Recovery Moment'
     _name = 'sale.recovery.moment'
     _order = 'min_recovery_date, max_recovery_date, place_id'
@@ -180,5 +180,5 @@ class sale_recovery_moment(Model):
                         " is %d Valid Sale Orders associated.\nPlease move"
                         " Sale orders on an other Recovery Moment and contact"
                         " your customers.") % (len(srm.valid_order_qty)))
-        return super(sale_recovery_moment, self).unlink(
+        return super(SaleRecoveryMoment, self).unlink(
             cr, uid, ids, context=context)

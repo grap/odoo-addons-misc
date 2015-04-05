@@ -242,5 +242,149 @@
             </field>
         </record>
 
+<!-- Model: product.prepare.category -->
+        <record id="view_product_prepare_category_tree" model="ir.ui.view">
+            <field name="model">product.prepare.category</field>
+            <field name="arch" type="xml">
+                <tree string="Prepare Categories" colors="gray:active == False;">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <field name="color" widget="color"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="active" invisible="1" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_product_prepare_category_form" model="ir.ui.view">
+            <field name="model">product.prepare.category</field>
+            <field name="arch" type="xml">
+                <form string="Prepare Categories" version="7.0">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h2><field name="name"/></h2>
+                        </div>
+                        <group col="4">
+                            <field name="sequence"/>
+                            <field name="code"/>
+                            <field name="color" widget="color"/>
+                            <field name="active"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+<!-- Model: product.product -->
+        <record id="view_product_product_form" model="ir.ui.view">
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view" />
+            <field name="arch" type="xml">
+                <field name="state" position="after">
+                    <field name="prepare_categ_id" groups="sale_recovery_moment.recovery_user"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_product_product_search" model="ir.ui.view">
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_search_form_view"/>
+            <field name="arch" type="xml">
+                <field name="categ_id" position="after">
+                    <field name="prepare_categ_id" groups="sale_recovery_moment.recovery_user"/>
+                </field>
+                <xpath expr="//filter[@string='Category']" position="after">
+                    <filter string="Prepare Category" domain="[]" context="{'group_by':'prepare_categ_id'}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_product_product_tree" model="ir.ui.view">
+            <field name="model">product.product</field>
+            <field name="arch" type="xml">
+                <tree string="Products (Prepare)" editable="bottom">
+                    <field name="name" readonly="1"/>
+                    <field name="prepare_categ_id"/>
+                    <field name="company_id" groups="base.group_multi_company" />
+                </tree>
+            </field>
+        </record>
+
+<!-- Model: sale.order -->
+        <record id="view_sale_order_form" model="ir.ui.view">
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form" />
+            <field name="arch" type="xml">
+                <field name="company_id" position="after">
+                    <field name="moment_id" groups="sale_recovery_moment.recovery_user"/>
+                    <field name="group_id" groups="sale_recovery_moment.recovery_user"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_sale_order_view" model="ir.ui.view">
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+                    <field name="moment_id" groups="sale_recovery_moment.recovery_user"/>
+                    <field name="group_id" groups="sale_recovery_moment.recovery_user"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_sale_order_search" model="ir.ui.view">
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+                    <field name="moment_id" groups="sale_recovery_moment.recovery_user"/>
+                    <field name="group_id" groups="sale_recovery_moment.recovery_user"/>
+                </field>
+            </field>
+        </record>
+
+<!-- Model: stock.picking -->
+        <record id="view_stock_picking_form" model="ir.ui.view">
+            <field name="model">stock.picking.out</field>
+            <field name="inherit_id" ref="sale_stock.stock_picking_out_inherit_sale" />
+            <field name="arch" type="xml">
+                <field name="sale_id" position="after">
+                    <group>
+                        <field name="moment_id" groups="sale_recovery_moment.recovery_user"/>
+                        <field name="group_id" groups="sale_recovery_moment.recovery_user"/>
+                    </group>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_stock_picking_out_view" model="ir.ui.view">
+            <field name="model">stock.picking.out</field>
+            <field name="inherit_id" ref="stock.view_picking_out_tree"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+                    <field name="moment_id" groups="sale_recovery_moment.recovery_user"/>
+                    <field name="group_id" groups="sale_recovery_moment.recovery_user"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_stock_picking_out_search" model="ir.ui.view">
+            <field name="model">stock.picking.out</field>
+            <field name="inherit_id" ref="stock.view_picking_out_search"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+                    <field name="moment_id" groups="sale_recovery_moment.recovery_user"/>
+                    <field name="group_id" groups="sale_recovery_moment.recovery_user"/>
+                </field>
+                <xpath expr="//filter[@string='Status']" position="after">
+                    <filter string="Recovery Moment" domain="[]" context="{'group_by':'moment_id'}"/>
+                </xpath>
+            </field>
+        </record>
+
+
     </data>
 </openerp>

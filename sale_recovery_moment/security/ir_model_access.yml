@@ -77,3 +77,21 @@
     perm_write: true
     perm_unlink: true
 
+
+- !record {model: ir.model.access, id: ir_model_access_product_prepare_category_reader}:
+    group_id: sale_recovery_moment.recovery_user
+    model_id: sale_recovery_moment.model_product_prepare_category
+    name: Product Prepare Category Reader
+    perm_read: true
+    perm_create: false
+    perm_write: false
+    perm_unlink: false
+
+- !record {model: ir.model.access, id: ir_model_access_product_prepare_category_manager}:
+    group_id: sale_recovery_moment.recovery_manager
+    model_id: sale_recovery_moment.model_product_prepare_category
+    name: Product Prepare Category Manager
+    perm_read: true
+    perm_create: true
+    perm_write: true
+    perm_unlink: true

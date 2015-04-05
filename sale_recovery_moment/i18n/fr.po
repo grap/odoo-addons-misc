@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-30 16:00+0000\n"
-"PO-Revision-Date: 2015-01-30 16:00+0000\n"
+"POT-Creation-Date: 2015-04-05 15:51+0000\n"
+"PO-Revision-Date: 2015-04-05 15:51+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -28,6 +28,7 @@ msgid "%d Order(s)"
 msgstr "%d Bon(s) de commande"
 
 #. module: sale_recovery_moment
+#: field:product.prepare.category,active:0
 #: field:sale.recovery.place,active:0
 msgid "Active"
 msgstr "Actif"
@@ -45,12 +46,19 @@ msgid "City"
 msgstr "Ville"
 
 #. module: sale_recovery_moment
+#: field:product.prepare.category,code:0
 #: field:sale.recovery.moment,code:0
 #: field:sale.recovery.moment.group,code:0
 msgid "Code"
 msgstr "Code"
 
 #. module: sale_recovery_moment
+#: field:product.prepare.category,color:0
+msgid "Color"
+msgstr "Couleur"
+
+#. module: sale_recovery_moment
+#: field:product.prepare.category,company_id:0
 #: field:sale.recovery.moment,company_id:0
 #: field:sale.recovery.moment.group,company_id:0
 #: field:sale.recovery.place,company_id:0
@@ -99,8 +107,8 @@ msgid "Duplicate"
 msgstr "Dupliquer"
 
 #. module: sale_recovery_moment
-#: view:sale.recovery.moment.group.wizard.duplicate:0
 #: model:ir.actions.act_window,name:sale_recovery_moment.action_sale_recovery_moment_group_wizard_duplicate
+#: view:sale.recovery.moment.group.wizard.duplicate:0
 msgid "Duplicate Group"
 msgstr "Dupliquer le groupe"
 
@@ -219,6 +227,7 @@ msgid "Moments"
 msgstr "Dates"
 
 #. module: sale_recovery_moment
+#: field:product.prepare.category,name:0
 #: field:sale.recovery.moment,name:0
 #: field:sale.recovery.moment.group,name:0
 #: field:sale.recovery.moment.group.wizard.product.list,name:0
@@ -278,13 +287,29 @@ msgstr "Merci de renseigner un nombre positif.\n"
 "Le Wizard va dupliquer le groupe en changeant les dates par le délai indiqué."
 
 #. module: sale_recovery_moment
+#: model:ir.actions.act_window,name:sale_recovery_moment.action_product_prepare_category
+#: model:ir.ui.menu,name:sale_recovery_moment.menu_product_prepare_category
+#: view:product.prepare.category:0
+msgid "Prepare Categories"
+msgstr "Catégories de préparation"
+
+#. module: sale_recovery_moment
+#: view:product.product:0
+#: field:product.product,prepare_categ_id:0
+msgid "Prepare Category"
+msgstr "Catégorie de préparation"
+
+#. module: sale_recovery_moment
 #: view:sale.recovery.moment.group.wizard.product.list:0
 msgid "Print"
 msgstr "Imprimer"
 
 #. module: sale_recovery_moment
+#: code:_description:0
 #: report:addons/sale_recovery_moment/report/moment_group_report.mako:15
+#: model:ir.model,name:sale_recovery_moment.model_product_product
 #: field:sale.recovery.moment.group.wizard.product.list.line,product_id:0
+#, python-format
 msgid "Product"
 msgstr "Produit"
 
@@ -293,6 +318,13 @@ msgstr "Produit"
 #: field:sale.recovery.moment.group.wizard.product.list,line_ids:0
 msgid "Products"
 msgstr "Produits"
+
+#. module: sale_recovery_moment
+#: model:ir.actions.act_window,name:sale_recovery_moment.action_product_product
+#: model:ir.ui.menu,name:sale_recovery_moment.menu_product_product
+#: view:product.product:0
+msgid "Products (Prepare)"
+msgstr "Produits (Préparation)"
 
 #. module: sale_recovery_moment
 #: model:ir.actions.act_window,name:sale_recovery_moment.action_sale_recovery_moment_group_wizard_product_list
@@ -336,6 +368,7 @@ msgstr "Groupe de récupération"
 #: field:sale.order,moment_id:0
 #: view:sale.recovery.moment:0
 #: field:stock.picking,moment_id:0
+#: view:stock.picking.out:0
 #: field:stock.picking.out,moment_id:0
 #, python-format
 msgid "Recovery Moment"
@@ -398,6 +431,11 @@ msgstr "Nombre de Ventes"
 #, python-format
 msgid "Sales Order"
 msgstr "Commande de ventes"
+
+#. module: sale_recovery_moment
+#: field:product.prepare.category,sequence:0
+msgid "Sequence"
+msgstr "Sequence"
 
 #. module: sale_recovery_moment
 #: field:sale.recovery.moment.group,shop_id:0
@@ -524,4 +562,3 @@ msgstr "ou"
 #: view:sale.recovery.moment.group:0
 msgid "to"
 msgstr "à"
-

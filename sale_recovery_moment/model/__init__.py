@@ -21,6 +21,8 @@
 ##############################################################################
 
 from . import sale_order
+from . import product_product
+from . import product_prepare_category
 from . import stock_picking
 from . import sale_recovery_moment
 from . import sale_recovery_place

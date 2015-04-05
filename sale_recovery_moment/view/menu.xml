@@ -40,5 +40,15 @@
             parent="menu_sale_recovery"
             action="action_sale_recovery_moment_group"/>
 
+        <menuitem id="menu_product_prepare_category"
+            sequence="4"
+            parent="menu_sale_recovery"
+            action="action_product_prepare_category"/>
+
+        <menuitem id="menu_product_product"
+            sequence="5"
+            parent="menu_sale_recovery"
+            groups="sale_recovery_moment.recovery_user"
+            action="action_product_product"/>
     </data>
 </openerp>

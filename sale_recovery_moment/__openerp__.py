@@ -72,6 +72,8 @@ Copyright, Authors and Licence:
     'depends': [
         'sale_stock',
         'report_webkit',
+        'web_widget_color',
+        'sale_order_dates',
     ],
     'data': [
         'security/ir_rule.xml',
