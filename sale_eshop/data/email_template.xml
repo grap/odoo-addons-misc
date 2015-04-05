@@ -20,7 +20,7 @@
 <openerp>
     <data>
 
-<!-- Model: email.template -->
+<!-- Model: email.template // res.partner -->
         <record model="email.template" id="eshop_password_template" >
             <field name="name">Send Password</field>
             <field name="model_id" ref="base.model_res_partner"/>
@@ -43,17 +43,6 @@
     </p><p>Have a nice day</p>
 </div>
             ]]></field>
-
         </record>
-
     </data>
 </openerp>
-
-
-<!--Hi,-->
-<!--Here is your credentials to access to the eShop of object.company_id.name:-->
-<!--<ul>-->
-<!--<li>Login : ${object.email}</li>-->
-<!--<li>Password : ${object.eshop_password}</li>-->
-<!--</ul>-->
-<!--Please, keep this credentials private.-->

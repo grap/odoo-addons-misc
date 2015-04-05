@@ -50,8 +50,9 @@ class res_partner(Model):
         res = self.search(cr, uid, [
             ('email', '=', login),
             ('eshop_password', '=', password),
-            ('eshop_active', '=', True)], context=context)
-        if res:
+                ('eshop_active', '=', True),
+        ], context=context)
+        if len(res) == 1:
             return res[0]
         else:
             return False
