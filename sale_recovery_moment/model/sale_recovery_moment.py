@@ -93,7 +93,8 @@ class SaleRecoveryMoment(Model):
         res = {}
         for srm in self.browse(cr, uid, ids, context=context):
             res[srm.id] = srm.code + ' - ' + srm.group_id.short_name\
-                + ' - ' + srm.min_recovery_date
+                + ' - ' + srm.place_id.name + ' - '\
+                + srm.min_recovery_date.split(' ')[0]
         return res
 
     def _get_moment_from_group(self, cr, uid, ids, context=None):
@@ -112,7 +113,7 @@ class SaleRecoveryMoment(Model):
             _get_name, type='char', string='Name', store={
                 'sale.recovery.moment': (
                     lambda self, cr, uid, ids, context=None: ids,
-                    ['code', 'min_recovery_date'], 10),
+                    ['code', 'min_recovery_date', 'place_id'], 10),
                 'sale.recovery.moment.group': (
                     _get_moment_from_group,
                     ['short_name'], 10),

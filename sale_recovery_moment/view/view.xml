@@ -346,45 +346,5 @@
             </field>
         </record>
 
-<!-- Model: stock.picking -->
-        <record id="view_stock_picking_form" model="ir.ui.view">
-            <field name="model">stock.picking.out</field>
-            <field name="inherit_id" ref="sale_stock.stock_picking_out_inherit_sale" />
-            <field name="arch" type="xml">
-                <field name="sale_id" position="after">
-                    <group>
-                        <field name="moment_id" groups="sale_recovery_moment.recovery_user"/>
-                        <field name="group_id" groups="sale_recovery_moment.recovery_user"/>
-                    </group>
-                </field>
-            </field>
-        </record>
-
-        <record id="view_stock_picking_out_view" model="ir.ui.view">
-            <field name="model">stock.picking.out</field>
-            <field name="inherit_id" ref="stock.view_picking_out_tree"/>
-            <field name="arch" type="xml">
-                <field name="partner_id" position="after">
-                    <field name="moment_id" groups="sale_recovery_moment.recovery_user"/>
-                    <field name="group_id" groups="sale_recovery_moment.recovery_user"/>
-                </field>
-            </field>
-        </record>
-
-        <record id="view_stock_picking_out_search" model="ir.ui.view">
-            <field name="model">stock.picking.out</field>
-            <field name="inherit_id" ref="stock.view_picking_out_search"/>
-            <field name="arch" type="xml">
-                <field name="partner_id" position="after">
-                    <field name="moment_id" groups="sale_recovery_moment.recovery_user"/>
-                    <field name="group_id" groups="sale_recovery_moment.recovery_user"/>
-                </field>
-                <xpath expr="//filter[@string='Status']" position="after">
-                    <filter string="Recovery Moment" domain="[]" context="{'group_by':'moment_id'}"/>
-                </xpath>
-            </field>
-        </record>
-
-
     </data>
 </openerp>
