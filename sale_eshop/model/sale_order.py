@@ -27,12 +27,53 @@ from openerp.osv.orm import Model
 class SaleOrder(Model):
     _inherit = 'sale.order'
 
-    def send_eshop_mail(self, cr, uid, ids, context=None):
+    def send_mail(self, cr, uid, ids, context=None):
         context = context or {}
         imd_obj = self.pool['ir.model.data']
         et_obj = self.pool['email.template']
         et = imd_obj.get_object(
-            cr, uid, 'sale_eshop', 'email_template_eshop_sale_order')
+            cr, uid, 'sale', 'email_template_edi_sale')
         for so in self.browse(cr, uid, ids, context=context):
             et_obj.send_mail(cr, uid, et.id, so.id, True, context=context)
         return {}
+
+    def get_current_eshop_product_list(self, cr, uid, id, context=None):
+        """The aim of this function is to deal with delay of response of
+        the odoo-eshop, module.
+        This will return a dictionnary of eshop.category, with all products
+        information"""
+        res = []
+        ec_obj = self.pool['eshop.category']
+        qty_dict = {}
+        # Get current quantities ordered
+        if id:
+            so = self.browse(cr, uid, id, context=context)
+            for sol in so.order_line:
+                if sol.product_id.id in qty_dict.keys():
+                    qty_dict[sol.product_id.id] += sol.product_uom_qty
+                else:
+                    qty_dict[sol.product_id.id] = sol.product_uom_qty
+
+        # Return product and categories
+        ec_ids = ec_obj.search(
+            cr, uid, [('type', '=', 'normal')], context=context)
+        for ec in ec_obj.browse(cr, uid, ec_ids):
+            if ec.available_product_qty == 0:
+                continue
+            current_categ = {
+                'id': ec.id,
+                'name': ec.name,
+                'image_small': ec.image_small,
+                'product_ids': [],
+            }
+            for pp in ec.available_product_ids:
+                current_categ['product_ids'].append({
+                    'id': pp.id,
+                    'name': pp.name,
+                    'image_small': pp.image_small,
+                    'list_price': pp.list_price,
+                    'uom_eshop_description': pp.uom_id.eshop_description,
+                    'current_qty': qty_dict.get(pp.id, 0)
+                })
+            res.append(current_categ)
+        return res
