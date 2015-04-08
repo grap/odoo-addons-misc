@@ -24,7 +24,7 @@ from datetime import datetime, timedelta
 
 from openerp.osv import fields
 from openerp.osv.orm import Model
-
+from openerp import SUPERUSER_ID
 
 class SaleOrder(Model):
     _inherit = 'sale.order'
@@ -50,14 +50,22 @@ class SaleOrder(Model):
             cr, uid, order, line, picking_id, date_planned, context=context)
         second_delta = 0
         ppc_obj = self.pool['product.prepare.category']
-        ppc_id = ppc_obj.search(cr, uid, [], limit=1, order='sequence desc')
-        if ppc_id and line.product_id and line.product_id.prepare_categ_id:
+
+        # Note: We access by SUPERUSER_ID, to avoid access restriction
+        # if the user who valid the sale order is not part of
+        # recovery groups
+        if line.product_id and line.product_id.prepare_categ_id:
+            ppc_offset_id = ppc_obj.search(
+                cr, SUPERUSER_ID, [], limit=1, order='sequence desc')[0]
             ppc_offset = ppc_obj.browse(
-                cr, uid, ppc_id[0], context=context).sequence + 1
-            second_delta = line.product_id.prepare_categ_id.sequence
+                cr, SUPERUSER_ID, ppc_offset_id,
+                context=context).sequence + 1
+            ppc_sequence = ppc_obj.browse(
+                cr, SUPERUSER_ID, line.product_id.prepare_categ_id.id,
+                context=context).sequence
             res['date_expected'] = datetime.strptime(
                 res['date_expected'], '%Y-%m-%d %H:%M:%S') +\
-                timedelta(seconds=(ppc_offset - second_delta))
+                timedelta(seconds=(ppc_offset - ppc_sequence))
         return res
 
     def create(self, cr, uid, vals, context=None):
