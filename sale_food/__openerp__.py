@@ -52,7 +52,7 @@ Python librairies required on Debian System:
         'product',
         'l10n_fr_department',
         'report_webkit',
-        'web_color',
+        'web_widget_color',
     ],
     'data': [
         'security/ir_rule.xml',
