@@ -72,7 +72,7 @@ Copyright, Authors and Licence:
     'depends': [
         'sale_stock',
         'report_webkit',
-        'web_widget_color',
+        'web_color',
         'sale_order_dates',
     ],
     'data': [
