@@ -26,6 +26,7 @@ from openerp.osv import fields
 from openerp.osv.orm import Model
 from openerp import SUPERUSER_ID
 
+
 class SaleOrder(Model):
     _inherit = 'sale.order'
 
@@ -48,7 +49,6 @@ class SaleOrder(Model):
         line."""
         res = super(SaleOrder, self)._prepare_order_line_move(
             cr, uid, order, line, picking_id, date_planned, context=context)
-        second_delta = 0
         ppc_obj = self.pool['product.prepare.category']
 
         # Note: We access by SUPERUSER_ID, to avoid access restriction
