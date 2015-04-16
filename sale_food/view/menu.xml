@@ -23,7 +23,7 @@
 <!-- menuitem for specific action of module 'sale_food' -->
         <menuitem id="menu_sale_food" 
             name="Sale Food"
-            parent="base.menu_base_partner" sequence="60"/>
+            parent="base.menu_base_config" sequence="10"/>
 
 <!-- Model: product.pricetag.type -->
         <menuitem id="menu_product_pricetag_type" 
@@ -37,27 +37,23 @@
             parent="menu_sale_food" sequence="2" 
             action="action_product_label"/>
 
-<!-- Model: 'product.pricetag.wizard' -->
-        <menuitem id="menu_product_pricetag_wizard"
-            name="Print Price Tags"
-            parent="menu_sale_food" sequence="4"
-            action="action_product_pricetag_wizard"/>
-
 <!-- Model: product.product -->
         <menuitem id="menu_product_product_food" 
-            name="Products (Food)" 
             parent="base.menu_product" sequence="2" 
             action="action_product_product_food"/>
 
         <menuitem id="menu_product_product_origin" 
-            name="Products (Origin)" 
             parent="base.menu_product" sequence="3" 
             action="action_product_product_origin"/>
 
         <menuitem id="menu_product_product_pricetag"
-            name="Products (Price Tag)"
-            parent="menu_sale_food" sequence="3"
+            parent="base.menu_product" sequence="4"
             action="action_product_product_pricetag"/>
+
+<!-- Model: 'product.pricetag.wizard' -->
+        <menuitem id="menu_product_pricetag_wizard"
+            parent="base.menu_product" sequence="45"
+            action="action_product_pricetag_wizard"/>
 
     </data>
 </openerp>

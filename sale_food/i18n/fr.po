@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-28 14:47+0000\n"
-"PO-Revision-Date: 2014-12-28 14:47+0000\n"
+"POT-Creation-Date: 2015-04-16 11:24+0000\n"
+"PO-Revision-Date: 2015-04-16 11:24+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -432,12 +432,12 @@ msgstr "Paramétrage d'impression"
 
 #. module: sale_food
 #: model:ir.actions.act_window,name:sale_food.action_product_pricetag_wizard
+#: model:ir.ui.menu,name:sale_food.menu_product_pricetag_wizard
 msgid "Print Price Tag"
 msgstr "Imprimer Etiquette"
 
 #. module: sale_food
-#: code:addons/sale_food/model/product_pricetag_wizard.py:42
-#: model:ir.ui.menu,name:sale_food.menu_product_pricetag_wizard
+#: code:addons/sale_food/model/product_pricetag_wizard.py:43
 #: view:product.pricetag.wizard:0
 #, python-format
 msgid "Print Price Tags"
@@ -491,24 +491,21 @@ msgstr "Produits"
 
 #. module: sale_food
 #: model:ir.actions.act_window,name:sale_food.action_product_product_food
-#: model:ir.ui.menu,name:sale_food.menu_product_product_food
 #: view:product.product:0
 msgid "Products (Food)"
 msgstr "Produits (Alimentaire)"
 
 #. module: sale_food
 #: model:ir.actions.act_window,name:sale_food.action_product_product_origin
-#: model:ir.ui.menu,name:sale_food.menu_product_product_origin
 #: view:product.product:0
 msgid "Products (Origin)"
 msgstr "Produits (Origine)"
 
 #. module: sale_food
-#: model:ir.actions.act_window,name:sale_food.action_product_product_pricetag
-#: model:ir.ui.menu,name:sale_food.menu_product_product_pricetag
 #: view:product.product:0
-msgid "Products (Price Tag)"
-msgstr "Produits (Etiquette)"
+#: model:ir.actions.act_window,name:sale_food.action_product_product_pricetag
+msgid "Products (Price Tags)"
+msgstr "Articles (Etiquettes)"
 
 #. module: sale_food
 #: field:product.pricetag.wizard.line,quantity:0
@@ -596,34 +593,6 @@ msgstr "emballage"
 #, python-format
 msgid "local"
 msgstr "local"
-
-#. module: sale_food
-#: code:_description:0
-#: model:ir.model,name:sale_food.model_product_label
-#, python-format
-msgid "product.label"
-msgstr "product.label"
-
-#. module: sale_food
-#: code:_description:0
-#: model:ir.model,name:sale_food.model_product_pricetag_type
-#, python-format
-msgid "product.pricetag.type"
-msgstr "product.pricetag.type"
-
-#. module: sale_food
-#: code:_description:0
-#: model:ir.model,name:sale_food.model_product_pricetag_wizard
-#, python-format
-msgid "product.pricetag.wizard"
-msgstr "product.pricetag.wizard"
-
-#. module: sale_food
-#: code:_description:0
-#: model:ir.model,name:sale_food.model_product_pricetag_wizard_line
-#, python-format
-msgid "product.pricetag.wizard.line"
-msgstr "product.pricetag.wizard.line"
 
 #. module: sale_food
 #: code:addons/sale_food/model/product_product.py:108

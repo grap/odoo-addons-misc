@@ -206,7 +206,7 @@
         <record id="view_product_product_pricetag_tree" model="ir.ui.view">
             <field name="model">product.product</field>
             <field name="arch" type="xml">
-                <tree string="Products (Price Tag)" editable="bottom">
+                <tree string="Products (Price Tags)" editable="bottom">
                     <field name="name" readonly="1"/>
                     <field name="pricetag_type_id"/>
                     <field name="pricetag_state" />
