@@ -35,12 +35,12 @@ msgstr "Possède des doublons EAN"
 #: model:ir.model,name:product_ean_duplicates.model_product_product
 #, python-format
 msgid "Product"
-msgstr "Produit"
+msgstr "Article"
 
 #. module: product_ean_duplicates
 #: model:ir.actions.act_window,name:product_ean_duplicates.action_product_ean_duplicates
 #: model:ir.ui.menu,name:product_ean_duplicates.menu_product_ean_duplicates
 #: view:product.product:0
 msgid "Products (EAN Duplicates)"
-msgstr "Produits (Doublons EAN)"
+msgstr "Articles (Doublons EAN)"
 
