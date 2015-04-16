@@ -29,7 +29,6 @@ from openerp.tools.translate import _
 
 
 class sale_recovery_moment_group(Model):
-    _description = 'Group of Recovery Moments'
     _name = 'sale.recovery.moment.group'
     _order = 'min_sale_date desc, name'
 
@@ -123,7 +122,7 @@ class sale_recovery_moment_group(Model):
                 order_ids.extend([order.id for order in srm.order_ids])
                 order_qty += len(srm.order_ids)
                 for order in srm.order_ids:
-                    if order.state not in ('draft', 'cancel'):
+                    if order.state not in ('draft', 'sent', 'cancel'):
                         valid_order_qty += 1
                         excl_total += order.amount_untaxed
                         incl_total += order.amount_total
@@ -146,8 +145,14 @@ class sale_recovery_moment_group(Model):
             picking_ids = spo_obj.search(cr, uid, [
                 ('sale_id', 'in', order_ids),
             ], context=context)
+            valid_picking_ids = spo_obj.search(cr, uid, [
+                ('sale_id', 'in', order_ids),
+                ('state', 'not in', ('draft', 'cancel')),
+            ], context=context)
             res[srmg.id] = {
                 'picking_ids': picking_ids,
+                'picking_qty': len(picking_ids),
+                'valid_picking_qty': len(valid_picking_ids),
             }
         return res
 
@@ -202,7 +207,13 @@ class sale_recovery_moment_group(Model):
             string='Valid Sale Orders Quantity'),
         'picking_ids': fields.function(
             _get_picking, multi='picking', type='one2many',
-            relation='stock.picking', string='Stock Picking', readonly=True),
+            relation='stock.picking', string='Delivery Orders', readonly=True),
+        'picking_qty': fields.function(
+            _get_picking, multi='picking', type='integer',
+            string='Delivery Orders Quantity'),
+        'valid_picking_qty': fields.function(
+            _get_picking, multi='picking', type='integer',
+            string='Valid Delivery Orders Quantity'),
         'excl_total': fields.function(
             _get_order, multi='order', type='float',
             string='Total (VAT Exclude)'),

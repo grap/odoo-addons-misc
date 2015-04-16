@@ -34,7 +34,8 @@ class stock_picking(Model):
             'sale.recovery.moment', 'Recovery Moment'),
         'group_id': fields.related(
             'moment_id', 'group_id', type='many2one',
-            relation='sale.recovery.moment.group', string='Recovery Group'),
+            relation='sale.recovery.moment.group',
+            string='Recovery Moment Group'),
     }
 
 
@@ -49,5 +50,6 @@ class stock_picking_out(Model):
             'sale.recovery.moment', 'Recovery Moment'),
         'group_id': fields.related(
             'moment_id', 'group_id', type='many2one',
-            relation='sale.recovery.moment.group', string='Recovery Group'),
+            relation='sale.recovery.moment.group',
+            string='Recovery Moment Group'),
     }

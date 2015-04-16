@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-05 15:51+0000\n"
-"PO-Revision-Date: 2015-04-05 15:51+0000\n"
+"POT-Creation-Date: 2015-04-16 15:28+0000\n"
+"PO-Revision-Date: 2015-04-16 15:28+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,13 +16,13 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: sale_recovery_moment
-#: code:addons/sale_recovery_moment/model/sale_recovery_moment.py:74
+#: code:addons/sale_recovery_moment/model/sale_recovery_moment.py:91
 #, python-format
 msgid "%d / %d Orders"
 msgstr "%d / %d Bons de commande"
 
 #. module: sale_recovery_moment
-#: code:addons/sale_recovery_moment/model/sale_recovery_moment.py:77
+#: code:addons/sale_recovery_moment/model/sale_recovery_moment.py:94
 #, python-format
 msgid "%d Order(s)"
 msgstr "%d Bon(s) de commande"
@@ -35,7 +35,6 @@ msgstr "Actif"
 
 #. module: sale_recovery_moment
 #: view:sale.recovery.moment.group.wizard.duplicate:0
-#: view:sale.recovery.moment.group.wizard.product.list:0
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -66,20 +65,15 @@ msgid "Company"
 msgstr "Société"
 
 #. module: sale_recovery_moment
-#: report:addons/sale_recovery_moment/report/moment_group_report.mako:17
-msgid "Confirmed Qty"
-msgstr "Qté Confirmé"
-
-#. module: sale_recovery_moment
-#: field:sale.recovery.moment.group.wizard.product.list.line,confirmed_qty:0
-msgid "Confirmed Quantity"
-msgstr "Quantité confirmée"
-
-#. module: sale_recovery_moment
 #: view:sale.recovery.place:0
 #: field:sale.recovery.place,country_id:0
 msgid "Country"
 msgstr "Région"
+
+#. module: sale_recovery_moment
+#: view:sale.recovery.moment:0
+msgid "D.O. Qty"
+msgstr "# BL"
 
 #. module: sale_recovery_moment
 #: field:sale.recovery.moment.group.wizard.duplicate,day_delay:0
@@ -88,12 +82,21 @@ msgstr "Délai (En jours)"
 
 #. module: sale_recovery_moment
 #: code:_description:0
+#: model:ir.actions.act_window,name:sale_recovery_moment.action_stock_picking_out_recovery_moment
 #: model:ir.actions.act_window,name:sale_recovery_moment.action_stock_picking_out_recovery_moment_group
 #: model:ir.model,name:sale_recovery_moment.model_stock_picking_out
+#: field:sale.recovery.moment,picking_ids:0
 #: view:sale.recovery.moment.group:0
+#: field:sale.recovery.moment.group,picking_ids:0
 #, python-format
 msgid "Delivery Orders"
 msgstr "Bons de livraisons"
+
+#. module: sale_recovery_moment
+#: field:sale.recovery.moment,picking_qty:0
+#: field:sale.recovery.moment.group,picking_qty:0
+msgid "Delivery Orders Quantity"
+msgstr "Nombre de bons de livraison"
 
 #. module: sale_recovery_moment
 #: field:sale.recovery.moment,description:0
@@ -129,8 +132,8 @@ msgid "Error ! You have to select a shop that belong to the company."
 msgstr "Erreur ! Vous devez sélectionner une boutique qui appartienne à la société."
 
 #. module: sale_recovery_moment
-#: code:addons/sale_recovery_moment/model/sale_recovery_moment.py:178
-#: code:addons/sale_recovery_moment/model/sale_recovery_moment_group.py:264
+#: code:addons/sale_recovery_moment/model/sale_recovery_moment.py:193
+#: code:addons/sale_recovery_moment/model/sale_recovery_moment_group.py:275
 #, python-format
 msgid "Error!"
 msgstr "Erreur !"
@@ -162,9 +165,7 @@ msgid "Futur"
 msgstr "Futur"
 
 #. module: sale_recovery_moment
-#: code:_description:0
 #: model:ir.model,name:sale_recovery_moment.model_sale_recovery_moment_group
-#, python-format
 msgid "Group of Recovery Moments"
 msgstr "Groupe de moments de récupération"
 
@@ -174,52 +175,41 @@ msgid "Group to Duplicate"
 msgstr "Groupe à dupliquer"
 
 #. module: sale_recovery_moment
-#: report:addons/sale_recovery_moment/report/moment_group_report.mako:20
-msgid "Incoming Qty"
-msgstr "Qté entrante"
-
-#. module: sale_recovery_moment
-#: field:sale.recovery.moment.group.wizard.product.list.line,incoming_qty:0
-msgid "Incoming Quantity"
-msgstr "Quantité entrante"
-
-#. module: sale_recovery_moment
 #: model:res.groups,name:sale_recovery_moment.recovery_manager
 msgid "Manager"
 msgstr "Responsable"
 
 #. module: sale_recovery_moment
+#: view:sale.recovery.moment:0
+msgid "Max"
+msgstr "Max"
+
+#. module: sale_recovery_moment
 #: field:sale.recovery.moment,max_order_qty:0
 msgid "Max Order Quantity"
-msgstr "Quantité Maximum de Vente"
+msgstr "Nombre maximum de ventes"
 
 #. module: sale_recovery_moment
 #: field:sale.recovery.moment.group,max_recovery_date:0
 msgid "Maximum date for the Recovery"
-msgstr "Maximum date for the Recovery"
+msgstr "Date de fin de récupération"
 
 #. module: sale_recovery_moment
 #: field:sale.recovery.moment.group,max_sale_date:0
 msgid "Maximum date for the Sale"
-msgstr "Date de Fin de Vente"
+msgstr "Date de fin de vente"
 
 #. module: sale_recovery_moment
 #: field:sale.recovery.moment,max_recovery_date:0
 #: field:sale.recovery.moment,min_recovery_date:0
 #: field:sale.recovery.moment.group,min_recovery_date:0
 msgid "Minimum date for the Recovery"
-msgstr "Date de Début de Récupération"
+msgstr "Date de début de récupération"
 
 #. module: sale_recovery_moment
 #: field:sale.recovery.moment.group,min_sale_date:0
 msgid "Minimum date for the Sale"
-msgstr "Date de Début de Vente"
-
-#. module: sale_recovery_moment
-#: model:ir.actions.report.xml,name:sale_recovery_moment.report_moment_group_report
-#: field:sale.recovery.moment.group.wizard.product.list,group_id:0
-msgid "Moment Group"
-msgstr "Groupe de Moment"
+msgstr "Date de début de vente"
 
 #. module: sale_recovery_moment
 #: view:sale.recovery.moment.group:0
@@ -230,27 +220,26 @@ msgstr "Dates"
 #: field:product.prepare.category,name:0
 #: field:sale.recovery.moment,name:0
 #: field:sale.recovery.moment.group,name:0
-#: field:sale.recovery.moment.group.wizard.product.list,name:0
 #: field:sale.recovery.place,complete_name:0
 #: field:sale.recovery.place,name:0
 msgid "Name"
 msgstr "Nom"
 
 #. module: sale_recovery_moment
-#: code:addons/sale_recovery_moment/model/sale_recovery_moment.py:80
+#: field:sale.recovery.moment.group.wizard.duplicate,next_max_sale_date:0
+msgid "Next Maximum date for the Sale"
+msgstr "Prochaine date de fin de vente"
+
+#. module: sale_recovery_moment
+#: field:sale.recovery.moment.group.wizard.duplicate,next_min_sale_date:0
+msgid "Next Minimum date for the Sale"
+msgstr "Prochaine date de début de vente"
+
+#. module: sale_recovery_moment
+#: code:addons/sale_recovery_moment/model/sale_recovery_moment.py:97
 #, python-format
 msgid "No Orders"
 msgstr "Pas de bon de commande"
-
-#. module: sale_recovery_moment
-#: report:addons/sale_recovery_moment/report/moment_group_report.mako:21
-msgid "Outgoing Qty"
-msgstr "Qté Sortante"
-
-#. module: sale_recovery_moment
-#: field:sale.recovery.moment.group.wizard.product.list.line,outgoing_qty:0
-msgid "Outgoing Quantity"
-msgstr "Quantité sortante"
 
 #. module: sale_recovery_moment
 #: view:sale.recovery.moment.group:0
@@ -300,48 +289,17 @@ msgid "Prepare Category"
 msgstr "Catégorie de préparation"
 
 #. module: sale_recovery_moment
-#: view:sale.recovery.moment.group.wizard.product.list:0
-msgid "Print"
-msgstr "Imprimer"
-
-#. module: sale_recovery_moment
 #: code:_description:0
-#: report:addons/sale_recovery_moment/report/moment_group_report.mako:15
 #: model:ir.model,name:sale_recovery_moment.model_product_product
-#: field:sale.recovery.moment.group.wizard.product.list.line,product_id:0
 #, python-format
 msgid "Product"
 msgstr "Produit"
 
 #. module: sale_recovery_moment
-#: view:sale.recovery.moment.group.wizard.product.list:0
-#: field:sale.recovery.moment.group.wizard.product.list,line_ids:0
-msgid "Products"
-msgstr "Produits"
-
-#. module: sale_recovery_moment
 #: model:ir.actions.act_window,name:sale_recovery_moment.action_product_product
-#: model:ir.ui.menu,name:sale_recovery_moment.menu_product_product
 #: view:product.product:0
 msgid "Products (Prepare)"
-msgstr "Produits (Préparation)"
-
-#. module: sale_recovery_moment
-#: model:ir.actions.act_window,name:sale_recovery_moment.action_sale_recovery_moment_group_wizard_product_list
-#: view:sale.recovery.moment.group:0
-#: view:sale.recovery.moment.group.wizard.product.list:0
-msgid "Products List"
-msgstr "Liste des produits"
-
-#. module: sale_recovery_moment
-#: report:addons/sale_recovery_moment/report/moment_group_report.mako:19
-msgid "Qty On Hand"
-msgstr "Qté en Stock"
-
-#. module: sale_recovery_moment
-#: field:sale.recovery.moment.group.wizard.product.list.line,qty_available:0
-msgid "Quantity On Hand"
-msgstr "Quantité en Stock"
+msgstr "Articles (Préparation)"
 
 #. module: sale_recovery_moment
 #: field:sale.recovery.moment,quota_description:0
@@ -354,19 +312,9 @@ msgid "Recovery"
 msgstr "Récupération"
 
 #. module: sale_recovery_moment
-#: field:sale.order,group_id:0
-#: field:stock.picking,group_id:0
-#: field:stock.picking.out,group_id:0
-msgid "Recovery Group"
-msgstr "Groupe de récupération"
-
-#. module: sale_recovery_moment
 #: code:_description:0
-#: model:ir.actions.act_window,name:sale_recovery_moment.action_sale_recovery_moment
 #: model:ir.model,name:sale_recovery_moment.model_sale_recovery_moment
-#: model:ir.ui.menu,name:sale_recovery_moment.menu_sale_recovery_moment
 #: field:sale.order,moment_id:0
-#: view:sale.recovery.moment:0
 #: field:stock.picking,moment_id:0
 #: view:stock.picking.out:0
 #: field:stock.picking.out,moment_id:0
@@ -375,34 +323,45 @@ msgid "Recovery Moment"
 msgstr "Moment de récupération"
 
 #. module: sale_recovery_moment
-#: model:ir.actions.act_window,name:sale_recovery_moment.action_sale_recovery_moment_group
-#: model:ir.ui.menu,name:sale_recovery_moment.menu_sale_recovery_moment_group
+#: field:sale.order,group_id:0
 #: field:sale.recovery.moment,group_id:0
-#: view:sale.recovery.moment.group:0
+#: field:stock.picking,group_id:0
+#: field:stock.picking.out,group_id:0
 msgid "Recovery Moment Group"
 msgstr "Groupe de récupération"
 
 #. module: sale_recovery_moment
+#: model:ir.actions.act_window,name:sale_recovery_moment.action_sale_recovery_moment_group
+#: model:ir.ui.menu,name:sale_recovery_moment.menu_sale_recovery_moment_group
+#: view:sale.recovery.moment.group:0
+msgid "Recovery Moment Groups"
+msgstr "Groupes de récupération"
+
+#. module: sale_recovery_moment
+#: model:ir.actions.act_window,name:sale_recovery_moment.action_sale_recovery_moment
+#: model:ir.ui.menu,name:sale_recovery_moment.menu_sale_recovery_moment
+#: view:sale.recovery.moment:0
 #: field:sale.recovery.moment.group,moment_ids:0
 msgid "Recovery Moments"
-msgstr "Moments de récupérations"
+msgstr "Moments de récupération"
 
 #. module: sale_recovery_moment
 #: code:_description:0
-#: model:ir.actions.act_window,name:sale_recovery_moment.action_sale_recovery_place
 #: model:ir.model,name:sale_recovery_moment.model_sale_recovery_place
-#: model:ir.ui.menu,name:sale_recovery_moment.menu_sale_recovery_place
 #, python-format
 msgid "Recovery Place"
 msgstr "Lieu de récupération"
 
 #. module: sale_recovery_moment
+#: model:ir.actions.act_window,name:sale_recovery_moment.action_sale_recovery_place
+#: model:ir.ui.menu,name:sale_recovery_moment.menu_sale_recovery_place
 #: view:sale.recovery.place:0
 msgid "Recovery Places"
 msgstr "Lieux de récupération"
 
 #. module: sale_recovery_moment
 #: model:ir.ui.menu,name:sale_recovery_moment.menu_sale_recovery
+#: model:ir.ui.menu,name:sale_recovery_moment.menu_sale_recovery_config
 msgid "Recovery Sales"
 msgstr "Ventes avec Récupération"
 
@@ -412,6 +371,7 @@ msgid "S.O. Qty"
 msgstr "# BdC"
 
 #. module: sale_recovery_moment
+#: model:ir.actions.act_window,name:sale_recovery_moment.action_sale_order_recovery_moment
 #: model:ir.actions.act_window,name:sale_recovery_moment.action_sale_order_recovery_moment_group
 #: field:sale.recovery.moment,order_ids:0
 #: view:sale.recovery.moment.group:0
@@ -433,9 +393,19 @@ msgid "Sales Order"
 msgstr "Commande de ventes"
 
 #. module: sale_recovery_moment
+#: view:sale.recovery.moment:0
+msgid "See Valid Delivery Orders"
+msgstr "Voir les bons de livraison valides"
+
+#. module: sale_recovery_moment
+#: view:sale.recovery.moment:0
+msgid "See Valid Sale Orders"
+msgstr "Voir les bons de commande valides"
+
+#. module: sale_recovery_moment
 #: field:product.prepare.category,sequence:0
 msgid "Sequence"
-msgstr "Sequence"
+msgstr "Séquence"
 
 #. module: sale_recovery_moment
 #: field:sale.recovery.moment.group,shop_id:0
@@ -455,16 +425,6 @@ msgstr "Nom Court"
 #: field:sale.recovery.place,state_id:0
 msgid "State"
 msgstr "Etat"
-
-#. module: sale_recovery_moment
-#: field:sale.recovery.moment.group,picking_ids:0
-msgid "Stock Picking"
-msgstr "Bon de livraison"
-
-#. module: sale_recovery_moment
-#: field:sale.recovery.moment,picking_ids:0
-msgid "Stock Picking Quantity"
-msgstr "Quantité de bons de livraison"
 
 #. module: sale_recovery_moment
 #: field:sale.recovery.place,street:0
@@ -487,7 +447,7 @@ msgid "Street2"
 msgstr "Rue (Complément)"
 
 #. module: sale_recovery_moment
-#: code:addons/sale_recovery_moment/model/sale_recovery_moment_group.py:49
+#: code:addons/sale_recovery_moment/model/sale_recovery_moment_group.py:48
 #, python-format
 msgid "The Operator %s is not implemented !"
 msgstr "L'opérande %s n'est pas implémenté !"
@@ -519,22 +479,42 @@ msgstr "Utilisateur"
 
 #. module: sale_recovery_moment
 #: view:sale.recovery.moment:0
+msgid "V.D.O. Qty"
+msgstr "# BL OK"
+
+#. module: sale_recovery_moment
+#: view:sale.recovery.moment:0
 msgid "V.S.O. Qty"
-msgstr "# BdC Valide"
+msgstr "# BdC OK"
+
+#. module: sale_recovery_moment
+#: model:ir.actions.act_window,name:sale_recovery_moment.action_stock_picking_out_recovery_moment_group_valid
+#: model:ir.actions.act_window,name:sale_recovery_moment.action_stock_picking_out_recovery_moment_valid
+#: view:sale.recovery.moment.group:0
+msgid "Valid Delivery Orders"
+msgstr "Bons de livraison valides"
+
+#. module: sale_recovery_moment
+#: field:sale.recovery.moment,valid_picking_qty:0
+#: field:sale.recovery.moment.group,valid_picking_qty:0
+msgid "Valid Delivery Orders Quantity"
+msgstr "Nombre de bons de livraison valides"
+
+#. module: sale_recovery_moment
+#: model:ir.actions.act_window,name:sale_recovery_moment.action_sale_order_recovery_moment_group_valid
+#: model:ir.actions.act_window,name:sale_recovery_moment.action_sale_order_recovery_moment_valid
+#: view:sale.recovery.moment.group:0
+msgid "Valid Sale Orders"
+msgstr "Bons de commande valides"
 
 #. module: sale_recovery_moment
 #: field:sale.recovery.moment,valid_order_qty:0
 #: field:sale.recovery.moment.group,valid_order_qty:0
 msgid "Valid Sale Orders Quantity"
-msgstr "Nombre de bons de commande valide"
+msgstr "Nombre de bons de commande valides"
 
 #. module: sale_recovery_moment
-#: field:sale.recovery.moment.group.wizard.product.list.line,wizard_id:0
-msgid "Wizard"
-msgstr "Wizard"
-
-#. module: sale_recovery_moment
-#: code:addons/sale_recovery_moment/model/sale_recovery_moment.py:179
+#: code:addons/sale_recovery_moment/model/sale_recovery_moment.py:194
 #, python-format
 msgid "You can not delete this Recovery Moment because there is %d Valid Sale Orders associated.\n"
 "Please move Sale orders on an other Recovery Moment and contact your customers."
@@ -542,7 +522,7 @@ msgstr "Vous ne pouvez pas supprimer ce moment de récupération car il y sont a
 "Merci de changer ces bons de commande sur un autre moment de récupération et de contacter les clients."
 
 #. module: sale_recovery_moment
-#: code:addons/sale_recovery_moment/model/sale_recovery_moment_group.py:265
+#: code:addons/sale_recovery_moment/model/sale_recovery_moment_group.py:276
 #, python-format
 msgid "You can not duplicate by this way, please use the Duplicate Button in the Form view."
 msgstr "Vous ne pouvez pas dupliquer de cette façon, merci d'utiliser le bouton 'Dupliquer' sur la vue formulaire."
@@ -559,6 +539,52 @@ msgid "or"
 msgstr "ou"
 
 #. module: sale_recovery_moment
+#: code:_description:0
+#: model:ir.model,name:sale_recovery_moment.model_product_prepare_category
+#, python-format
+msgid "product.prepare.category"
+msgstr "product.prepare.category"
+
+#. module: sale_recovery_moment
+#: code:_description:0
+#, python-format
+msgid "sale.recovery.moment.group"
+msgstr "sale.recovery.moment.group"
+
+#. module: sale_recovery_moment
+#: model:ir.model,name:sale_recovery_moment.model_sale_recovery_moment_group_wizard
+msgid "sale.recovery.moment.group.wizard"
+msgstr "sale.recovery.moment.group.wizard"
+
+#. module: sale_recovery_moment
+#: code:_description:0
+#: model:ir.model,name:sale_recovery_moment.model_sale_recovery_moment_group_wizard_duplicate
+#, python-format
+msgid "sale.recovery.moment.group.wizard.duplicate"
+msgstr "sale.recovery.moment.group.wizard.duplicate"
+
+#. module: sale_recovery_moment
+#: model:ir.model,name:sale_recovery_moment.model_sale_recovery_moment_group_wizard_line
+msgid "sale.recovery.moment.group.wizard.line"
+msgstr "sale.recovery.moment.group.wizard.line"
+
+#. module: sale_recovery_moment
+#: model:ir.model,name:sale_recovery_moment.model_sale_recovery_moment_group_wizard_product_list
+msgid "sale.recovery.moment.group.wizard.product.list"
+msgstr "sale.recovery.moment.group.wizard.product.list"
+
+#. module: sale_recovery_moment
+#: model:ir.model,name:sale_recovery_moment.model_sale_recovery_moment_group_wizard_product_list_line
+msgid "sale.recovery.moment.group.wizard.product.list.line"
+msgstr "sale.recovery.moment.group.wizard.product.list.line"
+
+#. module: sale_recovery_moment
+#: model:ir.ui.menu,name:sale_recovery_moment.menu_product_product
+msgid "sale_recovery_moment.menu_product_product"
+msgstr "sale_recovery_moment.menu_product_product"
+
+#. module: sale_recovery_moment
 #: view:sale.recovery.moment.group:0
 msgid "to"
 msgstr "à"
+

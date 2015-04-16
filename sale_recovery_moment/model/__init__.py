@@ -27,6 +27,4 @@ from . import stock_picking
 from . import sale_recovery_moment
 from . import sale_recovery_place
 from . import sale_recovery_moment_group
-from . import sale_recovery_moment_group_wizard_product_list
-from . import sale_recovery_moment_group_wizard_product_list_line
 from . import sale_recovery_moment_group_wizard_duplicate

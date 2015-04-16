@@ -97,6 +97,6 @@ class SaleOrder(Model):
             readonly=True, states={'draft': [('readonly', False)]}),
         'group_id': fields.related(
             'moment_id', 'group_id', type='many2one',
-            relation='sale.recovery.moment.group', string='Recovery Group',
-            readonly=True),
+            relation='sale.recovery.moment.group',
+            string='Recovery Moment Group', readonly=True),
     }

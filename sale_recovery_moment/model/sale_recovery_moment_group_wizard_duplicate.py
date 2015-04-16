@@ -98,9 +98,34 @@ class sale_recovery_moment_group_wizard_duplicate(TransientModel):
             "all the dates by the delay."),
         'short_name': fields.char(
             'Short Name', required=True),
+        'next_min_sale_date': fields.date(
+            'Next Minimum date for the Sale', readonly=True),
+        'next_max_sale_date': fields.date(
+            'Next Maximum date for the Sale', readonly=True),
     }
 
     _defaults = {
         'group_id': lambda self, cr, uid, ctx: ctx and ctx.get(
             'active_id', False) or False
     }
+
+    # View Section
+    def onchange_day_delay(
+            self, cr, uid, ids, group_id, day_delay, next_min_sale_date,
+            next_max_sale_date, context=None):
+        if day_delay and group_id:
+            group = self.pool['sale.recovery.moment.group'].browse(
+                cr, uid, group_id, context)
+            return {'value': {
+                'next_min_sale_date': (datetime.strptime(
+                    group.min_sale_date, '%Y-%m-%d %H:%M:%S') +
+                    relativedelta(days=day_delay)).strftime(
+                    '%Y-%m-%d'),
+                'next_max_sale_date': (datetime.strptime(
+                    group.max_sale_date, '%Y-%m-%d %H:%M:%S') +
+                    relativedelta(days=day_delay)).strftime(
+                    '%Y-%m-%d'),
+            }}
+        return {'value': {
+            'next_min_sale_date': False,
+            'next_max_sale_date': False}}

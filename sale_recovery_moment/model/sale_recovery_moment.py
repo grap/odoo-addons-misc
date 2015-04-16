@@ -45,6 +45,23 @@ class SaleRecoveryMoment(Model):
                     res[srm.id]['valid_order_qty'] += 1
         return res
 
+    def _get_picking(self, cr, uid, ids, field_name, arg, context=None):
+        res = {}
+        spo_obj = self.pool['stock.picking.out']
+        for srm in self.browse(cr, uid, ids, context=context):
+            order_ids = [x.id for x in srm.order_ids]
+            picking_ids = spo_obj.search(cr, uid, [
+                ('sale_id', 'in', order_ids)], context=context)
+            valid_picking_ids = spo_obj.search(cr, uid, [
+                ('sale_id', 'in', order_ids),
+                ('state', 'not in', ('draft', 'cancel'))], context=context)
+            res[srm.id] = {
+                'picking_ids': picking_ids,
+                'picking_qty': len(picking_ids),
+                'valid_picking_qty': len(valid_picking_ids),
+            }
+        return res
+
     def _get_complete_name(self, cr, uid, ids, field_name, arg, context=None):
         res = {}
         for srm in self.browse(cr, uid, ids, context=context):
@@ -78,15 +95,6 @@ class SaleRecoveryMoment(Model):
                     srm.valid_order_qty)
             else:
                 res[srm.id] = _('No Orders')
-        return res
-
-    def _get_picking(self, cr, uid, ids, field_name, arg, context=None):
-        res = {}
-        spo_obj = self.pool['stock.picking.out']
-        for srm in self.browse(cr, uid, ids, context=context):
-            order_ids = [x.id for x in srm.order_ids]
-            res[srm.id] = spo_obj.search(cr, uid, [
-                ('sale_id', 'in', order_ids)], context=context)
         return res
 
     def _get_name(self, cr, uid, ids, field_name, arg, context=None):
@@ -144,8 +152,14 @@ class SaleRecoveryMoment(Model):
         'quota_description': fields.function(
             _get_quota_description, type='char', string='Quota Description'),
         'picking_ids': fields.function(
-            _get_picking, type='one2many',
-            relation='stock.picking.out', string='Stock Picking Quantity'),
+            _get_picking, type='one2many', multi='picking',
+            relation='stock.picking.out', string='Delivery Orders'),
+        'picking_qty': fields.function(
+            _get_picking, type='integer', multi='picking',
+            string='Delivery Orders Quantity'),
+        'valid_picking_qty': fields.function(
+            _get_picking, type='integer', multi='picking',
+            string='Valid Delivery Orders Quantity'),
     }
 
     # Defaults Section

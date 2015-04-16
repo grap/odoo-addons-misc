@@ -81,7 +81,6 @@ Copyright, Authors and Licence:
         'security/ir_model_access.yml',
         'data/ir_sequence_type.yml',
         'data/ir_sequence.yml',
-        'report/moment_group_report.xml',
         'view/view_related.xml',
         'view/action_related.xml',
         'view/view.xml',
