@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-01 01:57+0000\n"
-"PO-Revision-Date: 2015-03-01 01:57+0000\n"
+"POT-Creation-Date: 2015-04-16 11:45+0000\n"
+"PO-Revision-Date: 2015-04-16 11:45+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -116,6 +116,18 @@ msgid "Company"
 msgstr "Société"
 
 #. module: sale_eshop
+#: model:ir.actions.act_window,name:sale_eshop.action_res_partner
+#: model:ir.ui.menu,name:sale_eshop.menu_res_partner
+#: view:res.partner:0
+msgid "Customers (eShop)"
+msgstr "Clients (eBoutique)"
+
+#. module: sale_eshop
+#: field:product.uom,eshop_description:0
+msgid "Description for the eShop"
+msgstr "Description pour la eBoutique"
+
+#. module: sale_eshop
 #: field:product.product,eshop_end_date:0
 msgid "End Date of Sale"
 msgstr "Date de Fin de Vente"
@@ -158,14 +170,14 @@ msgstr "Prix Minimum"
 #. module: sale_eshop
 #: field:product.product,eshop_minimum_qty:0
 msgid "Minimum Quantity for eShop"
-msgstr "Quantité minimum pour la boutique en ligne"
+msgstr "Quantité minimum pour la eBoutique"
 
 #. module: sale_eshop
 #: view:eshop.category:0
 #: model:ir.actions.act_window,name:sale_eshop.action_change_product_category
 #: view:wizard.change.product.category:0
 msgid "Move to other eShop Category"
-msgstr "Déplacer dans une autre Catégorie de Boutique en Ligne"
+msgstr "Déplacer dans une autre Catégorie de eBoutique"
 
 #. module: sale_eshop
 #: field:eshop.category,complete_name:0
@@ -176,7 +188,7 @@ msgstr "Nom"
 #. module: sale_eshop
 #: field:wizard.change.product.category,new_eshop_category_id:0
 msgid "New eShop Category"
-msgstr "Nouvelle Catégorie de Boutique en ligne"
+msgstr "Nouvelle Catégorie de eBoutique"
 
 #. module: sale_eshop
 #: selection:eshop.category,type:0
@@ -186,7 +198,7 @@ msgstr "Normal"
 #. module: sale_eshop
 #: field:wizard.change.product.category,old_eshop_category_id:0
 msgid "Old eShop Category"
-msgstr "Ancienne Catégorie de Boutique en ligne"
+msgstr "Ancienne Catégorie de la eBoutique"
 
 #. module: sale_eshop
 #: field:eshop.category,parent_id:0
@@ -203,14 +215,21 @@ msgstr "Partenaire"
 #. module: sale_eshop
 #: field:res.partner,eshop_password:0
 msgid "Password on eShop"
-msgstr "Mot de Passe sur Boutique en ligne"
+msgstr "Mot de Passe sur la eBoutique"
 
 #. module: sale_eshop
 #: code:_description:0
 #: model:ir.model,name:sale_eshop.model_product_product
 #, python-format
 msgid "Product"
-msgstr "Produit"
+msgstr "Article"
+
+#. module: sale_eshop
+#: code:_description:0
+#: model:ir.model,name:sale_eshop.model_product_uom
+#, python-format
+msgid "Product Unit of Measure"
+msgstr "Unité de mesure de l'article"
 
 #. module: sale_eshop
 #: view:eshop.category:0
@@ -219,19 +238,28 @@ msgid "Products"
 msgstr "Produits"
 
 #. module: sale_eshop
+#: model:ir.actions.act_window,name:sale_eshop.action_product_product
+#: model:ir.ui.menu,name:sale_eshop.menu_product_product
+#: view:product.product:0
+msgid "Products (eShop)"
+msgstr "Articles (eBoutique)"
+
+#. module: sale_eshop
 #: field:eshop.category,product_qty:0
 msgid "Products Quantity"
 msgstr "Quantité de Produits"
 
 #. module: sale_eshop
-#: view:product.product:0
-msgid "Products eShop"
-msgstr "Produits eBoutique"
-
-#. module: sale_eshop
 #: field:product.product,eshop_rounded_qty:0
 msgid "Rounded Quantity for eShop"
-msgstr "Arrondie en Quantité sur la boutique en ligne"
+msgstr "Arrondie en Quantité sur la eBoutique"
+
+#. module: sale_eshop
+#: code:_description:0
+#: model:ir.model,name:sale_eshop.model_sale_order
+#, python-format
+msgid "Sales Order"
+msgstr "Commande de ventes"
 
 #. module: sale_eshop
 #: code:_description:0
@@ -249,7 +277,7 @@ msgstr "Envoyer les identifiants"
 #: view:product.product:0
 #: view:res.partner:0
 msgid "Set On eShop"
-msgstr "Paramétré dans la Boutique en Ligne"
+msgstr "Paramétré dans la eBoutique"
 
 #. module: sale_eshop
 #: field:eshop.category,image_small:0
@@ -317,18 +345,18 @@ msgstr "Vous ne pouvez pas supprimer cette catégorie '%s' car elle contient %s 
 
 #. module: sale_eshop
 #: view:wizard.change.product.category:0
-msgid "_Apply"
-msgstr "_Apply"
+msgid "Apply"
+msgstr "Valider"
 
 #. module: sale_eshop
 #: model:ir.module.category,name:sale_eshop.module_category_eshop
 msgid "eShop"
-msgstr "Boutique en ligne"
+msgstr "eBoutique"
 
 #. module: sale_eshop
 #: model:email.template,subject:sale_eshop.eshop_password_template
 msgid "eShop Access"
-msgstr "Accès à la boutique en ligne"
+msgstr "Accès à la eBoutique"
 
 #. module: sale_eshop
 #: view:eshop.category:0
@@ -343,19 +371,6 @@ msgid "eShop Category"
 msgstr "Catégorie eBoutique"
 
 #. module: sale_eshop
-#: model:ir.actions.act_window,name:sale_eshop.action_res_partner
-#: model:ir.ui.menu,name:sale_eshop.menu_res_partner
-#: view:res.partner:0
-msgid "eShop Customers"
-msgstr "Client eBoutique"
-
-#. module: sale_eshop
-#: model:ir.actions.act_window,name:sale_eshop.action_product_product
-#: model:ir.ui.menu,name:sale_eshop.menu_product_product
-msgid "eShop Products"
-msgstr "Produits eBoutique"
-
-#. module: sale_eshop
 #: model:ir.ui.menu,name:sale_eshop.menu_eshop
 #: view:res.partner:0
 #: view:sale.shop:0
@@ -365,24 +380,10 @@ msgstr "Vente eBoutique"
 #. module: sale_eshop
 #: field:product.product,eshop_state:0
 msgid "eShop State"
-msgstr "Etat dans la Boutique en ligne"
-
-#. module: sale_eshop
-#: code:_description:0
-#: model:ir.model,name:sale_eshop.model_eshop_category
-#, python-format
-msgid "eshop.category"
-msgstr "eshop.category"
+msgstr "Etat dans la eBoutique"
 
 #. module: sale_eshop
 #: view:wizard.change.product.category:0
 msgid "or"
 msgstr "ou"
-
-#. module: sale_eshop
-#: code:_description:0
-#: model:ir.model,name:sale_eshop.model_wizard_change_product_category
-#, python-format
-msgid "wizard.change.product.category"
-msgstr "wizard.change.product.category"
 

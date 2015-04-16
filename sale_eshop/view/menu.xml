@@ -17,25 +17,25 @@
 <!--You should have received a copy of the GNU Affero General Public License-->
 <!--along with this program.  If not, see <http://www.gnu.org/licenses/>.   -->
 <!-- ********************************************************************** -->
-<!-- ********************************************************************** -->
+
 <openerp>
     <data>
 
         <menuitem id="menu_eshop" 
-            name="eShop Sale" sequence="75"
-            parent="base.menu_base_partner"/>
+            name="eShop Sale" sequence="30"
+            parent="base.menu_base_config"/>
 
         <menuitem id="menu_eshop_category" 
             parent="menu_eshop" sequence="1"
             action="action_eshop_category"/>
 
         <menuitem id="menu_res_partner" 
-            parent="menu_eshop" sequence="2"
+            parent="base.menu_sales" sequence="20"
             groups="sale_eshop.res_groups_eshop_user"
             action="action_res_partner"/>
 
         <menuitem id="menu_product_product"
-            parent="menu_eshop" sequence="3"
+            parent="base.menu_product" sequence="3"
             groups="sale_eshop.res_groups_eshop_user"
             action="action_product_product"/>
 

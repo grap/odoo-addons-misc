@@ -35,7 +35,7 @@
         <record id="view_product_product_tree" model="ir.ui.view">
             <field name="model">product.product</field>
             <field name="arch" type="xml">
-                <tree string="Products eShop" editable="bottom"
+                <tree string="Products (eShop)" editable="bottom"
                         colors="black:eshop_state == 'available'; blue:eshop_state == 'disabled'; gray: eshop_state == 'unavailable'">
                     <field name="name" readonly="1"/>
                     <field name="eshop_minimum_qty"/>
@@ -96,7 +96,7 @@
         <record id="view_res_partner_tree" model="ir.ui.view">
             <field name="model">res.partner</field>
             <field name="arch" type="xml">
-                <tree string="eShop Customers" editable="bottom"
+                <tree string="Customers (eShop)" editable="bottom"
                         colors="black:eshop_active == True; gray: eshop_active == False">
                     <field name="name" readonly="1"/>
                     <field name="eshop_active"/>

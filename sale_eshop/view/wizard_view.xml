@@ -30,7 +30,7 @@
                         <field name="new_eshop_category_id"/>
                     </group>
                     <footer>
-                        <button name="change_product_category" string="_Apply" type="object" class="oe_highlight"/>
+                        <button name="change_product_category" string="Apply" type="object" class="oe_highlight"/>
                         <label string="or"/>
                         <button string="Cancel" class="oe_link" special="cancel" />
                     </footer>
