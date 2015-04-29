@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ********************************************************************** -->
+<!-- Stock - Picking Quick Edit module for Odoo                             -->
+<!-- Copyright (C) 2015-Today GRAP (http://www.grap.coop)                   -->
+<!-- @author Sylvain LE GAL (https://twitter.com/legalsylvain)              -->
+
+<!--This program is free software: you can redistribute it and/or modify    -->
+<!--it under the terms of the GNU Affero General Public License as          -->
+<!--published by the Free Software Foundation, either version 3 of the      -->
+<!--License, or (at your option) any later version.                         -->
+
+<!--This program is distributed in the hope that it will be useful,         -->
+<!--but WITHOUT ANY WARRANTY; without even the implied warranty of          -->
+<!--MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           -->
+<!--GNU Affero General Public License for more details.                     -->
+
+<!--You should have received a copy of the GNU Affero General Public License-->
+<!--along with this program.  If not, see <http://www.gnu.org/licenses/>.   -->
+<!-- ********************************************************************** -->
+
+<!--                        <field name="current_line_ids">-->
+<!--                            <tree>-->
+<!--                                <field name="picking_id" />-->
+<!--                                <field name="quantity" />-->
+<!--                            </tree>-->
+<!--                        </field>-->
+<!--                        <field name="new_line_ids">-->
+<!--                            <tree>-->
+<!--                                <field name="picking_id" />-->
+<!--                                <field name="quantity" />-->
+<!--                            </tree>-->
+<!--                        </field>-->
+
+<openerp>
+    <data>
+
+<!-- Model: stock.picking.out -->
+        <record id="view_stock_picking_out_form" model="ir.ui.view">
+            <field name="model">stock.picking.out</field>
+            <field name="inherit_id" ref="stock.view_picking_out_form" />
+            <field name="arch" type="xml">
+                <button name="draft_validate" position="after">
+                    <button name="button_quick_edit_wizard" type="object" string="Quick Edit" states="draft,auto,confirmed,assigned"/>
+                </button>
+            </field>
+        </record>
+
+<!-- Model: stock.picking.quick.edit.wizard -->
+        <record id="view_stock_picking_quick_edit_wizard_form" model="ir.ui.view">
+            <field name="model">stock.picking.quick.edit.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Edit Delivery Order" version="7.0">
+                    <group col="2">
+                        <field name="picking_id" colspan="2" />
+                        <field name="current_move_ids" nolabel="1" colspan="2">
+                            <tree string="Edit Current Moves" editable="bottom">
+                                <field name="move_id" />
+                                <field name="product_id" />
+                                <field name="product_qty" />
+                                <field name="product_uom" />
+                            </tree>
+                        </field>
+                        <field name="new_move_ids" nolabel="1" colspan="2">
+                            <tree string="Create New Moves" editable="bottom">
+                                <field name="product_id" on_change="onchange_product_id(product_id)"/>
+                                <field name="product_qty" />
+                                <field name="product_uom" />
+                            </tree>
+                        </field>
+                    </group>
+                    <footer>
+                    <button name="apply" string="Apply" type="object" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</openerp>

@@ -30,7 +30,6 @@ class productSimplePricelistItemUpdateWizard(TransientModel):
 
     # Default Get Section
     def default_get(self, cr, uid, fields, context=None):
-        print context
         pp_obj = self.pool['product.product']
         pplv_obj = self.pool['product.pricelist.version']
         res = super(productSimplePricelistItemUpdateWizard, self).default_get(
@@ -90,7 +89,7 @@ class productSimplePricelistItemUpdateWizard(TransientModel):
                         }, context=context)
             else:
                 # Create new item
-                print ppli_obj.create(cr, uid, {
+                ppli_obj.create(cr, uid, {
                     'name': pp.code,
                     'product_id': pspiuw.product_id.id,
                     'company_id': pplv.company_id.id,
