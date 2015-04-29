@@ -101,10 +101,6 @@ class StockPickingQuickEditWizard(orm.TransientModel):
                     _("""Unable to quick edit a picking with stock moves"""
                         """ in different locations!"""))
             for new_move in wizard.new_move_ids:
-#                product_uos_qty = sm_obj.onchange_quantity(
-#                    cr, uid, False, new_move.product_id.id,
-#                    new_move.product_qty, new_move.product_uom.id,
-#                    new_move.product_id.uom_id.id)['value']['product_uos_qty']
                 sm_id = sm_obj.create(cr, uid, {
                     'name': '[%s] %s' % (
                         new_move.product_id.code, new_move.product_id.name),
@@ -120,7 +116,7 @@ class StockPickingQuickEditWizard(orm.TransientModel):
                     'location_id': location_id[0],
                     'location_dest_id': location_dest_id[0],
                 }, context=context)
-                new_sm_ids.append(sm_id) 
+                new_sm_ids.append(sm_id)
 
             if new_sm_ids and picking.state == 'confirmed':
                 sm_obj.action_confirm(cr, uid, new_sm_ids, context=context)
