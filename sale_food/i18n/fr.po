@@ -170,7 +170,7 @@ msgid "Extra - Hight Quality : product without default ;\n"
 "Quality I - Good Quality : Product with little defaults ;\n"
 "Quality II - Normal Quality : Product with default ;\n"
 "Quality III - Bad Quality : Use this option only in specific situation."
-msgstr "Extra - Excellente Qualité : produit sans défaut ;Qualité I - Bonne Qualité : Produit avec quelques défauts ;Qualité II - Qualité Normal : Produit avec défauts ;Qualité III - Mauvaise Qualité : N'utilisez cette option que dans des cas spécifiques."
+msgstr "Extra - Excellente Qualité : produit sans défaut ;\nQualité I - Bonne Qualité : Produit avec quelques défauts ;\nQualité II - Qualité Normal : Produit avec défauts ;\nQualité III - Mauvaise Qualité : N'utilisez cette option que dans des cas spécifiques."
 
 #. module: sale_food
 #: field:product.product,pricetag_organic_text:0

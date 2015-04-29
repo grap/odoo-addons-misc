@@ -46,6 +46,14 @@ class product_product(Model):
         ('3', 'Category III'),
     ]
 
+    _FRESH_RANGE_KEYS = [
+        ('1', '1 - Fresh'),
+        ('2', '2 - Canned'),
+        ('3', '3 - Frozen'),
+        ('4', '4 - Uncooked and Ready to Use'),
+        ('4', '5 - Cooked and Ready to Use'),
+    ]
+
     """Fields list wich modification change edition_state to 'recommanded'."""
     _PRICETAG_RECOMMANDED_FIELDS = [
         'name',
@@ -205,12 +213,14 @@ class product_product(Model):
             _get_pricetag_origin, type='char',
             string='Text about origin'),
         'fresh_category': fields.selection(
-            _FRESH_CATEGORY_KEYS, 'Food category of the product',
+            _FRESH_CATEGORY_KEYS, 'Category for Fresh Product',
             help="""Extra - Hight Quality : product without default ;\n"""
             """Quality I - Good Quality : Product with little defaults ;\n"""
             """Quality II - Normal Quality : Product with default ;\n"""
             """Quality III - Bad Quality : Use this option only in"""
             """ specific situation."""),
+        'fresh_range': fields.selection(
+            _FRESH_RANGE_KEYS, 'Range for Fresh Product'),
         'label_ids': fields.many2many(
             'product.label', 'product_label_product_rel',
             'product_id', 'label_id', 'Labels'),

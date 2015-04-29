@@ -196,8 +196,9 @@
             <field name="arch" type="xml">
                 <tree string="Products (Food)" editable="bottom">
                     <field name="name" readonly="1"/>
-                    <field name="fresh_category"/>
                     <field name="label_ids" widget="many2many_tags"/>
+                    <field name="fresh_category"/>
+                    <field name="fresh_range"/>
                     <field name="organic_notation"/>
                 </tree>
             </field>
@@ -259,7 +260,6 @@
                             </group>
                             <group>
                                 <separator string="Food" colspan="2"/>
-                                <field name="fresh_category"/>
                                 <field name="label_ids" options="{'quick_create':false}"
                                     widget="many2many_tags"
                                     on_change="onchange_label_ids(
@@ -268,6 +268,8 @@
                                         local_notation,
                                         organic_notation,
                                         packaging_notation)"/>
+                                <field name="fresh_category"/>
+                                <field name="fresh_range"/>
                             </group>
                         </group>
                         <group colspan="4" col="4">
