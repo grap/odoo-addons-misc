@@ -1,0 +1,114 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* stock_picking_quick_edit
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-04-29 22:13+0000\n"
+"PO-Revision-Date: 2015-04-29 22:13+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_quick_edit
+#: view:stock.picking.quick.edit.wizard:0
+msgid "Apply"
+msgstr "Appliquer"
+
+#. module: stock_picking_quick_edit
+#: view:stock.picking.quick.edit.wizard:0
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: stock_picking_quick_edit
+#: view:stock.picking.quick.edit.wizard:0
+msgid "Create New Moves"
+msgstr "Créer de nouveaux mouvements"
+
+#. module: stock_picking_quick_edit
+#: field:stock.picking.quick.edit.wizard,picking_id:0
+msgid "Delivery Order"
+msgstr "Bon de livraison"
+
+#. module: stock_picking_quick_edit
+#: code:_description:0
+#: model:ir.model,name:stock_picking_quick_edit.model_stock_picking_out
+#, python-format
+msgid "Delivery Orders"
+msgstr "Bons de livraisons"
+
+#. module: stock_picking_quick_edit
+#: view:stock.picking.quick.edit.wizard:0
+msgid "Edit Current Moves"
+msgstr "Editer les mouvements existants"
+
+#. module: stock_picking_quick_edit
+#: view:stock.picking.quick.edit.wizard:0
+msgid "Edit Delivery Order"
+msgstr "Editer le bon de livraison"
+
+#. module: stock_picking_quick_edit
+#: code:addons/stock_picking_quick_edit/model/stock_picking_quick_edit_wizard.py:100
+#, python-format
+msgid "Error!"
+msgstr "Erreur !"
+
+#. module: stock_picking_quick_edit
+#: field:stock.picking.quick.edit.wizard.current.move,move_id:0
+msgid "Existing Move"
+msgstr "Mouvement existant"
+
+#. module: stock_picking_quick_edit
+#: field:stock.picking.quick.edit.wizard,current_move_ids:0
+msgid "Existing Moves"
+msgstr "Mouvements existants"
+
+#. module: stock_picking_quick_edit
+#: field:stock.picking.quick.edit.wizard,new_move_ids:0
+msgid "New Moves"
+msgstr "Nouveaux mouvements"
+
+#. module: stock_picking_quick_edit
+#: field:stock.picking.quick.edit.wizard.current.move,product_id:0
+#: field:stock.picking.quick.edit.wizard.new.move,product_id:0
+msgid "Product"
+msgstr "Article"
+
+#. module: stock_picking_quick_edit
+#: field:stock.picking.quick.edit.wizard.current.move,product_qty:0
+#: field:stock.picking.quick.edit.wizard.new.move,product_qty:0
+msgid "Quantity"
+msgstr "Quantité"
+
+#. module: stock_picking_quick_edit
+#: view:stock.picking.out:0
+msgid "Quick Edit"
+msgstr "Edition rapide"
+
+#. module: stock_picking_quick_edit
+#: code:addons/stock_picking_quick_edit/model/stock_picking_quick_edit_wizard.py:101
+#, python-format
+msgid "Unable to quick edit a picking with stock moves in different locations!"
+msgstr "Impossible d'éditer rapidement cet élément qui contient des movements de stock dans différents emplacements !"
+
+#. module: stock_picking_quick_edit
+#: field:stock.picking.quick.edit.wizard.current.move,product_uom:0
+#: field:stock.picking.quick.edit.wizard.new.move,product_uom:0
+msgid "UoM"
+msgstr "udM"
+
+#. module: stock_picking_quick_edit
+#: field:stock.picking.quick.edit.wizard.current.move,wizard_id:0
+#: field:stock.picking.quick.edit.wizard.new.move,wizard_id:0
+msgid "Wizard"
+msgstr "Wizard"
+
+#. module: stock_picking_quick_edit
+#: view:stock.picking.quick.edit.wizard:0
+msgid "or"
+msgstr "ou"

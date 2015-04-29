@@ -21,6 +21,8 @@
 ##############################################################################
 
 from openerp.osv import orm, fields
+from openerp.osv.osv import except_osv
+from openerp.tools.translate import _
 
 
 class StockPickingQuickEditWizard(orm.TransientModel):
@@ -65,7 +67,14 @@ class StockPickingQuickEditWizard(orm.TransientModel):
         sm_obj = self.pool['stock.move']
         for wizard in self.browse(cr, uid, ids, context=context):
             picking = wizard.picking_id
+            location_id = []
+            location_dest_id = []
+            new_sm_ids = []
             for sm in picking.move_lines:
+                if sm.location_id.id not in location_id:
+                    location_id.append(sm.location_id.id)
+                if sm.location_dest_id.id not in location_dest_id:
+                    location_dest_id.append(sm.location_dest_id.id)
                 found = False
                 for current_move in wizard.current_move_ids:
                     if current_move.move_id.id == sm.id:
@@ -85,6 +94,36 @@ class StockPickingQuickEditWizard(orm.TransientModel):
                         'product_qty': 0,
                     }, context=context)
 
+            if wizard.new_move_ids\
+                    and (len(location_id) != 1 or len(location_dest_id) != 1):
+                raise except_osv(
+                    _('Error!'),
+                    _("""Unable to quick edit a picking with stock moves"""
+                        """ in different locations!"""))
+            for new_move in wizard.new_move_ids:
+#                product_uos_qty = sm_obj.onchange_quantity(
+#                    cr, uid, False, new_move.product_id.id,
+#                    new_move.product_qty, new_move.product_uom.id,
+#                    new_move.product_id.uom_id.id)['value']['product_uos_qty']
+                sm_id = sm_obj.create(cr, uid, {
+                    'name': '[%s] %s' % (
+                        new_move.product_id.code, new_move.product_id.name),
+                    'date_expected': picking.min_date,
+                    'company_id': picking.company_id.id,
+                    'type': picking.type,
+                    'picking_id': picking.id,
+                    'product_id': new_move.product_id.id,
+                    'product_qty': new_move.product_qty,
+                    'product_uos_qty': new_move.product_qty,
+                    'weight_uom_id': new_move.product_id.uom_id.id,
+                    'product_uom': new_move.product_id.uom_id.id,
+                    'location_id': location_id[0],
+                    'location_dest_id': location_dest_id[0],
+                }, context=context)
+                new_sm_ids.append(sm_id) 
+
+            if new_sm_ids and picking.state == 'confirmed':
+                sm_obj.action_confirm(cr, uid, new_sm_ids, context=context)
         return {
             'type': 'ir.actions.client',
             'tag': 'reload',
