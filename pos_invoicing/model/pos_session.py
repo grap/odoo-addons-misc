@@ -78,7 +78,7 @@ class pos_session(Model):
                 _logger.warning(
                     "Unable to reconcile the payment of %s #%s."
                     "(partner : %s)" % (
-                    po.name, po.id, po.partner_id.name))
+                        po.name, po.id, po.partner_id.name))
             else:
                 aml_obj.reconcile(
                     cr, uid, aml_payment_ids + aml_sale_ids, 'manual',
