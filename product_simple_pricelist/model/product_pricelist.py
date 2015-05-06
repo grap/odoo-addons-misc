@@ -36,6 +36,20 @@ class ProductPricelist(Model):
             """ pricelist by product"""),
     }
 
+    # Constraints Section
+    def _check_company_id_is_simple(self, cr, uid, ids, context=None):
+        for pp in self.browse(cr, uid, ids, context=context):
+            if (pp.is_simple and not pp.company_id):
+                return False
+        return True
+
+    _constraints = [
+        (
+            _check_company_id_is_simple,
+            """Error: Simple Pricelist must have a company defined""",
+            ['company_id', 'is_simple']),
+    ]
+
     def action_edit_simple_pricelist(self, cr, uid, ids, context=None):
         """
         This function returns an action that allow user to edit pricelist
