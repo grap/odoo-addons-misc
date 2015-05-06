@@ -93,7 +93,7 @@
                                     <tree string="Lines" editable="bottom" class="stock_internal_use_of_products__view_internal_use_form">
                                         <field name="product_id" 
                                             on_change="on_change_product_id(product_id)" 
-                                            domain="[('type','&lt;&gt;','service'),('purchase_ok','=','True')]"/>
+                                            domain="[('type','&lt;&gt;','service')]"/>
                                         <field name="product_qty"/>
                                         <field name="product_uom_id"/>
                                         <field name="price_unit"/>
