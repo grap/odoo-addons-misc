@@ -133,4 +133,5 @@ class ProductSimplePricelistItem(Model):
             LEFT OUTER JOIN product_pricelist_item ppli
                 ON ppli.product_id = pp.id
                 AND ppli.price_version_id = pplv.id
+            WHERE pp.active IS True or ppli.id IS NOT null
         )""" % (self._table))
