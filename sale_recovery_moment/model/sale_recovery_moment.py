@@ -39,10 +39,26 @@ class SaleRecoveryMoment(Model):
             res[srm.id] = {
                 'valid_order_qty': 0,
                 'order_qty': len(srm.order_ids),
+                'is_complete': False,
+                'quota_description': _('No Orders'),
             }
+            # Update valid Orders Quantity
             for order in srm.order_ids:
                 if order.state not in ('draft', 'cancel'):
                     res[srm.id]['valid_order_qty'] += 1
+
+            # Update Is Complete Field
+            if srm.max_order_qty:
+                res[srm.id]['is_complete'] = (
+                    res[srm.id]['valid_order_qty'] >= srm.max_order_qty)
+
+            # Update Quota Description Field
+            if srm.max_order_qty:
+                res[srm.id]['quota_description'] = _('%d / %d Orders') % (
+                    res[srm.id]['valid_order_qty'], srm.max_order_qty)
+            elif res[srm.id]['valid_order_qty']:
+                res[srm.id]['quota_description'] = _('%d Order(s)') % (
+                    res[srm.id]['valid_order_qty'])
         return res
 
     def _get_picking(self, cr, uid, ids, field_name, arg, context=None):
@@ -81,20 +97,6 @@ class SaleRecoveryMoment(Model):
             }
             res[srm.id] = srm.name + ' - ' \
                 + (address_format % args).replace('\n', ' ')
-        return res
-
-    def _get_quota_description(
-            self, cr, uid, ids, field_name, arg, context=None):
-        res = {}
-        for srm in self.browse(cr, uid, ids, context=context):
-            if srm.max_order_qty:
-                res[srm.id] = _('%d / %d Orders') % (
-                    srm.valid_order_qty, srm.max_order_qty)
-            elif srm.valid_order_qty:
-                res[srm.id] = _('%d Order(s)') % (
-                    srm.valid_order_qty)
-            else:
-                res[srm.id] = _('No Orders')
         return res
 
     def _get_name(self, cr, uid, ids, field_name, arg, context=None):
@@ -147,10 +149,14 @@ class SaleRecoveryMoment(Model):
         'valid_order_qty': fields.function(
             _get_order, type='integer', multi='order',
             string='Valid Sale Orders Quantity'),
+        'is_complete': fields.function(
+            _get_order, type='boolean', multi='order',
+            string='Is Complete'),
         'max_order_qty': fields.integer(
             'Max Order Quantity'),
         'quota_description': fields.function(
-            _get_quota_description, type='char', string='Quota Description'),
+            _get_order, type='char', multi='order',
+            string='Quota Description'),
         'picking_ids': fields.function(
             _get_picking, type='one2many', multi='picking',
             relation='stock.picking.out', string='Delivery Orders'),
