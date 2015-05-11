@@ -26,10 +26,8 @@
             <field name="inherit_id" ref="sale_stock.stock_picking_out_inherit_sale" />
             <field name="arch" type="xml">
                 <field name="sale_id" position="after">
-                    <group>
-                        <field name="moment_id" groups="sale_recovery_moment.recovery_user"/>
-                        <field name="group_id" groups="sale_recovery_moment.recovery_user"/>
-                    </group>
+                    <field name="moment_id" groups="sale_recovery_moment.recovery_user"/>
+                    <field name="group_id" groups="sale_recovery_moment.recovery_user"/>
                 </field>
             </field>
         </record>
