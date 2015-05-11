@@ -144,10 +144,12 @@
         <record id="view_sale_recovery_moment_tree" model="ir.ui.view">
             <field name="model">sale.recovery.moment</field>
             <field name="arch" type="xml">
-                <tree string="Recovery Moments" editable="bottom">
+                <tree string="Recovery Moments" editable="bottom"
+                        colors="red:is_complete == True; blue: max_order_qty == 0;">
                     <field name="place_id"/>
                     <field name="max_order_qty" string="Max"/>
                     <field name="min_recovery_date"/>
+                    <field name="is_complete" invisible="1" />
                     <field name="max_recovery_date"/>
                     <field name="description"/>
                     <field name="valid_order_qty" string="V.S.O. Qty"/>
