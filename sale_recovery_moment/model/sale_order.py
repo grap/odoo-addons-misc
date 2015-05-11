@@ -20,6 +20,7 @@
 #
 ##############################################################################
 
+import pytz
 from datetime import datetime, timedelta
 
 from openerp.osv import fields
@@ -51,9 +52,19 @@ class SaleOrder(Model):
             cr, uid, order, line, picking_id, date_planned, context=context)
         ppc_obj = self.pool['product.prepare.category']
 
+        if line.order_id.moment_id:
+            # We take into account the min date of the recovery moment
+            res['date_expected'] = line.order_id.moment_id.min_recovery_date
+        elif line.order_id.requested_date:
+            # we take into account the expected_date of the sale
+            res['date_expected'] = line.order_id.requested_date
+
         # Note: We access by SUPERUSER_ID, to avoid access restriction
         # if the user who valid the sale order is not part of
         # recovery groups
+        # Note 2: We adjust datetime with categ_id to force correct
+        # Order. (And we manage offset because the stock.move order is realized
+        # by date desc by default).
         if line.product_id and line.product_id.prepare_categ_id:
             ppc_offset_id = ppc_obj.search(
                 cr, SUPERUSER_ID, [], limit=1, order='sequence desc')[0]
@@ -72,13 +83,13 @@ class SaleOrder(Model):
         self._set_requested_date_from_moment_id(
             cr, uid, vals, context=context)
         return super(SaleOrder, self).create(
-            cr, uid, vals, context=None)
+            cr, uid, vals, context=context)
 
     def write(self, cr, uid, ids, vals, context=None):
         self._set_requested_date_from_moment_id(
             cr, uid, vals, context=context)
         res = super(SaleOrder, self).write(
-            cr, uid, ids, vals, context=None)
+            cr, uid, ids, vals, context=context)
         return res
 
     # Custom Section
