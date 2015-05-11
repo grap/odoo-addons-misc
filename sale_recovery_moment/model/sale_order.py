@@ -20,7 +20,6 @@
 #
 ##############################################################################
 
-import pytz
 from datetime import datetime, timedelta
 
 from openerp.osv import fields
