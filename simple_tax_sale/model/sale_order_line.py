@@ -43,11 +43,8 @@ class SaleOrderLine(Model):
             info = at_obj._translate_simple_tax(
                 cr, uid, partner_id, res['value']['price_unit'],
                 res['value']['tax_id'], context=context)
-            print res
-            print info
             res['value'].update({
                 'price_unit': info['price_unit'],
                 'tax_id': info['tax_ids'],
             })
-            print res
         return res
