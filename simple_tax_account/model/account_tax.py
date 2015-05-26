@@ -26,6 +26,7 @@ from openerp.osv.osv import except_osv
 from openerp.osv.orm import Model
 from openerp.tools.translate import _
 
+
 class AccountTax(Model):
     _inherit = 'account.tax'
 

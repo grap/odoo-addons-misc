@@ -23,13 +23,11 @@
 
 from openerp.osv import fields
 from openerp.osv.orm import Model
-from .res_partner import SIMPLE_TAX_TYPE_KEYS 
+from .res_partner import SIMPLE_TAX_TYPE_KEYS
 
 
 class AccountInvoice(Model):
     _inherit = 'account.invoice'
-
-
 
     _columns = {
         'simple_tax_type': fields.related(
