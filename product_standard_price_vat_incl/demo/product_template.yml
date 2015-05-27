@@ -20,17 +20,11 @@
 #
 ##############################################################################
 
-- !record {model: product.template, id: product_template}:
-    name: Product Template
-    uom_id: product.product_uom_unit
-    uom_po_id: product.product_uom_unit
-    taxes_id:
-        - account_tax_vat_incl
-
 - !record {model: product.product, id: product_product}:
     name: Product Product
     uom_id: product.product_uom_unit
     uom_po_id: product.product_uom_unit
-    product_tmpl_id: product_template
     standard_price: 10
     list_price: 20
+    taxes_id:
+        - account_tax_vat_incl
