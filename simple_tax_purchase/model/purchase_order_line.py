@@ -38,7 +38,8 @@ class PurchaseOrderLine(Model):
             fiscal_position_id=fiscal_position_id, date_planned=date_planned,
             name=name, price_unit=price_unit, context=context)
 
-        if res['value'].get('price_unit', False):
+        if res['value'].get('price_unit', False) and\
+                res['value'].get('taxes_id', False):
             info = at_obj._translate_simple_tax(
                 cr, uid, partner_id, res['value']['price_unit'],
                 res['value']['taxes_id'], context=context)

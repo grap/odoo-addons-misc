@@ -39,7 +39,8 @@ class SaleOrderLine(Model):
             packaging=packaging, fiscal_position=fiscal_position,
             flag=flag, context=context)
 
-        if res['value'].get('price_unit', False):
+        if res['value'].get('price_unit', False) and\
+                res['value'].get('tax_id', False):
             info = at_obj._translate_simple_tax(
                 cr, uid, partner_id, res['value']['price_unit'],
                 res['value']['tax_id'], context=context)
