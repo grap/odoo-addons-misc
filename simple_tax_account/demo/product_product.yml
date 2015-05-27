@@ -25,6 +25,7 @@
     categ_id: product.product_category_all
     type: consu
     list_price: 100
+    uom_id: product.product_uom_unit
     taxes_id:
       - vat_included
     supplier_taxes_id:
@@ -35,6 +36,7 @@
     categ_id: product.product_category_all
     type: consu
     list_price: 100
+    uom_id: product.product_uom_unit
     taxes_id:
       - vat_excluded
     supplier_taxes_id:
