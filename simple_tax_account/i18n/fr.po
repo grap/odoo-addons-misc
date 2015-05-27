@@ -1,0 +1,85 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* simple_tax_account
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-05-27 12:16+0000\n"
+"PO-Revision-Date: 2015-05-27 12:16+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: simple_tax_account
+#: constraint:account.tax:0
+msgid "Error: The current Tax and the Related Tax have the same settings for the field 'Tax Included in Price'"
+msgstr "Erreur: La taxe et la taxe liée ont le même paramétrage pour le champ 'Taxe inclue dans le prix'"
+
+#. module: simple_tax_account
+#: selection:account.invoice,simple_tax_type:0
+#: selection:res.partner,simple_tax_type:0
+msgid "Exlude Tax in Prices"
+msgstr "Communiquer les prix HT"
+
+#. module: simple_tax_account
+#: help:account.tax,simple_tax_id:0
+msgid "If the current tax is flagged as included, set here a tax flagged as excluded. Otherwise, set a tax flagged as included."
+msgstr "Si la taxe est marqué comme 'Taxe include dans le prix', paramétrer ici une taxe 'Taxe Exclue'. Sinon mettre une taxe 'Taxe Inclue'."
+
+#. module: simple_tax_account
+#: selection:account.invoice,simple_tax_type:0
+#: selection:res.partner,simple_tax_type:0
+msgid "Include Tax in Prices"
+msgstr "Communiquer les prix TTC"
+
+#. module: simple_tax_account
+#: code:addons/simple_tax_account/model/account_tax.py:75
+#, python-format
+msgid "Missing Configuration!"
+msgstr "Paramétrage manquant !"
+
+#. module: simple_tax_account
+#: code:_description:0
+#: model:ir.model,name:simple_tax_account.model_res_partner
+#, python-format
+msgid "Partner"
+msgstr "Partenaire"
+
+#. module: simple_tax_account
+#: code:addons/simple_tax_account/model/account_tax.py:76
+#, python-format
+msgid "Please ask to your accountant to set a Related Tax for the tax %s."
+msgstr "Veuillez demander à votre comptable de paramétrer une taxe liée pour la taxe %s."
+
+#. module: simple_tax_account
+#: field:account.tax,simple_tax_id:0
+msgid "Related Tax"
+msgstr "Taxe liée"
+
+#. module: simple_tax_account
+#: code:_description:0
+#, python-format
+msgid "Tax"
+msgstr "Taxe"
+
+#. module: simple_tax_account
+#: field:account.invoice,simple_tax_type:0
+#: field:res.partner,simple_tax_type:0
+msgid "Tax Type"
+msgstr "Type de taxe"
+
+#. module: simple_tax_account
+#: selection:account.invoice,simple_tax_type:0
+#: selection:res.partner,simple_tax_type:0
+msgid "Undefined"
+msgstr "Non définie"
+
+#. module: simple_tax_account
+#: view:account.invoice:0
+msgid "VAT Exc - VAT Incl"
+msgstr "HT <-> TTC"

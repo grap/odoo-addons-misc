@@ -74,7 +74,7 @@ class AccountTax(Model):
                 raise except_osv(
                     _('Missing Configuration!'),
                     _("""Please ask to your accountant to set a Related"""
-                        """ Tax for the tax %s """) % (at.name))
+                        """ Tax for the tax %s.""") % (at.name))
             if at.price_include:
                 price_unit = price_unit / (1 + at.amount)
             else:
@@ -96,7 +96,7 @@ class AccountTax(Model):
     _constraints = [
         (
             _check_simple_tax_id,
-            """Error: The current Tax and the Related Tax have the """
+            """Error: The current Tax and the Related Tax have the"""
             """ same settings for the field 'Tax Included in Price'""",
             ['price_include', 'simple_tax_id']),
     ]
