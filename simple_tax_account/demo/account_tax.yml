@@ -25,12 +25,14 @@
     type: percent
     amount: 0.1
     price_include: False
+    company_id: base.main_company
 
 - !record {model: account.tax, id: vat_included}:
     name: VAT 10% Included
     type: percent
     amount: 0.1
     price_include: True
+    company_id: base.main_company
 
 - !record {model: account.tax, id: vat_excluded}:
     simple_tax_id: vat_included
