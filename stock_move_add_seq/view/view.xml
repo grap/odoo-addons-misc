@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <!-- Overload stock.move -->
+        <record id="view_stock_move_tree" model="ir.ui.view">
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_picking_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_id']" position="before">
+                    <field name="sequence" widget="handle"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_stock_move_form" model="ir.ui.view">
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_form"/>
+            <field name="arch" type="xml">
+                <field name="date_expected" position="after">
+                    <field name="sequence"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_stock_move_picking_form" model="ir.ui.view">
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_picking_form"/>
+            <field name="arch" type="xml">
+                <field name="date_expected" position="after">
+                    <field name="sequence"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</openerp>
