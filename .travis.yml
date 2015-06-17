@@ -27,7 +27,7 @@ before_install:
 install:
   - git clone https://github.com/OCA/web.git $HOME/web -b 7.0
   - git clone https://github.com/OCA/pos.git $HOME/pos -b 7.0
-  - bzr branch lp:openerp-french-localization/7.0 $HOME/openerp-french-localization
+  - git clone https://github.com/OCA/l10n-france.git $HOME/l10n-france -b 7.0
   - git clone https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
   - travis_install_nightly ${VERSION}
