@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    Sale - Recovery Moment Module for Odoo
-#    Copyright (C) 2014 - Today GRAP (http://www.grap.coop)
+#    Copyright (C) 2015-Today GRAP (http://www.grap.coop)
 #    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -20,13 +20,18 @@
 #
 ##############################################################################
 
-from . import sale_shop
-from . import sale_order
-from . import product_product
-from . import product_prepare_category
-from . import stock_picking
-from . import stock_picking_reorder
-from . import sale_recovery_moment
-from . import sale_recovery_place
-from . import sale_recovery_moment_group
-from . import sale_recovery_moment_group_wizard_duplicate
+from openerp.osv import orm, fields
+from openerp.tools.translate import _
+
+
+class StockPickingReorder(orm.TransientModel):
+    _name = 'stock.picking.reorder'
+    _description = 'Stock Picking Reorder Moves'
+
+    def reorder(self, cr, uid, ids, context=None):
+        context = context or {}
+        picking_obj = self.pool['stock.picking']
+        picking_ids = context.get('active_ids')
+        picking_obj.reorder_moves_by_category_and_name(
+            cr, uid, picking_ids, context=context)
+        return True

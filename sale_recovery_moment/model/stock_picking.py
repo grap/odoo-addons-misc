@@ -38,9 +38,37 @@ class stock_picking(Model):
             string='Recovery Moment Group'),
     }
 
+    def reorder_moves_by_category_and_name(
+            self, cr, uid, ids, context=None):
+        sm_obj = self.pool['stock.move']
+        ppc_obj = self.pool['product.prepare.category']
+        for picking in self.browse(cr, uid, ids, context=context):
+            # Create list of product prepare category
+            ppc_ids = ppc_obj.search(
+                cr, uid, [], order='sequence', context=context)
+            ppc_lst = {x: [] for x in (ppc_ids + [0])}
+            for sm in picking.move_lines:
+                if sm.product_id.prepare_categ_id:
+                    ppc_lst[sm.product_id.prepare_categ_id\
+                        .id].append(sm.product_id.id)
+                else:
+                    ppc_lst[0].append(sm.product_id.id)
+            count = 0
+            for ppc_id, pp_ids in ppc_lst.items():
+                sm_ids = sm_obj.search(
+                    cr, uid, [
+                        ('picking_id', '=', picking.id),
+                        ('product_id', 'in', pp_ids),
+                    ], order='product_id, product_id', context=context)
+                for sm_id in sm_ids:
+                    count += 1
+                    sm_obj.write(
+                        cr, uid, sm_id, {'sequence': count}, context=context)
+
 
 # FIXME: Actually it doesn't work if you don't redefine in stock_picking
 # the field defined in stock.picking.out
+# TODO: (or refactoring in V8)
 class stock_picking_out(Model):
     _inherit = 'stock.picking.out'
 

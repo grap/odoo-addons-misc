@@ -22,7 +22,7 @@
 
 {
     'name': 'Sale - Recovery Moment',
-    'version': '0.1',
+    'version': '0.2',
     'summary': """Manage Recovery Moments and Places for Sale Order""",
     'category': 'Sale',
     'description': """
@@ -36,30 +36,22 @@ Functionality:
       to recover them sales; A recovery moment is described by:
         * A min date and a max date;
         * A place (sale.recovery.place);
+    * Add Product.prepare.category Model that is a new type of product:
+        * The picking created can be reordered by Prepare Category
+          (with a wizard);
 
 Technical Information:
 ----------------------
-    * XXX;
-
-TODO:
------
-    * Possibility to create a moment group based on existing moment group,
-    by sliding by a number of days;
-    * maybe a link on stock.picking.out better;
-    * make the link between stock.picking and moment group by sale_id;
-    * finish color management for kanban view;
-    * make company_id a related field on both moment and moment group object;
-
-    * Make demo data for stock;
-    * Realize some test;
-    * fr translation;
-    * ir access;
-    * ir rules;
-    * ir group;
+    * Possibility to create a cron task to send email to customers, to remind
+      them to recover their Orders.
+      The cron task must be set with:
+        * model: 'sale.order';
+        * function:  _send_reminder_email;
+        * args: ([company_ids], hours)
 
 Technical Limits:
 -----------------
-    * This module displays some Total or sale Order; This amount will be wrong
+    * This module displays some Total of Sale Orders; This amount will be wrong
     in a multicurrencies context for the instance;
 
 Copyright, Authors and Licence:
@@ -73,6 +65,7 @@ Copyright, Authors and Licence:
         'sale_stock',
         'report_webkit',
         'sale_order_dates',
+        'stock_picking_reorder_lines',
     ],
     'data': [
         'security/ir_rule.xml',

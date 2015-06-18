@@ -20,7 +20,6 @@
 #
 ##############################################################################
 
-
 from openerp.osv import fields
 from openerp.osv.orm import Model
 from openerp.osv.orm import except_orm

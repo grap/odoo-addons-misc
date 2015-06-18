@@ -279,7 +279,7 @@
                         <group col="4">
                             <field name="sequence"/>
                             <field name="code"/>
-                            <field name="color"/>
+                            <field name="color" widget="color"/>
                             <field name="active"/>
                             <field name="company_id" groups="base.group_multi_company"/>
                         </group>
@@ -323,11 +323,29 @@
             </field>
         </record>
 
+<!-- Model: sale.shop -->
+        <record id="view_sale_shop_form" model="ir.ui.view">
+            <field name="model">sale.shop</field>
+            <field name="inherit_id" ref="sale.view_shop_form" />
+            <field name="arch" type="xml">
+                <group name="shop" position="after">
+                    <group name="recovery" string="Recovery Sale">
+                        <field name="reminder_template"/>
+                    </group>
+                </group>
+            </field>
+        </record>
+
 <!-- Model: sale.order -->
         <record id="view_sale_order_form" model="ir.ui.view">
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_order_form" />
             <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+                    <field name="recovery_reminder_state" groups="sale_recovery_moment.recovery_user"
+                    attrs="{'readonly': [('recovery_reminder_state', '=', 'sent')]}"
+                    />
+                </field>
                 <field name="company_id" position="after">
                     <field name="moment_id" groups="sale_recovery_moment.recovery_user"/>
                     <field name="group_id" groups="sale_recovery_moment.recovery_user"/>
@@ -356,6 +374,20 @@
                 </field>
             </field>
         </record>
+
+    <record id="view_stock_picking_reorder" model="ir.ui.view">
+      <field name="model">stock.picking.reorder</field>
+      <field name="arch" type="xml">
+        <form string="Reorder lines of the selected delivery orders" version="7.0">
+            <p>This will reorder lines by Product Prepare Category, and next by name.</p>
+          <footer>
+            <button name="reorder" string="Apply" type="object" class="oe_highlight"/>
+            or
+            <button string="Cancel" class="oe_link" special="cancel"/>
+          </footer>
+        </form>
+      </field>
+    </record>
 
     </data>
 </openerp>

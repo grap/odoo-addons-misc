@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Sale - Recovery Moment Module for Odoo
-#    Copyright (C) 2014 - Today GRAP (http://www.grap.coop)
+#    Sale - eShop for Odoo
+#    Copyright (C) 2014 GRAP (http://www.grap.coop)
 #    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -20,13 +20,16 @@
 #
 ##############################################################################
 
-from . import sale_shop
-from . import sale_order
-from . import product_product
-from . import product_prepare_category
-from . import stock_picking
-from . import stock_picking_reorder
-from . import sale_recovery_moment
-from . import sale_recovery_place
-from . import sale_recovery_moment_group
-from . import sale_recovery_moment_group_wizard_duplicate
+
+from openerp.osv import fields
+from openerp.osv.orm import Model
+
+
+class SaleShop(Model):
+    _inherit = 'sale.shop'
+
+    # Columns Section
+    _columns = {
+        'reminder_template': fields.many2one(
+            'email.template', 'Template of Reminder Mail'),
+    }

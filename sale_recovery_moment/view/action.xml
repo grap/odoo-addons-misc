@@ -56,5 +56,24 @@
             <field name="view_mode">tree</field>
             <field name="view_id" ref="view_product_product_tree" />
         </record>
+
+<!-- Model: stock.picking - Reorder Action -->
+    <record id="action_stock_picking_reorder" model="ir.actions.act_window">
+      <field name="name">Reorder Delivery Orders For Preparation</field>
+      <field name="res_model">stock.picking.reorder</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">form</field>
+      <field name="target">new</field>
+    </record>
+
+    <record id="action_stock_picking_reorder_values" model="ir.values">
+      <field name="model_id" ref="stock.model_stock_picking_out" />
+      <field name="name">Reorder Delivery Orders For Preparation</field>
+      <field name="key2">client_action_multi</field>
+      <field name="value" eval="'ir.actions.act_window,' + str(ref('action_stock_picking_reorder'))"/>
+      <field name="key">action</field>
+      <field name="model">stock.picking.out</field>
+    </record>
+
     </data>
 </openerp>
