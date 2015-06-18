@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-16 11:45+0000\n"
-"PO-Revision-Date: 2015-04-16 11:45+0000\n"
+"POT-Creation-Date: 2015-06-18 15:35+0000\n"
+"PO-Revision-Date: 2015-06-18 15:35+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -54,14 +54,19 @@ msgid "A category of the view type is a virtual category that can be used as the
 msgstr "Une catégorie de type 'vue' est une catégorie virtuelle qui peut être utilisée comme parent d'une autre catégorie, pour créer une architecture."
 
 #. module: sale_eshop
+#: view:wizard.change.product.category:0
+msgid "Apply"
+msgstr "Valider"
+
+#. module: sale_eshop
 #: field:eshop.category,available_product_ids:0
 msgid "Available Products"
-msgstr "Produits disponibles"
+msgstr "Articles disponibles"
 
 #. module: sale_eshop
 #: field:eshop.category,available_product_qty:0
 msgid "Available Products Quantity"
-msgstr "Nombre de produits disponibles"
+msgstr "Nombre d'articles disponibles"
 
 #. module: sale_eshop
 #: selection:product.product,eshop_state:0
@@ -93,7 +98,7 @@ msgstr "Catégorie avec des enfants!"
 #: code:addons/sale_eshop/model/eshop_category.py:198
 #, python-format
 msgid "Category with Products!"
-msgstr "Catégorie avec des produits!"
+msgstr "Catégorie avec des articles!"
 
 #. module: sale_eshop
 #: field:eshop.category,child_ids:0
@@ -135,7 +140,7 @@ msgstr "Date de Fin de Vente"
 #. module: sale_eshop
 #: constraint:eshop.category:0
 msgid "Error ! A 'view' Category can not belongs products;A 'normal' Category can not belongs childs categories."
-msgstr "Erreur ! Une catégorie 'vue' ne peut pas posséder de produits ; Une catégorie 'normale' ne peut pas possédér de catégories enfants."
+msgstr "Erreur ! Une catégorie 'vue' ne peut pas posséder d'articles ; Une catégorie 'normale' ne peut pas possédér de catégories enfants."
 
 #. module: sale_eshop
 #: view:res.partner:0
@@ -235,11 +240,10 @@ msgstr "Unité de mesure de l'article"
 #: view:eshop.category:0
 #: field:eshop.category,product_ids:0
 msgid "Products"
-msgstr "Produits"
+msgstr "Articles"
 
 #. module: sale_eshop
 #: model:ir.actions.act_window,name:sale_eshop.action_product_product
-#: model:ir.ui.menu,name:sale_eshop.menu_product_product
 #: view:product.product:0
 msgid "Products (eShop)"
 msgstr "Articles (eBoutique)"
@@ -247,7 +251,7 @@ msgstr "Articles (eBoutique)"
 #. module: sale_eshop
 #: field:eshop.category,product_qty:0
 msgid "Products Quantity"
-msgstr "Quantité de Produits"
+msgstr "Quantité d'articles"
 
 #. module: sale_eshop
 #: field:product.product,eshop_rounded_qty:0
@@ -341,12 +345,7 @@ msgstr "Vous ne pouvez pas supprimer la catégorie '%s' car elle contient %s cat
 #: code:addons/sale_eshop/model/eshop_category.py:199
 #, python-format
 msgid "You cannot delete the category '%s' because it contents %s products. Please move products to another Category First."
-msgstr "Vous ne pouvez pas supprimer cette catégorie '%s' car elle contient %s produits. Veuillez déplacer d'abord les produits dans une autre catégorie."
-
-#. module: sale_eshop
-#: view:wizard.change.product.category:0
-msgid "Apply"
-msgstr "Valider"
+msgstr "Vous ne pouvez pas supprimer cette catégorie '%s' car elle contient %s articles. Veuillez déplacer d'abord les articles dans une autre catégorie."
 
 #. module: sale_eshop
 #: model:ir.module.category,name:sale_eshop.module_category_eshop
@@ -386,4 +385,3 @@ msgstr "Etat dans la eBoutique"
 #: view:wizard.change.product.category:0
 msgid "or"
 msgstr "ou"
-

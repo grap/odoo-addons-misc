@@ -23,7 +23,7 @@ msgstr "Quantité Brute"
 #. module: stock_easy_valuation
 #: report:addons/stock_easy_valuation/report/stock_easy_valuation_report.mako:70
 msgid "A: Automatic: The system generated a cost for the product, using one of the following valuation methods CUMP, LIFO, FIFO, LPP, NIFO...;"
-msgstr "A : Automatique : Le logiciel génère un prix de revient pour chaque produit, en utilisant l'une des méthodes de valorisation suivantes CUMP, LIFO, FIFO, LPP, NIFO...;"
+msgstr "A : Automatique : Le logiciel génère un prix de revient pour chaque article, en utilisant l'une des méthodes de valorisation suivantes CUMP, LIFO, FIFO, LPP, NIFO...;"
 
 #. module: stock_easy_valuation
 #: view:stock.easy.valuation.wizard:0
@@ -110,20 +110,20 @@ msgstr "Date d'édition"
 #: field:stock.easy.valuation.wizard.product.line,product_id:0
 #, python-format
 msgid "Product"
-msgstr "Produit"
+msgstr "Article"
 
 #. module: stock_easy_valuation
 #: report:addons/stock_easy_valuation/report/stock_easy_valuation_report.mako:115
 #: field:stock.easy.valuation.wizard.category.line,product_line_ids:0
 msgid "Products"
-msgstr "Produits"
+msgstr "Articles"
 
 #. module: stock_easy_valuation
 #: model:ir.actions.act_window,name:stock_easy_valuation.action_product_product
 #: model:ir.ui.menu,name:stock_easy_valuation.menu_product_product
 #: view:product.product:0
 msgid "Products (Stock)"
-msgstr "Produits (Stock)"
+msgstr "Articles (Stock)"
 
 #. module: stock_easy_valuation
 #: field:stock.easy.valuation.wizard,state:0
@@ -142,7 +142,7 @@ msgstr "Valorisation du stock"
 #. module: stock_easy_valuation
 #: report:addons/stock_easy_valuation/report/stock_easy_valuation_report.mako:68
 msgid "The Method Column indicates how the cost price is defined by product."
-msgstr "La colonne 'Méthode' indique comment le prix de revient est défini pour chaque produit."
+msgstr "La colonne 'Méthode' indique comment le prix de revient est défini pour chaque article."
 
 #. module: stock_easy_valuation
 #: report:addons/stock_easy_valuation/report/stock_easy_valuation_report.mako:66
@@ -168,7 +168,7 @@ msgstr "Total"
 #. module: stock_easy_valuation
 #: field:stock.easy.valuation.wizard.category.line,total_product_qty:0
 msgid "Total Product Quantity"
-msgstr "Nombre total de produits"
+msgstr "Nombre total d'Article"
 
 #. module: stock_easy_valuation
 #: report:addons/stock_easy_valuation/report/stock_easy_valuation_report.mako:89
