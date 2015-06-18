@@ -49,8 +49,9 @@ class stock_picking(Model):
             ppc_lst = {x: [] for x in (ppc_ids + [0])}
             for sm in picking.move_lines:
                 if sm.product_id.prepare_categ_id:
-                    ppc_lst[sm.product_id.prepare_categ_id\
-                        .id].append(sm.product_id.id)
+                    ppc_lst[
+                        sm.product_id.prepare_categ_id.id].append(
+                            sm.product_id.id)
                 else:
                     ppc_lst[0].append(sm.product_id.id)
             count = 0

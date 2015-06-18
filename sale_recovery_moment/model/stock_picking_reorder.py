@@ -20,11 +20,10 @@
 #
 ##############################################################################
 
-from openerp.osv import orm, fields
-from openerp.tools.translate import _
+from openerp.osv.orm import TransientModel
 
 
-class StockPickingReorder(orm.TransientModel):
+class StockPickingReorder(TransientModel):
     _name = 'stock.picking.reorder'
     _description = 'Stock Picking Reorder Moves'
 

@@ -24,7 +24,6 @@ from datetime import datetime, timedelta
 
 from openerp.osv import fields
 from openerp.osv.orm import Model
-from openerp import SUPERUSER_ID
 
 
 class SaleOrder(Model):
@@ -130,9 +129,9 @@ class SaleOrder(Model):
             ], context=context)
             for so in self.browse(cr, uid, so_ids, context=context):
                 if datetime.now() + timedelta(hours=hours) > datetime.strptime(
-                        so.moment_id.min_recovery_date,"%Y-%m-%d %H:%M:%S"):
+                        so.moment_id.min_recovery_date, '%Y-%m-%d %H:%M:%S'):
                     et_id = so.shop_id.reminder_template\
-                            and so.shop_id.reminder_template.id or et.id
+                        and so.shop_id.reminder_template.id or et.id
                     et_obj.send_mail(
                         cr, uid, et_id, so.id, True, context=context)
                     sent_so_ids.append(so.id)
