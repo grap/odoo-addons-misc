@@ -92,6 +92,7 @@ class StockPickingQuickEditWizard(orm.TransientModel):
                 if not found:
                     sm_obj.write(cr, uid, [sm.id], {
                         'product_qty': 0,
+                        'product_uos_qty': 0,
                     }, context=context)
 
             if wizard.new_move_ids\
