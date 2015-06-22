@@ -27,7 +27,7 @@ from openerp.osv.orm import Model
 
 SIMPLE_TAX_TYPE_KEYS = [
     ('none', 'Undefined'),
-    ('excluded', 'Exlude Tax in Prices'),
+    ('excluded', 'Exclude Tax in Prices'),
     ('included', 'Include Tax in Prices'),
 ]
 
