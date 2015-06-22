@@ -45,7 +45,7 @@ class account_invoice(Model):
                     if hasattr(
                             ai.partner_id,
                             'property_product_pricelist_purchase'):
-                        res[ai.id] =ai.partner_id.\
+                        res[ai.id] = ai.partner_id.\
                             property_product_pricelist_purchase.id
                 else:
                     raise osv.except_osv(_('Not Implemented!'), _(
@@ -66,7 +66,7 @@ class account_invoice(Model):
                     if hasattr(
                             ai.partner_id,
                             'property_product_pricelist_purchase'):
-                        res[ai.id] =ai.partner_id.\
+                        res[ai.id] = ai.partner_id.\
                             property_product_pricelist_purchase.id
                 else:
                     raise osv.except_osv(_('Not Implemented!'), _(
