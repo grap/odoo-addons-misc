@@ -36,6 +36,8 @@ Functionnality:
 Limitation:
 -----------
     * The computation of the price is not set;
+    * The field will not be stored for purchase pricelist as long as 'purchase'
+      module is not installed; (in invoice / in refund)
 
 This module is usefull to do reporting.
 
@@ -50,7 +52,6 @@ Copyright, Author and Licence:
     'license': 'AGPL-3',
     'depends': [
         'account',
-        'purchase',
     ],
     'data': [
         'view/view.xml',

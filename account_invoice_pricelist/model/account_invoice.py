@@ -42,8 +42,11 @@ class account_invoice(Model):
                     res[ai.id] =\
                         ai.partner_id.property_product_pricelist.id
                 elif ai.type in ('in_invoice', 'in_refund'):
-                    res[ai.id] =\
-                        ai.partner_id.property_product_pricelist_purchase.id
+                    if hasattr(
+                            ai.partner_id,
+                            'property_product_pricelist_purchase'):
+                        res[ai.id] =ai.partner_id.\
+                            property_product_pricelist_purchase.id
                 else:
                     raise osv.except_osv(_('Not Implemented!'), _(
                         """Can not compute Partner Pricelist for this"""
@@ -60,8 +63,11 @@ class account_invoice(Model):
                     res[ai.id] =\
                         ai.partner_id.property_product_pricelist.id
                 elif ai.type in ('in_invoice', 'in_refund'):
-                    res[ai.id] =\
-                        ai.partner_id.property_product_pricelist_purchase.id
+                    if hasattr(
+                            ai.partner_id,
+                            'property_product_pricelist_purchase'):
+                        res[ai.id] =ai.partner_id.\
+                            property_product_pricelist_purchase.id
                 else:
                     raise osv.except_osv(_('Not Implemented!'), _(
                         """Can not compute Partner Pricelist for this"""
