@@ -42,9 +42,8 @@ class account_invoice(Model):
                     res[ai.id] =\
                         ai.partner_id.property_product_pricelist.id
                 elif ai.type in ('in_invoice', 'in_refund'):
-                    if hasattr(
-                            ai.partner_id,
-                            'property_product_pricelist_purchase'):
+                    if ai.partner_id._model._columns.get(
+                            'property_product_pricelist_purchase', False):
                         res[ai.id] = ai.partner_id.\
                             property_product_pricelist_purchase.id
                 else:
@@ -63,9 +62,8 @@ class account_invoice(Model):
                     res[ai.id] =\
                         ai.partner_id.property_product_pricelist.id
                 elif ai.type in ('in_invoice', 'in_refund'):
-                    if hasattr(
-                            ai.partner_id,
-                            'property_product_pricelist_purchase'):
+                    if ai.partner_id._model._columns.get(
+                            'property_product_pricelist_purchase', False):
                         res[ai.id] = ai.partner_id.\
                             property_product_pricelist_purchase.id
                 else:
