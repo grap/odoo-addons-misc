@@ -97,13 +97,13 @@ class InternalUse(Model):
     def create(self, cr, uid, vals, context=None):
         vals['name'] = self.pool.get('ir.sequence').get(
             cr, uid, 'internal.use')
-        return super(internal_use, self).create(cr, uid, vals, context=context)
+        return super(InternalUse, self).create(cr, uid, vals, context=context)
 
     def copy_data(self, cr, uid, record_id, default=None, context=None):
         if not default:
             default = {}
         default.update({'move_ids': [], 'line_ids': []})
-        return super(internal_use, self).copy_data(
+        return super(InternalUse, self).copy_data(
             cr, uid, record_id, default, context=context)
 
     def unlink(self, cr, uid, ids, context=None):
@@ -113,7 +113,7 @@ class InternalUse(Model):
             if iu.state != 'draft':
                 raise osv.except_osv(
                     _('User Error!'), _('You can only delete draft uses.'))
-        return super(internal_use, self).unlink(cr, uid, ids, context=context)
+        return super(InternalUse, self).unlink(cr, uid, ids, context=context)
 
     # Actions section
     def action_confirm(self, cr, uid, ids, context=None):
