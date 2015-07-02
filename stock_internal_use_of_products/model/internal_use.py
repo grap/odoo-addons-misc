@@ -31,6 +31,7 @@ _INTERNAL_USE_STATE = [
     ('done', 'Done'),
 ]
 
+
 class InternalUse(Model):
     _name = 'internal.use'
     _order = "date_done desc"
