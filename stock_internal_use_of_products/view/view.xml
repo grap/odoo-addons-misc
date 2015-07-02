@@ -123,7 +123,6 @@
 
 <!-- Model : internal.use.line -->
          <record id="view_internal_use_line_search" model="ir.ui.view">
-            <field name="name">internal.use.line.search</field>
             <field name="model">internal.use.line</field>
             <field name="arch" type="xml">
                 <search string="Search Internal Use Lines">
@@ -133,6 +132,7 @@
                     <field name="company_id" groups="base.group_multi_company"/>
                     <field name="state"/>
                     <group expand="0" string="Group By...">
+                        <filter string="Date" domain="[]" context="{'group_by':'date_done'}"/>
                         <filter string="Status" domain="[]" context="{'group_by':'state'}"/>
                         <filter string="Case" domain="[]" context="{'group_by':'internal_use_case'}"/>
                     </group>
@@ -142,13 +142,14 @@
         </record>
         
         <record id="internal_use_line_tree" model="ir.ui.view">
-            <field name="name">internal.use.line.tree</field>
             <field name="model">internal.use.line</field>
             <field name="arch" type="xml">
                 <tree string="Internal Use Lines" create="false">
+                    <field name="date_done"/>
                     <field name="product_id"/>
-                    <field name="product_qty"/>
+                    <field name="product_qty" sum="Total (Qty)"/>
                     <field name="product_uom_id" groups="product.group_uom"/>
+                    <field name="subtotal" sum="Total (Vat Excl)"/>
                     <field name="internal_use_case"/>
                     <field name="company_id" groups="base.group_multi_company"/>
                     <field name="state"/>
@@ -157,7 +158,6 @@
         </record>
 
         <record id="internal_use_line_form" model="ir.ui.view">
-            <field name="name">internal.use.line.form</field>
             <field name="model">internal.use.line</field>
             <field name="arch" type="xml">
                 <form string="Internal Use Lines" version="7.0">

@@ -31,8 +31,7 @@ _INTERNAL_USE_STATE = [
     ('done', 'Done'),
 ]
 
-
-class internal_use(Model):
+class InternalUse(Model):
     _name = 'internal.use'
     _order = "date_done desc"
 
@@ -48,7 +47,8 @@ class internal_use(Model):
         return res
 
     _columns = {
-        'name': fields.char('Name', size=64, required=True,),
+        'name': fields.char(
+            'Name', size=64, required=True),
         'description': fields.char(
             'Description', size=128,
             states={

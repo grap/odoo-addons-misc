@@ -25,10 +25,9 @@ from openerp.osv import fields
 import openerp.addons.decimal_precision as dp
 
 
-class internal_use_line(Model):
-    _name = "internal.use.line"
-    _description = "Internal use lines declared so far"
-    _order = "create_date"
+class InternalUseLine(Model):
+    _name = 'internal.use.line'
+    _order = 'create_date'
 
     # Columns section
     def _get_subtotal(self, cr, uid, ids, name, args, context=None):
@@ -39,17 +38,21 @@ class internal_use_line(Model):
         return res
 
     _columns = {
-        'name': fields.related('internal_use', 'name', select=1),
+        'name': fields.related(
+            'internal_use', 'name', string='Name', select=1),
         'company_id': fields.related(
             'internal_use', 'company_id', select=1,
             type='many2one', relation='res.company', string='Company',
             readonly=True, store=True),
         'internal_use': fields.many2one(
-            'internal.use', 'Internal_use', select=1, ondelete='cascade'),
+            'internal.use', 'Internal Uses', select=1, ondelete='cascade'),
         'internal_use_case': fields.related(
             'internal_use', 'internal_use_case', string='Internal Use Case',
             select=1, type='many2one', relation='internal.use.case',
             readonly=True, store=True),
+        'date_done': fields.related(
+            'internal_use', 'date_done', string='Date',
+            select=1, type='date', readonly=True, store=True),
         'product_id': fields.many2one(
             'product.product', 'Product', required=True, select=1),
         'product_qty': fields.float(
