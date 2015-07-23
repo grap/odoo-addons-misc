@@ -23,7 +23,6 @@
 
 from openerp.osv.orm import TransientModel
 from openerp.osv import fields
-from openerp.tools.translate import _
 
 
 class print_product_wizard(TransientModel):

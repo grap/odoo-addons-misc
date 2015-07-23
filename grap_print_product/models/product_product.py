@@ -57,7 +57,7 @@ class product_product(Model):
     _columns = {
         'ean13_image': fields.function(
             _get_ean13_image, string='Image of the EAN13', type='binary',
-                store={
+            store={
                 'product.product': (
                     lambda self, cr, uid, ids, context=None: ids,
                     ['ean13'], 10)}),
