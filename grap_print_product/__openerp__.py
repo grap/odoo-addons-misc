@@ -44,6 +44,8 @@ Limits / Roadmap
         * margin_left;
         * inner_margin_top;
         * inner_margin_left;
+        * row_qty;
+        * column_qty;
         * width;
         * height;
 
@@ -66,9 +68,11 @@ Copyright, Authors and Licence:
         'report_webkit',
     ],
     'data': [
+        'security/ir_model_access.yml',
         'report/print_product_1_report.xml',
         'views/view.xml',
         'views/action.xml',
+        'views/menu.xml',
     ],
     'external_dependencies': {
         'python': ['barcode', 'cairosvg'],

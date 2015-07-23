@@ -1,9 +1,8 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Sale - Food Module for Odoo
-#    Copyright (C) 2012-Today GRAP (http://www.grap.coop)
-#    @author Julien WESTE
+#    GRAP - Print Product module for Odoo
+#    Copyright (C) 2015-Today GRAP (http://www.grap.coop)
 #    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -47,7 +46,8 @@ class product_product(Model):
                 f = open(fullname, 'r')
                 output = StringIO.StringIO()
                 svg = f.read()
-                cairosvg.svg2png(bytestring=svg, write_to=output, dpi=300)
+                cairosvg.svg2png(
+                    bytestring=svg, write_to=output, center_text=True, dpi=300)
                 res[pp.id] = base64.b64encode(output.getvalue())
                 os.remove(fullname)
             else:
