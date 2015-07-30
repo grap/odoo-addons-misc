@@ -29,6 +29,13 @@ import openerp.addons.decimal_precision as dp
 class product_template(Model):
     _inherit = 'product.template'
 
+    def _get_template_from_product(self, cr, uid, ids, context=None):
+        """Find the products to trigger when a Tax changes"""
+        product_obj = self.pool['product.product']
+        products = product_obj.browse(cr, uid, ids, context=context)
+        res = [x.product_tmpl_id.id for x in products]
+        return res
+
     def _get_standard_price_vat_incl(
             self, cr, uid, ids, name, arg, context=None):
         res = {}
@@ -49,11 +56,16 @@ class product_template(Model):
             """* Customer Taxes;\n"""
             """This cost will be Cost x Taxes and works only if you have"""
             """ set Taxes with VAT include in the price""",
-            store={
-                'product.template': (
-                    lambda self, cr, uid, ids, context=None: ids,
-                    [
+            method=True, store={
+                'product.product': (
+                    _get_template_from_product, [
                         'standard_price',
                         'taxes_id',
-                    ], 10)}),
+                    ], 10),
+                'product.template': (
+                    lambda self, cr, uid, ids, context=None: ids, [
+                        'standard_price',
+                        'taxes_id',
+                    ], 10),
+            }),
     }
