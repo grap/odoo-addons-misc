@@ -61,7 +61,8 @@ class SaleOrderDuplicationWizard(orm.TransientModel):
         if not so_id:
             return False
         else:
-            return so_obj.browse(cr, uid, so_id, context=context).date_order
+            return so_obj.browse(
+                cr, uid, so_id, context=context).requested_date
 
     def _default_partner_id(self, cr, uid, context=None):
         so_obj = self.pool['sale.order']
