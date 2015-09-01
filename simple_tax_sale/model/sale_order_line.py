@@ -48,4 +48,7 @@ class SaleOrderLine(Model):
                 'price_unit': info['price_unit'],
                 'tax_id': info['tax_ids'],
             })
+        else:
+            if not 'tax_id' in res['value'].keys():
+                res['value'].pop('price_unit', False)
         return res
