@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-27 12:16+0000\n"
-"PO-Revision-Date: 2015-05-27 12:16+0000\n"
+"POT-Creation-Date: 2015-09-01 13:38+0000\n"
+"PO-Revision-Date: 2015-09-01 13:38+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgstr "Erreur: La taxe et la taxe liée ont le même paramétrage pour le champ
 #. module: simple_tax_account
 #: selection:account.invoice,simple_tax_type:0
 #: selection:res.partner,simple_tax_type:0
-msgid "Exlude Tax in Prices"
+msgid "Exclude Tax in Prices"
 msgstr "Communiquer les prix HT"
 
 #. module: simple_tax_account
@@ -36,6 +36,20 @@ msgstr "Si la taxe est marqué comme 'Taxe include dans le prix', paramétrer ic
 #: selection:res.partner,simple_tax_type:0
 msgid "Include Tax in Prices"
 msgstr "Communiquer les prix TTC"
+
+#. module: simple_tax_account
+#: code:_description:0
+#: model:ir.model,name:simple_tax_account.model_account_invoice
+#, python-format
+msgid "Invoice"
+msgstr "Facture"
+
+#. module: simple_tax_account
+#: code:_description:0
+#: model:ir.model,name:simple_tax_account.model_account_invoice_line
+#, python-format
+msgid "Invoice Line"
+msgstr "Lignes de facture"
 
 #. module: simple_tax_account
 #: code:addons/simple_tax_account/model/account_tax.py:75
@@ -71,13 +85,13 @@ msgstr "Taxe"
 #: field:account.invoice,simple_tax_type:0
 #: field:res.partner,simple_tax_type:0
 msgid "Tax Type"
-msgstr "Type de taxe"
+msgstr "Prix HT / TTC"
 
 #. module: simple_tax_account
 #: selection:account.invoice,simple_tax_type:0
 #: selection:res.partner,simple_tax_type:0
 msgid "Undefined"
-msgstr "Non définie"
+msgstr "Non défini"
 
 #. module: simple_tax_account
 #: view:account.invoice:0
