@@ -53,6 +53,6 @@ class SaleOrderLine(Model):
             # setting tax, so taxes mapping are lost.
             # We assume that there is no pricelist with different prices,
             # depending of the quantity saled.
-            if not 'tax_id' in res['value'].keys():
+            if 'tax_id' not in res['value'].keys():
                 res['value'].pop('price_unit', False)
         return res
