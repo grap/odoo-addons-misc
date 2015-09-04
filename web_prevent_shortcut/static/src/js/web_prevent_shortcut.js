@@ -23,7 +23,7 @@ $(function(){
      */
     var NON_INPUT_FIELDS = ['A', 'BODY']
 
-    $(document).bind("keydown keypress", function(e){
+    $(document).bind("keydown", function(e){
 
         // we prevent F5 pressed, if not Ctr is pressed
         if (e.which == 116){
