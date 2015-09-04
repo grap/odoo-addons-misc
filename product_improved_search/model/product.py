@@ -123,7 +123,7 @@ class product_product(Model):
             new_name = string.replace(
                 product.name, self._SEPARATOR, self._REPLACEMENT)
             self.write(
-                cr, SUPERUSER_ID, product.id, {
+                cr, SUPERUSER_ID, [product.id], {
                     'name': new_name,
                 }, context=context)
         return product_ids
