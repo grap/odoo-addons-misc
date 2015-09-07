@@ -35,11 +35,10 @@ class SaleOrderLine(Model):
         res = super(SaleOrderLine, self).product_id_change(
             cr, uid, ids, pricelist, product, qty=qty, uom=uom,
             qty_uos=qty_uos, uos=uos, name=name, partner_id=partner_id,
-            lang=lang, update_tax=update_tax, date_order=date_order,
+            lang=lang, update_tax=True, date_order=date_order,
             packaging=packaging, fiscal_position=fiscal_position,
             flag=flag, context=context)
-        if res['value'].get('price_unit', False) and\
-                res['value'].get('tax_id', False):
+        if res['value'].get('price_unit', False):
             info = at_obj._translate_simple_tax(
                 cr, uid, partner_id, res['value']['price_unit'],
                 res['value']['tax_id'], context=context)
@@ -47,12 +46,4 @@ class SaleOrderLine(Model):
                 'price_unit': info['price_unit'],
                 'tax_id': info['tax_ids'],
             })
-        else:
-            # FIXME : weird behaviour:
-            # if we change quantity, this will change price unit, without
-            # setting tax, so taxes mapping are lost.
-            # We assume that there is no pricelist with different prices,
-            # depending of the quantity saled.
-            if 'tax_id' not in res['value'].keys():
-                res['value'].pop('price_unit', False)
         return res
