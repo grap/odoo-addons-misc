@@ -30,7 +30,7 @@
                     <field name="is_simple"/>
                 </field>
                 <field name="company_id" position="after">
-                    <button name="action_edit_simple_pricelist" string="Edit By Product" type="object" class="oe_highlight" colspan="2" attrs="{'invisible': [('is_simple', '=', False)]}"/>
+                    <button name="action_edit_simple_pricelist" string="Edit By Product" type="object" class="oe_highlight" colspan="2" attrs="{'invisible': [('is_simple', '=', False)]}" icon="gtk-edit"/>
                 </field>
             </field>
         </record>
@@ -41,7 +41,7 @@
             <field name="arch" type="xml">
                 <field name="active" position="after">
                     <field name="is_simple"/>
-                    <button name="action_edit_simple_pricelist" string="Edit By Product" type="object" class="oe_highlight" attrs="{'invisible': [('is_simple', '=', False)]}"/>
+                    <button name="action_edit_simple_pricelist" string="Edit By Product" type="object" class="oe_highlight" attrs="{'invisible': [('is_simple', '=', False)]}" icon="gtk-edit"/>
                 </field>
             </field>
         </record>
@@ -50,7 +50,7 @@
         <record id="view_product_simple_pricelist_item_tree" model="ir.ui.view">
             <field name="model">product.simple.pricelist.item</field>
             <field name="arch" type="xml">
-                <tree string="Pricelist - Edit By Product" colors="blue:state == 'not_set';" editable="bottom">
+                <tree string="Pricelist - Edit By Product" colors="blue:state == 'not_set';" create="false">
                     <field name="product_id"/>
                     <field name="pricelist_id"/>
                     <field name="pricelist_version_id" invisible="1"/>
@@ -62,7 +62,7 @@
                     <field name="difference"/>
                     <field name="company_id" groups="base.group_multi_company"/>
                     <field name="state" invisible="1"/>
-                    <button name="change_price_wizard" string="Set Price" type="object"/>
+                    <button name="change_price_wizard" string="Set Price" type="object" icon="gtk-add"/>
                 </tree>
             </field>
         </record>
@@ -79,7 +79,7 @@
                         <field name="specific_price" />
                     </group>
                     <group colspan="4">
-                        <button name="set_price" type="object" string="Set Price"/>
+                        <button name="set_price" type="object" string="Set Price" icon="gtk-add"/>
                     </group>
                 </form>
             </field>
