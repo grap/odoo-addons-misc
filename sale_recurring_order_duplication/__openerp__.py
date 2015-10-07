@@ -52,6 +52,5 @@ Copyright, Authors and Licence:
     'data': [
         'views/view.xml',
         'views/action.xml',
-
     ],
 }

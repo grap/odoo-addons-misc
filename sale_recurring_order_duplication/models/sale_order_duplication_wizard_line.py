@@ -23,7 +23,7 @@
 from openerp.osv import orm, fields
 
 
-class SaleOrderDuplicationWizard(orm.TransientModel):
+class SaleOrderDuplicationWizardLine(orm.TransientModel):
     _name = 'sale.order.duplication.wizard.line'
 
     # Columns Section

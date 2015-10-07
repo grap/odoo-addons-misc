@@ -74,7 +74,7 @@ msgstr "Mensuelle"
 #: view:sale.order.duplication.wizard:0
 #: field:sale.order.duplication.wizard,line_ids:0
 msgid "New Dates"
-msgstr "Nouvelle dates"
+msgstr "Nouvelles dates"
 
 #. module: sale_recurring_order_duplication
 #: field:sale.order.duplication.wizard,order_id:0
@@ -98,7 +98,7 @@ msgstr "Le type de duplication '%s' n'est pas implémenté"
 #: code:addons/sale_recurring_order_duplication/models/sale_order_duplication_wizard.py:105
 #, python-format
 msgid "Unimplemented Feature!"
-msgstr "Fonctionnalité non implémentée!"
+msgstr "Fonctionnalité non implémentée !"
 
 #. module: sale_recurring_order_duplication
 #: selection:sale.order.duplication.wizard,duplication_type:0

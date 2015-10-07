@@ -80,7 +80,7 @@ class SaleOrderDuplicationWizard(orm.TransientModel):
     _defaults = {
         'duplication_type': 'week',
         'duplication_duration': 0,
-        'include_current_date': True,
+        'include_current_date': False,
         'order_id': _default_order_id,
         'begin_date': _default_begin_date,
         'partner_id': _default_partner_id,
