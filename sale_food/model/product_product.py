@@ -35,9 +35,6 @@ from openerp.addons.sale_food import radar_template
 class product_product(Model):
     _inherit = 'product.product'
 
-#    def _needaction_domain_get(self, cr, uid, context=None):
-#        return [('pricetag_state', 'in', ('1', '2'))]
-
     # Constant Section
     _FRESH_CATEGORY_KEYS = [
         ('extra', 'Extra'),
@@ -51,7 +48,8 @@ class product_product(Model):
         ('2', '2 - Canned'),
         ('3', '3 - Frozen'),
         ('4', '4 - Uncooked and Ready to Use'),
-        ('4', '5 - Cooked and Ready to Use'),
+        ('5', '5 - Cooked and Ready to Use'),
+        ('6', '6 - Dehydrated and Shelf'),
     ]
 
     """Fields list wich modification change edition_state to 'recommanded'."""
@@ -192,6 +190,9 @@ class product_product(Model):
         return res
 
     _columns = {
+        'is_mercuriale': fields.boolean(
+            'Mercuriale Product', help="A product in mercuriale has price"
+            "that changes very regularly."),
         'price_volume': fields.function(
             _get_price_volume, type='char',
             string='Price by volume'),
@@ -214,11 +215,11 @@ class product_product(Model):
             string='Text about origin'),
         'fresh_category': fields.selection(
             _FRESH_CATEGORY_KEYS, 'Category for Fresh Product',
-            help="""Extra - Hight Quality : product without default ;\n"""
-            """Quality I - Good Quality : Product with little defaults ;\n"""
-            """Quality II - Normal Quality : Product with default ;\n"""
-            """Quality III - Bad Quality : Use this option only in"""
-            """ specific situation."""),
+            help="Extra - Hight Quality : product without default ;\n"
+            "Quality I - Good Quality : Product with little defaults ;\n"
+            "Quality II - Normal Quality : Product with default ;\n"
+            "Quality III - Bad Quality : Use this option only in"
+            " specific situation."),
         'fresh_range': fields.selection(
             _FRESH_RANGE_KEYS, 'Range for Fresh Product'),
         'label_ids': fields.many2many(

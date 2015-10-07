@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-16 11:24+0000\n"
-"PO-Revision-Date: 2015-04-16 11:24+0000\n"
+"POT-Creation-Date: 2015-10-07 16:17+0000\n"
+"PO-Revision-Date: 2015-10-07 16:17+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,25 +16,60 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: sale_food
-#: code:addons/sale_food/model/product_product.py:176
+#: code:addons/sale_food/model/product_product.py:182
 #, python-format
 msgid " - Category: "
 msgstr " - Catégorie : "
 
 #. module: sale_food
-#: code:addons/sale_food/model/product_product.py:173
+#: code:addons/sale_food/model/product_product.py:179
 #, python-format
 msgid " - Country: "
 msgstr " - Pays : "
 
 #. module: sale_food
-#: code:addons/sale_food/model/product_product.py:182
+#: code:addons/sale_food/model/product_product.py:188
 #, python-format
 msgid " - Label: "
 msgstr " - Label: "
 
 #. module: sale_food
-#: code:addons/sale_food/model/product_product.py:105
+#: selection:product.product,fresh_range:0
+msgid "1 - Fresh"
+msgstr "1 - Produit agricole frais"
+
+#. module: sale_food
+#: selection:product.product,fresh_range:0
+msgid "2 - Canned"
+msgstr "2 - En conserve / pasteurisé"
+
+#. module: sale_food
+#: selection:product.product,fresh_range:0
+msgid "3 - Frozen"
+msgstr "3 - Surgelé"
+
+#. module: sale_food
+#: selection:product.product,fresh_range:0
+msgid "4 - Uncooked and Ready to Use"
+msgstr "4 - Cru et prêt à l'emploi"
+
+#. module: sale_food
+#: selection:product.product,fresh_range:0
+msgid "5 - Cooked and Ready to Use"
+msgstr "5 - Cuit et prêt à l'emploi"
+
+#. module: sale_food
+#: selection:product.product,fresh_range:0
+msgid "6 - Dehydrated and Shelf"
+msgstr "6 - Déshydraté et longue conservation"
+
+#. module: sale_food
+#: help:product.product,is_mercuriale:0
+msgid "A product in mercuriale has pricethat changes very regularly."
+msgstr "A product in mercuriale has pricethat changes very regularly."
+
+#. module: sale_food
+#: code:addons/sale_food/model/product_product.py:111
 #, python-format
 msgid "AE"
 msgstr "AE"
@@ -77,7 +112,12 @@ msgstr "Catégorie II"
 #. module: sale_food
 #: selection:product.product,fresh_category:0
 msgid "Category III"
-msgstr "Category III"
+msgstr "Catégorie III"
+
+#. module: sale_food
+#: field:product.product,fresh_category:0
+msgid "Category for Fresh Product"
+msgstr "Catégorie de produits frais"
 
 #. module: sale_food
 #: report:addons/sale_food/report/pricetag_report.mako:95
@@ -153,7 +193,7 @@ msgid "Do not print"
 msgstr "Ne pas imprimer"
 
 #. module: sale_food
-#: code:addons/sale_food/model/product_product.py:287
+#: code:addons/sale_food/model/product_product.py:298
 #: constraint:product.product:0
 #, python-format
 msgid "Error ! Department must belong to the country."
@@ -170,7 +210,10 @@ msgid "Extra - Hight Quality : product without default ;\n"
 "Quality I - Good Quality : Product with little defaults ;\n"
 "Quality II - Normal Quality : Product with default ;\n"
 "Quality III - Bad Quality : Use this option only in specific situation."
-msgstr "Extra - Excellente Qualité : Article sans défaut ;\nQualité I - Bonne Qualité : Article avec quelques défauts ;\nQualité II - Qualité Normal : Article avec défauts ;\nQualité III - Mauvaise Qualité : N'utilisez cette option que dans des cas spécifiques."
+msgstr "Extra - Excellente Qualité : Article sans défaut ;\n"
+"Qualité I - Bonne Qualité : Article avec quelques défauts ;\n"
+"Qualité II - Qualité Normal : Article avec défauts ;\n"
+"Qualité III - Mauvaise Qualité : N'utilisez cette option que dans des cas spécifiques."
 
 #. module: sale_food
 #: field:product.product,pricetag_organic_text:0
@@ -191,11 +234,6 @@ msgstr "Alimentaire"
 #: view:product.product:0
 msgid "Food Informations"
 msgstr "Informations Alimentaires"
-
-#. module: sale_food
-#: field:product.product,fresh_category:0
-msgid "Food category of the product"
-msgstr "Catégorie Alimentaire de l'article"
 
 #. module: sale_food
 #: view:product.label:0
@@ -275,6 +313,12 @@ msgid "Mandatory on invoice"
 msgstr "Obligatoire sur les factures"
 
 #. module: sale_food
+#: view:product.product:0
+#: field:product.product,is_mercuriale:0
+msgid "Mercuriale Product"
+msgstr "Produit en Mercuriale"
+
+#. module: sale_food
 #: field:product.label,minimum_local_notation:0
 msgid "Minimum Local Notation"
 msgstr "Notation Local Minimum"
@@ -300,7 +344,7 @@ msgid "Name"
 msgstr "Nom"
 
 #. module: sale_food
-#: code:addons/sale_food/model/product_product.py:163
+#: code:addons/sale_food/model/product_product.py:169
 #, python-format
 msgid "Not From Organic Farming"
 msgstr "Non issu de l'agriculture biologique"
@@ -323,7 +367,7 @@ msgstr "Décallage"
 #. module: sale_food
 #: field:product.product,organic_notation:0
 msgid "Organic notation"
-msgstr "notation Agro Ecologique"
+msgstr "Notation agro-écologique"
 
 #. module: sale_food
 #: view:product.product:0
@@ -493,17 +537,17 @@ msgstr "Articles"
 #: model:ir.actions.act_window,name:sale_food.action_product_product_food
 #: view:product.product:0
 msgid "Products (Food)"
-msgstr "Articles (Alimentaire)"
+msgstr "Produits (Alimentaire)"
 
 #. module: sale_food
 #: model:ir.actions.act_window,name:sale_food.action_product_product_origin
 #: view:product.product:0
 msgid "Products (Origin)"
-msgstr "Articles (Origine)"
+msgstr "Produits (Origine)"
 
 #. module: sale_food
-#: view:product.product:0
 #: model:ir.actions.act_window,name:sale_food.action_product_product_pricetag
+#: view:product.product:0
 msgid "Products (Price Tags)"
 msgstr "Articles (Etiquettes)"
 
@@ -516,6 +560,11 @@ msgstr "Quantité"
 #: field:product.pricetag.wizard,radar_chart:0
 msgid "Radar Chart"
 msgstr "Graphique Radar"
+
+#. module: sale_food
+#: field:product.product,fresh_range:0
+msgid "Range for Fresh Product"
+msgstr "Gamme de produits frais alimentaires"
 
 #. module: sale_food
 #: selection:product.product,pricetag_state:0
@@ -583,19 +632,62 @@ msgid "Wizard"
 msgstr "Wizard"
 
 #. module: sale_food
-#: code:addons/sale_food/model/product_product.py:107
+#: code:addons/sale_food/model/product_product.py:113
 #, python-format
 msgid "emballage"
 msgstr "emballage"
 
 #. module: sale_food
-#: code:addons/sale_food/model/product_product.py:106
+#: code:addons/sale_food/model/product_product.py:112
 #, python-format
 msgid "local"
 msgstr "local"
 
 #. module: sale_food
-#: code:addons/sale_food/model/product_product.py:108
+#: code:_description:0
+#: model:ir.model,name:sale_food.model_product_label
+#, python-format
+msgid "product.label"
+msgstr "product.label"
+
+#. module: sale_food
+#: code:_description:0
+#: model:ir.model,name:sale_food.model_product_pricetag_type
+#, python-format
+msgid "product.pricetag.type"
+msgstr "product.pricetag.type"
+
+#. module: sale_food
+#: code:_description:0
+#: model:ir.model,name:sale_food.model_product_pricetag_wizard
+#, python-format
+msgid "product.pricetag.wizard"
+msgstr "product.pricetag.wizard"
+
+#. module: sale_food
+#: code:_description:0
+#: model:ir.model,name:sale_food.model_product_pricetag_wizard_line
+#, python-format
+msgid "product.pricetag.wizard.line"
+msgstr "product.pricetag.wizard.line"
+
+#. module: sale_food
+#: model:ir.ui.menu,name:sale_food.menu_product_product_food
+msgid "sale_food.menu_product_product_food"
+msgstr "sale_food.menu_product_product_food"
+
+#. module: sale_food
+#: model:ir.ui.menu,name:sale_food.menu_product_product_origin
+msgid "sale_food.menu_product_product_origin"
+msgstr "sale_food.menu_product_product_origin"
+
+#. module: sale_food
+#: model:ir.ui.menu,name:sale_food.menu_product_product_pricetag
+msgid "sale_food.menu_product_product_pricetag"
+msgstr "sale_food.menu_product_product_pricetag"
+
+#. module: sale_food
+#: code:addons/sale_food/model/product_product.py:114
 #, python-format
 msgid "social"
 msgstr "social"
