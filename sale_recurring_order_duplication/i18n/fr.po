@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-31 10:12+0000\n"
-"PO-Revision-Date: 2015-07-31 10:12+0000\n"
+"POT-Creation-Date: 2015-10-07 08:31+0000\n"
+"PO-Revision-Date: 2015-10-07 08:31+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -61,6 +61,16 @@ msgid "Duplication Wizard"
 msgstr "Outils de duplication"
 
 #. module: sale_recurring_order_duplication
+#: field:sale.order.duplication.wizard,include_current_date:0
+msgid "Include Current Date"
+msgstr "Inclure la date courante"
+
+#. module: sale_recurring_order_duplication
+#: selection:sale.order.duplication.wizard,duplication_type:0
+msgid "Monthly"
+msgstr "Mensuelle"
+
+#. module: sale_recurring_order_duplication
 #: view:sale.order.duplication.wizard:0
 #: field:sale.order.duplication.wizard,line_ids:0
 msgid "New Dates"
@@ -79,13 +89,13 @@ msgid "Sales Order"
 msgstr "Commande de ventes"
 
 #. module: sale_recurring_order_duplication
-#: code:addons/sale_recurring_order_duplication/models/sale_order_duplication_wizard.py:95
+#: code:addons/sale_recurring_order_duplication/models/sale_order_duplication_wizard.py:106
 #, python-format
 msgid "The duplication type '%s' is not implemented"
 msgstr "Le type de duplication '%s' n'est pas implémenté"
 
 #. module: sale_recurring_order_duplication
-#: code:addons/sale_recurring_order_duplication/models/sale_order_duplication_wizard.py:94
+#: code:addons/sale_recurring_order_duplication/models/sale_order_duplication_wizard.py:105
 #, python-format
 msgid "Unimplemented Feature!"
 msgstr "Fonctionnalité non implémentée!"

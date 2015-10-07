@@ -21,6 +21,8 @@
 ##############################################################################
 
 import datetime
+from dateutil.relativedelta import relativedelta
+
 from openerp.osv import orm, fields
 from openerp.osv.osv import except_osv
 from openerp.tools.translate import _
@@ -31,6 +33,7 @@ class SaleOrderDuplicationWizard(orm.TransientModel):
 
     _DUPLICATION_TYPE_KEYS = [
         ('week', 'Weekly'),
+        ('month', 'Monthly'),
     ]
 
     # Column Section
@@ -42,6 +45,8 @@ class SaleOrderDuplicationWizard(orm.TransientModel):
             'res.partner', string='Customer', readonly=True),
         'begin_date': fields.date(
             string='Begin Date', required=True),
+        'include_current_date': fields.boolean(
+            string='Include Current Date'),
         'duplication_type': fields.selection(
             _DUPLICATION_TYPE_KEYS, string='Duplication Type', required=True),
         'duplication_duration': fields.integer(
@@ -75,6 +80,7 @@ class SaleOrderDuplicationWizard(orm.TransientModel):
     _defaults = {
         'duplication_type': 'week',
         'duplication_duration': 0,
+        'include_current_date': True,
         'order_id': _default_order_id,
         'begin_date': _default_begin_date,
         'partner_id': _default_partner_id,
@@ -83,13 +89,17 @@ class SaleOrderDuplicationWizard(orm.TransientModel):
     # View Section
     def onchange_duplication_settings(
             self, cr, uid, ids, begin_date_str, duplication_type,
-            duplication_duration, context=None):
+            duplication_duration, include_current_date, context=None):
         res = {'value': {'line_ids': []}}
         if (begin_date_str and duplication_type and duplication_duration):
             begin_date = datetime.datetime.strptime(begin_date_str, '%Y-%m-%d')
-            for x in range(1, duplication_duration + 1):
+            for i in range(1, duplication_duration + 1):
+                if include_current_date:
+                    i -= 1
                 if duplication_type == 'week':
-                    current_date = begin_date + datetime.timedelta(weeks=x)
+                    current_date = begin_date + datetime.timedelta(weeks=i)
+                elif duplication_type == 'month':
+                    current_date = begin_date + relativedelta(months=i)
                 else:
                     raise except_osv(
                         _("Unimplemented Feature!"),

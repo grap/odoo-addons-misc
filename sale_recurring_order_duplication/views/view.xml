@@ -28,9 +28,10 @@
                 <group col="2">
                     <field name="order_id"/>
                     <field name="partner_id"/>
-                    <field name="begin_date" on_change="onchange_duplication_settings(begin_date, duplication_type, duplication_duration)"/>
-                    <field name="duplication_type" on_change="onchange_duplication_settings(begin_date, duplication_type, duplication_duration)"/>
-                    <field name="duplication_duration" on_change="onchange_duplication_settings(begin_date, duplication_type, duplication_duration)"/>
+                    <field name="include_current_date" on_change="onchange_duplication_settings(begin_date, duplication_type, duplication_duration, include_current_date)"/>
+                    <field name="begin_date" on_change="onchange_duplication_settings(begin_date, duplication_type, duplication_duration, include_current_date)"/>
+                    <field name="duplication_type" on_change="onchange_duplication_settings(begin_date, duplication_type, duplication_duration, include_current_date)"/>
+                    <field name="duplication_duration" on_change="onchange_duplication_settings(begin_date, duplication_type, duplication_duration, include_current_date)"/>
                     <field name="line_ids" nolabel="1" colspan="2">
                         <tree string="New Dates" editable="bottom">
                             <field name="date" />
