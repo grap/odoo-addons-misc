@@ -31,7 +31,7 @@ from openerp.addons.sale_eshop import demo_image
 class EshopCategory(Model):
     _name = 'eshop.category'
     _rec_name = 'complete_name'
-    _order = 'complete_name'
+    _order = 'sequence, complete_name'
 
     _SEPARATOR = ' / '
 
@@ -76,14 +76,14 @@ class EshopCategory(Model):
             }
         return res
 
-    def _get_image_multi(self, cr, uid, ids, name, args, context=None):
+    def _get_image(self, cr, uid, ids, name, args, context=None):
         result = dict.fromkeys(ids, False)
         for obj in self.browse(cr, uid, ids, context=context):
             result[obj.id] = tools.image_get_resized_images(
                 obj.image, avoid_resize_medium=True)
         return result
 
-    def _set_image_multi(self, cr, uid, pId, name, value, args, context=None):
+    def _set_image(self, cr, uid, pId, name, value, args, context=None):
         return self.write(
             cr, uid, [pId], {'image': tools.image_resize_image_big(value)},
             context=context)
@@ -91,6 +91,8 @@ class EshopCategory(Model):
     _columns = {
         'name': fields.char(
             'Name', required=True, select=True),
+        'sequence': fields.integer(
+            'Sequence', required=True),
         'complete_name': fields.function(
             _get_complete_name, type='char', string='Name', store={
                 'eshop.category': (
@@ -101,13 +103,13 @@ class EshopCategory(Model):
         'company_id': fields.many2one(
             'res.company', 'Company', select=True, required=True),
         'image_small': fields.function(
-            _get_image_multi, fnct_inv=_set_image_multi,
+            _get_image, fnct_inv=_set_image,
             string='Small-sized image', type='binary', multi='_get_image',
             store={
                 'eshop.category': (
                     lambda self, cr, uid, ids, c={}: ids, ['image'], 10)}),
         'image_medium': fields.function(
-            _get_image_multi, fnct_inv=_set_image_multi,
+            _get_image, fnct_inv=_set_image,
             string='Medium-sized image', type='binary', multi='_get_image',
             store={
                 'eshop.category': (

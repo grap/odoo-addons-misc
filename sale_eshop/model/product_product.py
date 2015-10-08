@@ -105,6 +105,17 @@ class ProductProduct(Model):
         return [('id', 'in', map(lambda x:x[0], res))]
 
     # Field function Section
+    def _get_eshop_taxes_description(
+            self, cr, uid, ids, fields_name, args, context=None):
+        res = {}
+        for pp in self.browse(cr, uid, ids, context=context):
+            if pp.taxes_id:
+                res[pp.id] = ', '.join(
+                    [x.eshop_description for x in pp.taxes_id])
+            else:
+                res[pp.id] = ''
+        return res
+
     def _get_eshop_state(self, cr, uid, ids, fields_name, args, context=None):
         res = {}
         for pp in self.browse(cr, uid, ids, context=context):
@@ -148,6 +159,9 @@ class ProductProduct(Model):
             'Minimum Quantity for eShop', required=True),
         'eshop_rounded_qty': fields.float(
             'Rounded Quantity for eShop', required=True),
+        'eshop_taxes_description': fields.function(
+            _get_eshop_taxes_description, type='char',
+            string='Eshop Taxes Description'),
     }
 
     # Defaults Section

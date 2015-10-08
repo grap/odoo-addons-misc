@@ -56,6 +56,7 @@ Copyright, Authors and Licence:
     'depends': [
         'mail',
         'sale',
+        'sale_recovery_moment',
     ],
     'data': [
         'security/ir_rule.xml',

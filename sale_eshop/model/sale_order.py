@@ -63,17 +63,29 @@ class SaleOrder(Model):
             current_categ = {
                 'id': ec.id,
                 'name': ec.name,
-                'image_small': ec.image_small,
+                'image_medium': ec.image_medium,
                 'product_ids': [],
             }
             for pp in ec.available_product_ids:
-                current_categ['product_ids'].append({
+                current_product = {
                     'id': pp.id,
                     'name': pp.name,
-                    'image_small': pp.image_small,
                     'list_price': pp.list_price,
                     'uom_eshop_description': pp.uom_id.eshop_description,
-                    'current_qty': qty_dict.get(pp.id, 0)
-                })
+                    'eshop_taxes_description': pp.eshop_taxes_description,
+                    'current_qty': qty_dict.get(pp.id, 0),
+                    'label_ids': [],
+                }
+                if pp.delivery_categ_id:
+                    current_product['delivery_categ_id'] = {
+                        'name': pp.delivery_categ_id.name,
+                        'image_small': pp.delivery_categ_id.image,
+                    }
+                for label in pp.label_ids:
+                    current_product['label_ids'].append({
+                        'name': label.name,
+                        'image_small': label.image_small,
+                    })
+                current_categ['product_ids'].append(current_product)
             res.append(current_categ)
         return res

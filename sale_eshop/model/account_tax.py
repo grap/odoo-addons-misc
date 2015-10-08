@@ -20,11 +20,20 @@
 #
 ##############################################################################
 
-from . import eshop_category
-from . import product_product
-from . import wizard_change_product_category
-from . import res_partner
-from . import sale_shop
-from . import product_uom
-from . import sale_order
-from . import account_tax
+
+from openerp.osv import fields
+from openerp.osv.orm import Model
+
+
+class AccountTax(Model):
+    _inherit = 'account.tax'
+
+    # Columns Section
+    _columns = {
+        'eshop_description': fields.char(
+            'Description for the eShop', required=True),
+    }
+
+    _defaults = {
+        'eshop_description': '/',
+    }
