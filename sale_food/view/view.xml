@@ -72,6 +72,7 @@
                             <h1><field name="name"/></h1>
                             <label for="code" class="oe_edit_only"/>
                             <h2><field name="code"/></h2>
+                        <field name="image_small" widget="image"/>
                         </div>
                         <notebook>
                             <page string="Information">

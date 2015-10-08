@@ -25,10 +25,24 @@
 from openerp.osv.orm import Model
 from openerp.osv import fields
 from openerp.addons.sale_food import demo_image
+from openerp import tools
 
 
 class product_label(Model):
     _name = 'product.label'
+
+    # Compute Section
+    def _get_image(self, cr, uid, ids, name, args, context=None):
+        res = {}
+        for label in self.browse(cr, uid, ids, context=context):
+            res[label.id] = tools.image_get_resized_images(
+                label.image, avoid_resize_medium=True)
+        return res
+
+    def _set_image(self, cr, uid, pId, name, value, args, context=None):
+        return self.write(
+            cr, uid, [pId], {'image': tools.image_resize_image_big(value)},
+            context=context)
 
     # Columns Section
     _columns = {
@@ -37,6 +51,18 @@ class product_label(Model):
         'name': fields.char(
             'Name', required=True, size=64),
         'image': fields.binary('Image'),
+        'image_small': fields.function(
+            _get_image, fnct_inv=_set_image,
+            string='Small-sized image', type='binary', multi='_get_image',
+            store={
+                'product.label': (
+                    lambda self, cr, uid, ids, c={}: ids, ['image'], 10)}),
+        'image_medium': fields.function(
+            _get_image, fnct_inv=_set_image,
+            string='Medium-sized image', type='binary', multi='_get_image',
+            store={
+                'product.label': (
+                    lambda self, cr, uid, ids, c={}: ids, ['image'], 10)}),
         'active': fields.boolean(
             'Active',
             help="""By unchecking the active field you can disable a label"""
