@@ -23,7 +23,6 @@
 <!-- Model : product.product -->
         <record id="view_product_product_tree" model="ir.ui.view">
             <field name="model">product.product</field>
-            <field eval="5" name="priority"/>
             <field name="arch" type="xml">
                 <tree string="Products (Stock)">
                     <field name="name"/>
