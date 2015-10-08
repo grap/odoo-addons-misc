@@ -20,17 +20,30 @@
 #
 ##############################################################################
 
-from . import res_partner
-from . import sale_shop
-from . import sale_order
-from . import product_product
-from . import product_delivery_category
-from . import product_prepare_category
-from . import stock_picking
-from . import stock_picking_reorder
-from . import sale_recovery_moment
-from . import sale_recovery_place
-from . import sale_recovery_moment_group
-from . import sale_recovery_moment_group_wizard_duplicate
-from . import sale_delivery_category
-from . import sale_delivery_moment
+from openerp.osv import fields
+from openerp.osv.orm import Model
+
+
+class SaleDeliveryCategory(Model):
+    _name = 'sale.delivery.category'
+    _order = 'name'
+
+    # Column Section
+    _columns = {
+        'name': fields.char(
+            'Name', required=True),
+        'partner_ids': fields.one2many(
+            'res.partner', 'delivery_categ_id', string='Partners'),
+        'company_id': fields.many2one(
+            'res.company', string='Company', required=True),
+        'active': fields.boolean('Active'),
+        'moment_ids': fields.one2many(
+            'sale.delivery.moment', 'delivery_categ_id', string='Moments'),
+    }
+
+    _defaults = {
+        'company_id': (
+            lambda s, cr, uid, c: s.pool.get('res.users')._get_company(
+                cr, uid, context=c)),
+        'active': True,
+    }

@@ -24,9 +24,9 @@ from openerp.osv import fields
 from openerp.osv.orm import Model
 
 
-class ProductPrepareCategory(Model):
-    _name = 'product.prepare.category'
-    _order = 'name'
+class ProductDeliveryCategory(Model):
+    _name = 'product.delivery.category'
+    _order = 'sequence, name'
 
     # Column Section
     _columns = {
@@ -34,15 +34,14 @@ class ProductPrepareCategory(Model):
             'Name', required=True),
         'sequence': fields.integer(
             'Sequence', required=True),
-        'code': fields.char(
-            'Code', required=True, size=5),
-        'color': fields.char(
-            'Color', required=True),
+        'image': fields.binary(
+            'Image'),
         'company_id': fields.many2one(
             'res.company', string='Company', required=True),
         'active': fields.boolean('Active'),
+        'sale_delay': fields.integer('Days required before delivery'),
         'product_ids': fields.one2many(
-            'product.product', 'prepare_categ_id', 'Products'),
+            'product.product', 'delivery_categ_id', 'Products'),
     }
 
     _defaults = {
@@ -50,4 +49,18 @@ class ProductPrepareCategory(Model):
             lambda s, cr, uid, c: s.pool.get('res.users')._get_company(
                 cr, uid, context=c)),
         'active': True,
+        'sale_delay': 0,
     }
+
+    def write(self, cr, uid, ids, vals, context=None):
+        "Apply sale_delay value to linked products"
+        pp_obj = self.pool['product.product']
+        res = super(ProductDeliveryCategory, self).write(
+            cr, uid, ids, vals, context=context)
+        if vals.get('sale_delay', False):
+            for categ in self.browse(cr, uid, ids, context=context):
+                pp_ids = [x.id for x in categ.product_ids]
+                pp_obj.write(cr, uid, pp_ids, {
+                    'sale_delay': categ.sale_delay,
+                }, context=context)
+        return res

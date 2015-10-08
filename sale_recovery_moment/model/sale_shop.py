@@ -32,4 +32,10 @@ class SaleShop(Model):
     _columns = {
         'reminder_template': fields.many2one(
             'email.template', 'Template of Reminder Mail'),
+
+        'manage_delivery_moment': fields.boolean(
+            'Manage Delivery Moment'),
+
+        'manage_recovery_moment': fields.boolean(
+            'Manage Recovery Moment'),
     }

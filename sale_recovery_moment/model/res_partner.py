@@ -25,36 +25,11 @@ from openerp.osv import fields
 from openerp.osv.orm import Model
 
 
-class ProductProduct(Model):
-    _inherit = 'product.product'
+class ResPartner(Model):
+    _inherit = 'res.partner'
 
     # Column Section
     _columns = {
-        'prepare_categ_id': fields.many2one(
-            'product.prepare.category', 'Prepare Category'),
-
         'delivery_categ_id': fields.many2one(
-            'product.delivery.category', 'Delivery Category'),
+            'sale.delivery.category', 'Delivery Category'),
     }
-
-    # Custom Section
-    def get_sale_delay_from_delivery_categ(
-            self, cr, uid, vals, context=None):
-        pdc_obj = self.pool['product.delivery.category']
-        if vals.get('delivery_categ_id', False):
-            pdc = pdc_obj.browse(
-                cr, uid, vals['delivery_categ_id'], context=context)
-            vals['sale_delay'] = pdc.sale_delay
-        return vals
-
-    def create(self, cr, uid, vals, context=None):
-        vals = self.get_sale_delay_from_delivery_categ(
-            cr, uid, vals, context=context)
-        return super(ProductProduct, self).create(
-            cr, uid, vals, context=context)
-
-    def write(self, cr, uid, ids, vals, context=None):
-        vals = self.get_sale_delay_from_delivery_categ(
-            cr, uid, vals, context=context)
-        return super(ProductProduct, self).write(
-            cr, uid, ids, vals, context=context)

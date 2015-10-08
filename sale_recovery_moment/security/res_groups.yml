@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Sale - eShop Module for Odoo
-#    Copyright (C) 2014 GRAP (http://www.grap.coop)
+#    Sale - Recovery Moment Module for Odoo
+#    Copyright (C) 2014-Today GRAP (http://www.grap.coop)
 #    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -20,6 +20,16 @@
 #
 ##############################################################################
 
+- !record {model: res.groups, id: prepare_user}:
+    name: User
+    category_id: sale_recovery_moment.module_category_prepare
+
+- !record {model: res.groups, id: prepare_manager}:
+    name: Manager
+    category_id: sale_recovery_moment.module_category_prepare
+    implied_ids:
+        - prepare_user
+
 - !record {model: res.groups, id: recovery_user}:
     name: User
     category_id: sale_recovery_moment.module_category_recovery
@@ -29,3 +39,13 @@
     category_id: sale_recovery_moment.module_category_recovery
     implied_ids:
         - recovery_user
+
+- !record {model: res.groups, id: delivery_user}:
+    name: User
+    category_id: sale_recovery_moment.module_category_delivery
+
+- !record {model: res.groups, id: delivery_manager}:
+    name: Manager
+    category_id: sale_recovery_moment.module_category_delivery
+    implied_ids:
+        - delivery_user

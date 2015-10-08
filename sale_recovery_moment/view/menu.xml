@@ -22,23 +22,43 @@
     <data>
 
 <!-- Sale Recovery Work Part -->
-        <menuitem id="menu_sale_recovery"
+        <menuitem id="menu_sale_recovery_work"
             name="Recovery Sales" sequence="20"
             parent="base.menu_base_partner" />
 
         <menuitem id="menu_sale_recovery_moment"
             sequence="1"
-            parent="menu_sale_recovery"
+            parent="menu_sale_recovery_work"
             action="action_sale_recovery_moment"/>
 
         <menuitem id="menu_sale_recovery_moment_group"
             sequence="2"
-            parent="menu_sale_recovery"
+            parent="menu_sale_recovery_work"
             action="action_sale_recovery_moment_group"/>
+
+<!-- Sale Delivery Work Part -->
+        <menuitem id="menu_sale_delivery_work"
+            name="Delivery Sales" sequence="21"
+            parent="base.menu_base_partner" />
+
+        <menuitem id="menu_sale_delivery_moment"
+            sequence="1"
+            parent="menu_sale_delivery_work"
+            action="action_sale_delivery_moment"/>
+
+<!-- Sale Preparation Configuration Part -->
+        <menuitem id="menu_sale_preparation_config"
+            name="Preparation Sales"
+            parent="base.menu_base_config" />
+
+        <menuitem id="menu_product_prepare_category"
+            sequence="1"
+            parent="menu_sale_preparation_config"
+            action="action_product_prepare_category"/>
 
 <!-- Sale Recovery Configuration Part -->
         <menuitem id="menu_sale_recovery_config"
-            name="Recovery Sales" sequence="20"
+            name="Recovery Sales"
             parent="base.menu_base_config" />
 
         <menuitem id="menu_sale_recovery_place"
@@ -46,17 +66,35 @@
             parent="menu_sale_recovery_config"
             action="action_sale_recovery_place"/>
 
-        <menuitem id="menu_product_prepare_category"
+<!-- Sale Delivery Configuration Part -->
+        <menuitem id="menu_sale_delivery_config"
+            name="Delivery Sales"
+            parent="base.menu_base_config" />
+
+        <menuitem id="menu_sale_delivery_category"
+            sequence="1"
+            parent="menu_sale_delivery_config"
+            action="action_sale_delivery_category"/>
+
+        <menuitem id="menu_product_delivery_category"
             sequence="2"
-            parent="menu_sale_recovery_config"
-            action="action_product_prepare_category"/>
+            parent="menu_sale_delivery_config"
+            action="action_product_delivery_category"/>
+
 
 <!-- Sale Recovery Extra View Part -->
         <menuitem id="menu_product_product_prepare"
             name="Products (Prepare)"
-            sequence="5"
+            sequence="20"
             parent="base.menu_product"
-            groups="sale_recovery_moment.recovery_user"
-            action="action_product_product"/>
+            groups="sale_recovery_moment.prepare_user"
+            action="action_product_product_prepare"/>
+
+        <menuitem id="menu_product_product_delivery"
+            name="Products (Delivery)"
+            sequence="21"
+            parent="base.menu_product"
+            groups="sale_recovery_moment.delivery_user"
+            action="action_product_product_delivery"/>
     </data>
 </openerp>

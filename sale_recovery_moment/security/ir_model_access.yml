@@ -38,7 +38,6 @@
     perm_write: true
     perm_unlink: true
 
-
 - !record {model: ir.model.access, id: ir_model_access_recovery_moment_group_reader}:
     group_id: sale_recovery_moment.recovery_user
     model_id: sale_recovery_moment.model_sale_recovery_moment_group
@@ -57,6 +56,24 @@
     perm_write: true
     perm_unlink: true
 
+
+- !record {model: ir.model.access, id: ir_model_access_delivery_moment_reader}:
+    group_id: sale_recovery_moment.delivery_user
+    model_id: sale_recovery_moment.model_sale_delivery_moment
+    name: Delivery Moment Reader
+    perm_read: true
+    perm_create: false
+    perm_write: false
+    perm_unlink: false
+
+- !record {model: ir.model.access, id: ir_model_access_delivery_moment_manager}:
+    group_id: sale_recovery_moment.delivery_manager
+    model_id: sale_recovery_moment.model_sale_delivery_moment
+    name: Delivery Moment Manager
+    perm_read: true
+    perm_create: true
+    perm_write: true
+    perm_unlink: true
 
 
 - !record {model: ir.model.access, id: ir_model_access_recovery_moment_place_reader}:
@@ -79,7 +96,7 @@
 
 
 - !record {model: ir.model.access, id: ir_model_access_product_prepare_category_reader}:
-    group_id: sale_recovery_moment.recovery_user
+    group_id: sale_recovery_moment.prepare_user
     model_id: sale_recovery_moment.model_product_prepare_category
     name: Product Prepare Category Reader
     perm_read: true
@@ -88,9 +105,46 @@
     perm_unlink: false
 
 - !record {model: ir.model.access, id: ir_model_access_product_prepare_category_manager}:
-    group_id: sale_recovery_moment.recovery_manager
+    group_id: sale_recovery_moment.prepare_manager
     model_id: sale_recovery_moment.model_product_prepare_category
     name: Product Prepare Category Manager
+    perm_read: true
+    perm_create: true
+    perm_write: true
+    perm_unlink: true
+
+
+- !record {model: ir.model.access, id: ir_model_access_product_delivery_category_reader}:
+    model_id: sale_recovery_moment.model_product_delivery_category
+    name: Product Delivery Category Reader
+    perm_read: true
+    perm_create: false
+    perm_write: false
+    perm_unlink: false
+
+- !record {model: ir.model.access, id: ir_model_access_product_delivery_category_manager}:
+    group_id: sale_recovery_moment.delivery_manager
+    model_id: sale_recovery_moment.model_product_delivery_category
+    name: Product Delivery Category Manager
+    perm_read: true
+    perm_create: true
+    perm_write: true
+    perm_unlink: true
+
+
+- !record {model: ir.model.access, id: ir_model_access_sale_delivery_category_reader}:
+    group_id: sale_recovery_moment.delivery_user
+    model_id: sale_recovery_moment.model_sale_delivery_category
+    name: Sale Delivery Category Reader
+    perm_read: true
+    perm_create: false
+    perm_write: false
+    perm_unlink: false
+
+- !record {model: ir.model.access, id: ir_model_access_sale_delivery_category_manager}:
+    group_id: sale_recovery_moment.delivery_manager
+    model_id: sale_recovery_moment.model_sale_delivery_category
+    name: Sale Delivery Category Manager
     perm_read: true
     perm_create: true
     perm_write: true
