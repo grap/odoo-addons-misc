@@ -50,12 +50,14 @@
         <record id="view_product_simple_pricelist_item_tree" model="ir.ui.view">
             <field name="model">product.simple.pricelist.item</field>
             <field name="arch" type="xml">
-                <tree string="Pricelist - Edit By Product" colors="blue:state == 'not_set';" create="false">
+                <tree string="Pricelist - Edit By Product" colors="red:product_active == False; blue:state == 'not_set'; brown: product_sale_ok == False;" create="false">
                     <field name="product_id"/>
                     <field name="pricelist_id"/>
                     <field name="pricelist_version_id" invisible="1"/>
                     <field name="pricelist_item_id" invisible="1"/>
                     <field name="standard_price" invisible="1"/>
+                    <field name="product_active" invisible="1"/>
+                    <field name="product_sale_ok" invisible="1"/>
                     <field name="list_price"/>
                     <field name="specific_price" invisible="1"/>
                     <field name="price"/>

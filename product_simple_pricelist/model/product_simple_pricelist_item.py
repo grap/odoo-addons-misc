@@ -93,6 +93,8 @@ class ProductSimplePricelistItem(Model):
             digits_compute=dp.get_precision('Product Price')),
         'difference': fields.float(
             'Difference', readonly=True),
+        'product_active': fields.boolean('Product Active'),
+        'product_sale_ok': fields.boolean('Product Can be sold'),
     }
 
     # View Section
@@ -105,7 +107,8 @@ class ProductSimplePricelistItem(Model):
                     || to_char(pplv.id, 'FM099999999') AS id,
                 pt.company_id AS company_id,
                 pt.name AS product_name,
-                pt.sale_ok AS sale_ok,
+                pt.sale_ok AS product_sale_ok,
+                pp.active AS product_active,
                 pp.id AS product_id,
                 pt.standard_price,
                 pt.list_price,
@@ -133,5 +136,7 @@ class ProductSimplePricelistItem(Model):
             LEFT OUTER JOIN product_pricelist_item ppli
                 ON ppli.product_id = pp.id
                 AND ppli.price_version_id = pplv.id
-            WHERE pp.active IS True or ppli.id IS NOT null
+            WHERE
+                (pp.active IS True AND pt.sale_ok IS True)
+                OR ppli.id IS NOT null
         )""" % (self._table))
