@@ -142,6 +142,7 @@ class EshopCategory(Model):
     }
 
     _defaults = {
+        'sequence': 1,
         'type': 'view',
         'company_id': (
             lambda s, cr, uid, c: s.pool.get('res.users')._get_company(
