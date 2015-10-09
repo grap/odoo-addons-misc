@@ -187,7 +187,7 @@
             <field name="model">eshop.category</field>
             <field name="arch" type="xml">
                 <tree string="eShop Categories">
-                    <field name="sequence" widget="hand"/>
+                    <field name="sequence" widget="handle"/>
                     <field name="complete_name"/>
                     <field name="product_qty"/>
                     <field name="available_product_qty"/>
