@@ -45,6 +45,21 @@ class ResPartner(Model):
         'eshop_active': False,
     }
 
+    # Constraints Section
+    def _check_eshop_active_email(
+            self, cr, uid, ids, context=None):
+        for rp in self.browse(cr, uid, ids, context=context):
+            if rp.eshop_active and not rp.email:
+                return False
+        return True
+
+    _constraints = [
+        (
+            _check_eshop_active_email,
+            "To enable Customer for eShop, you have to set it first an email",
+            ['eshop_active', 'email']),
+    ]
+
     # Technical Function
     def login(self, cr, uid, login, password, context=None):
         res = self.search(cr, uid, [

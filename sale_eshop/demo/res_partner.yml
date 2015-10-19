@@ -21,5 +21,6 @@
 ##############################################################################
 
 - !record {model: res.partner, id: base.partner_root}:
+    email: admin@localhost
     eshop_active: True
     eshop_password: admin
