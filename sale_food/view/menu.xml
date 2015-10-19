@@ -22,7 +22,7 @@
     <data>
 <!-- menuitem for specific action of module 'sale_food' -->
         <menuitem id="menu_sale_food" 
-            name="Sale Food"
+            name="Food Sales"
             parent="base.menu_base_config" sequence="10"/>
 
 <!-- Model: product.pricetag.type -->
