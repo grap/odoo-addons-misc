@@ -189,6 +189,15 @@ class product_product(Model):
                     res[pp.id] += label.name
         return res
 
+    def _get_labels_description(self, cr, uid, ids, name, arg, context=None):
+        res = {}
+        for pp in self.browse(cr, uid, ids, context=context):
+            if pp.label_ids:
+                res[pp.id] = _(' / ').join([x.name for x in pp.label_ids])
+            else:
+                res[pp.id] = False
+        return res
+
     _columns = {
         'is_mercuriale': fields.boolean(
             'Mercuriale Product', help="A product in mercuriale has price"
@@ -271,6 +280,13 @@ class product_product(Model):
         'extra_food_info': fields.function(
             _get_extra_food_info, type='char',
             string='Extra information for invoices'),
+        'labels_description': fields.function(
+            _get_labels_description, type='char',
+            string='Labels Description', store={
+                'product.product': (
+                    lambda self, cr, uid, ids, context=None: ids, [
+                        'label_ids',
+                    ], 10)}),
     }
 
     # Default Section
