@@ -118,24 +118,26 @@ class EshopCategory(Model):
             'eshop.category', 'Parent Category', select=True,
             ondelete='cascade', domain="[('type', '=', 'view')]"),
         'child_ids': fields.one2many(
-            'eshop.category', 'parent_id', string='Child Categories'),
+            'eshop.category', 'parent_id', string='Child Categories',
+            readonly=True),
         'child_qty': fields.function(
             _get_product_multi, multi='product', type='integer',
             string='Childs Quantity'),
         'type': fields.selection(
             [('view', 'View'), ('normal', 'Normal')], 'Category Type',
-            help="""A category of the view type is a virtual category that"""
-            """ can be used as the parent of another category to create a"""
-            """ hierarchical structure.""", required=True),
+            help="A category of the view type is a virtual category that"
+            " can be used as the parent of another category to create a"
+            " hierarchical structure.", required=True),
         'product_ids': fields.one2many(
-            'product.product', 'eshop_category_id', string='Products'),
+            'product.product', 'eshop_category_id', string='Products',
+            readonly=True),
         'product_qty': fields.function(
             _get_product_multi, multi='product', type='integer',
             string='Products Quantity'),
         'available_product_ids': fields.function(
             _get_product_multi, multi='product', type='one2many',
-            relation='product.product',
-            string='Available Products'),
+            relation='product.product', string='Available Products',
+            readonly=True),
         'available_product_qty': fields.function(
             _get_product_multi, multi='product', type='integer',
             string='Available Products Quantity'),
@@ -143,7 +145,7 @@ class EshopCategory(Model):
 
     _defaults = {
         'sequence': 1,
-        'type': 'view',
+        'type': 'normal',
         'company_id': (
             lambda s, cr, uid, c: s.pool.get('res.users')._get_company(
                 cr, uid, context=c)),
@@ -160,8 +162,8 @@ class EshopCategory(Model):
 
     _constraints = [
         (_check_type,
-            """Error ! A 'view' Category can not belongs products;"""
-            """A 'normal' Category can not belongs childs categories.""",
+            "A 'view' Category can not belongs products;\n"
+            "A 'normal' Category can not belongs childs categories.\n",
             ['view']),
     ]
 
