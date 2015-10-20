@@ -36,4 +36,8 @@ class SaleShop(Model):
             'WebSite URL'),
         'eshop_home_text': fields.html(
             'Text for Home Page'),
+        'eshop_image': fields.binary(
+            'Image Home Page'),
+        'eshop_vat_included': fields.boolean(
+            'VAT Inluded'),
     }

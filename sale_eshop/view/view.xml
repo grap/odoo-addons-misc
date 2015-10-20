@@ -134,6 +134,8 @@
                     <group name="eshop" string="eShop Sale">
                         <field name="eshop_minimum_price"/>
                         <field name="eshop_website"/>
+                        <field name="eshop_vat_included"/>
+                        <field name="eshop_image" widget="image"/>
                         <field name="eshop_home_text"/>
                     </group>
                 </group>
