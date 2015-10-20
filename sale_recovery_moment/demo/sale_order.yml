@@ -12,7 +12,7 @@
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 #    GNU Affero General Public License for more details.
 #
 #    You should have received a copy of the GNU Affero General Public License
@@ -22,7 +22,7 @@
 
 - !record {model: sale.order, id: sale_order_1}:
     partner_id: base.res_partner_2
-    moment_id: recovery_moment_1
+    recovery_moment_id: recovery_moment_1
 
 - !record {model: sale.order.line, id: sale_order_1_line_1}:
     order_id: sale_order_1

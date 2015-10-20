@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    Sale - Recovery Moment Module for Odoo
-#    Copyright (C) 2014 - Today GRAP (http://www.grap.coop)
+#    Copyright (C) 2015-Today GRAP (http://www.grap.coop)
 #    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -20,18 +20,19 @@
 #
 ##############################################################################
 
-from . import res_partner
-from . import sale_shop
-from . import sale_order
-from . import sale_order_line
-from . import product_product
-from . import product_delivery_category
-from . import product_prepare_category
-from . import stock_picking
-from . import stock_picking_reorder
-from . import sale_recovery_moment
-from . import sale_recovery_place
-from . import sale_recovery_moment_group
-from . import sale_recovery_moment_group_wizard_duplicate
-from . import sale_delivery_category
-from . import sale_delivery_moment
+from datetime import datetime, timedelta
+
+from openerp.osv import fields
+from openerp.osv.orm import Model
+
+
+class SaleOrderLine(Model):
+    _inherit = 'sale.order.line'
+
+    # Column Section
+    _columns = {
+        'delivery_categ_id': fields.related(
+            'product_id', 'delivery_categ_id', type='many2one',
+            relation='product.delivery.category', readonly=True,
+            string='Delivery Category', store=True),
+    }

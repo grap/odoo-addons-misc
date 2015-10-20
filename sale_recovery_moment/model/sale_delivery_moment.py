@@ -29,6 +29,27 @@ from openerp.tools.translate import _
 class SaleDeliveryMoment(Model):
     _name = 'sale.delivery.moment'
 
+    def load_delivery_moment(self, cr, uid, sale_order_id, context=None):
+        """Load Delivery Moments, depending of the current sale order"""
+        so_obj = self.pool['sale.order']
+        so = so_obj.browse(cr, uid, sale_order_id, context=context)
+        res = []
+        sale_delivery_categ_id = so.partner_id.delivery_categ_id
+        if not sale_delivery_categ_id:
+            return res
+        futur_delivery_moments = self.search(cr, uid, [
+            ('min_delivery_date', '>', now),
+            ('delivery_categ_id', '=', sale_delivery_categ_id.id)],
+            context=context)
+        for moment in futur_delivery_moments:
+            res.append({
+                'min_delivery_date': moment.min_delivery_date,
+                'max_delivery_date': moment.max_delivery_date,
+                'is_complete': moment.is_complete,
+                'is_partial': (id == 1),
+            })
+        return res
+
     # Field Functions Section
     def _get_order(self, cr, uid, ids, field_name, arg, context=None):
         res = {}
@@ -99,7 +120,7 @@ class SaleDeliveryMoment(Model):
             string='Maximum date for the Delivery', required=True),
         'description': fields.text('Description'),
         'order_ids': fields.one2many(
-            'sale.order', 'moment_id', 'Sale Orders', readonly=True),
+            'sale.order', 'delivery_moment_id', 'Sale Orders', readonly=True),
         'order_qty': fields.function(
             _get_order, type='integer', multi='order',
             string='Sale Orders Quantity'),

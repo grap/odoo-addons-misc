@@ -153,11 +153,13 @@
                     <field name="max_recovery_date"/>
                     <field name="description"/>
                     <field name="valid_order_qty" string="V.S.O. Qty"/>
-                    <button name="%(action_sale_order_recovery_moment_valid)d" icon="gtk-find" string="See Valid Sale Orders" type="action" attrs="{'invisible': [('valid_order_qty',  '=', 0)]}"/>
+                    <button name="%(action_sale_order_recovery_moment_valid)d" icon="gtk-find" string="See" type="action" />
                     <field name="order_qty" string="S.O. Qty"/>
+                    <button name="%(action_sale_order_recovery_moment)d" icon="gtk-find" string="See" type="action" />
                     <field name="valid_picking_qty" string="V.D.O. Qty"/>
-                    <button name="%(action_stock_picking_out_recovery_moment_valid)d" icon="gtk-find" string="See Valid Delivery Orders" type="action" attrs="{'invisible': [('valid_picking_qty',  '=', 0)]}"/>
-                    <field name="picking_qty" string="D.O. Qty"/>
+                    <button name="%(action_stock_picking_out_recovery_moment_valid)d" icon="gtk-find" string="See" type="action"/>
+                    <field name="picking_qty" string="D.O. Qty" />
+                    <button name="%(action_stock_picking_out_recovery_moment)d" icon="gtk-find" string="See" type="action" />
                 </tree>
             </field>
         </record>
@@ -193,17 +195,18 @@
                                 <field name="min_recovery_date"/>
                                 <field name="max_recovery_date"/>
                                 <field name="company_id" groups="base.group_multi_company"/>
+                                <field name="description" colspan="4"/>
                             </group>
-                            <group col="5" colspan="4">
+                            <group col="6" colspan="4">
                                 <field name="valid_order_qty"/>
-                                <button name="%(action_sale_order_recovery_moment_valid)d" icon="gtk-find" string="See Valid Sale Orders" type="action" attrs="{'invisible': [('valid_order_qty',  '=', 0)]}"/>
+                                <button name="%(action_sale_order_recovery_moment_valid)d" icon="gtk-find" string="See" type="action"/>
                                 <field name="order_qty"/>
-                                <button name="%(action_sale_order_recovery_moment)d" icon="gtk-find" string="See Sale Orders" type="action" attrs="{'invisible': [('order_qty',  '=', 0)]}"/>
+                                <button name="%(action_sale_order_recovery_moment)d" icon="gtk-find" string="See" type="action" />
                                 <field name="valid_picking_qty"/>
-                                <button name="%(action_stock_picking_out_recovery_moment_valid)d" icon="gtk-find" string="See Valid Delivery Orders" type="action" attrs="{'invisible': [('valid_picking_qty',  '=', 0)]}"/>
+                                <button name="%(action_stock_picking_out_recovery_moment_valid)d" icon="gtk-find" string="See" type="action"/>
                                 <field name="picking_qty"/>
-                                <button name="%(action_stock_picking_out_recovery_moment)d" icon="gtk-find" string="See Delivery Orders" type="action" attrs="{'invisible': [('picking_qty',  '=', 0)]}"/>
-                                <field name="description" colspan="5"/>
+                                <button name="%(action_stock_picking_out_recovery_moment)d" icon="gtk-find" string="See" type="action"/>
+
                             </group>
                         </group>
                     </sheet>
@@ -240,17 +243,17 @@
                                 <field name="min_delivery_date"/>
                                 <field name="max_delivery_date"/>
                                 <field name="company_id" groups="base.group_multi_company"/>
+                                <field name="description" colspan="4"/>
                             </group>
-                            <group col="5" colspan="4">
+                            <group col="6" colspan="4">
                                 <field name="valid_order_qty"/>
-                                <button name="%(action_sale_order_delivery_moment_valid)d" icon="gtk-find" string="See Valid Sale Orders" type="action" attrs="{'invisible': [('valid_order_qty',  '=', 0)]}"/>
+                                <button name="%(action_sale_order_delivery_moment_valid)d" icon="gtk-find" string="See" type="action"/>
                                 <field name="order_qty"/>
-                                <button name="%(action_sale_order_delivery_moment)d" icon="gtk-find" string="See Sale Orders" type="action" attrs="{'invisible': [('order_qty',  '=', 0)]}"/>
+                                <button name="%(action_sale_order_delivery_moment)d" icon="gtk-find" string="See" type="action"/>
                                 <field name="valid_picking_qty"/>
-                                <button name="%(action_stock_picking_out_delivery_moment_valid)d" icon="gtk-find" string="See Valid Delivery Orders" type="action" attrs="{'invisible': [('valid_picking_qty',  '=', 0)]}"/>
+                                <button name="%(action_stock_picking_out_delivery_moment_valid)d" icon="gtk-find" string="See" type="action"/>
                                 <field name="picking_qty"/>
-                                <button name="%(action_stock_picking_out_delivery_moment)d" icon="gtk-find" string="See Delivery Orders" type="action" attrs="{'invisible': [('picking_qty',  '=', 0)]}"/>
-                                <field name="description" colspan="5"/>
+                                <button name="%(action_stock_picking_out_delivery_moment)d" icon="gtk-find" string="See" type="action" />
                             </group>
                         </group>
                     </sheet>
@@ -372,6 +375,7 @@
                             <field name="sale_delay"/>
                             <field name="image" widget="image"/>
                             <field name="active"/>
+                            <field name="sequence"/>
                             <field name="company_id" groups="base.group_multi_company"/>
                         </group>
                         <notebook>
@@ -392,6 +396,7 @@
             <field name="arch" type="xml">
                 <tree string="Sale Delivery Categories" colors="gray:active == False;">
                     <field name="name"/>
+                    <field name="partner_qty"/>
                     <field name="company_id" groups="base.group_multi_company"/>
                     <field name="active" invisible="1" />
                 </tree>
@@ -409,17 +414,18 @@
                         </div>
                         <group col="4">
                             <field name="active"/>
+                            <field name="partner_qty"/>
                             <field name="company_id" groups="base.group_multi_company"/>
                         </group>
                         <notebook>
-                            <page string="Moments">
-                                <group col="4">
-                                    <field name="moment_ids" nolabel="1" colspan="4"/>
-                                </group>
-                            </page>
                             <page string="Customers">
                                 <group col="4">
                                     <field name="partner_ids" nolabel="1" colspan="4"/>
+                                </group>
+                            </page>
+                            <page string="Moments">
+                                <group col="4">
+                                    <field name="moment_ids" nolabel="1" colspan="4"/>
                                 </group>
                             </page>
                         </notebook>
@@ -435,7 +441,7 @@
             <field name="arch" type="xml">
                 <field name="state" position="after">
                     <field name="prepare_categ_id" groups="sale_recovery_moment.recovery_user"/>
-                    <field name="delivery_categ_id" groups="sale_recovery_moment.recovery_user"/>
+                    <field name="delivery_categ_id" groups="sale_recovery_moment.delivery_user"/>
                 </field>
             </field>
         </record>
@@ -455,27 +461,18 @@
             </field>
         </record>
 
-        <record id="view_product_product_prepare_tree" model="ir.ui.view">
+        <record id="view_product_product_tree" model="ir.ui.view">
             <field name="model">product.product</field>
             <field name="arch" type="xml">
-                <tree string="Products (Prepare)" editable="bottom">
+                <tree string="Products (Prepare &amp; Deliver)" editable="bottom">
                     <field name="name" readonly="1"/>
                     <field name="prepare_categ_id"/>
+                    <field name="delivery_categ_id" groups="sale_recovery_moment.delivery_user"/>
                     <field name="company_id" groups="base.group_multi_company" />
                 </tree>
             </field>
         </record>
 
-        <record id="view_product_product_delivery_tree" model="ir.ui.view">
-            <field name="model">product.product</field>
-            <field name="arch" type="xml">
-                <tree string="Products (Delivery)" editable="bottom">
-                    <field name="name" readonly="1"/>
-                    <field name="delivery_categ_id"/>
-                    <field name="company_id" groups="base.group_multi_company" />
-                </tree>
-            </field>
-        </record>
 
 <!-- Model: sale.shop -->
         <record id="view_sale_shop_form" model="ir.ui.view">
@@ -498,13 +495,16 @@
             <field name="inherit_id" ref="sale.view_order_form" />
             <field name="arch" type="xml">
                 <field name="partner_id" position="after">
-                    <field name="recovery_reminder_state" groups="sale_recovery_moment.recovery_user"
-                    attrs="{'readonly': [('recovery_reminder_state', '=', 'sent')]}"
-                    />
+                    <field name="reminder_state" groups="sale_recovery_moment.recovery_user"
+                        attrs="{'readonly': [('reminder_state', '=', 'sent')]}" />
                 </field>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="after">
+                    <field name="delivery_categ_id" groups="sale_recovery_moment.delivery_user" />
+                </xpath>
                 <field name="company_id" position="after">
-                    <field name="moment_id" groups="sale_recovery_moment.recovery_user"/>
-                    <field name="group_id" groups="sale_recovery_moment.recovery_user"/>
+                    <field name="recovery_moment_id" groups="sale_recovery_moment.recovery_user"/>
+                    <field name="recovery_group_id" groups="sale_recovery_moment.recovery_user"/>
+                    <field name="delivery_moment_id" groups="sale_recovery_moment.delivery_user"/>
                 </field>
             </field>
         </record>
@@ -514,8 +514,9 @@
             <field name="inherit_id" ref="sale.view_order_tree"/>
             <field name="arch" type="xml">
                 <field name="partner_id" position="after">
-                    <field name="moment_id" groups="sale_recovery_moment.recovery_user"/>
-                    <field name="group_id" groups="sale_recovery_moment.recovery_user"/>
+                    <field name="recovery_moment_id" groups="sale_recovery_moment.recovery_user"/>
+                    <field name="recovery_group_id" groups="sale_recovery_moment.recovery_user"/>
+                    <field name="delivery_moment_id" groups="sale_recovery_moment.delivery_user"/>
                 </field>
             </field>
         </record>
@@ -525,12 +526,60 @@
             <field name="inherit_id" ref="sale.view_sales_order_filter"/>
             <field name="arch" type="xml">
                 <field name="partner_id" position="after">
-                    <field name="moment_id" groups="sale_recovery_moment.recovery_user"/>
-                    <field name="group_id" groups="sale_recovery_moment.recovery_user"/>
+                    <field name="recovery_moment_id" groups="sale_recovery_moment.recovery_user"/>
+                    <field name="delivery_moment_id" groups="sale_recovery_moment.delivery_user"/>
+                </field>
+                <xpath expr="//filter[@string='Status']" position="after">
+                    <filter string="Recovery Group" context="{'group_by':'recovery_group_id'}" groups="sale_recovery_moment.recovery_user"/>
+                    <filter string="Recovery Moment" context="{'group_by':'recovery_moment_id'}" groups="sale_recovery_moment.recovery_user"/>
+                    <filter string="Delivery Moment" context="{'group_by':'delivery_moment_id'}" groups="sale_recovery_moment.delivery_user"/>
+                </xpath>
+            </field>
+        </record>
+
+<!-- Model: stock.picking -->
+        <record id="view_stock_picking_form" model="ir.ui.view">
+            <field name="model">stock.picking.out</field>
+            <field name="inherit_id" ref="sale_stock.stock_picking_out_inherit_sale" />
+            <field name="arch" type="xml">
+                <field name="sale_id" position="after">
+                    <field name="recovery_moment_id" groups="sale_recovery_moment.recovery_user"/>
+                    <field name="recovery_group_id" groups="sale_recovery_moment.recovery_user"/>
+                    <field name="delivery_moment_id" groups="sale_recovery_moment.delivery_user"/>
                 </field>
             </field>
         </record>
 
+        <record id="view_stock_picking_out_tree" model="ir.ui.view">
+            <field name="model">stock.picking.out</field>
+            <field name="inherit_id" ref="stock.view_picking_out_tree"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+                    <field name="recovery_moment_id" groups="sale_recovery_moment.recovery_user"/>
+                    <field name="recovery_group_id" groups="sale_recovery_moment.recovery_user"/>
+                    <field name="delivery_moment_id" groups="sale_recovery_moment.delivery_user"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_stock_picking_out_search" model="ir.ui.view">
+            <field name="model">stock.picking.out</field>
+            <field name="inherit_id" ref="stock.view_picking_out_search"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+                    <field name="recovery_moment_id" groups="sale_recovery_moment.recovery_user"/>
+                    <field name="recovery_group_id" groups="sale_recovery_moment.recovery_user"/>
+                    <field name="delivery_moment_id" groups="sale_recovery_moment.delivery_user"/>
+                </field>
+                <xpath expr="//filter[@string='Status']" position="after">
+                    <filter string="Recovery Group" context="{'group_by':'recovery_group_id'}" groups="sale_recovery_moment.recovery_user"/>
+                    <filter string="Recovery Moment" context="{'group_by':'recovery_moment_id'}" groups="sale_recovery_moment.recovery_user"/>
+                    <filter string="Delivery Moment" context="{'group_by':'delivery_moment_id'}" groups="sale_recovery_moment.delivery_user"/>
+                </xpath>
+            </field>
+        </record>
+
+<!-- Model: stock.picking.reorder -->
     <record id="view_stock_picking_reorder" model="ir.ui.view">
       <field name="model">stock.picking.reorder</field>
       <field name="arch" type="xml">

@@ -29,7 +29,7 @@ from openerp.osv.orm import Model
 class SaleOrder(Model):
     _inherit = 'sale.order'
 
-    _RECOVERY_REMINDER_STATE_KEYS = [
+    _REMINDER_STATE_KEYS = [
         ('to_send', 'To Send'),
         ('do_not_send', 'Do Not Send'),
         ('sent', 'Sent'),
@@ -37,25 +37,29 @@ class SaleOrder(Model):
 
     # Column Section
     _columns = {
-        'moment_id': fields.many2one(
+        'recovery_moment_id': fields.many2one(
             'sale.recovery.moment', 'Recovery Moment',
-            readonly=True, states={'draft': [('readonly', False)]}),
-        'group_id': fields.related(
-            'moment_id', 'group_id', type='many2one',
-            relation='sale.recovery.moment.group',
-            string='Recovery Moment Group', readonly=True),
-        'recovery_reminder_state': fields.selection(
-            _RECOVERY_REMINDER_STATE_KEYS, 'State of the E-mail Reminder',
+            readonly=True, states={'draft': [('readonly', False)]},
+            oldname='moment_id'),
+        'recovery_group_id': fields.related(
+            'recovery_moment_id', 'group_id', type='many2one',
+            relation='sale.recovery.moment.group', readonly=True,
+            string='Recovery Moment Group', oldname='group_id', store=True),
+        'delivery_moment_id': fields.many2one(
+            'sale.delivery.moment', 'Delivery Moment'),
+        'reminder_state': fields.selection(
+            _REMINDER_STATE_KEYS, 'State of the E-mail Reminder',
             required=True,
-            help="""To Send - The Reminder will be sent before the"""
-            """ recovery date ;\n"""
-            """Do Not Send - The Reminder will not be sent before the"""
-            """ recovery date ;\n"""
-            """Sent - The Reminder has been sent;"""),
+            help="To Send - The Reminder will be sent before the"
+            " recovery date ;\n"
+            "Do Not Send - The Reminder will not be sent before the"
+            " recovery date ;\n"
+            "Sent - The Reminder has been sent;",
+            oldname='recovery_reminder_state'),
     }
 
     _defaults = {
-        'recovery_reminder_state': 'do_not_send',
+        'reminder_state': 'do_not_send',
     }
 
     # Overload Section
@@ -77,7 +81,8 @@ class SaleOrder(Model):
         created."""
         res = super(SaleOrder, self)._prepare_order_picking(
             cr, uid, order, context=context)
-        res['moment_id'] = order.moment_id.id
+        res['recovery_moment_id'] = order.recovery_moment_id.id
+        res['delivery_moment_id'] = order.delivery_moment_id.id
         return res
 
     def _prepare_order_line_move(
@@ -88,21 +93,32 @@ class SaleOrder(Model):
         res = super(SaleOrder, self)._prepare_order_line_move(
             cr, uid, order, line, picking_id, date_planned, context=context)
 
-        if line.order_id.moment_id:
+        if line.order_id.recovery_moment_id:
             # We take into account the min date of the recovery moment
-            res['date_expected'] = line.order_id.moment_id.min_recovery_date
+            res['date_expected'] =\
+                line.order_id.recovery_moment_id.min_recovery_date
+        if line.order_id.delivery_moment_id:
+            # We take into account the min date of the delivery moment
+            res['date_expected'] =\
+                line.order_id.delivery_moment_id.min_delivery_date
         elif line.order_id.requested_date:
             # we take into account the expected_date of the sale
             res['date_expected'] = line.order_id.requested_date
         return res
 
     # Custom Section
-    def _set_requested_date_from_moment_id(self, cr, uid, vals, context=None):
+    def _set_requested_date_from_moment_id(
+            self, cr, uid, vals, context=None):
         srm_obj = self.pool['sale.recovery.moment']
-        if vals.get('moment_id', False):
+        sdm_obj = self.pool['sale.delivery.moment']
+        if vals.get('recovery_moment_id', False):
             srm = srm_obj.browse(
-                cr, uid, vals.get('moment_id'), context=context)
+                cr, uid, vals.get('recovery_moment_id'), context=context)
             vals['requested_date'] = srm.min_recovery_date
+        elif vals.get('delivery_moment_id', False):
+            sdm = sdm_obj.browse(
+                cr, uid, vals.get('delivery_moment_id'), context=context)
+            vals['requested_date'] = sdm.min_recovery_date
 
     def _send_reminder_email(self, cr, uid, company_ids, hours, context=None):
         """Send a reminder for all customer that asked one reminder email
@@ -123,20 +139,21 @@ class SaleOrder(Model):
                 'company_id': company_id}, context=context)
             sent_so_ids = []
             so_ids = self.search(cr, uid, [
-                ('recovery_reminder_state', '=', 'to_send'),
-                ('moment_id', '!=', False),
+                ('reminder_state', '=', 'to_send'),
+                ('recovery_moment_id', '!=', False),
                 ('company_id', '=', company_id),
             ], context=context)
             for so in self.browse(cr, uid, so_ids, context=context):
                 if datetime.now() + timedelta(hours=hours) > datetime.strptime(
-                        so.moment_id.min_recovery_date, '%Y-%m-%d %H:%M:%S'):
+                        so.recovery_moment_id.min_recovery_date,
+                        '%Y-%m-%d %H:%M:%S'):
                     et_id = so.shop_id.reminder_template\
                         and so.shop_id.reminder_template.id or et.id
                     et_obj.send_mail(
                         cr, uid, et_id, so.id, True, context=context)
                     sent_so_ids.append(so.id)
             self.write(cr, uid, sent_so_ids, {
-                'recovery_reminder_state': 'sent'}, context=context)
+                'reminder_state': 'sent'}, context=context)
 
         ru_obj.write(cr, uid, [uid], {
             'company_id': original_company_id}, context=context)

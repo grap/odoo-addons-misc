@@ -30,14 +30,17 @@ class stock_picking(Model):
 
     # Column Section
     _columns = {
-        'moment_id': fields.many2one(
-            'sale.recovery.moment', 'Recovery Moment'),
-        'group_id': fields.related(
-            'moment_id', 'group_id', type='many2one',
-            relation='sale.recovery.moment.group',
-            string='Recovery Moment Group'),
+        'recovery_moment_id': fields.many2one(
+            'sale.recovery.moment', 'Recovery Moment', oldname='moment_id'),
+        'recovery_group_id': fields.related(
+            'recovery_moment_id', 'group_id', type='many2one',
+            relation='sale.recovery.moment.group', store=True,
+            string='Recovery Moment Group', readonly=True, oldname='group_id'),
+        'delivery_moment_id': fields.many2one(
+            'sale.delivery.moment', 'Delivery Moment'),
     }
 
+    # Custom Section
     def reorder_moves_by_category_and_name(
             self, cr, uid, ids, context=None):
         sm_obj = self.pool['stock.move']
@@ -75,10 +78,12 @@ class stock_picking_out(Model):
 
     # Column Section
     _columns = {
-        'moment_id': fields.many2one(
-            'sale.recovery.moment', 'Recovery Moment'),
-        'group_id': fields.related(
-            'moment_id', 'group_id', type='many2one',
-            relation='sale.recovery.moment.group',
-            string='Recovery Moment Group'),
+        'recovery_moment_id': fields.many2one(
+            'sale.recovery.moment', 'Recovery Moment', oldname='moment_id'),
+        'recovery_group_id': fields.related(
+            'recovery_moment_id', 'group_id', type='many2one',
+            relation='sale.recovery.moment.group', store=True,
+            string='Recovery Moment Group', readonly=True, oldname='group_id'),
+        'delivery_moment_id': fields.many2one(
+            'sale.delivery.moment', 'Delivery Moment'),
     }

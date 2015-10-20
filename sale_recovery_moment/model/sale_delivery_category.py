@@ -28,17 +28,27 @@ class SaleDeliveryCategory(Model):
     _name = 'sale.delivery.category'
     _order = 'name'
 
+    def _get_partner_qty(self, cr, uid, ids, field_name, arg, context=None):
+        res = {}
+        for item in self.browse(cr, uid, ids, context=context):
+            res[item.id] = len(item.partner_ids)
+        return res
+
     # Column Section
     _columns = {
         'name': fields.char(
             'Name', required=True),
         'partner_ids': fields.one2many(
-            'res.partner', 'delivery_categ_id', string='Partners'),
+            'res.partner', 'delivery_categ_id', string='Partners',
+            readonly=True),
+        'partner_qty': fields.function(
+            _get_partner_qty, type='integer', string='Partners Qty'),
         'company_id': fields.many2one(
             'res.company', string='Company', required=True),
         'active': fields.boolean('Active'),
         'moment_ids': fields.one2many(
-            'sale.delivery.moment', 'delivery_categ_id', string='Moments'),
+            'sale.delivery.moment', 'delivery_categ_id', string='Moments',
+            readonly=True),
     }
 
     _defaults = {

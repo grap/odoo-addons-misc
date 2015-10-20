@@ -25,7 +25,7 @@
             <field name="name">Recovery Moments</field>
             <field name="res_model">sale.recovery.moment</field>
             <field name="view_type">form</field>
-            <field name="view_mode">calendar</field>
+            <field name="view_mode">calendar,tree,form</field>
         </record>
 
         <record id="action_sale_recovery_moment_group" model="ir.actions.act_window">
@@ -75,20 +75,12 @@
         </record>
 
 <!-- Model: product.product -->
-        <record id="action_product_product_prepare" model="ir.actions.act_window">
-            <field name="name">Products (Prepare)</field>
+        <record id="action_product_product" model="ir.actions.act_window">
+            <field name="name">Products (Prepare &amp; Deliver)</field>
             <field name="res_model">product.product</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree</field>
-            <field name="view_id" ref="view_product_product_prepare_tree" />
-        </record>
-
-        <record id="action_product_product_delivery" model="ir.actions.act_window">
-            <field name="name">Products (Delivery)</field>
-            <field name="res_model">product.product</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree</field>
-            <field name="view_id" ref="view_product_product_delivery_tree" />
+            <field name="view_id" ref="view_product_product_tree" />
         </record>
 
 <!-- Model: stock.picking - Reorder Action -->

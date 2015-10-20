@@ -138,10 +138,11 @@ class SaleRecoveryMoment(Model):
         'min_recovery_date': fields.datetime(
             string='Minimum date for the Recovery', required=True),
         'max_recovery_date': fields.datetime(
-            string='Minimum date for the Recovery', required=True),
+            string='Maximum date for the Recovery', required=True),
         'description': fields.text('Description'),
         'order_ids': fields.one2many(
-            'sale.order', 'moment_id', 'Sale Orders', readonly=True),
+            'sale.order', 'recovery_moment_id', 'Sale Orders',
+            readonly=True),
         'order_qty': fields.function(
             _get_order, type='integer', multi='order',
             string='Sale Orders Quantity'),
