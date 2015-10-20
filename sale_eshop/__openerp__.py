@@ -54,6 +54,7 @@ Copyright, Authors and Licence:
     'website': 'http://www.grap.coop',
     'license': 'AGPL-3',
     'depends': [
+        'product',
         'mail',
         'sale',
         'sale_recovery_moment',
@@ -74,6 +75,7 @@ Copyright, Authors and Licence:
         'demo/res_partner.yml',
         'demo/eshop_category.yml',
         'demo/product_product.yml',
+        'demo/product_uom.yml',
         'demo/function.xml',
         'demo/res_groups.yml',
     ],
