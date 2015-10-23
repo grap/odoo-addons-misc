@@ -68,6 +68,7 @@ class SaleOrder(Model):
             }
             for pp in ec.available_product_ids:
                 current_product = {
+                    'default_code': pp.default_code,
                     'id': pp.id,
                     'name': pp.name,
                     'list_price': pp.list_price,

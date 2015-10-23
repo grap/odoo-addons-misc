@@ -240,6 +240,7 @@
                             <group col="4" colspan="4">
                                 <field name="delivery_categ_id"/>
                                 <field name="max_order_qty"/>
+                                <field name="offset"/>
                                 <field name="min_delivery_date"/>
                                 <field name="max_delivery_date"/>
                                 <field name="company_id" groups="base.group_multi_company"/>
@@ -452,7 +453,7 @@
             <field name="arch" type="xml">
                 <field name="categ_id" position="after">
                     <field name="prepare_categ_id" groups="sale_recovery_moment.recovery_user"/>
-                    <field name="delivery_categ_id" groups="sale_recovery_moment.recovery_user"/>
+                    <field name="delivery_categ_id" groups="sale_recovery_moment.delivery_user"/>
                 </field>
                 <xpath expr="//filter[@string='Category']" position="after">
                     <filter string="Prepare Category" domain="[]" context="{'group_by':'prepare_categ_id'}"/>
@@ -466,13 +467,37 @@
             <field name="arch" type="xml">
                 <tree string="Products (Prepare &amp; Deliver)" editable="bottom">
                     <field name="name" readonly="1"/>
-                    <field name="prepare_categ_id"/>
+                    <field name="prepare_categ_id" groups="sale_recovery_moment.prepare_user"/>
                     <field name="delivery_categ_id" groups="sale_recovery_moment.delivery_user"/>
                     <field name="company_id" groups="base.group_multi_company" />
                 </tree>
             </field>
         </record>
 
+<!-- Model: res.partner -->
+        <record id="view_res_partner_search" model="ir.ui.view">
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <field name="category_id" position="after">
+                    <field name="delivery_categ_id" groups="sale_recovery_moment.delivery_user"/>
+                </field>
+                <xpath expr="//filter[@string='Salesperson']" position="after">
+                    <filter string="Delivery Category" domain="[]" context="{'group_by':'delivery_categ_id'}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_res_partner_tree" model="ir.ui.view">
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <tree string="Customers (Delivery)" editable="bottom">
+                    <field name="name" readonly="1"/>
+                    <field name="delivery_categ_id" groups="sale_recovery_moment.delivery_user"/>
+                    <field name="company_id" groups="base.group_multi_company" />
+                </tree>
+            </field>
+        </record>
 
 <!-- Model: sale.shop -->
         <record id="view_sale_shop_form" model="ir.ui.view">

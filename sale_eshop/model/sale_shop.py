@@ -31,13 +31,29 @@ class SaleShop(Model):
     # Columns Section
     _columns = {
         'eshop_minimum_price': fields.float(
-            'Minimum Price'),
-        'eshop_website': fields.char(
-            'WebSite URL'),
+            'Minimum Price by eShop'),
+        'eshop_title': fields.char(
+            'eShop Title'),
+        'eshop_url': fields.char(
+            'eShop URL', oldname="eshop_website"),
+        'eshop_website_url': fields.char(
+            'Website URL'),
+        'eshop_facebook_url': fields.char(
+            'Facebook URL'),
+        'eshop_twitter_url': fields.char(
+            'Twitter URL'),
+        'eshop_google_plus_url': fields.char(
+            'Google Plus URL'),
         'eshop_home_text': fields.html(
-            'Text for Home Page'),
-        'eshop_image': fields.binary(
-            'Image Home Page'),
+            'Text for the eShop Home Page'),
+        'eshop_home_image': fields.binary(
+            'Image for the eShop Home Page', oldname="eshop_image"),
+        'eshop_image_small': fields.binary(
+            'Small Image for the eShop Home Page'),
         'eshop_vat_included': fields.boolean(
-            'VAT Inluded'),
+            'VAT Included for eShop'),
+        'eshop_register_allowed': fields.boolean(
+            'Allow new customer to register on eShop'),
+        'eshop_list_view_enabled': fields.boolean(
+            'Provide a List view to realize quick purchase.'),
     }

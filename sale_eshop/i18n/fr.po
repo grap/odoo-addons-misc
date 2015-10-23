@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-18 15:35+0000\n"
-"PO-Revision-Date: 2015-06-18 15:35+0000\n"
+"POT-Creation-Date: 2015-10-22 15:12+0000\n"
+"PO-Revision-Date: 2015-10-22 15:12+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: sale_eshop
-#: model:email.template,body_html:sale_eshop.eshop_password_template
+#: model:email.template,body_html:sale_eshop.eshop_crendential_template
 msgid "\n"
 "<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
 "    <p>Hello, ${object.name}</p>\n"
@@ -29,7 +29,11 @@ msgid "\n"
 "            <li>Login: ${object.email}</li>\n"
 "            <li>Password: ${object.eshop_password}</li>\n"
 "        </ul>\n"
-"    </p><p>Have a nice day</p>\n"
+"    </p>\n"
+"% if object.eshop_state == 'email_to_confirm':\n"
+"    Please finish your registration by clicking on this <a href=\"${ctx.get('eshop_website')}activate_account.html?id=${object.id}&email=${object.email}\">activation link</a>.\n"
+"% endif\n"
+"    <p>Have a nice day</p>\n"
 "</div>\n"
 "            "
 msgstr "\n"
@@ -44,14 +48,32 @@ msgstr "\n"
 "            <li>Login : ${object.email}</li>\n"
 "            <li>Mot de passe : ${object.eshop_password}</li>\n"
 "        </ul>\n"
-"    </p><p>Bonne Journée.</p>\n"
+"    </p>\n"
+"% if object.eshop_state == 'email_to_confirm':\n"
+"    Merci de finir votre inscription en cliquant sur ce <a href=\"${ctx.get('eshop_website')}activate_account.html?id=${object.id}&email=${object.email}\">lien d'activation</a>.\n"
+"% endif\n"
+"<p>Bonne Journée.</p>\n"
 "</div>\n"
 "            "
+
+#. module: sale_eshop
+#: constraint:eshop.category:0
+msgid "A 'view' Category can not belongs products;\n"
+"A 'normal' Category can not belongs childs categories.\n"
+""
+msgstr "Une catégorie de type 'vue' ne peux pas contenir de produits;\n"
+"Une catégorie de type 'normal' ne peux pas contenir de catégories.\n"
+""
 
 #. module: sale_eshop
 #: help:eshop.category,type:0
 msgid "A category of the view type is a virtual category that can be used as the parent of another category to create a hierarchical structure."
 msgstr "Une catégorie de type 'vue' est une catégorie virtuelle qui peut être utilisée comme parent d'une autre catégorie, pour créer une architecture."
+
+#. module: sale_eshop
+#: field:sale.shop,eshop_register_allowed:0
+msgid "Allow new customer to register on eShop"
+msgstr "Autoriser les nouveaux clients à s'enregistrer sur la eBoutique"
 
 #. module: sale_eshop
 #: view:wizard.change.product.category:0
@@ -76,7 +98,7 @@ msgstr "Disponible à la vente"
 #. module: sale_eshop
 #: field:res.partner,eshop_active:0
 msgid "Can buy on eShop"
-msgstr "peut acheter en ligne"
+msgstr "Peut acheter en ligne"
 
 #. module: sale_eshop
 #: view:wizard.change.product.category:0
@@ -89,13 +111,13 @@ msgid "Category Type"
 msgstr "Type de catégorie"
 
 #. module: sale_eshop
-#: code:addons/sale_eshop/model/eshop_category.py:191
+#: code:addons/sale_eshop/model/eshop_category.py:196
 #, python-format
 msgid "Category with Childs!"
 msgstr "Catégorie avec des enfants!"
 
 #. module: sale_eshop
-#: code:addons/sale_eshop/model/eshop_category.py:198
+#: code:addons/sale_eshop/model/eshop_category.py:203
 #, python-format
 msgid "Category with Products!"
 msgstr "Catégorie avec des articles!"
@@ -121,6 +143,11 @@ msgid "Company"
 msgstr "Société"
 
 #. module: sale_eshop
+#: view:res.partner:0
+msgid "Confirm Customer"
+msgstr "Valider le client"
+
+#. module: sale_eshop
 #: model:ir.actions.act_window,name:sale_eshop.action_res_partner
 #: model:ir.ui.menu,name:sale_eshop.menu_res_partner
 #: view:res.partner:0
@@ -128,9 +155,25 @@ msgid "Customers (eShop)"
 msgstr "Clients (eBoutique)"
 
 #. module: sale_eshop
+#: field:account.tax,eshop_description:0
 #: field:product.uom,eshop_description:0
 msgid "Description for the eShop"
 msgstr "Description pour la eBoutique"
+
+#. module: sale_eshop
+#: selection:res.partner,eshop_state:0
+msgid "Disabled"
+msgstr "Désactivé"
+
+#. module: sale_eshop
+#: selection:res.partner,eshop_state:0
+msgid "EMail To Confirm"
+msgstr "EMail à confirmer"
+
+#. module: sale_eshop
+#: selection:res.partner,eshop_state:0
+msgid "Enabled"
+msgstr "Activé"
 
 #. module: sale_eshop
 #: field:product.product,eshop_end_date:0
@@ -138,19 +181,29 @@ msgid "End Date of Sale"
 msgstr "Date de Fin de Vente"
 
 #. module: sale_eshop
-#: constraint:eshop.category:0
-msgid "Error ! A 'view' Category can not belongs products;A 'normal' Category can not belongs childs categories."
-msgstr "Erreur ! Une catégorie 'vue' ne peut pas posséder d'articles ; Une catégorie 'normale' ne peut pas possédér de catégories enfants."
+#: field:product.product,eshop_taxes_description:0
+msgid "Eshop Taxes Description"
+msgstr "Description des taxes sur la eBoutique"
+
+#. module: sale_eshop
+#: selection:res.partner,eshop_state:0
+msgid "First Purchase"
+msgstr "Premier achat"
 
 #. module: sale_eshop
 #: view:res.partner:0
-msgid "Generate Password"
-msgstr "Générer un mot de passe"
+msgid "Generate (or generate again) and Send Credentials"
+msgstr "(Re) Générer un mot de passe et l'envoyer par mail"
 
 #. module: sale_eshop
 #: field:eshop.category,image:0
 msgid "Image"
 msgstr "Image"
+
+#. module: sale_eshop
+#: field:sale.shop,eshop_image:0
+msgid "Image for the eShop Home Page"
+msgstr "Image pour la page d'accueil de la eBoutique"
 
 #. module: sale_eshop
 #: help:eshop.category,image:0
@@ -169,8 +222,8 @@ msgstr "Image de taille moyenne"
 
 #. module: sale_eshop
 #: field:sale.shop,eshop_minimum_price:0
-msgid "Minimum Price"
-msgstr "Prix Minimum"
+msgid "Minimum Price by eShop"
+msgstr "Franco de commande dans la eBoutique"
 
 #. module: sale_eshop
 #: field:product.product,eshop_minimum_qty:0
@@ -223,6 +276,11 @@ msgid "Password on eShop"
 msgstr "Mot de Passe sur la eBoutique"
 
 #. module: sale_eshop
+#: view:res.partner:0
+msgid "Prevent User to use eShop"
+msgstr "Empêcher l'utilisateur d'utiliser la eBoutique"
+
+#. module: sale_eshop
 #: code:_description:0
 #: model:ir.model,name:sale_eshop.model_product_product
 #, python-format
@@ -234,7 +292,7 @@ msgstr "Article"
 #: model:ir.model,name:sale_eshop.model_product_uom
 #, python-format
 msgid "Product Unit of Measure"
-msgstr "Unité de mesure de l'article"
+msgstr "Unité de mesure du produit"
 
 #. module: sale_eshop
 #: view:eshop.category:0
@@ -273,9 +331,9 @@ msgid "Sales Shop"
 msgstr "Magasin"
 
 #. module: sale_eshop
-#: view:res.partner:0
-msgid "Send Credentials"
-msgstr "Envoyer les identifiants"
+#: field:eshop.category,sequence:0
+msgid "Sequence"
+msgstr "Sequence"
 
 #. module: sale_eshop
 #: view:product.product:0
@@ -294,14 +352,25 @@ msgid "Start Date of Sale"
 msgstr "Date de Début de vente"
 
 #. module: sale_eshop
+#: field:res.partner,eshop_state:0
+msgid "State on eShop"
+msgstr "Etat dans la eBoutique"
+
+#. module: sale_eshop
+#: code:_description:0
+#, python-format
+msgid "Tax"
+msgstr "Taxe"
+
+#. module: sale_eshop
 #: selection:product.product,eshop_state:0
 msgid "Temporarily Disabled"
 msgstr "Désactivé temporairement"
 
 #. module: sale_eshop
 #: field:sale.shop,eshop_home_text:0
-msgid "Text for Home Page"
-msgstr "Texte pour la page d'accueil"
+msgid "Text for the eShop Home Page"
+msgstr "Texte pour la page d'accueil de la eBoutique"
 
 #. module: sale_eshop
 #: code:addons/sale_eshop/model/product_product.py:46
@@ -326,23 +395,23 @@ msgid "User"
 msgstr "Utilisateur"
 
 #. module: sale_eshop
+#: field:sale.shop,eshop_vat_included:0
+msgid "VAT Included for eShop"
+msgstr "Prix TTC sur la eBoutique"
+
+#. module: sale_eshop
 #: selection:eshop.category,type:0
 msgid "View"
 msgstr "Vue"
 
 #. module: sale_eshop
-#: field:sale.shop,eshop_website:0
-msgid "WebSite URL"
-msgstr "URL du site web"
-
-#. module: sale_eshop
-#: code:addons/sale_eshop/model/eshop_category.py:192
+#: code:addons/sale_eshop/model/eshop_category.py:197
 #, python-format
 msgid "You cannot delete the category '%s' because it contents %s child categories. Please move child categories to another Category First."
 msgstr "Vous ne pouvez pas supprimer la catégorie '%s' car elle contient %s catégories enfants. Veuillez déplacer d'abord les catégories enfants dans une autre catégorie."
 
 #. module: sale_eshop
-#: code:addons/sale_eshop/model/eshop_category.py:199
+#: code:addons/sale_eshop/model/eshop_category.py:204
 #, python-format
 msgid "You cannot delete the category '%s' because it contents %s products. Please move products to another Category First."
 msgstr "Vous ne pouvez pas supprimer cette catégorie '%s' car elle contient %s articles. Veuillez déplacer d'abord les articles dans une autre catégorie."
@@ -380,6 +449,11 @@ msgstr "Vente eBoutique"
 #: field:product.product,eshop_state:0
 msgid "eShop State"
 msgstr "Etat dans la eBoutique"
+
+#. module: sale_eshop
+#: field:sale.shop,eshop_website:0
+msgid "eShop URL"
+msgstr "URL de l'eBoutique"
 
 #. module: sale_eshop
 #: view:wizard.change.product.category:0

@@ -65,6 +65,7 @@ Copyright, Authors and Licence:
         'sale_stock',
         'report_webkit',
         'sale_order_dates',
+        'sale_visible_tax',
         'stock_picking_reorder_lines',
     ],
     'data': [

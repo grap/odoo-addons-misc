@@ -34,71 +34,98 @@ class ResPartner(Model):
     _PASSWORD_LENGTH = 6
     _PASSWORD_CHARS = string.ascii_letters + '23456789'
 
+    _ESHOP_STATE_KEYS = [
+        ('disabled', 'Disabled'),
+        ('email_to_confirm', 'EMail To Confirm'),
+        ('first_purchase', 'First Purchase'),
+        ('enabled', 'Enabled'),
+    ]
+
+    def _get_eshop_active(
+            self, cr, uid, ids, fields_name, args, context=None):
+        res = {}
+        for rp in self.browse(cr, uid, ids, context=context):
+            res[rp.id] = rp.eshop_state in ['first_purchase', 'enabled']
+        return res
+
     # Columns Section
     _columns = {
         'eshop_password': fields.char('Password on eShop', readonly=True),
-        'eshop_active': fields.boolean('Can buy on eShop'),
+        'eshop_state': fields.selection(
+            _ESHOP_STATE_KEYS, 'State on eShop', readonly=True, required=True),
+        'eshop_active': fields.function(
+            _get_eshop_active, string='Can buy on eShop', store=True,
+            readonly=True),
     }
 
-    # Defaults Section
     _defaults = {
-        'eshop_active': False,
+        'eshop_state': 'disabled',
     }
 
-    # Constraints Section
-    def _check_eshop_active_email(
-            self, cr, uid, ids, context=None):
-        for rp in self.browse(cr, uid, ids, context=context):
-            if rp.eshop_active and not rp.email:
-                return False
-        return True
-
-    _constraints = [
-        (
-            _check_eshop_active_email,
-            "To enable Customer for eShop, you have to set it first an email",
-            ['eshop_active', 'email']),
-    ]
-
-    # Technical Function
+    # Public Custom Section
     def login(self, cr, uid, login, password, context=None):
+        if not password:
+            return False
         res = self.search(cr, uid, [
             ('email', '=', login),
             ('eshop_password', '=', password),
-            ('eshop_active', '=', True),
+            ('eshop_state', 'in', ['first_purchase', 'enabled']),
         ], context=context)
         if len(res) == 1:
             return res[0]
         else:
             return False
 
-    # View Function Section
-    def button_send_credentials(self, cr, uid, ids, context=None):
+    def create_from_eshop(self, cr, uid, vals, context=None):
+        vals.update({
+            'name': vals['first_name'] + ' ' + vals['last_name'],
+            'eshop_state': 'email_to_confirm',
+        })
+        vals.pop('first_name', False)
+        vals.pop('last_name', False)
+        # Create partner
+        res = self.create(cr, uid, vals, context=context)
+        # Send an email
+        self.send_credentials(cr, uid, [res], context=context)
+
+    def send_credentials(self, cr, uid, ids, context=None):
         context = context or {}
         imd_obj = self.pool['ir.model.data']
         et_obj = self.pool['email.template']
         ss_obj = self.pool['sale.shop']
         et = imd_obj.get_object(
-            cr, uid, 'sale_eshop', 'eshop_password_template')
+            cr, uid, 'sale_eshop', 'eshop_crendential_template')
 
         for rp in self.browse(cr, uid, ids, context=context):
             ss_ids = ss_obj.search(cr, uid, [
                 ('company_id', '=', rp.company_id.id),
-                ('eshop_website', '!=', False),
+                ('eshop_url', '!=', False),
             ], context=context)
             ctx = context.copy()
             if ss_ids:
-                ctx['eshop_website'] = ss_obj.browse(
-                    cr, uid, ss_ids[0], context=context).eshop_website
+                ctx['eshop_url'] = ss_obj.browse(
+                    cr, uid, ss_ids[0], context=context).eshop_url
             et_obj.send_mail(
                 cr, uid, et.id, rp.id, True, context=ctx)
         return True
 
-    def button_generate_eshop_password(self, cr, uid, ids, context=None):
+    # View Function Section
+    def button_confirm_eshop(self, cr, uid, ids, context=None):
+        self.write(cr, uid, ids, {
+            'eshop_state': 'enabled'}, context=context)
+
+    def button_disable_eshop(self, cr, uid, ids, context=None):
+        self.write(cr, uid, ids, {
+            'eshop_password': False,
+            'eshop_state': 'disabled'}, context=context)
+
+    def button_generate_send_password(self, cr, uid, ids, context=None):
         for rp in self.browse(cr, uid, ids, context=context):
             random.seed = (os.urandom(1024))
             password = ''.join(random.choice(
                 self._PASSWORD_CHARS) for i in range(self._PASSWORD_LENGTH))
             self.write(cr, uid, ids, {
-                'eshop_password': password}, context=context)
+                'eshop_password': password,
+                'eshop_state': 'enabled'}, context=context)
+        self.send_credentials(cr, uid, ids, context=context)
         return True

@@ -21,7 +21,7 @@
     <data>
 
 <!-- Model: email.template // res.partner -->
-        <record model="email.template" id="eshop_password_template" >
+        <record model="email.template" id="eshop_send_crendential_template" >
             <field name="name">Send Password</field>
             <field name="model_id" ref="base.model_res_partner"/>
             <field name="email_from"><![CDATA[${object.company_id.name} <${(object.company_id.email or user.email)|safe}>]]></field>
@@ -40,7 +40,11 @@
             <li>Login: ${object.email}</li>
             <li>Password: ${object.eshop_password}</li>
         </ul>
-    </p><p>Have a nice day</p>
+    </p>
+% if object.eshop_state == 'email_to_confirm':
+    Please finish your registration by clicking on this <a href="${ctx.get('eshop_url')}activate_account.html?id=${object.id}&email=${object.email}">activation link</a>.
+% endif
+    <p>Have a nice day</p>
 </div>
             ]]></field>
         </record>

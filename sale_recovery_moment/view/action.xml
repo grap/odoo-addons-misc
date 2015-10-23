@@ -83,6 +83,15 @@
             <field name="view_id" ref="view_product_product_tree" />
         </record>
 
+<!-- Model: res.partner -->
+        <record id="action_res_partner" model="ir.actions.act_window">
+            <field name="name">Customers (Delivery)</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_res_partner_tree" />
+        </record>
+
 <!-- Model: stock.picking - Reorder Action -->
     <record id="action_stock_picking_reorder" model="ir.actions.act_window">
       <field name="name">Reorder Delivery Orders For Preparation</field>

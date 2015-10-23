@@ -20,6 +20,8 @@
 #
 ##############################################################################
 
+from datetime import datetime, timedelta
+
 from openerp.osv import fields
 from openerp.osv.orm import Model
 from openerp.osv.orm import except_orm
@@ -29,26 +31,68 @@ from openerp.tools.translate import _
 class SaleDeliveryMoment(Model):
     _name = 'sale.delivery.moment'
 
-    def load_delivery_moment(self, cr, uid, sale_order_id, context=None):
-        """Load Delivery Moments, depending of the current sale order"""
+    def load_delivery_moment(
+            self, cr, uid, sale_order_id, minimum_price, vat_included,
+            context=None):
+        """Load Delivery Moments, depending of the current sale order
+            Mention for each delivery moment if it's possible to select it.
+        """
         so_obj = self.pool['sale.order']
         so = so_obj.browse(cr, uid, sale_order_id, context=context)
         res = []
         sale_delivery_categ_id = so.partner_id.delivery_categ_id
+        now = datetime.now()
+        now_str = now.strftime('%Y-%m-%d %H:%M:%S')
         if not sale_delivery_categ_id:
             return res
-        futur_delivery_moments = self.search(cr, uid, [
-            ('min_delivery_date', '>', now),
+        moment_ids = self.search(cr, uid, [
+            ('min_delivery_date', '>', now_str),
             ('delivery_categ_id', '=', sale_delivery_categ_id.id)],
             context=context)
-        for moment in futur_delivery_moments:
+        moments = self.browse(cr, uid, moment_ids, context=context)
+        for moment in moments:
+            amount_vat_included = 0
+            amount_vat_excluded = 0
+            is_delay_possible = False
+            is_partial = False
+            for line in so.order_line:
+                line_ok = self.check_possibility(
+                    cr, uid, line, moment, now, context=context)
+                is_delay_possible = is_delay_possible or line_ok
+                is_partial = is_partial or not line_ok
+                if line_ok:
+                    amount_vat_excluded += line.price_subtotal
+                    amount_vat_included += line.price_subtotal_taxinc
+            if minimum_price:
+                if vat_included:
+                    is_limit_ok = (minimum_price <= amount_vat_included)
+                else:
+                    is_limit_ok = (minimum_price <= amount_vat_excluded)
+            else:
+                is_limit_ok = True
             res.append({
+                'id': moment.id,
                 'min_delivery_date': moment.min_delivery_date,
                 'max_delivery_date': moment.max_delivery_date,
                 'is_complete': moment.is_complete,
-                'is_partial': (id == 1),
+                'is_delay_possible': is_delay_possible,
+                'is_partial': is_partial,
+                'amount_vat_excluded': amount_vat_excluded,
+                'amount_vat_included': amount_vat_included,
+                'is_limit_ok': is_limit_ok,
             })
         return res
+
+    def check_possibility(
+            self, cr, uid, sale_order_line, moment, date_now, context=None):
+        categ_id = sale_order_line.product_id.delivery_categ_id
+        if not categ_id:
+            return True
+        return (date_now\
+            + timedelta(days=categ_id.sale_delay)\
+            + timedelta(hours=moment.offset)) <=\
+            datetime.strptime(moment.min_delivery_date, '%Y-%m-%d %H:%M:%S')
+
 
     # Field Functions Section
     def _get_order(self, cr, uid, ids, field_name, arg, context=None):
@@ -111,13 +155,17 @@ class SaleDeliveryMoment(Model):
                     ['min_delivery_date'], 10),
             }),
         'company_id': fields.many2one(
-            'res.company', string='Company', required=True, readonly=True),
+            'res.company', string='Company', required=True, readonly=True,
+            select=True),
         'delivery_categ_id': fields.many2one(
-            'sale.delivery.category', 'Delivery Category', required=True),
+            'sale.delivery.category', 'Delivery Category', required=True,
+            select=True),
         'min_delivery_date': fields.datetime(
-            string='Minimum date for the Delivery', required=True),
+            string='Minimum date for the Delivery', required=True,
+            select=True),
         'max_delivery_date': fields.datetime(
-            string='Maximum date for the Delivery', required=True),
+            string='Maximum date for the Delivery', required=True,
+            select=True),
         'description': fields.text('Description'),
         'order_ids': fields.one2many(
             'sale.order', 'delivery_moment_id', 'Sale Orders', readonly=True),
@@ -132,6 +180,9 @@ class SaleDeliveryMoment(Model):
             string='Is Complete'),
         'max_order_qty': fields.integer(
             'Max Order Quantity'),
+        'offset': fields.integer(
+            'Offset (Hours)', required=True, help="Set positive value to"
+            " increase delay or negative value to reduce delay."),
         'quota_description': fields.function(
             _get_order, type='char', multi='order',
             string='Quota Description'),
@@ -152,6 +203,7 @@ class SaleDeliveryMoment(Model):
         'company_id': (
             lambda s, cr, uid, c: s.pool.get('res.users')._get_company(
                 cr, uid, context=c)),
+        'offset': 0,
     }
 
     # Constraint Section

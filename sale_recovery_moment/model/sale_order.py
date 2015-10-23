@@ -35,6 +35,17 @@ class SaleOrder(Model):
         ('sent', 'Sent'),
     ]
 
+    # Custom Section
+    def select_delivery_moment_id(
+            self, cr, uid, id, delivery_moment_id, context=None):
+        so = self.browse(cr, uid, id, context=context)
+        so_obj.action_button_confirm(cr, uid, [so.id], context=context)
+        so_obj.send_mail(cr, uid, [so.id], context=context)
+        return {
+            'state': 'TODO',
+            'message': 'TODO',
+        }
+
     # Column Section
     _columns = {
         'recovery_moment_id': fields.many2one(
