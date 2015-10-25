@@ -42,7 +42,7 @@
         </ul>
     </p>
 % if object.eshop_state == 'email_to_confirm':
-    Please finish your registration by clicking on this <a href="${ctx.get('eshop_url')}activate_account.html?id=${object.id}&email=${object.email}">activation link</a>.
+    Please finish your registration by clicking on this <a href="${ctx.get('eshop_url')}activate_account/${object.id}/${object.email}">activation link</a>.
 % endif
     <p>Have a nice day</p>
 </div>
