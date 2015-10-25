@@ -79,15 +79,16 @@
                         <group name="eShop" col="4">
                             <field name="eshop_active"/>
                             <field name="eshop_state" />
-                            <button name="button_disable_eshop"
-                                string="Prevent User to use eShop" icon="gtk-cancel"
-                                type="object" attrs="{'invisible':[('eshop_state','=', 'disabled')]}"/>
-                            <button name="button_confirm_eshop"
+                            <field name="eshop_password"/>
+                            <button name="button_confirm_eshop" colspan="2"
                                 string="Confirm Customer" icon="gtk-apply"
                                 type="object" attrs="{'invisible':[('eshop_state','!=', 'first_purchase')]}"/>
-                            <button name="button_generate_send_password"
+                            <button name="button_generate_send_password" colspan="2"
                                 string="Generate (or generate again) and Send Credentials" icon="terp-mail-message-new"
                                 type="object"/>
+                            <button name="button_disable_eshop" colspan="2"
+                                string="Prevent User to use eShop" icon="gtk-cancel"
+                                type="object" attrs="{'invisible':[('eshop_state','=', 'disabled')]}"/>
                         </group>
                     </page>
                 </notebook>
@@ -97,22 +98,22 @@
         <record id="view_res_partner_tree" model="ir.ui.view">
             <field name="model">res.partner</field>
             <field name="arch" type="xml">
-                <tree string="Customers (eShop)" editable="bottom"
+                <tree string="Customers (eShop)"
                         colors="brown:eshop_state == 'email_to_confirm'; blue:eshop_state == 'first_purchase'; gray: eshop_state == 'disabled'">
                     <field name="name" readonly="1"/>
                     <field name="email"/>
                     <field name="eshop_active" invisible="1"/>
                     <field name="eshop_state"/>
                     <field name="eshop_password"/>
-                    <button name="button_disable_eshop"
-                        string="Prevent User to use eShop" icon="gtk-cancel"
-                        type="object" attrs="{'invisible':[('eshop_state','=', 'disabled')]}"/>
                     <button name="button_confirm_eshop"
                         string="Confirm Customer" icon="gtk-apply"
                         type="object" attrs="{'invisible':[('eshop_state','!=', 'first_purchase')]}"/>
                     <button name="button_generate_send_password"
                         string="Generate (or generate again) and Send Credentials" icon="terp-mail-message-new"
                         type="object"/>
+                    <button name="button_disable_eshop"
+                        string="Prevent User to use eShop" icon="gtk-cancel"
+                        type="object" attrs="{'invisible':[('eshop_state','=', 'disabled')]}"/>
                 </tree>
             </field>
         </record>

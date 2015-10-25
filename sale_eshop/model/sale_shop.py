@@ -49,7 +49,7 @@ class SaleShop(Model):
         'eshop_home_image': fields.binary(
             'Image for the eShop Home Page', oldname="eshop_image"),
         'eshop_image_small': fields.binary(
-            'Small Image for the eShop Home Page'),
+            'Small Image for the eShop Menu'),
         'eshop_vat_included': fields.boolean(
             'VAT Included for eShop'),
         'eshop_register_allowed': fields.boolean(

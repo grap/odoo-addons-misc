@@ -31,7 +31,7 @@ from openerp.tools.translate import _
 class SaleDeliveryMoment(Model):
     _name = 'sale.delivery.moment'
 
-    def load_delivery_moment(
+    def load_delivery_moment_data(
             self, cr, uid, sale_order_id, minimum_price, vat_included,
             context=None):
         """Load Delivery Moments, depending of the current sale order
@@ -48,9 +48,11 @@ class SaleDeliveryMoment(Model):
         moment_ids = self.search(cr, uid, [
             ('min_delivery_date', '>', now_str),
             ('delivery_categ_id', '=', sale_delivery_categ_id.id)],
+            order='min_delivery_date, id',
             context=context)
         moments = self.browse(cr, uid, moment_ids, context=context)
         for moment in moments:
+            print moment.min_delivery_date
             amount_vat_included = 0
             amount_vat_excluded = 0
             is_delay_possible = False
@@ -81,6 +83,7 @@ class SaleDeliveryMoment(Model):
                 'amount_vat_included': amount_vat_included,
                 'is_limit_ok': is_limit_ok,
             })
+        print res
         return res
 
     def check_possibility(
@@ -88,11 +91,11 @@ class SaleDeliveryMoment(Model):
         categ_id = sale_order_line.product_id.delivery_categ_id
         if not categ_id:
             return True
-        return (date_now\
-            + timedelta(days=categ_id.sale_delay)\
+        return (
+            date_now
+            + timedelta(days=categ_id.sale_delay)
             + timedelta(hours=moment.offset)) <=\
             datetime.strptime(moment.min_delivery_date, '%Y-%m-%d %H:%M:%S')
-
 
     # Field Functions Section
     def _get_order(self, cr, uid, ids, field_name, arg, context=None):

@@ -520,8 +520,7 @@
             <field name="inherit_id" ref="sale.view_order_form" />
             <field name="arch" type="xml">
                 <field name="partner_id" position="after">
-                    <field name="reminder_state" groups="sale_recovery_moment.recovery_user"
-                        attrs="{'readonly': [('reminder_state', '=', 'sent')]}" />
+                    <field name="reminder_state" groups="sale_recovery_moment.recovery_user"/>
                 </field>
                 <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="after">
                     <field name="delivery_categ_id" groups="sale_recovery_moment.delivery_user" />
@@ -551,10 +550,13 @@
             <field name="inherit_id" ref="sale.view_sales_order_filter"/>
             <field name="arch" type="xml">
                 <field name="partner_id" position="after">
+                    <field name="reminder_state" groups="sale_recovery_moment.recovery_user"/>
+                    <field name="recovery_group_id" groups="sale_recovery_moment.recovery_user"/>
                     <field name="recovery_moment_id" groups="sale_recovery_moment.recovery_user"/>
                     <field name="delivery_moment_id" groups="sale_recovery_moment.delivery_user"/>
                 </field>
                 <xpath expr="//filter[@string='Status']" position="after">
+                    <filter string="State of the E-mail Reminder" context="{'group_by':'reminder_state'}" groups="sale_recovery_moment.recovery_user"/>
                     <filter string="Recovery Group" context="{'group_by':'recovery_group_id'}" groups="sale_recovery_moment.recovery_user"/>
                     <filter string="Recovery Moment" context="{'group_by':'recovery_moment_id'}" groups="sale_recovery_moment.recovery_user"/>
                     <filter string="Delivery Moment" context="{'group_by':'delivery_moment_id'}" groups="sale_recovery_moment.delivery_user"/>

@@ -35,17 +35,6 @@ class SaleOrder(Model):
         ('sent', 'Sent'),
     ]
 
-    # Custom Section
-    def select_delivery_moment_id(
-            self, cr, uid, id, delivery_moment_id, context=None):
-        so = self.browse(cr, uid, id, context=context)
-        so_obj.action_button_confirm(cr, uid, [so.id], context=context)
-        so_obj.send_mail(cr, uid, [so.id], context=context)
-        return {
-            'state': 'TODO',
-            'message': 'TODO',
-        }
-
     # Column Section
     _columns = {
         'recovery_moment_id': fields.many2one(
@@ -72,6 +61,15 @@ class SaleOrder(Model):
     _defaults = {
         'reminder_state': 'do_not_send',
     }
+
+    def copy(self, cr, uid, id, default=None, context=None):
+        default = default and default or {}
+        default['reminder_state'] = 'do_not_send'
+        default['recovery_moment_id'] = False
+        default['delivery_moment_id'] = False
+        res = super(SaleOrder, self).copy(
+            cr, uid, id, default, context=context)
+        return res
 
     # Overload Section
     def create(self, cr, uid, vals, context=None):
@@ -129,7 +127,7 @@ class SaleOrder(Model):
         elif vals.get('delivery_moment_id', False):
             sdm = sdm_obj.browse(
                 cr, uid, vals.get('delivery_moment_id'), context=context)
-            vals['requested_date'] = sdm.min_recovery_date
+            vals['requested_date'] = sdm.min_delivery_date
 
     def _send_reminder_email(self, cr, uid, company_ids, hours, context=None):
         """Send a reminder for all customer that asked one reminder email

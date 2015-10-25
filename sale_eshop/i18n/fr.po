@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-22 15:12+0000\n"
-"PO-Revision-Date: 2015-10-22 15:12+0000\n"
+"POT-Creation-Date: 2015-10-25 20:34+0000\n"
+"PO-Revision-Date: 2015-10-25 20:34+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: sale_eshop
-#: model:email.template,body_html:sale_eshop.eshop_crendential_template
+#: model:email.template,body_html:sale_eshop.eshop_send_crendential_template
 msgid "\n"
 "<div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; \">\n"
 "    <p>Hello, ${object.name}</p>\n"
@@ -31,7 +31,7 @@ msgid "\n"
 "        </ul>\n"
 "    </p>\n"
 "% if object.eshop_state == 'email_to_confirm':\n"
-"    Please finish your registration by clicking on this <a href=\"${ctx.get('eshop_website')}activate_account.html?id=${object.id}&email=${object.email}\">activation link</a>.\n"
+"    Please finish your registration by clicking on this <a href=\"${ctx.get('eshop_url')}activate_account/${object.id}/${object.email}\">activation link</a>.\n"
 "% endif\n"
 "    <p>Have a nice day</p>\n"
 "</div>\n"
@@ -50,7 +50,7 @@ msgstr "\n"
 "        </ul>\n"
 "    </p>\n"
 "% if object.eshop_state == 'email_to_confirm':\n"
-"    Merci de finir votre inscription en cliquant sur ce <a href=\"${ctx.get('eshop_website')}activate_account.html?id=${object.id}&email=${object.email}\">lien d'activation</a>.\n"
+"    Merci de finir votre inscription en cliquant sur ce <a href=\"${ctx.get('eshop_website')}activate_account/${object.id}/${object.email}\">lien d'activation</a>.\n"
 "% endif\n"
 "<p>Bonne Journée.</p>\n"
 "</div>\n"
@@ -186,6 +186,11 @@ msgid "Eshop Taxes Description"
 msgstr "Description des taxes sur la eBoutique"
 
 #. module: sale_eshop
+#: field:sale.shop,eshop_facebook_url:0
+msgid "Facebook URL"
+msgstr "URL Facebook"
+
+#. module: sale_eshop
 #: selection:res.partner,eshop_state:0
 msgid "First Purchase"
 msgstr "Premier achat"
@@ -196,12 +201,17 @@ msgid "Generate (or generate again) and Send Credentials"
 msgstr "(Re) Générer un mot de passe et l'envoyer par mail"
 
 #. module: sale_eshop
+#: field:sale.shop,eshop_google_plus_url:0
+msgid "Google Plus URL"
+msgstr "URL Google Plus"
+
+#. module: sale_eshop
 #: field:eshop.category,image:0
 msgid "Image"
 msgstr "Image"
 
 #. module: sale_eshop
-#: field:sale.shop,eshop_image:0
+#: field:sale.shop,eshop_home_image:0
 msgid "Image for the eShop Home Page"
 msgstr "Image pour la page d'accueil de la eBoutique"
 
@@ -312,6 +322,11 @@ msgid "Products Quantity"
 msgstr "Quantité d'articles"
 
 #. module: sale_eshop
+#: field:sale.shop,eshop_list_view_enabled:0
+msgid "Provide a List view to realize quick purchase."
+msgstr "Fournir une vue liste pour réaliser des achats rapides."
+
+#. module: sale_eshop
 #: field:product.product,eshop_rounded_qty:0
 msgid "Rounded Quantity for eShop"
 msgstr "Arrondie en Quantité sur la eBoutique"
@@ -340,6 +355,11 @@ msgstr "Sequence"
 #: view:res.partner:0
 msgid "Set On eShop"
 msgstr "Paramétré dans la eBoutique"
+
+#. module: sale_eshop
+#: field:sale.shop,eshop_image_small:0
+msgid "Small Image for the eShop Menu"
+msgstr "Petite image pour le menu de la eBoutique"
 
 #. module: sale_eshop
 #: field:eshop.category,image_small:0
@@ -385,6 +405,11 @@ msgid "This arg %s is not implemented !"
 msgstr "L'argument %s n'est pas implémenté !"
 
 #. module: sale_eshop
+#: field:sale.shop,eshop_twitter_url:0
+msgid "Twitter URL"
+msgstr "URL Twitter"
+
+#. module: sale_eshop
 #: selection:product.product,eshop_state:0
 msgid "Unavailable for Sale"
 msgstr "Indisponible à la vente"
@@ -405,6 +430,11 @@ msgid "View"
 msgstr "Vue"
 
 #. module: sale_eshop
+#: field:sale.shop,eshop_website_url:0
+msgid "Website URL"
+msgstr "URL du Site Web"
+
+#. module: sale_eshop
 #: code:addons/sale_eshop/model/eshop_category.py:197
 #, python-format
 msgid "You cannot delete the category '%s' because it contents %s child categories. Please move child categories to another Category First."
@@ -422,7 +452,7 @@ msgid "eShop"
 msgstr "eBoutique"
 
 #. module: sale_eshop
-#: model:email.template,subject:sale_eshop.eshop_password_template
+#: model:email.template,subject:sale_eshop.eshop_send_crendential_template
 msgid "eShop Access"
 msgstr "Accès à la eBoutique"
 
@@ -451,9 +481,14 @@ msgid "eShop State"
 msgstr "Etat dans la eBoutique"
 
 #. module: sale_eshop
-#: field:sale.shop,eshop_website:0
+#: field:sale.shop,eshop_title:0
+msgid "eShop Title"
+msgstr "Titre de la eBoutique"
+
+#. module: sale_eshop
+#: field:sale.shop,eshop_url:0
 msgid "eShop URL"
-msgstr "URL de l'eBoutique"
+msgstr "URL de la eBoutique"
 
 #. module: sale_eshop
 #: view:wizard.change.product.category:0
