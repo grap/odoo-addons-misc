@@ -94,7 +94,7 @@ class ResPartner(Model):
         et_obj = self.pool['email.template']
         ss_obj = self.pool['sale.shop']
         et = imd_obj.get_object(
-            cr, uid, 'sale_eshop', 'eshop_crendential_template')
+            cr, uid, 'sale_eshop', 'eshop_send_crendential_template')
 
         for rp in self.browse(cr, uid, ids, context=context):
             ss_ids = ss_obj.search(cr, uid, [
