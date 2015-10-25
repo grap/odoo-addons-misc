@@ -52,7 +52,6 @@ class SaleDeliveryMoment(Model):
             context=context)
         moments = self.browse(cr, uid, moment_ids, context=context)
         for moment in moments:
-            print moment.min_delivery_date
             amount_vat_included = 0
             amount_vat_excluded = 0
             is_delay_possible = False
@@ -83,7 +82,6 @@ class SaleDeliveryMoment(Model):
                 'amount_vat_included': amount_vat_included,
                 'is_limit_ok': is_limit_ok,
             })
-        print res
         return res
 
     def check_possibility(
