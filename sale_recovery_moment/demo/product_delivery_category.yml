@@ -22,8 +22,10 @@
 
 - !record {model: product.delivery.category, id: product_delivery_category_4_days}:
     name: 4 Days
+    sequence: 1
     sale_delay: 4
 
 - !record {model: product.delivery.category, id: product_delivery_category_10_days}:
     name: 10 Days
+    sequence: 2
     sale_delay: 10
