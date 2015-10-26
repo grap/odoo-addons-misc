@@ -21,33 +21,33 @@
     <data>
 
 <!-- Model: stock.picking -->
-        <record id="view_stock_picking_out_tree" model="ir.ui.view">
-            <field name="model">stock.picking.out</field>
-            <field name="inherit_id" ref="stock.view_picking_out_tree"/>
-            <field name="arch" type="xml">
-                <field name="partner_id" position="after">
-                    <field name="recovery_moment_id" groups="sale_recovery_moment.recovery_user"/>
-                    <field name="recovery_group_id" groups="sale_recovery_moment.recovery_user"/>
-                    <field name="delivery_moment_id" groups="sale_recovery_moment.delivery_user"/>
-                </field>
-            </field>
-        </record>
+<!--        <record id="view_stock_picking_out_tree" model="ir.ui.view">-->
+<!--            <field name="model">stock.picking.out</field>-->
+<!--            <field name="inherit_id" ref="stock.view_picking_out_tree"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <field name="partner_id" position="after">-->
+<!--                    <field name="recovery_moment_id" groups="sale_recovery_moment.recovery_user"/>-->
+<!--                    <field name="recovery_group_id" groups="sale_recovery_moment.recovery_user"/>-->
+<!--                    <field name="delivery_moment_id" groups="sale_recovery_moment.delivery_user"/>-->
+<!--                </field>-->
+<!--            </field>-->
+<!--        </record>-->
 
-        <record id="view_stock_picking_out_search" model="ir.ui.view">
-            <field name="model">stock.picking.out</field>
-            <field name="inherit_id" ref="stock.view_picking_out_search"/>
-            <field name="arch" type="xml">
-                <field name="partner_id" position="after">
-                    <field name="recovery_moment_id" groups="sale_recovery_moment.recovery_user"/>
-                    <field name="recovery_group_id" groups="sale_recovery_moment.recovery_user"/>
-                    <field name="delivery_moment_id" groups="sale_recovery_moment.delivery_user"/>
-                </field>
-                <xpath expr="//filter[@string='Status']" position="after">
-                    <filter string="Recovery Group" context="{'group_by':'recovery_group_id'}" groups="sale_recovery_moment.recovery_user"/>
-                    <filter string="Recovery Moment" context="{'group_by':'recovery_moment_id'}" groups="sale_recovery_moment.recovery_user"/>
-                    <filter string="Delivery Moment" context="{'group_by':'delivery_moment_id'}" groups="sale_recovery_moment.delivery_user"/>
-                </xpath>
-            </field>
-        </record>
+<!--        <record id="view_stock_picking_out_search" model="ir.ui.view">-->
+<!--            <field name="model">stock.picking.out</field>-->
+<!--            <field name="inherit_id" ref="stock.view_picking_out_search"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <field name="partner_id" position="after">-->
+<!--                    <field name="recovery_moment_id" groups="sale_recovery_moment.recovery_user"/>-->
+<!--                    <field name="recovery_group_id" groups="sale_recovery_moment.recovery_user"/>-->
+<!--                    <field name="delivery_moment_id" groups="sale_recovery_moment.delivery_user"/>-->
+<!--                </field>-->
+<!--                <xpath expr="//filter[@string='Status']" position="after">-->
+<!--                    <filter string="Recovery Group" context="{'group_by':'recovery_group_id'}" groups="sale_recovery_moment.recovery_user"/>-->
+<!--                    <filter string="Recovery Moment" context="{'group_by':'recovery_moment_id'}" groups="sale_recovery_moment.recovery_user"/>-->
+<!--                    <filter string="Delivery Moment" context="{'group_by':'delivery_moment_id'}" groups="sale_recovery_moment.delivery_user"/>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
     </data>
 </openerp>
