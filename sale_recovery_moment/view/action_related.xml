@@ -88,8 +88,6 @@
             <field name="res_model">stock.picking.out</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form,graph</field>
-            <field name="search_view_id" ref="view_stock_picking_out_search"/>
-            <field name="view_id" ref="view_stock_picking_out_tree"/>
             <field name="context">{'search_default_recovery_group_id': active_id}</field>
         </record>
 
@@ -99,8 +97,6 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form,graph</field>
             <field name="domain">[('state', 'not in', ('draft', 'cancel'))]</field>
-            <field name="search_view_id" ref="view_stock_picking_out_search"/>
-            <field name="view_id" ref="view_stock_picking_out_tree"/>
             <field name="context">{'search_default_recovery_group_id': active_id}</field>
         </record>
 
@@ -109,19 +105,18 @@
             <field name="res_model">stock.picking.out</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form,graph</field>
-            <field name="search_view_id" ref="view_stock_picking_out_search"/>
-            <field name="view_id" ref="view_stock_picking_out_tree"/>
             <field name="context">{'search_default_recovery_moment_id': active_id}</field>
         </record>
 
+<!--            <field name="search_view_id" ref="view_stock_picking_out_search"/>-->
+<!--            <field name="view_id" ref="view_stock_picking_out_tree"/>-->
+            
         <record id="action_stock_picking_out_recovery_moment_valid" model="ir.actions.act_window">
             <field name="name">Valid Delivery Orders</field>
             <field name="res_model">stock.picking.out</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form,graph</field>
             <field name="domain">[('state', 'not in', ('draft', 'cancel'))]</field>
-            <field name="search_view_id" ref="view_stock_picking_out_search"/>
-            <field name="view_id" ref="view_stock_picking_out_tree"/>
             <field name="context">{'search_default_recovery_moment_id': active_id}</field>
         </record>
 
@@ -130,8 +125,6 @@
             <field name="res_model">stock.picking.out</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form,graph</field>
-            <field name="search_view_id" ref="view_stock_picking_out_search"/>
-            <field name="view_id" ref="view_stock_picking_out_tree"/>
             <field name="context">{'search_default_delivery_moment_id': active_id}</field>
         </record>
 
@@ -141,8 +134,6 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form,graph</field>
             <field name="domain">[('state', 'not in', ('draft', 'cancel'))]</field>
-            <field name="search_view_id" ref="view_stock_picking_out_search"/>
-            <field name="view_id" ref="view_stock_picking_out_tree"/>
             <field name="context">{'search_default_delivery_moment_id': active_id}</field>
         </record>
 
