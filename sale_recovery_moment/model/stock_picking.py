@@ -70,9 +70,9 @@ class stock_picking(Model):
                         cr, uid, sm_id, {'sequence': count}, context=context)
 
 
-# FIXME: Actually it doesn't work if you don't redefine in stock_picking
+# TODO: IMPROVE (in V8)
+# Actually it doesn't work if you don't redefine in stock_picking
 # the field defined in stock.picking.out
-# TODO: (or refactoring in V8)
 class stock_picking_out(Model):
     _inherit = 'stock.picking.out'
 

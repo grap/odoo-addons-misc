@@ -32,9 +32,7 @@ Functionnality:
 ---------------
     * Possibility to move products to another category;
 
-TODO:
------
-    * Possibility to view number of product of categories;
+TODO: (IMPROVE) Possibility to view number of product of categories;
 
 Copyright, Author and Licence:
 ------------------------------

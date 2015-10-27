@@ -29,8 +29,8 @@
 Allow connection to Odoo eShop Project
 ======================================
 
-Functionality:
---------------
+Functionality
+-------------
     * Create a new category eshop_category for products;
     * Add fields on product.product:
         * 'eShop Category': category in the eShop;
@@ -38,13 +38,6 @@ Functionality:
     * Add fields on res.partner:
         * 'Can purchase on eShop';
         * 'eShop password';
-
-BUG:
-----
-    * It is possible to link product to view category;
-    * TODO :
-        * Remove dependencies to sale_recovery_moment;
-        * move email template from sale_eshop into a custom module;
 
 Copyright, Authors and Licence:
 -------------------------------

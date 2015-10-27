@@ -82,7 +82,7 @@ class pos_switch_journal_wizard(TransientModel):
             po_obj._allow_change_payments(
                 cr, uid, [absl.pos_statement_id.id], context=context)
 
-        # TODO : FIXME when upstream is fixed.
+        # TODO (FIXME) when upstream is fixed.
         # We do 2 write, one in the old statement, one in the new, with
         # 'amount' value each time to recompute all the functional fields
         # of the Account Bank Statements
