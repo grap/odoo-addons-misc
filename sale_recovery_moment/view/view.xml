@@ -482,17 +482,28 @@
             </field>
         </record>
 
-        <record id="view_product_product_tree" model="ir.ui.view">
+        <record id="view_product_product_prepare_tree" model="ir.ui.view">
             <field name="model">product.product</field>
             <field name="arch" type="xml">
-                <tree string="Products (Prepare &amp; Deliver)" editable="bottom">
+                <tree string="Products (Prepare)" editable="bottom">
                     <field name="name" readonly="1"/>
                     <field name="prepare_categ_id" groups="sale_recovery_moment.prepare_user"/>
+                    <field name="company_id" groups="base.group_multi_company" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_product_product_delivery_tree" model="ir.ui.view">
+            <field name="model">product.product</field>
+            <field name="arch" type="xml">
+                <tree string="Products (Delivery)" editable="bottom">
+                    <field name="name" readonly="1"/>
                     <field name="delivery_categ_id" groups="sale_recovery_moment.delivery_user"/>
                     <field name="company_id" groups="base.group_multi_company" />
                 </tree>
             </field>
         </record>
+
 
 <!-- Model: res.partner -->
         <record id="view_res_partner_search" model="ir.ui.view">
@@ -508,7 +519,7 @@
             </field>
         </record>
 
-        <record id="view_res_partner_tree" model="ir.ui.view">
+        <record id="view_res_partner_delivery_tree" model="ir.ui.view">
             <field name="model">res.partner</field>
             <field name="arch" type="xml">
                 <tree string="Customers (Delivery)" editable="bottom">

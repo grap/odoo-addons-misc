@@ -75,21 +75,29 @@
         </record>
 
 <!-- Model: product.product -->
-        <record id="action_product_product" model="ir.actions.act_window">
-            <field name="name">Products (Prepare &amp; Deliver)</field>
+        <record id="action_product_product_prepare" model="ir.actions.act_window">
+            <field name="name">Products (Prepare)</field>
             <field name="res_model">product.product</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree</field>
-            <field name="view_id" ref="view_product_product_tree" />
+            <field name="view_id" ref="view_product_product_prepare_tree" />
+        </record>
+
+        <record id="action_product_product_delivery" model="ir.actions.act_window">
+            <field name="name">Products (Delivery)</field>
+            <field name="res_model">product.product</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_product_product_delivery_tree" />
         </record>
 
 <!-- Model: res.partner -->
-        <record id="action_res_partner" model="ir.actions.act_window">
+        <record id="action_res_partner_delivery" model="ir.actions.act_window">
             <field name="name">Customers (Delivery)</field>
             <field name="res_model">res.partner</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree</field>
-            <field name="view_id" ref="view_res_partner_tree" />
+            <field name="view_id" ref="view_res_partner_delivery_tree" />
         </record>
 
 <!-- Model: stock.picking - Reorder Action -->

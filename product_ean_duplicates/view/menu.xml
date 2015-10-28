@@ -20,7 +20,7 @@
 <openerp>
     <data>
 
-        <menuitem id="menu_product_ean_duplicates"
+        <menuitem id="menu_product_ean_duplicates_3"
             parent="base.menu_product"
             action="action_product_ean_duplicates"
             sequence="15"/>

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-20 15:32+0000\n"
-"PO-Revision-Date: 2015-10-20 15:32+0000\n"
+"POT-Creation-Date: 2015-10-28 23:04+0000\n"
+"PO-Revision-Date: 2015-10-28 23:04+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,14 +16,14 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: sale_recovery_moment
-#: code:addons/sale_recovery_moment/model/sale_delivery_moment.py:75
+#: code:addons/sale_recovery_moment/model/sale_delivery_moment.py:120
 #: code:addons/sale_recovery_moment/model/sale_recovery_moment.py:56
 #, python-format
 msgid "%d / %d Orders"
 msgstr "%d / %d Bons de commande"
 
 #. module: sale_recovery_moment
-#: code:addons/sale_recovery_moment/model/sale_delivery_moment.py:78
+#: code:addons/sale_recovery_moment/model/sale_delivery_moment.py:123
 #: code:addons/sale_recovery_moment/model/sale_recovery_moment.py:59
 #, python-format
 msgid "%d Order(s)"
@@ -89,6 +89,13 @@ msgid "Customers"
 msgstr "Clients"
 
 #. module: sale_recovery_moment
+#: model:ir.actions.act_window,name:sale_recovery_moment.action_res_partner_delivery
+#: model:ir.ui.menu,name:sale_recovery_moment.menu_res_partner_delivery_5
+#: view:res.partner:0
+msgid "Customers (Delivery)"
+msgstr "Clients (Livraison)"
+
+#. module: sale_recovery_moment
 #: view:sale.recovery.moment:0
 msgid "D.O. Qty"
 msgstr "# BL"
@@ -106,6 +113,7 @@ msgstr "Délai (En jours)"
 #. module: sale_recovery_moment
 #: view:product.product:0
 #: field:product.product,delivery_categ_id:0
+#: view:res.partner:0
 #: field:res.partner,delivery_categ_id:0
 #: field:sale.delivery.moment,delivery_categ_id:0
 #: field:sale.order.line,delivery_categ_id:0
@@ -201,7 +209,7 @@ msgid "Error ! You have to select a shop that belong to the company."
 msgstr "Erreur ! Vous devez sélectionner une boutique qui appartienne à la société."
 
 #. module: sale_recovery_moment
-#: code:addons/sale_recovery_moment/model/sale_delivery_moment.py:177
+#: code:addons/sale_recovery_moment/model/sale_delivery_moment.py:230
 #: code:addons/sale_recovery_moment/model/sale_recovery_moment.py:199
 #: code:addons/sale_recovery_moment/model/sale_recovery_moment_group.py:275
 #, python-format
@@ -233,6 +241,11 @@ msgstr "De"
 #: selection:sale.recovery.moment.group,state:0
 msgid "Futur"
 msgstr "Futur"
+
+#. module: sale_recovery_moment
+#: model:ir.model,name:sale_recovery_moment.model_sale_recovery_moment_group
+msgid "Group of Recovery Moments"
+msgstr "Groupe de moments de récupération"
 
 #. module: sale_recovery_moment
 #: field:sale.recovery.moment.group.wizard.duplicate,group_id:0
@@ -340,11 +353,16 @@ msgid "Next Minimum date for the Sale"
 msgstr "Prochaine date de début de vente"
 
 #. module: sale_recovery_moment
-#: code:addons/sale_recovery_moment/model/sale_delivery_moment.py:61
+#: code:addons/sale_recovery_moment/model/sale_delivery_moment.py:106
 #: code:addons/sale_recovery_moment/model/sale_recovery_moment.py:42
 #, python-format
 msgid "No Orders"
 msgstr "Pas de bon de commande"
+
+#. module: sale_recovery_moment
+#: field:sale.delivery.moment,offset:0
+msgid "Offset (Hours)"
+msgstr "Offset (Heures)"
 
 #. module: sale_recovery_moment
 #: code:_description:0
@@ -439,11 +457,19 @@ msgid "Products"
 msgstr "Articles"
 
 #. module: sale_recovery_moment
-#: model:ir.actions.act_window,name:sale_recovery_moment.action_product_product
-#: model:ir.ui.menu,name:sale_recovery_moment.menu_product_product
+#: model:ir.actions.act_window,name:sale_recovery_moment.action_product_product_delivery
+#: model:ir.ui.menu,name:sale_recovery_moment.menu_product_delivery_3
+#: model:ir.ui.menu,name:sale_recovery_moment.menu_product_product_delivery_3
 #: view:product.product:0
-msgid "Products (Prepare & Deliver)"
-msgstr "Articles (Prépa & Livraison)"
+msgid "Products (Delivery)"
+msgstr "Articles (Livraison)"
+
+#. module: sale_recovery_moment
+#: model:ir.actions.act_window,name:sale_recovery_moment.action_product_product_prepare
+#: model:ir.ui.menu,name:sale_recovery_moment.menu_product_product_prepare_3
+#: view:product.product:0
+msgid "Products (Prepare)"
+msgstr "Articles (Préparation)"
 
 #. module: sale_recovery_moment
 #: field:sale.delivery.moment,quota_description:0
@@ -583,7 +609,7 @@ msgstr "Magasin"
 #: view:sale.delivery.moment:0
 #: view:sale.recovery.moment:0
 msgid "See"
-msgstr "See"
+msgstr "Voir"
 
 #. module: sale_recovery_moment
 #: selection:sale.order,reminder_state:0
@@ -595,6 +621,11 @@ msgstr "Envoyé"
 #: field:product.prepare.category,sequence:0
 msgid "Sequence"
 msgstr "Séquence"
+
+#. module: sale_recovery_moment
+#: help:sale.delivery.moment,offset:0
+msgid "Set positive value to increase delay or negative value to reduce delay."
+msgstr "Mettre une valeur positive pour augmenter le délai ou une valeur négative pour le réduire."
 
 #. module: sale_recovery_moment
 #: field:sale.recovery.moment.group,shop_id:0
@@ -616,6 +647,7 @@ msgid "State"
 msgstr "Etat"
 
 #. module: sale_recovery_moment
+#: view:sale.order:0
 #: field:sale.order,reminder_state:0
 msgid "State of the E-mail Reminder"
 msgstr "Etat du mail de rappel"
@@ -745,7 +777,7 @@ msgid "Valid Sale Orders Quantity"
 msgstr "Nombre de bons de commande valides"
 
 #. module: sale_recovery_moment
-#: code:addons/sale_recovery_moment/model/sale_delivery_moment.py:178
+#: code:addons/sale_recovery_moment/model/sale_delivery_moment.py:231
 #, python-format
 msgid "You can not delete this Delivery Moment because there is %d Valid Sale Orders associated.\n"
 "Please move Sale orders on an other Delivery Moment and contact your customers."
