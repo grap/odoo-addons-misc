@@ -21,5 +21,13 @@
 <openerp>
     <data>
 
+<!-- Model: product.supplierinfo -->
+        <menuitem id="menu_product_supplierinfo"
+            name="Supplier Prices"
+            sequence="15"
+            parent="purchase.menu_procurement_management_product"
+            action="action_product_supplierinfo"
+            groups="product.group_purchase_pricelist"/>
+
     </data>
 </openerp>
