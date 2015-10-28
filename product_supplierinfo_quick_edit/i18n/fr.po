@@ -1,13 +1,13 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* product_simple_pricelist
+#	* product_supplierinfo_quick_edit
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-28 19:07+0000\n"
-"PO-Revision-Date: 2015-04-28 19:07+0000\n"
+"POT-Creation-Date: 2015-10-28 22:50+0000\n"
+"PO-Revision-Date: 2015-10-28 22:50+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,114 +15,117 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: product_simple_pricelist
-#: help:product.pricelist,is_simple:0
-msgid "Check this box if you want to edit this pricelist by product"
-msgstr "Cochez cette case si vous voulez éditer cette Liste de prix par produit"
+#. module: product_supplierinfo_quick_edit
+#: view:product.supplierinfo:0
+msgid "Create"
+msgstr "Créer"
 
-#. module: product_simple_pricelist
-#: field:product.simple.pricelist.item,company_id:0
-msgid "Company"
-msgstr "Société"
+#. module: product_supplierinfo_quick_edit
+#: view:product.supplierinfo:0
+msgid "Edit Multiple Lines"
+msgstr "Editer plusieurs lignes"
 
-#. module: product_simple_pricelist
-#: field:product.simple.pricelist.item,difference:0
-msgid "Difference"
-msgstr "Différence"
-
-#. module: product_simple_pricelist
-#: model:ir.actions.act_window,name:product_simple_pricelist.action_edit_simple_pricelist
-#: view:product.pricelist:0
-msgid "Edit By Product"
-msgstr "Editer par produit"
-
-#. module: product_simple_pricelist
-#: code:addons/product_simple_pricelist/model/product_pricelist.py:49
+#. module: product_supplierinfo_quick_edit
+#: code:addons/product_supplierinfo_quick_edit/model/product_supplierinfo.py:118
 #, python-format
 msgid "Error!"
 msgstr "Erreur !"
 
-#. module: product_simple_pricelist
-#: field:product.pricelist,is_simple:0
-msgid "Is Simple"
-msgstr "Est Simple"
+#. module: product_supplierinfo_quick_edit
+#: view:product.supplierinfo:0
+msgid "Group By..."
+msgstr "Regrouper par ..."
 
-#. module: product_simple_pricelist
-#: field:product.simple.pricelist.item,list_price:0
-#: field:product.simple.pricelist.item.update.wizard,list_price:0
-msgid "List Price"
-msgstr "Prix Catalogue"
-
-#. module: product_simple_pricelist
-#: selection:product.simple.pricelist.item,state:0
-msgid "Not Set"
-msgstr "Non défini"
-
-#. module: product_simple_pricelist
-#: field:product.simple.pricelist.item,price:0
-#: field:product.simple.pricelist.item.update.wizard,specific_price:0
-msgid "Price"
-msgstr "Prix"
-
-#. module: product_simple_pricelist
+#. module: product_supplierinfo_quick_edit
 #: code:_description:0
-#: model:ir.model,name:product_simple_pricelist.model_product_pricelist
-#: field:product.simple.pricelist.item,pricelist_id:0
-#: field:product.simple.pricelist.item.update.wizard,pricelist_id:0
+#: model:ir.model,name:product_supplierinfo_quick_edit.model_product_supplierinfo
 #, python-format
-msgid "Pricelist"
-msgstr "Liste de prix"
+msgid "Information about a product supplier"
+msgstr "Information sur le fournisseur de l'article"
 
-#. module: product_simple_pricelist
-#: view:product.simple.pricelist.item:0
-msgid "Pricelist - Edit By Product"
-msgstr "Liste de prix - éditer par produit"
+#. module: product_supplierinfo_quick_edit
+#: field:product.supplierinfo,line_qty:0
+msgid "Lines Quantity"
+msgstr "Nombre de lignes"
 
-#. module: product_simple_pricelist
-#: field:product.simple.pricelist.item,pricelist_item_id:0
-msgid "Pricelist Item"
-msgstr "Item de la liste de prix"
+#. module: product_supplierinfo_quick_edit
+#: code:_description:0
+#: model:ir.model,name:product_supplierinfo_quick_edit.model_res_partner
+#, python-format
+msgid "Partner"
+msgstr "Partenaire"
 
-#. module: product_simple_pricelist
-#: field:product.simple.pricelist.item,pricelist_version_id:0
-#: field:product.simple.pricelist.item.update.wizard,pricelist_version_id:0
-msgid "Pricelist Version"
-msgstr "Version de la liste de prix"
-
-#. module: product_simple_pricelist
-#: field:product.simple.pricelist.item,product_id:0
-#: field:product.simple.pricelist.item.update.wizard,product_id:0
+#. module: product_supplierinfo_quick_edit
+#: view:product.supplierinfo:0
 msgid "Product"
 msgstr "Article"
 
-#. module: product_simple_pricelist
-#: selection:product.simple.pricelist.item,state:0
-msgid "Set"
-msgstr "Défini"
+#. module: product_supplierinfo_quick_edit
+#: view:res.partner:0
+#: field:res.partner,template_ids:0
+msgid "Products"
+msgstr "Articles"
 
-#. module: product_simple_pricelist
-#: view:product.simple.pricelist.item:0
-#: view:product.simple.pricelist.item.update.wizard:0
-msgid "Set Price"
-msgstr "Définir un prix"
+#. module: product_supplierinfo_quick_edit
+#: field:res.partner,template_count:0
+msgid "Products Quantity"
+msgstr "Nombre d'articles"
 
-#. module: product_simple_pricelist
-#: field:product.simple.pricelist.item,specific_price:0
-msgid "Specific Price"
-msgstr "Prix spécifique"
+#. module: product_supplierinfo_quick_edit
+#: field:product.supplierinfo,simple_min_quantity:0
+msgid "Simple Minimum Quantity"
+msgstr "Quantité minimum (simple)"
 
-#. module: product_simple_pricelist
-#: field:product.simple.pricelist.item,standard_price:0
-msgid "Standard Price"
-msgstr "Coût de revient"
+#. module: product_supplierinfo_quick_edit
+#: field:product.supplierinfo,simple_price:0
+msgid "Simple Price"
+msgstr "Prix (simple)"
 
-#. module: product_simple_pricelist
-#: field:product.simple.pricelist.item,state:0
-msgid "State"
-msgstr "Etat"
+#. module: product_supplierinfo_quick_edit
+#: view:product.supplierinfo:0
+msgid "Supplier"
+msgstr "Fournisseur"
 
-#. module: product_simple_pricelist
-#: code:addons/product_simple_pricelist/model/product_pricelist.py:50
+#. module: product_supplierinfo_quick_edit
+#: model:ir.actions.act_window,name:product_supplierinfo_quick_edit.action_product_supplierinfo
+#: model:ir.ui.menu,name:product_supplierinfo_quick_edit.menu_product_supplierinfo
+#: view:product.supplierinfo:0
+msgid "Supplier Prices"
+msgstr "Prix fournisseur"
+
+#. module: product_supplierinfo_quick_edit
+#: view:product.supplierinfo:0
+msgid "Unlink"
+msgstr "Supprimer"
+
+#. module: product_supplierinfo_quick_edit
+#: view:product.supplierinfo:0
+msgid "With Many Prices Defined"
+msgstr "Avec plusieurs prix définis"
+
+#. module: product_supplierinfo_quick_edit
+#: view:product.supplierinfo:0
+msgid "With One Price Defined"
+msgstr "Avec un prix défini"
+
+#. module: product_supplierinfo_quick_edit
+#: view:product.supplierinfo:0
+msgid "Without Prices Defined"
+msgstr "Sans prix définis"
+
+#. module: product_supplierinfo_quick_edit
+#: code:addons/product_supplierinfo_quick_edit/model/product_supplierinfo.py:121
 #, python-format
-msgid "You can not Edit simple pricelist for many pricelists"
-msgstr "Vous ne pouvez pas éditer des listes de prix simple pour plusieurs listes de prix"
+msgid "You can not create a simple supplier line for '%s' product because it has already one (or many) lines.\n"
+"\n"
+" - %s"
+msgstr "Vous ne pouvez par créer une ligne fournisseur pour ce produit '%s' car il possède déjà une ou plusieurs ligne(s).\n"
+"\n"
+" - %s"
+
+#. module: product_supplierinfo_quick_edit
+#: code:addons/product_supplierinfo_quick_edit/model/product_supplierinfo.py:115
+#, python-format
+msgid "qty : %s - price : %s"
+msgstr "qté : %s - prix : %s"
+
