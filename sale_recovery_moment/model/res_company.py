@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Sale - eShop for Odoo
+#    Sale - Recovery Moment for Odoo
 #    Copyright (C) 2014 GRAP (http://www.grap.coop)
 #    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
 #
@@ -25,17 +25,15 @@ from openerp.osv import fields
 from openerp.osv.orm import Model
 
 
-class SaleShop(Model):
-    _inherit = 'sale.shop'
+class ResCompany(Model):
+    _inherit = 'res.company'
 
     # Columns Section
     _columns = {
         'reminder_template': fields.many2one(
             'email.template', 'Template of Reminder Mail'),
-
         'manage_delivery_moment': fields.boolean(
             'Manage Delivery Moment'),
-
         'manage_recovery_moment': fields.boolean(
             'Manage Recovery Moment'),
     }

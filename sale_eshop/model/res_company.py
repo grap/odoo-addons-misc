@@ -25,19 +25,23 @@ from openerp.osv import fields
 from openerp.osv.orm import Model
 
 
-class SaleShop(Model):
-    _inherit = 'sale.shop'
+class ResCompany(Model):
+    _inherit = 'res.company'
 
     # Columns Section
     _columns = {
+        'eshop_invalidation_cache_url': fields.char(
+            'Invalidation Cache URL'),
+        'has_eshop': fields.boolean(
+            'Has eShop'),
+        'eshop_pricelist_id': fields.many2one(
+            'product.pricelist', 'Pricelist Used on eShop'),
         'eshop_minimum_price': fields.float(
             'Minimum Price by eShop'),
         'eshop_title': fields.char(
             'eShop Title'),
         'eshop_url': fields.char(
             'eShop URL', oldname="eshop_website"),
-        'eshop_website_url': fields.char(
-            'Website URL'),
         'eshop_facebook_url': fields.char(
             'Facebook URL'),
         'eshop_twitter_url': fields.char(

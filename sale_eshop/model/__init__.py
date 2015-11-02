@@ -20,11 +20,13 @@
 #
 ##############################################################################
 
+from . import model
+
 from . import eshop_category
 from . import product_product
 from . import wizard_change_product_category
 from . import res_partner
-from . import sale_shop
+from . import res_company
 from . import product_uom
 from . import sale_order
 from . import account_tax
