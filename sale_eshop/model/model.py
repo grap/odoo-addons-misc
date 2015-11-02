@@ -65,12 +65,14 @@ _eshop_backup_write_function = Model.write
 
 
 def new_write_function(self, cr, uid, ids, vals, context=None):
+    user_obj = self.pool['res.users']
+    company_obj = self.pool['res.company']
+
     res = _eshop_backup_write_function(
         self, cr, uid, ids, vals, context=context)
     eshop_model = _ESHOP_OPENERP_MODELS.get(self._name, False)
-    if eshop_model:
-        user_obj = self.pool['res.users']
-        company_obj = self.pool['res.company']
+
+    if eshop_model and 'has_eshop' in company_obj._all_columns.keys():
         # It's a model loaded and cached by the eShop
         eshop_fields = eshop_model['fields']
         update_fields = vals.keys()
