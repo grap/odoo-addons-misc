@@ -394,7 +394,6 @@
                         </div>
                         <group col="4">
                             <field name="sale_delay"/>
-                            <field name="image" widget="image"/>
                             <field name="active"/>
                             <field name="sequence"/>
                             <field name="company_id" groups="base.group_multi_company"/>

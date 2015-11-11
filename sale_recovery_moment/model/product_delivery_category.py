@@ -34,8 +34,6 @@ class ProductDeliveryCategory(Model):
             'Name', required=True),
         'sequence': fields.integer(
             'Sequence', required=True),
-        'image': fields.binary(
-            'Image'),
         'company_id': fields.many2one(
             'res.company', string='Company', required=True),
         'active': fields.boolean('Active'),
