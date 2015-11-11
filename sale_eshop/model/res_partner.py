@@ -92,21 +92,21 @@ class ResPartner(Model):
         context = context or {}
         imd_obj = self.pool['ir.model.data']
         et_obj = self.pool['email.template']
-        ss_obj = self.pool['sale.shop']
         et = imd_obj.get_object(
             cr, uid, 'sale_eshop', 'eshop_send_crendential_template')
 
         for rp in self.browse(cr, uid, ids, context=context):
-            ss_ids = ss_obj.search(cr, uid, [
-                ('company_id', '=', rp.company_id.id),
-                ('eshop_url', '!=', False),
-            ], context=context)
-            ctx = context.copy()
-            if ss_ids:
-                ctx['eshop_url'] = ss_obj.browse(
-                    cr, uid, ss_ids[0], context=context).eshop_url
-            et_obj.send_mail(
-                cr, uid, et.id, rp.id, True, context=ctx)
+            et_obj.send_mail(cr, uid, et.id, rp.id, True, context=context)
+        return True
+
+    def generate_credentials(self, cr, uid, ids, context=None):
+        for rp in self.browse(cr, uid, ids, context=context):
+            random.seed = (os.urandom(1024))
+            password = ''.join(random.choice(
+                self._PASSWORD_CHARS) for i in range(self._PASSWORD_LENGTH))
+            self.write(cr, uid, ids, {
+                'eshop_password': password,
+                'eshop_state': 'enabled'}, context=context)
         return True
 
     # View Function Section
@@ -119,13 +119,10 @@ class ResPartner(Model):
             'eshop_password': False,
             'eshop_state': 'disabled'}, context=context)
 
-    def button_generate_send_password(self, cr, uid, ids, context=None):
-        for rp in self.browse(cr, uid, ids, context=context):
-            random.seed = (os.urandom(1024))
-            password = ''.join(random.choice(
-                self._PASSWORD_CHARS) for i in range(self._PASSWORD_LENGTH))
-            self.write(cr, uid, ids, {
-                'eshop_password': password,
-                'eshop_state': 'enabled'}, context=context)
+    def button_generate_credentials(self, cr, uid, ids, context=None):
+        self.generate_credentials(cr, uid, ids, context=context)
+        return True
+
+    def button_send_credentials(self, cr, uid, ids, context=None):
         self.send_credentials(cr, uid, ids, context=context)
         return True

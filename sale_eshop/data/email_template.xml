@@ -34,9 +34,7 @@
     <p>Here is your credentials to access to the eShop of ${object.company_id.name}:</p>
     <p>
         <ul>
-% if ctx.get('eshop_website', False):
-            <li>Web Site: ${ctx.get('eshop_website')}</li>
-% endif
+            <li>Web Site: ${object.company_id.eshop_url}</li>
             <li>Login: ${object.email}</li>
             <li>Password: ${object.eshop_password}</li>
         </ul>

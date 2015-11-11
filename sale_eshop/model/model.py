@@ -29,10 +29,59 @@ from openerp.osv.orm import Model
 from openerp.tools.translate import _
 
 
+"""
+    Define models used by eshop. Format.
+    'model.name' : {
+        'type': 'single' / 'multiple',
+        'fields': ['field_1', 'field_2']
+    }
+    If a model is defined in this list, all write action will call an
+    invalidation call to the according eshop (or eshops) to mention that
+    the model should be reloaded.
+
+    'fields' mentions wich fields raise invalidation call.
+
+    if type is 'single', only one invalidation will be called.
+    if type is 'multiple', all eshop will be called.
+"""
 _ESHOP_OPENERP_MODELS = {
+    # 'single' type Models
+    'product.product': {
+        'type': 'single',
+        'fields': [
+            'name', 'uom_id', 'image', 'image_medium', 'list_price',
+            'eshop_category_id', 'label_ids', 'eshop_minimum_qty',
+            'eshop_rounded_qty', 'origin_description', 'maker_description',
+            'fresh_category', 'description', 'country_id', 'department_id',
+            'default_code', 'delivery_categ_id', 'eshop_taxes_description'],
+    },
+    'res.company': {
+        'type': 'single',
+        'fields': [
+            'name', 'has_eshop', 'eshop_minimum_price', 'eshop_title',
+            'eshop_url', 'website', 'eshop_list_view_enabled',
+            'eshop_facebook_url', 'eshop_twitter_url', 'eshop_google_plus_url',
+            'eshop_home_text', 'eshop_home_image', 'eshop_image_small',
+            'eshop_vat_included', 'eshop_register_allowed',
+            'manage_delivery_moment', 'manage_recovery_moment',
+        ],
+    },
+    'eshop.category': {
+        'type': 'single',
+        'fields': [
+            'name', 'available_product_qty', 'child_qty', 'image_medium',
+            'type', 'parent_id', 'product_ids', 'complete_name'],
+    },
+    'product.delivery.category': {
+        'type': 'single',
+        'fields': ['name'],
+    },
+
+
+    # 'multiple' type Models
     'product.label': {
         'type': 'multiple',
-        'fields': ['name', 'code', 'image_small', 'image'],
+        'fields': ['name', 'code', 'image', 'image_small'],
     },
     'res.country': {
         'type': 'multiple',
@@ -44,19 +93,7 @@ _ESHOP_OPENERP_MODELS = {
     },
     'product.uom': {
         'type': 'multiple',
-        'fields': ['name', 'eshop_description'],
-    },
-    'res.company': {
-        'type': 'single',
-        'fields': [
-            'name', 'has_eshop', 'eshop_minimum_price', 'eshop_title',
-            'eshop_url',
-            'eshop_facebook_url', 'eshop_twitter_url', 'eshop_google_plus_url',
-            'eshop_home_text', 'eshop_home_image', 'eshop_image_small',
-            'eshop_vat_included', 'eshop_register_allowed',
-            'eshop_list_view_enabled',
-            'manage_delivery_moment', 'manage_recovery_moment',
-        ],
+        'fields': ['id', 'name', 'eshop_description'],
     },
 }
 
@@ -97,7 +134,8 @@ def new_write_function(self, cr, uid, ids, vals, context=None):
                     cr, SUPERUSER_ID, company_ids, context=context):
                 for id in ids:
                     url = company.eshop_invalidation_cache_url\
-                        + self._name + '/' + str(id)
+                        + self._name + '/' + str(id) + '/'\
+                        + ','.join(intersec_fields)
                     # TODO IMPROVE ME, auth=('user', 'pass')
                     req = requests.get(url)
                     if req.status_code != 200:

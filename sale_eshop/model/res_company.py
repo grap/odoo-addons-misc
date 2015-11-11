@@ -20,6 +20,7 @@
 #
 ##############################################################################
 
+from .model import _ESHOP_OPENERP_MODELS
 
 from openerp.osv import fields
 from openerp.osv.orm import Model
@@ -27,6 +28,9 @@ from openerp.osv.orm import Model
 
 class ResCompany(Model):
     _inherit = 'res.company'
+
+    def GetEshopModel(self, cr, uid, context=None):
+        return _ESHOP_OPENERP_MODELS
 
     # Columns Section
     _columns = {

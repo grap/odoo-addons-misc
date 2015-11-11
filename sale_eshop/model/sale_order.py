@@ -20,6 +20,7 @@
 #
 ##############################################################################
 
+import hashlib
 from datetime import datetime
 
 from openerp.osv.orm import Model
@@ -37,8 +38,8 @@ class SaleOrder(Model):
         now = datetime.now()
 
         delivery_moments_data = sdm_obj.load_delivery_moment_data(
-            cr, uid, so.id, so.shop_id.eshop_minimum_price,
-            so.shop_id.eshop_vat_included, context=context)
+            cr, uid, so.id, so.company_id.eshop_minimum_price,
+            so.company_id.eshop_vat_included, context=context)
 
         delivery_moment_data = False
         for item in delivery_moments_data:
@@ -110,6 +111,8 @@ class SaleOrder(Model):
         information"""
         res = []
         ec_obj = self.pool['eshop.category']
+        pp_obj = self.pool['product.product']
+        label_obj = self.pool['product.label']
         qty_dict = {}
         # Get current quantities ordered
         if id:
@@ -129,29 +132,36 @@ class SaleOrder(Model):
             current_categ = {
                 'id': ec.id,
                 'name': ec.name,
-                'image_medium': ec.image_medium,
+                'complete_name': ec.complete_name,
+                'sha1': hashlib.sha1(str(ec_obj.perm_read(
+                    cr, uid, [ec.id])[0]['write_date'])).hexdigest(),
                 'product_ids': [],
             }
-            for pp in ec.available_product_ids:
+            for product in ec.available_product_ids:
                 current_product = {
-                    'default_code': pp.default_code,
-                    'id': pp.id,
-                    'name': pp.name,
-                    'list_price': pp.list_price,
-                    'uom_eshop_description': pp.uom_id.eshop_description,
-                    'eshop_taxes_description': pp.eshop_taxes_description,
-                    'current_qty': qty_dict.get(pp.id, 0),
+                    'id': product.id,
+                    'name': product.name,
+                    'default_code': product.default_code,
+                    'list_price': product.list_price,
+                    'uom_eshop_description': product.uom_id.eshop_description,
+                    'eshop_taxes_description': product.eshop_taxes_description,
+                    'current_qty': qty_dict.get(product.id, 0),
                     'label_ids': [],
+                    'sha1': hashlib.sha1(str(pp_obj.perm_read(
+                        cr, uid, [product.id])[0]['write_date'])).hexdigest(),
                 }
-                if pp.delivery_categ_id:
+                if product.delivery_categ_id:
                     current_product['delivery_categ_id'] = {
-                        'name': pp.delivery_categ_id.name,
-                        'image_small': pp.delivery_categ_id.image,
+                        'id': product.delivery_categ_id.id,
+                        'name': product.delivery_categ_id.name,
                     }
-                for label in pp.label_ids:
+                for label in product.label_ids:
                     current_product['label_ids'].append({
+                        'id': label.id,
                         'name': label.name,
-                        'image_small': label.image_small,
+                        'sha1': hashlib.sha1(str(label_obj.perm_read(
+                            cr, uid,
+                            [label.id])[0]['write_date'])).hexdigest(),
                     })
                 current_categ['product_ids'].append(current_product)
             res.append(current_categ)

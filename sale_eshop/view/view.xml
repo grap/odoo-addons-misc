@@ -83,8 +83,11 @@
                             <button name="button_confirm_eshop" colspan="2"
                                 string="Confirm Customer" icon="gtk-apply"
                                 type="object" attrs="{'invisible':[('eshop_state','!=', 'first_purchase')]}"/>
-                            <button name="button_generate_send_password" colspan="2"
-                                string="Generate (or generate again) and Send Credentials" icon="terp-mail-message-new"
+                            <button name="button_generate_credentials" colspan="2"
+                                string="Generate Credentials" icon="STOCK_EXECUTE"
+                                type="object"/>
+                            <button name="button_send_credentials" colspan="2"
+                                string="Send Credentials" icon="terp-mail-message-new"
                                 type="object"/>
                             <button name="button_disable_eshop" colspan="2"
                                 string="Prevent User to use eShop" icon="gtk-cancel"
@@ -108,8 +111,11 @@
                     <button name="button_confirm_eshop"
                         string="Confirm Customer" icon="gtk-apply"
                         type="object" attrs="{'invisible':[('eshop_state','!=', 'first_purchase')]}"/>
-                    <button name="button_generate_send_password"
-                        string="Generate (or generate again) and Send Credentials" icon="terp-mail-message-new"
+                    <button name="button_generate_credentials"
+                        string="Generate Credentials" icon="STOCK_EXECUTE"
+                        type="object"/>
+                    <button name="button_send_credentials"
+                        string="Send Credentials" icon="terp-mail-message-new"
                         type="object"/>
                     <button name="button_disable_eshop"
                         string="Prevent User to use eShop" icon="gtk-cancel"

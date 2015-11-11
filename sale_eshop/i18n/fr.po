@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-28 23:02+0000\n"
-"PO-Revision-Date: 2015-10-28 23:02+0000\n"
+"POT-Creation-Date: 2015-11-11 22:07+0000\n"
+"PO-Revision-Date: 2015-11-11 22:07+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -23,9 +23,7 @@ msgid "\n"
 "    <p>Here is your credentials to access to the eShop of ${object.company_id.name}:</p>\n"
 "    <p>\n"
 "        <ul>\n"
-"% if ctx.get('eshop_website', False):\n"
-"            <li>Web Site: ${ctx.get('eshop_website')}</li>\n"
-"% endif\n"
+"            <li>Web Site: ${object.company_id.eshop_url}</li>\n"
 "            <li>Login: ${object.email}</li>\n"
 "            <li>Password: ${object.eshop_password}</li>\n"
 "        </ul>\n"
@@ -42,9 +40,7 @@ msgstr "\n"
 "    <p>Vous trouverez ci-dessous vos identifiants pour accéder à la boutique en ligne de ${object.company_id.name} :</p>\n"
 "    <p>\n"
 "        <ul>\n"
-"% if ctx.get('eshop_website', False):\n"
-"            <li>Site Web : ${ctx.get('eshop_website')}</li>\n"
-"% endif\n"
+"            <li>Site Web : ${object.company_id.eshop_url}</li>\n"
 "            <li>Login : ${object.email}</li>\n"
 "            <li>Mot de passe : ${object.eshop_password}</li>\n"
 "        </ul>\n"
@@ -71,9 +67,9 @@ msgid "A category of the view type is a virtual category that can be used as the
 msgstr "Une catégorie de type 'vue' est une catégorie virtuelle qui peut être utilisée comme parent d'une autre catégorie, pour créer une architecture."
 
 #. module: sale_eshop
-#: field:sale.shop,eshop_register_allowed:0
+#: field:res.company,eshop_register_allowed:0
 msgid "Allow new customer to register on eShop"
-msgstr "Autoriser les nouveaux clients à s'enregistrer sur la eBoutique"
+msgstr "Autorise un nouveau client à s'enregistrer sur la eBoutique"
 
 #. module: sale_eshop
 #: view:wizard.change.product.category:0
@@ -138,6 +134,13 @@ msgid "Childs Quantity"
 msgstr "Nombre de Catégories Enfants"
 
 #. module: sale_eshop
+#: code:_description:0
+#: model:ir.model,name:sale_eshop.model_res_company
+#, python-format
+msgid "Companies"
+msgstr "Sociétés"
+
+#. module: sale_eshop
 #: field:eshop.category,company_id:0
 msgid "Company"
 msgstr "Société"
@@ -181,14 +184,28 @@ msgid "End Date of Sale"
 msgstr "Date de Fin de Vente"
 
 #. module: sale_eshop
+#: code:addons/sale_eshop/model/model.py:126
+#: code:addons/sale_eshop/model/model.py:142
+#, python-format
+msgid "Error !"
+msgstr "Erreur !"
+
+#. module: sale_eshop
 #: field:product.product,eshop_taxes_description:0
 msgid "Eshop Taxes Description"
 msgstr "Description des taxes sur la eBoutique"
 
 #. module: sale_eshop
-#: field:sale.shop,eshop_facebook_url:0
+#: field:res.company,eshop_facebook_url:0
 msgid "Facebook URL"
 msgstr "URL Facebook"
+
+#. module: sale_eshop
+#: code:_description:0
+#: model:ir.model,name:sale_eshop.model_ir_model_fields
+#, python-format
+msgid "Fields"
+msgstr "Champs"
 
 #. module: sale_eshop
 #: selection:res.partner,eshop_state:0
@@ -201,9 +218,14 @@ msgid "Generate (or generate again) and Send Credentials"
 msgstr "(Re) Générer un mot de passe et l'envoyer par mail"
 
 #. module: sale_eshop
-#: field:sale.shop,eshop_google_plus_url:0
+#: field:res.company,eshop_google_plus_url:0
 msgid "Google Plus URL"
 msgstr "URL Google Plus"
+
+#. module: sale_eshop
+#: field:res.company,has_eshop:0
+msgid "Has eShop"
+msgstr "A une boutique en ligne"
 
 #. module: sale_eshop
 #: field:eshop.category,image:0
@@ -211,9 +233,14 @@ msgid "Image"
 msgstr "Image"
 
 #. module: sale_eshop
-#: field:sale.shop,eshop_home_image:0
+#: field:res.company,eshop_home_image:0
 msgid "Image for the eShop Home Page"
 msgstr "Image pour la page d'accueil de la eBoutique"
+
+#. module: sale_eshop
+#: field:res.company,eshop_invalidation_cache_url:0
+msgid "Invalidation Cache URL"
+msgstr "URL d'invalidation du cache"
 
 #. module: sale_eshop
 #: help:eshop.category,image:0
@@ -231,14 +258,21 @@ msgid "Medium-sized image"
 msgstr "Image de taille moyenne"
 
 #. module: sale_eshop
-#: field:sale.shop,eshop_minimum_price:0
+#: field:res.company,eshop_minimum_price:0
 msgid "Minimum Price by eShop"
-msgstr "Franco de commande dans la eBoutique"
+msgstr "Prix minimum pour la eBoutique"
 
 #. module: sale_eshop
 #: field:product.product,eshop_minimum_qty:0
 msgid "Minimum Quantity for eShop"
 msgstr "Quantité minimum pour la eBoutique"
+
+#. module: sale_eshop
+#: code:_description:0
+#: model:ir.model,name:sale_eshop.model_ir_model
+#, python-format
+msgid "Models"
+msgstr "Modèles"
 
 #. module: sale_eshop
 #: view:eshop.category:0
@@ -291,6 +325,11 @@ msgid "Prevent User to use eShop"
 msgstr "Empêcher l'utilisateur d'utiliser la eBoutique"
 
 #. module: sale_eshop
+#: field:res.company,eshop_pricelist_id:0
+msgid "Pricelist Used on eShop"
+msgstr "Liste de prix utilisée pour la eBoutique"
+
+#. module: sale_eshop
 #: code:_description:0
 #: model:ir.model,name:sale_eshop.model_product_product
 #, python-format
@@ -323,9 +362,9 @@ msgid "Products Quantity"
 msgstr "Quantité d'articles"
 
 #. module: sale_eshop
-#: field:sale.shop,eshop_list_view_enabled:0
+#: field:res.company,eshop_list_view_enabled:0
 msgid "Provide a List view to realize quick purchase."
-msgstr "Fournir une vue liste pour réaliser des achats rapides."
+msgstr "Fourni une vue liste pour réaliser des achats rapides"
 
 #. module: sale_eshop
 #: field:product.product,eshop_rounded_qty:0
@@ -349,7 +388,7 @@ msgstr "Magasin"
 #. module: sale_eshop
 #: field:eshop.category,sequence:0
 msgid "Sequence"
-msgstr "Sequence"
+msgstr "Séquence"
 
 #. module: sale_eshop
 #: view:product.product:0
@@ -358,7 +397,7 @@ msgid "Set On eShop"
 msgstr "Paramétré dans la eBoutique"
 
 #. module: sale_eshop
-#: field:sale.shop,eshop_image_small:0
+#: field:res.company,eshop_image_small:0
 msgid "Small Image for the eShop Menu"
 msgstr "Petite image pour le menu de la eBoutique"
 
@@ -389,7 +428,7 @@ msgid "Temporarily Disabled"
 msgstr "Désactivé temporairement"
 
 #. module: sale_eshop
-#: field:sale.shop,eshop_home_text:0
+#: field:res.company,eshop_home_text:0
 msgid "Text for the eShop Home Page"
 msgstr "Texte pour la page d'accueil de la eBoutique"
 
@@ -406,7 +445,7 @@ msgid "This arg %s is not implemented !"
 msgstr "L'argument %s n'est pas implémenté !"
 
 #. module: sale_eshop
-#: field:sale.shop,eshop_twitter_url:0
+#: field:res.company,eshop_twitter_url:0
 msgid "Twitter URL"
 msgstr "URL Twitter"
 
@@ -421,7 +460,7 @@ msgid "User"
 msgstr "Utilisateur"
 
 #. module: sale_eshop
-#: field:sale.shop,eshop_vat_included:0
+#: field:res.company,eshop_vat_included:0
 msgid "VAT Included for eShop"
 msgstr "Prix TTC sur la eBoutique"
 
@@ -431,9 +470,16 @@ msgid "View"
 msgstr "Vue"
 
 #. module: sale_eshop
-#: field:sale.shop,eshop_website_url:0
-msgid "Website URL"
-msgstr "URL du Site Web"
+#: code:addons/sale_eshop/model/model.py:142
+#, python-format
+msgid "You can not change this values because the eShop is unreachable."
+msgstr "Vous ne pouvez pas changer ces valeurs car la eBoutique est inaccessible."
+
+#. module: sale_eshop
+#: code:addons/sale_eshop/model/model.py:126
+#, python-format
+msgid "You can not change this values because you have not selected the good company."
+msgstr "Vous ne pouvez pas changer ces valeurs car vous n'avez pas sélectionné la bonne société."
 
 #. module: sale_eshop
 #: code:addons/sale_eshop/model/eshop_category.py:197
@@ -447,8 +493,10 @@ msgstr "Vous ne pouvez pas supprimer la catégorie '%s' car elle contient %s cat
 msgid "You cannot delete the category '%s' because it contents %s products. Please move products to another Category First."
 msgstr "Vous ne pouvez pas supprimer cette catégorie '%s' car elle contient %s articles. Veuillez déplacer d'abord les articles dans une autre catégorie."
 
+
 #. module: sale_eshop
 #: model:ir.module.category,name:sale_eshop.module_category_eshop
+#: view:res.company:0
 msgid "eShop"
 msgstr "eBoutique"
 
@@ -471,8 +519,8 @@ msgstr "Catégorie eBoutique"
 
 #. module: sale_eshop
 #: model:ir.ui.menu,name:sale_eshop.menu_eshop
+#: view:res.company:0
 #: view:res.partner:0
-#: view:sale.shop:0
 msgid "eShop Sale"
 msgstr "Vente eBoutique"
 
@@ -482,15 +530,14 @@ msgid "eShop State"
 msgstr "Etat dans la eBoutique"
 
 #. module: sale_eshop
-#: field:sale.shop,eshop_title:0
+#: field:res.company,eshop_title:0
 msgid "eShop Title"
-msgstr "Titre de la eBoutique"
+msgstr "Title de la eBoutique"
 
 #. module: sale_eshop
-#: field:sale.shop,eshop_url:0
+#: field:res.company,eshop_url:0
 msgid "eShop URL"
 msgstr "URL de la eBoutique"
-
 
 #. module: sale_eshop
 #: view:wizard.change.product.category:0
