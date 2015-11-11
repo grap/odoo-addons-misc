@@ -29,21 +29,19 @@ from openerp.osv.orm import Model
 from openerp.tools.translate import _
 
 
-"""
-    Define models used by eshop. Format.
-    'model.name' : {
-        'type': 'single' / 'multiple',
-        'fields': ['field_1', 'field_2']
-    }
-    If a model is defined in this list, all write action will call an
-    invalidation call to the according eshop (or eshops) to mention that
-    the model should be reloaded.
+#    Define models used by eshop. Format.
+#    'model.name' : {
+#        'type': 'single' / 'multiple',
+#        'fields': ['field_1', 'field_2']
+#    }
+#    If a model is defined in this list, all write action will call an
+#    invalidation call to the according eshop (or eshops) to mention that
+#    the model should be reloaded.
 
-    'fields' mentions wich fields raise invalidation call.
+#    'fields' mentions wich fields raise invalidation call.
 
-    if type is 'single', only one invalidation will be called.
-    if type is 'multiple', all eshop will be called.
-"""
+#    if type is 'single', only one invalidation will be called.
+#    if type is 'multiple', all eshop will be called.
 _ESHOP_OPENERP_MODELS = {
     # 'single' type Models
     'product.product': {
