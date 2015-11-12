@@ -100,7 +100,6 @@ _eshop_backup_write_function = Model.write
 
 
 def new_write_function(self, cr, uid, ids, vals, context=None):
-    user_obj = self.pool['res.users']
     company_obj = self.pool['res.company']
 
     res = _eshop_backup_write_function(
