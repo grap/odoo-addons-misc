@@ -1,0 +1,4 @@
+web
+pos
+l10n-france
+sale-workflow
