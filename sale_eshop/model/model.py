@@ -105,41 +105,63 @@ def new_write_function(self, cr, uid, ids, vals, context=None):
 
     res = _eshop_backup_write_function(
         self, cr, uid, ids, vals, context=context)
-    eshop_model = _ESHOP_OPENERP_MODELS.get(self._name, False)
 
-    if eshop_model and 'has_eshop' in company_obj._all_columns.keys():
-        # It's a model loaded and cached by the eShop
-        eshop_fields = eshop_model['fields']
-        update_fields = vals.keys()
-        intersec_fields = [x for x in eshop_fields if x in update_fields]
-        if intersec_fields:
-            # Some fields are loaded and cached by the eShop
-            if eshop_model['type'] == 'single':
-                company_ids = [x for x in [user_obj._get_company(
-                    cr, uid, context=context)] if x in company_obj.search(
-                        cr, SUPERUSER_ID,
-                        [('has_eshop', '=', True)],
-                        context=context)]
-                if not company_ids:
+    if 'has_eshop' not in company_obj._all_columns.keys():
+        # The module is not installed
+        return res
+
+    eshop_model = _ESHOP_OPENERP_MODELS.get(self._name, False)
+    if not eshop_model:
+        # The model is not synchronised with an eShop
+        return res
+
+    eshop_fields = eshop_model['fields']
+    update_fields = vals.keys()
+    intersec_fields = [x for x in eshop_fields if x in update_fields]
+    if not intersec_fields:
+        # No fields synchronised has changed
+        return res
+
+    # Some fields are loaded and cached by the eShop
+    if eshop_model['type'] == 'single':
+        for item in self.browse(cr, uid, ids, context=context):
+            if self._name == 'res.company' and item.has_eshop:
+                url = item.eshop_invalidation_cache_url\
+                    + self._name + '/' + str(item.id) + '/'\
+                    + ','.join(intersec_fields)
+                req = requests.get(url, verify=False)
+                if req.status_code != 200:
                     raise except_osv(_('Error !'), _(
-                        "You can not change this values because you have"
-                        " not selected the good company."))
+                        "You can not change this values because the"
+                        " eShop is unreachable."))
+            elif item.company_id.has_eshop:
+                url = item.company_id.eshop_invalidation_cache_url\
+                    + self._name + '/' + str(item.id) + '/'\
+                    + ','.join(intersec_fields)
+                req = requests.get(url, verify=False)
+                if req.status_code != 200:
+                    raise except_osv(_('Error !'), _(
+                        "You can not change this values because the"
+                        " eShop is unreachable."))
             else:
-                company_ids = company_obj.search(
-                    cr, SUPERUSER_ID, [('has_eshop', '=', True)],
-                    context=context)
-            for company in company_obj.browse(
-                    cr, SUPERUSER_ID, company_ids, context=context):
-                for id in ids:
-                    url = company.eshop_invalidation_cache_url\
-                        + self._name + '/' + str(id) + '/'\
-                        + ','.join(intersec_fields)
-                    # TODO IMPROVE ME, auth=('user', 'pass')
-                    req = requests.get(url, verify=False)
-                    if req.status_code != 200:
-                        raise except_osv(_('Error !'), _(
-                            "You can not change this values because the"
-                            " eShop is unreachable."))
+                # Company has no eShop
+                return res
+
+    if eshop_model['type'] == 'multiple':
+        company_ids = company_obj.search(
+            cr, SUPERUSER_ID, [('has_eshop', '=', True)],
+            context=context)
+        for company in company_obj.browse(
+                cr, SUPERUSER_ID, company_ids, context=context):
+            for id in ids:
+                url = company.eshop_invalidation_cache_url\
+                    + self._name + '/' + str(id) + '/'\
+                    + ','.join(intersec_fields)
+                req = requests.get(url, verify=False)
+                if req.status_code != 200:
+                    raise except_osv(_('Error !'), _(
+                        "You can not change this values because the"
+                        " eShop is unreachable."))
 
     return res
 
