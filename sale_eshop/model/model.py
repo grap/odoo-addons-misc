@@ -133,7 +133,7 @@ def new_write_function(self, cr, uid, ids, vals, context=None):
                     raise except_osv(_('Error !'), _(
                         "You can not change this values because the"
                         " eShop is unreachable."))
-            elif item.company_id.has_eshop:
+            elif self._name != 'res.company' and item.company_id.has_eshop:
                 url = item.company_id.eshop_invalidation_cache_url\
                     + self._name + '/' + str(item.id) + '/'\
                     + ','.join(intersec_fields)
