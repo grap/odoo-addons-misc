@@ -135,7 +135,7 @@ def new_write_function(self, cr, uid, ids, vals, context=None):
                         + self._name + '/' + str(id) + '/'\
                         + ','.join(intersec_fields)
                     # TODO IMPROVE ME, auth=('user', 'pass')
-                    req = requests.get(url)
+                    req = requests.get(url, verify=False)
                     if req.status_code != 200:
                         raise except_osv(_('Error !'), _(
                             "You can not change this values because the"
