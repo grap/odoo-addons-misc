@@ -132,7 +132,7 @@ def new_write_function(self, cr, uid, ids, vals, context=None):
                 if req.status_code != 200:
                     raise except_osv(_('Error !'), _(
                         "You can not change this values because the"
-                        " eShop is unreachable."))
+                        " eShop datas can not be updated."))
             elif self._name != 'res.company' and item.company_id.has_eshop:
                 url = item.company_id.eshop_invalidation_cache_url\
                     + self._name + '/' + str(item.id) + '/'\
@@ -141,7 +141,7 @@ def new_write_function(self, cr, uid, ids, vals, context=None):
                 if req.status_code != 200:
                     raise except_osv(_('Error !'), _(
                         "You can not change this values because the"
-                        " eShop is unreachable."))
+                        " eShop datas can not be updated. \n - Code : %s") % (req.status_code))
             else:
                 # Company has no eShop
                 return res
