@@ -77,6 +77,10 @@ _ESHOP_OPENERP_MODELS = {
 
 
     # 'multiple' type Models
+    'account.tax': {
+        'type': 'multiple',
+        'fields': ['eshop_description'],
+    },
     'product.label': {
         'type': 'multiple',
         'fields': ['name', 'code', 'image', 'image_small'],
@@ -141,7 +145,8 @@ def new_write_function(self, cr, uid, ids, vals, context=None):
                 if req.status_code != 200:
                     raise except_osv(_('Error !'), _(
                         "You can not change this values because the"
-                        " eShop datas can not be updated. \n - Code : %s") % (req.status_code))
+                        " eShop datas can not be updated."
+                        " \n - Code : %s") % (req.status_code))
             else:
                 # Company has no eShop
                 return res
@@ -160,7 +165,8 @@ def new_write_function(self, cr, uid, ids, vals, context=None):
                 if req.status_code != 200:
                     raise except_osv(_('Error !'), _(
                         "You can not change this values because the"
-                        " eShop is unreachable."))
+                        " eShop datas can not be updated."
+                        " \n - Code : %s") % (req.status_code))
 
     return res
 

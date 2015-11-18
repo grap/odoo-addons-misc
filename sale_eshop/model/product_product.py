@@ -175,3 +175,69 @@ class ProductProduct(Model):
         demo_image.init_image(
             self.pool, cr, uid, 'product.product', 'image',
             '/static/src/img/demo/product_product/', context=context)
+
+    # Custom Section
+    def get_current_eshop_product_list(self, cr, uid, order_id, context=None):
+        """The aim of this function is to deal with delay of response of
+        the odoo-eshop, module.
+        This will return a list of data, used for catalog inline view."""
+        so_obj = self.pool['sale.order']
+        ru_obj = self.pool['res.users']
+        res = []
+        qty_dict = {}
+        # Get current quantities ordered
+        if id:
+            so = so_obj.browse(cr, uid, order_id, context=context)
+            for sol in so.order_line:
+                if sol.product_id.id in qty_dict.keys():
+                    qty_dict[sol.product_id.id] += sol.product_uom_qty
+                else:
+                    qty_dict[sol.product_id.id] = sol.product_uom_qty
+
+        company_id = ru_obj.browse(cr, uid, uid, context=context).company_id.id
+        cr.execute("""
+SELECT
+    distinct tmp.*,
+    array_to_string(array_agg(label_rel.label_id)
+        OVER (PARTITION BY label_rel.product_id), ',') label_ids
+FROM (
+    SELECT distinct
+    pp.id id,
+    pt.id as template_id,
+    pp.default_code default_code,
+    pt.name,
+    pt.list_price list_price,
+    ec.id category_id,
+    ec.sequence category_sequence,
+    ec.name category_name,
+    pt.uom_id,
+    pp.eshop_minimum_qty,
+    pp.delivery_categ_id,
+    array_to_string(array_agg(tax_rel.tax_id)
+        OVER (PARTITION BY tax_rel.prod_id), ',') tax_ids
+    FROM product_product pp
+    INNER JOIN product_template pt on pt.id = pp.product_tmpl_id
+    INNER JOIN eshop_category ec on ec.id = pp.eshop_category_id
+    INNER JOIN product_uom uom on uom.id = pt.uom_id
+    LEFT OUTER JOIN product_taxes_rel tax_rel ON tax_rel.prod_id = pt.id
+    WHERE pt.company_id = %s
+    AND (eshop_start_date < current_date or eshop_start_date is null)
+    AND (current_date < eshop_end_date or eshop_end_date is null)
+) as tmp
+LEFT OUTER JOIN product_label_product_rel label_rel
+    ON label_rel.product_id = tmp.id
+order by category_sequence, category_name, name;
+""" % company_id)
+        columns = cr.description
+        for value in cr.fetchall():
+            tmp = {}
+            for (index, column) in enumerate(value):
+                if '_ids' in columns[index][0]:
+                    tmp[columns[index][0]] = sorted(
+                        [int(x) for x in column.split(',') if x])
+                else:
+                    tmp[columns[index][0]] = column
+            tmp['current_qty'] = qty_dict.get(value[0], 0)
+            res.append(tmp)
+
+        return res
