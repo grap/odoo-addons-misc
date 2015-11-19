@@ -51,7 +51,8 @@ _ESHOP_OPENERP_MODELS = {
             'eshop_category_id', 'label_ids', 'eshop_minimum_qty',
             'eshop_rounded_qty', 'origin_description', 'maker_description',
             'fresh_category', 'description', 'country_id', 'department_id',
-            'default_code', 'delivery_categ_id', 'eshop_taxes_description'],
+            'default_code', 'delivery_categ_id', 'eshop_taxes_description',
+            'eshop_unpack_qty', 'eshop_unpack_surcharge'],
     },
     'res.company': {
         'type': 'single',
@@ -62,6 +63,7 @@ _ESHOP_OPENERP_MODELS = {
             'eshop_home_text', 'eshop_home_image', 'eshop_image_small',
             'eshop_vat_included', 'eshop_register_allowed',
             'manage_delivery_moment', 'manage_recovery_moment',
+            'eshop_manage_unpacking',
         ],
     },
     'eshop.category': {
@@ -74,7 +76,6 @@ _ESHOP_OPENERP_MODELS = {
         'type': 'single',
         'fields': ['name'],
     },
-
 
     # 'multiple' type Models
     'account.tax': {

@@ -42,6 +42,8 @@ class ResCompany(Model):
             'product.pricelist', 'Pricelist Used on eShop'),
         'eshop_minimum_price': fields.float(
             'Minimum Price by eShop'),
+        'eshop_manage_unpacking': fields.boolean(
+            'Manage Unpacking on eShop'),
         'eshop_title': fields.char(
             'eShop Title'),
         'eshop_url': fields.char(

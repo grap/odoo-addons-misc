@@ -159,6 +159,10 @@ class ProductProduct(Model):
             'Minimum Quantity for eShop', required=True),
         'eshop_rounded_qty': fields.float(
             'Rounded Quantity for eShop', required=True),
+        'eshop_unpack_qty': fields.float(
+            'Unpack Quantity for eShop', required=True),
+        'eshop_unpack_surcharge': fields.float(
+            'Unpack Surcharge for eShop', required=True),
         'eshop_taxes_description': fields.function(
             _get_eshop_taxes_description, type='char',
             string='Eshop Taxes Description'),
@@ -166,8 +170,10 @@ class ProductProduct(Model):
 
     # Defaults Section
     _defaults = {
-        'eshop_minimum_qty': 1,
-        'eshop_rounded_qty': 1,
+        'eshop_minimum_qty': 0,
+        'eshop_rounded_qty': 0,
+        'eshop_unpack_qty': 0,
+        'eshop_unpack_surcharge': 0,
     }
 
     # Demo Function Section
@@ -184,15 +190,15 @@ class ProductProduct(Model):
         so_obj = self.pool['sale.order']
         ru_obj = self.pool['res.users']
         res = []
-        qty_dict = {}
+        line_dict = {}
         # Get current quantities ordered
         if id:
             so = so_obj.browse(cr, uid, order_id, context=context)
             for sol in so.order_line:
-                if sol.product_id.id in qty_dict.keys():
-                    qty_dict[sol.product_id.id] += sol.product_uom_qty
-                else:
-                    qty_dict[sol.product_id.id] = sol.product_uom_qty
+                line_dict[sol.product_id.id] = {
+                    'qty': sol.product_uom_qty,
+                    'discount': sol.discount,
+                }
 
         company_id = ru_obj.browse(cr, uid, uid, context=context).company_id.id
         cr.execute("""
@@ -212,6 +218,8 @@ FROM (
     ec.name category_name,
     pt.uom_id,
     pp.eshop_minimum_qty,
+    pp.eshop_unpack_qty,
+    pp.eshop_unpack_surcharge,
     pp.delivery_categ_id,
     array_to_string(array_agg(tax_rel.tax_id)
         OVER (PARTITION BY tax_rel.prod_id), ',') tax_ids
@@ -230,6 +238,7 @@ order by category_sequence, category_name, name;
 """ % company_id)
         columns = cr.description
         for value in cr.fetchall():
+            product_id = value[0]
             tmp = {}
             for (index, column) in enumerate(value):
                 if '_ids' in columns[index][0]:
@@ -237,7 +246,13 @@ order by category_sequence, category_name, name;
                         [int(x) for x in column.split(',') if x])
                 else:
                     tmp[columns[index][0]] = column
-            tmp['current_qty'] = qty_dict.get(value[0], 0)
+            if product_id in line_dict:
+                tmp.update({
+                    'qty': line_dict[product_id]['qty'],
+                    'discount': line_dict[product_id]['discount'],
+                })
+            else:
+                tmp.update({'qty': 0, 'discount': 0})
             res.append(tmp)
 
         return res
