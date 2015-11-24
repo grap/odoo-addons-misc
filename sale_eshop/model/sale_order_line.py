@@ -21,14 +21,13 @@
 ##############################################################################
 
 import math
-from datetime import datetime
 
 from openerp.osv.orm import Model
 from openerp.tools.translate import _
 
+
 class SaleOrderLine(Model):
     _inherit = 'sale.order.line'
-
 
     def _eshop_round_value(self, product, qty):
         if qty < product.eshop_minimum_qty:
@@ -42,8 +41,8 @@ class SaleOrderLine(Model):
         else:
             return round(math.ceil(division) * rounded_qty, digit)
 
-
-    def product_id_change(self, cr, uid, ids, pricelist, product_id, qty=0,
+    def product_id_change(
+            self, cr, uid, ids, pricelist, product_id, qty=0,
             uom=False, qty_uos=0, uos=False, name='', partner_id=False,
             lang=False, update_tax=True, date_order=False, packaging=False,
             fiscal_position=False, flag=False, context=None):
@@ -52,10 +51,6 @@ class SaleOrderLine(Model):
         return 'info' value instead of 'warning' value to avoid blocking
         message for end users.
         """
-        print "*******************"
-        print "product_id %s" % product_id
-        print "qty %s" % qty
-        print "qty_uos %s" % qty_uos
         is_eshop = self.pool['res.users'].has_group(
             cr, uid, 'sale_eshop.res_groups_is_eshop')
         infos = ""
@@ -101,7 +96,7 @@ class SaleOrderLine(Model):
                             " been automatically increased in your shopping"
                             " cart.") % (
                                 qty, product.name, product.eshop_minimum_qty)\
-                                + "\n\n"
+                            + "\n\n"
                         qty = product.eshop_minimum_qty
                 else:
                     if qty != rounded_qty:
@@ -112,11 +107,11 @@ class SaleOrderLine(Model):
                                 qty, product.name, rounded_qty) + "\n\n"
                         qty = rounded_qty
 
-        res = super(SaleOrderLine, self).product_id_change(cr, uid, ids,
-            pricelist, product_id, qty=qty, uom=uom, qty_uos=qty_uos, uos=uos,
-            name=name, partner_id=partner_id, lang=lang, update_tax=update_tax,
-            date_order=date_order, packaging=packaging,
-            fiscal_position=fiscal_position,
+        res = super(SaleOrderLine, self).product_id_change(
+            cr, uid, ids, pricelist, product_id, qty=qty, uom=uom,
+            qty_uos=qty_uos, uos=uos, name=name, partner_id=partner_id,
+            lang=lang, update_tax=update_tax, date_order=date_order,
+            packaging=packaging, fiscal_position=fiscal_position,
             flag=flag, context=context)
         res['info'] = infos
         res['value']['product_uom_qty'] =\
