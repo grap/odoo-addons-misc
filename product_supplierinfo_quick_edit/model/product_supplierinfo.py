@@ -44,6 +44,10 @@ class product_supplierinfo(Model):
                     'simple_min_quantity': False,
                     'simple_price': False,
                     'line_qty': len(item.pricelist_ids)}
+            res[item.id]['template_standard_price'] =\
+                item.product_id and item.product_id.standard_price or 0
+            res[item.id]['template_cost_method'] =\
+                item.product_id and item.product_id.cost_method or ''
         return res
 
     def _set_simple_min_quantity(
@@ -68,6 +72,17 @@ class product_supplierinfo(Model):
         else:
             return True
 
+    def _set_template_standard_price(
+            self, cr, uid, id, name, value, args, context=None):
+        template_obj = self.pool['product.template']
+        supplierinfo = self.browse(cr, uid, id, context=context)
+        if supplierinfo.product_id.id:
+            return template_obj.write(
+                cr, uid, supplierinfo.product_id.id, {'standard_price': value},
+                context=context)
+        else:
+            return True
+
     def _get_product_supplierinfo_pricelist_partnerinfo(
             self, cr, uid, ids, context=None):
         """Return 'product.supplierinfo' Info
@@ -79,6 +94,12 @@ class product_supplierinfo(Model):
 
     # Column Section
     _columns = {
+        'template_cost_method': fields.function(
+            _get_simple_info, type='char',
+            string='Cost', multi='simple_info', readonly=True),
+        'template_standard_price': fields.function(
+            _get_simple_info, fnct_inv=_set_template_standard_price,
+            type='float', string='Cost', multi='simple_info', required=True),
         'simple_min_quantity': fields.function(
             _get_simple_info, fnct_inv=_set_simple_min_quantity, type='float',
             string='Simple Minimum Quantity', multi='simple_info',
@@ -88,7 +109,7 @@ class product_supplierinfo(Model):
             string='Simple Price', multi='simple_info', required=True),
         'line_qty': fields.function(
             _get_simple_info, type='integer', string='Lines Quantity',
-            multi='simple_info', required=True, store={
+            multi='simple_info', store={
                 'product.supplierinfo': (
                     lambda self, cr, uid, ids, context=None: ids, [
                         'pricelist_ids', 'name',

@@ -23,15 +23,22 @@
 {
     'name': 'Product - Supplier Info Quick Edit',
     'summary': 'Provides Wizard to manage easily Supplierinfo',
-    'version': '0.1',
+    'version': '0.2',
     'category': 'Product',
     'description': """
 Provides Wizard to manage easily Supplierinfo
 =============================================
 
-Functionality
--------------
+* Display a tree and editable view to edit quickly supplier info;
+    * possibility to update very quickly if there is only one line in
+      pricelist_ids;
+    * Possibility to see and update lines if there are many pricelist_ids;
 
+* Display on partner form and kanban view, the quantity of products supplied
+  by the partner and a link to see the products;
+
+* Possibility to select various products to create quickly a new draft purchase
+  order;
 
 Copyright, Authors and Licence:
 -------------------------------

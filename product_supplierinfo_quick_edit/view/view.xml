@@ -30,12 +30,16 @@
                     <field name="product_id" domain="[('purchase_ok', '=', True)]"/>
                     <field name="sequence" widget="handle" invisible="context.get('search_default_name', False)"/>
                     <field name="name" invisible="context.get('search_default_name', False)"/>
-                    <field name="product_code"/>
-                    <field name="product_name"/>
-                    <field name="min_qty"/>
+                    <field name="product_code" string="Supp. Code"/>
+                    <field name="product_name" string="Supp. Name"/>
+                    <field name="min_qty" string="Min. Qty"/>
                     <field name="delay"/>
                     <field name="simple_min_quantity" attrs="{'invisible': [('line_qty', '!=', 1)]}"/>
                     <field name="simple_price" attrs="{'invisible': [('line_qty', '!=', 1)]}"/>
+                    <field name="template_cost_method" invisible="1"/>
+                    <field name="template_standard_price" attrs="{
+                        'invisible': [('product_id', '=', False)],
+                        'readonly': [('template_cost_method', '!=', 'standard')]}"/>
                     <field name="line_qty" invisible="1"/>
                     <button name="create_simple_line" string="Create" type="object" icon="gtk-add"
                         attrs="{'invisible': [('line_qty', '!=', 0)]}"/>
