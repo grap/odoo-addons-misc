@@ -70,7 +70,7 @@ Copyright, Authors and Licence:
         'demo/product_product.yml',
         'demo/product_uom.yml',
         'demo/function.xml',
-        'demo/res_groups.yml',
         'demo/res_users.yml',
+        'demo/res_groups.yml',
     ],
 }
