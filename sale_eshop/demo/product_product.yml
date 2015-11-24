@@ -52,6 +52,8 @@
     eshop_category_id: category_fruit
     eshop_minimum_qty: 1.0
     eshop_rounded_qty: 0.2
+    eshop_unpack_qty: 0.5
+    eshop_unpack_surcharge: 20
     uom_id: product.product_uom_kgm
     uom_po_id: product.product_uom_kgm
     uos_id: product.product_uom_kgm

@@ -71,5 +71,6 @@ Copyright, Authors and Licence:
         'demo/product_uom.yml',
         'demo/function.xml',
         'demo/res_groups.yml',
+        'demo/res_users.yml',
     ],
 }
