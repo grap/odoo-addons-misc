@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-28 22:50+0000\n"
-"PO-Revision-Date: 2015-10-28 22:50+0000\n"
+"POT-Creation-Date: 2015-11-25 00:51+0000\n"
+"PO-Revision-Date: 2015-11-25 00:51+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,9 +16,26 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: product_supplierinfo_quick_edit
+#: view:product.supplierinfo.create.purchase.order:0
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: product_supplierinfo_quick_edit
+#: field:product.supplierinfo,template_cost_method:0
+#: field:product.supplierinfo,template_standard_price:0
+msgid "Cost"
+msgstr "Prix de revient"
+
+#. module: product_supplierinfo_quick_edit
 #: view:product.supplierinfo:0
 msgid "Create"
 msgstr "Créer"
+
+#. module: product_supplierinfo_quick_edit
+#: model:ir.actions.act_window,name:product_supplierinfo_quick_edit.action_product_supplierinfo_create_purchase_order
+#: view:product.supplierinfo.create.purchase.order:0
+msgid "Create Purchase Orders"
+msgstr "Créer des bons de commandes"
 
 #. module: product_supplierinfo_quick_edit
 #: view:product.supplierinfo:0
@@ -26,7 +43,7 @@ msgid "Edit Multiple Lines"
 msgstr "Editer plusieurs lignes"
 
 #. module: product_supplierinfo_quick_edit
-#: code:addons/product_supplierinfo_quick_edit/model/product_supplierinfo.py:118
+#: code:addons/product_supplierinfo_quick_edit/model/product_supplierinfo.py:139
 #, python-format
 msgid "Error!"
 msgstr "Erreur !"
@@ -47,6 +64,11 @@ msgstr "Information sur le fournisseur de l'article"
 #: field:product.supplierinfo,line_qty:0
 msgid "Lines Quantity"
 msgstr "Nombre de lignes"
+
+#. module: product_supplierinfo_quick_edit
+#: view:product.supplierinfo:0
+msgid "Min. Qty"
+msgstr "Qté Min."
 
 #. module: product_supplierinfo_quick_edit
 #: code:_description:0
@@ -72,14 +94,30 @@ msgid "Products Quantity"
 msgstr "Nombre d'articles"
 
 #. module: product_supplierinfo_quick_edit
+#: code:addons/product_supplierinfo_quick_edit/model/product_supplierinfo_create_purchase_order.py:102
+#, python-format
+msgid "Purchase Orders"
+msgstr "Bon de commandes"
+
+#. module: product_supplierinfo_quick_edit
 #: field:product.supplierinfo,simple_min_quantity:0
 msgid "Simple Minimum Quantity"
-msgstr "Quantité minimum (simple)"
+msgstr "Quantité minimum (Une Ligne)"
 
 #. module: product_supplierinfo_quick_edit
 #: field:product.supplierinfo,simple_price:0
 msgid "Simple Price"
-msgstr "Prix (simple)"
+msgstr "Prix (Une Ligne)"
+
+#. module: product_supplierinfo_quick_edit
+#: view:product.supplierinfo:0
+msgid "Supp. Code"
+msgstr "Code (Frs)"
+
+#. module: product_supplierinfo_quick_edit
+#: view:product.supplierinfo:0
+msgid "Supp. Name"
+msgstr "Nom (Frs)"
 
 #. module: product_supplierinfo_quick_edit
 #: view:product.supplierinfo:0
@@ -92,6 +130,11 @@ msgstr "Fournisseur"
 #: view:product.supplierinfo:0
 msgid "Supplier Prices"
 msgstr "Prix fournisseur"
+
+#. module: product_supplierinfo_quick_edit
+#: view:product.supplierinfo.create.purchase.order:0
+msgid "This will create a purchase order for each supplier concerned by your previous selection."
+msgstr "Cela va créer un bon de commande d'achat pour chaque fournisseur concerné par la précédente sélection."
 
 #. module: product_supplierinfo_quick_edit
 #: view:product.supplierinfo:0
@@ -114,7 +157,7 @@ msgid "Without Prices Defined"
 msgstr "Sans prix définis"
 
 #. module: product_supplierinfo_quick_edit
-#: code:addons/product_supplierinfo_quick_edit/model/product_supplierinfo.py:121
+#: code:addons/product_supplierinfo_quick_edit/model/product_supplierinfo.py:142
 #, python-format
 msgid "You can not create a simple supplier line for '%s' product because it has already one (or many) lines.\n"
 "\n"
@@ -124,7 +167,12 @@ msgstr "Vous ne pouvez par créer une ligne fournisseur pour ce produit '%s' car
 " - %s"
 
 #. module: product_supplierinfo_quick_edit
-#: code:addons/product_supplierinfo_quick_edit/model/product_supplierinfo.py:115
+#: view:product.supplierinfo.create.purchase.order:0
+msgid "or"
+msgstr "ou"
+
+#. module: product_supplierinfo_quick_edit
+#: code:addons/product_supplierinfo_quick_edit/model/product_supplierinfo.py:136
 #, python-format
 msgid "qty : %s - price : %s"
 msgstr "qté : %s - prix : %s"

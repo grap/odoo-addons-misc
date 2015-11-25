@@ -39,5 +39,16 @@
             <field name="view_id" ref="view_product_supplierinfo_tree"/>
         </record>
 
+    <act_window name="Create Purchase Orders"
+        id="action_product_supplierinfo_create_purchase_order"
+        src_model="product.supplierinfo"
+        res_model="product.supplierinfo.create.purchase.order"
+        view_mode="form"
+        target="new"
+        multi="True"
+        key2="client_action_multi"/>
+
+
+<!--        context="{'search_default_draft': 1, 'search_default_approved': False}"-->
     </data>
 </openerp>
