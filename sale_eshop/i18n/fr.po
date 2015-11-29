@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-11 22:07+0000\n"
-"PO-Revision-Date: 2015-11-11 22:07+0000\n"
+"POT-Creation-Date: 2015-11-29 18:54+0000\n"
+"PO-Revision-Date: 2015-11-29 18:54+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -51,6 +51,31 @@ msgstr "\n"
 "<p>Bonne Journée.</p>\n"
 "</div>\n"
 "            "
+
+#. module: sale_eshop
+#: code:addons/sale_eshop/model/sale_order_line.py:69
+#, python-format
+msgid " The quantity '%.3f' for the product '%s' is under the minimum quantity '%.3f'. A %d%% surcharge has been applied."
+msgstr " La quantité '%.3f' pour le produit '%s' est en deça de la quantité minimum '%.3f'. Un surcoût de %d%% pour le déconditionnement a été appliqué."
+
+#. module: sale_eshop
+#: code:addons/sale_eshop/model/sale_order_line.py:93
+#, python-format
+msgid "'%.3f' is not a valid quantity for %s, the  minimum quantity is %'%.3f'. The quantity has been automatically increased in your shopping cart."
+msgstr "'%.3f' n'est pas une quantité valide pour %s, la quantité minimum est '%.3f'. La quantité a été automatiquement augmenté dans votre panier."
+
+#. module: sale_eshop
+#: code:addons/sale_eshop/model/sale_order_line.py:78
+#, python-format
+msgid "'%.3f' is not a valid quantity for %s, the minimum quantity is '%.3f'. The quantity  has been automatically increased in your shopping cart."
+msgstr "'%.3f' n'est pas une quantité valide pour %s, la quantité minimum est '%.3f'. La quantité a été automatiquement augmenté dans votre panier."
+
+#. module: sale_eshop
+#: code:addons/sale_eshop/model/sale_order_line.py:87
+#: code:addons/sale_eshop/model/sale_order_line.py:103
+#, python-format
+msgid "'%.3f' is not a valid quantity for %s, the quantity has been rounded to '%.3f'."
+msgstr "'%.3f' n'est pas une quantité valide pour %s, la quantité a été arrondie à '%.3f'."
 
 #. module: sale_eshop
 #: constraint:eshop.category:0
@@ -184,8 +209,9 @@ msgid "End Date of Sale"
 msgstr "Date de Fin de Vente"
 
 #. module: sale_eshop
-#: code:addons/sale_eshop/model/model.py:126
-#: code:addons/sale_eshop/model/model.py:142
+#: code:addons/sale_eshop/model/model.py:138
+#: code:addons/sale_eshop/model/model.py:147
+#: code:addons/sale_eshop/model/model.py:167
 #, python-format
 msgid "Error !"
 msgstr "Erreur !"
@@ -201,21 +227,14 @@ msgid "Facebook URL"
 msgstr "URL Facebook"
 
 #. module: sale_eshop
-#: code:_description:0
-#: model:ir.model,name:sale_eshop.model_ir_model_fields
-#, python-format
-msgid "Fields"
-msgstr "Champs"
-
-#. module: sale_eshop
 #: selection:res.partner,eshop_state:0
 msgid "First Purchase"
 msgstr "Premier achat"
 
 #. module: sale_eshop
 #: view:res.partner:0
-msgid "Generate (or generate again) and Send Credentials"
-msgstr "(Re) Générer un mot de passe et l'envoyer par mail"
+msgid "Generate Credentials"
+msgstr "Générer les identifiants"
 
 #. module: sale_eshop
 #: field:res.company,eshop_google_plus_url:0
@@ -243,9 +262,19 @@ msgid "Invalidation Cache URL"
 msgstr "URL d'invalidation du cache"
 
 #. module: sale_eshop
+#: model:res.groups,name:sale_eshop.res_groups_is_eshop
+msgid "Is eShop"
+msgstr "Est eBoutique"
+
+#. module: sale_eshop
 #: help:eshop.category,image:0
 msgid "Limited to 1024x1024px."
 msgstr "Limité à 1024x1024px."
+
+#. module: sale_eshop
+#: field:res.company,eshop_manage_unpacking:0
+msgid "Manage Unpacking on eShop"
+msgstr "Manage Unpacking on eShop"
 
 #. module: sale_eshop
 #: model:res.groups,name:sale_eshop.res_groups_eshop_manager
@@ -266,13 +295,6 @@ msgstr "Prix minimum pour la eBoutique"
 #: field:product.product,eshop_minimum_qty:0
 msgid "Minimum Quantity for eShop"
 msgstr "Quantité minimum pour la eBoutique"
-
-#. module: sale_eshop
-#: code:_description:0
-#: model:ir.model,name:sale_eshop.model_ir_model
-#, python-format
-msgid "Models"
-msgstr "Modèles"
 
 #. module: sale_eshop
 #: view:eshop.category:0
@@ -380,10 +402,22 @@ msgstr "Commande de ventes"
 
 #. module: sale_eshop
 #: code:_description:0
+#: model:ir.model,name:sale_eshop.model_sale_order_line
+#, python-format
+msgid "Sales Order Line"
+msgstr "Ligne de commandes de vente"
+
+#. module: sale_eshop
+#: code:_description:0
 #: model:ir.model,name:sale_eshop.model_sale_shop
 #, python-format
 msgid "Sales Shop"
 msgstr "Magasin"
+
+#. module: sale_eshop
+#: view:res.partner:0
+msgid "Send Credentials"
+msgstr "Envoyer les identifiants"
 
 #. module: sale_eshop
 #: field:eshop.category,sequence:0
@@ -439,6 +473,18 @@ msgid "The Operator %s is not implemented !"
 msgstr "L'opérateur %s n'est pas implémenté !"
 
 #. module: sale_eshop
+#: code:addons/sale_eshop/model/sale_order.py:119
+#, python-format
+msgid "The Shopping Cart has been successfully deleted."
+msgstr "Le panier a été supprimé avec succès"
+
+#. module: sale_eshop
+#: code:addons/sale_eshop/model/sale_order.py:125
+#, python-format
+msgid "The line has been successfully deleted"
+msgstr "La ligne a été supprimée avec succès"
+
+#. module: sale_eshop
 #: code:addons/sale_eshop/model/product_product.py:93
 #, python-format
 msgid "This arg %s is not implemented !"
@@ -453,6 +499,16 @@ msgstr "URL Twitter"
 #: selection:product.product,eshop_state:0
 msgid "Unavailable for Sale"
 msgstr "Indisponible à la vente"
+
+#. module: sale_eshop
+#: field:product.product,eshop_unpack_qty:0
+msgid "Unpack Quantity for eShop"
+msgstr "Quantité de déconditionement pour la eBoutique"
+
+#. module: sale_eshop
+#: field:product.product,eshop_unpack_surcharge:0
+msgid "Unpack Surcharge for eShop"
+msgstr "Supplément de déconditionement pour la eBoutique"
 
 #. module: sale_eshop
 #: model:res.groups,name:sale_eshop.res_groups_eshop_user
@@ -470,16 +526,19 @@ msgid "View"
 msgstr "Vue"
 
 #. module: sale_eshop
-#: code:addons/sale_eshop/model/model.py:142
+#: code:addons/sale_eshop/model/model.py:138
 #, python-format
-msgid "You can not change this values because the eShop is unreachable."
-msgstr "Vous ne pouvez pas changer ces valeurs car la eBoutique est inaccessible."
+msgid "You can not change this values because the eShop datas can not be updated."
+msgstr "Vous ne pouvez pas changer ces valeurs car les données de la eBoutique ne peuvent être mises à jour."
 
 #. module: sale_eshop
-#: code:addons/sale_eshop/model/model.py:126
+#: code:addons/sale_eshop/model/model.py:147
+#: code:addons/sale_eshop/model/model.py:167
 #, python-format
-msgid "You can not change this values because you have not selected the good company."
-msgstr "Vous ne pouvez pas changer ces valeurs car vous n'avez pas sélectionné la bonne société."
+msgid "You can not change this values because the eShop datas can not be updated. \n"
+" - Code : %s"
+msgstr "Vous ne pouvez pas changer ces valeurs car les données de la eBoutique ne peuvent être mises à jour. \n"
+" - Code : %s"
 
 #. module: sale_eshop
 #: code:addons/sale_eshop/model/eshop_category.py:197
@@ -492,7 +551,6 @@ msgstr "Vous ne pouvez pas supprimer la catégorie '%s' car elle contient %s cat
 #, python-format
 msgid "You cannot delete the category '%s' because it contents %s products. Please move products to another Category First."
 msgstr "Vous ne pouvez pas supprimer cette catégorie '%s' car elle contient %s articles. Veuillez déplacer d'abord les articles dans une autre catégorie."
-
 
 #. module: sale_eshop
 #: model:ir.module.category,name:sale_eshop.module_category_eshop
