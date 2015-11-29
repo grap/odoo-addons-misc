@@ -253,6 +253,8 @@ order by category_sequence, category_name, name;
                 })
             else:
                 tmp.update({'qty': 0, 'discount': 0})
+            if tmp['delivery_categ_id'] is None:
+                tmp['delivery_categ_id'] = False
             res.append(tmp)
 
         return res
