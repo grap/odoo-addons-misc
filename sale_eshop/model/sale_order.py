@@ -120,7 +120,8 @@ class SaleOrder(Model):
                         "The Shopping Cart has been successfully deleted.")]
                 else:
                     # We unlink the line
-                    line_obj.unlink(cr, uid, [current_line_id], context=context)
+                    line_obj.unlink(
+                        cr, uid, [current_line_id], context=context)
                     res['messages'] = [_(
                         "The line has been successfully deleted")]
 
