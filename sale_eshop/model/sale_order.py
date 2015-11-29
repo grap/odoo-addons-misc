@@ -28,7 +28,84 @@ from openerp.osv.orm import Model
 class SaleOrder(Model):
     _inherit = 'sale.order'
 
-    # Custom Section
+    # Custom Section for eshop
+    def eshop_get_current_sale_order_id(
+            self, cr, uid, partner_id, context=None):
+        order_ids = self.search(cr, uid, [
+            ('partner_id', '=', partner_id),
+            ('user_id', '=', uid),
+            ('state', '=', 'draft')], context=context)
+        return order_ids and order_ids[0] or False
+
+    def eshop_set_quantity(
+            self, cr, uid, partner_id, product_id, quantity, context=None):
+        line_obj = self.pool['sale.order.line']
+        partner_obj = self.pool['res.partner']
+        user_obj = self.pool['res.users']
+
+        order_id = self.eshop_get_current_sale_order_id(
+            cr, uid, partner_id, context=context)
+
+        if not order_id:
+            # Create Sale Order
+            partner = partner_obj.browse(cr, uid, partner_id, context=context)
+            if partner.property_product_pricelist:
+                pricelist_id = partner.property_product_pricelist.id
+            else:
+                user = user_obj.browse(cr, uid, uid, context=context)
+                pricelist_id = user.company_id.eshop_pricelist_id.id
+            order_id = self.create(
+                cr, uid, {
+                    'partner_id': partner_id,
+                    'partner_invoice_id': partner_id,
+                    'partner_shipping_id': partner_id,
+                    'pricelist_id': pricelist_id,
+                }, context=context)
+        order = self.browse(cr, uid, order_id, context=context)
+
+        # Search Line
+        current_line_id = False
+        for line in order.order_line:
+            if line.product_id.id == product_id:
+                current_line_id = line.id
+                break
+
+        res = line_obj.product_id_change(
+            cr, uid, False, order.pricelist_id.id, product_id,
+            qty=quantity, partner_id=partner_id, context=context)
+        print res
+
+        line_data = {k: v for k, v in res['value'].items()}
+
+        # Create line if needed
+        if not current_line_id:
+            line_data['product_id'] = product_id
+            line_data['order_id'] = order_id
+            current_line_id = line_obj.create(
+                cr, uid, line_data, context=context)
+        else:
+            line_obj.write(
+                cr, uid, [current_line_id], line_data, context=context)
+
+        line = line_obj.browse(cr, uid, current_line_id, context=context)
+        res = {
+            'messages': res['infos'],
+            'quantity': line.product_uom_qty,
+            'changed': quantity != line.product_uom_qty,
+            'price_subtotal': line.price_subtotal,
+            'price_subtotal_taxinc': line.price_subtotal_taxinc,
+        }
+        res.update(self.eshop_sale_order_info(cr, uid, order, context=context))
+        print res
+        return res
+
+    def eshop_sale_order_info(self, cr, uid, order, context=None):
+        return {
+            'amount_untaxed': order.amount_untaxed,
+            'amount_tax': order.amount_tax,
+            'amount_total': order.amount_total,
+        }
+
     def select_delivery_moment_id(
             self, cr, uid, id, delivery_moment_id, context=None):
         sdm_obj = self.pool['sale.delivery.moment']

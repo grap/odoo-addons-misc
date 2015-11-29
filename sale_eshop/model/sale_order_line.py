@@ -53,7 +53,7 @@ class SaleOrderLine(Model):
         """
         is_eshop = self.pool['res.users'].has_group(
             cr, uid, 'sale_eshop.res_groups_is_eshop')
-        infos = ""
+        infos = []
         computed_discount = False
         product = self.pool['product.product'].browse(
             cr, uid, product_id, context=context)
@@ -66,45 +66,44 @@ class SaleOrderLine(Model):
                     if product.eshop_unpack_qty:
                         if rounded_qty < product.eshop_minimum_qty:
                             # rounding qty didn't make it reach the minimum qty
-                            infos += _(
+                            infos.append(_(
                                 " The quantity '%.3f' for the product '%s' is"
                                 " under the minimum quantity '%.3f'.\n A %d%%"
                                 " surcharge has been applied.") % (
                                     qty, product.name,
                                     product.eshop_minimum_qty,
-                                    product.eshop_unpack_surcharge) + "\n\n"
+                                    product.eshop_unpack_surcharge))
                             discount = - product.eshop_unpack_surcharge
                         else:
-                            infos += _(
+                            infos.append(_(
                                 "'%.3f' is not a valid quantity for %s, the"
                                 " minimum quantity is '%.3f'. The quantity"
                                 "  has been automatically increased in your"
                                 " shopping cart.") % (
                                     qty, product.name,
-                                    product.eshop_minimum_qty) + "\n\n"
+                                    product.eshop_minimum_qty))
                         if qty != rounded_qty:
                             # The quantity has been rounded
-                            infos += _(
+                            infos.append(_(
                                 "'%.3f' is not a valid quantity for %s, the"
                                 " quantity has been rounded to '%.3f'.") % (
-                                    qty, product.name, rounded_qty) + "\n\n"
+                                    qty, product.name, rounded_qty))
                             qty = rounded_qty
                     else:
-                        infos += _(
+                        infos.append(_(
                             "'%.3f' is not a valid quantity for %s, the "
                             " minimum quantity is %'%.3f'. The quantity has"
                             " been automatically increased in your shopping"
                             " cart.") % (
-                                qty, product.name, product.eshop_minimum_qty)\
-                            + "\n\n"
+                                qty, product.name, product.eshop_minimum_qty))
                         qty = product.eshop_minimum_qty
                 else:
                     if qty != rounded_qty:
                         # The quantity has been rounded
-                        infos += _(
+                        infos.append(_(
                             "'%.3f' is not a valid quantity for %s, the"
                             " quantity has been rounded to '%.3f'.") % (
-                                qty, product.name, rounded_qty) + "\n\n"
+                                qty, product.name, rounded_qty))
                         qty = rounded_qty
 
         res = super(SaleOrderLine, self).product_id_change(
@@ -113,7 +112,7 @@ class SaleOrderLine(Model):
             lang=lang, update_tax=update_tax, date_order=date_order,
             packaging=packaging, fiscal_position=fiscal_position,
             flag=flag, context=context)
-        res['info'] = infos
+        res['infos'] = infos
         res['value']['product_uom_qty'] =\
             res['value'].get('product_uom_qty', qty)
         if computed_discount:

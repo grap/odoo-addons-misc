@@ -192,7 +192,7 @@ class ProductProduct(Model):
         res = []
         line_dict = {}
         # Get current quantities ordered
-        if id:
+        if order_id:
             so = so_obj.browse(cr, uid, order_id, context=context)
             for sol in so.order_line:
                 line_dict[sol.product_id.id] = {
