@@ -68,7 +68,7 @@ class SaleOrderLine(Model):
                             # rounding qty didn't make it reach the minimum qty
                             infos.append(_(
                                 " The quantity '%.3f' for the product '%s' is"
-                                " under the minimum quantity '%.3f'.\n A %d%%"
+                                " under the minimum quantity '%.3f'. A %d%%"
                                 " surcharge has been applied.") % (
                                     qty, product.name,
                                     product.eshop_minimum_qty,
