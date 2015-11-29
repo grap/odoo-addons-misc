@@ -26,7 +26,7 @@ from openerp.osv.orm import Model
 
 class ProductPrepareCategory(Model):
     _name = 'product.prepare.category'
-    _order = 'name'
+    _order = 'sequence, name'
 
     # Column Section
     _columns = {
