@@ -30,7 +30,7 @@ class SaleOrderLine(Model):
     _inherit = 'sale.order.line'
 
     def _eshop_round_value(self, product, qty):
-        if qty < product.eshop_minimum_qty:
+        if product.eshop_unpack_qty and qty < product.eshop_minimum_qty:
             rounded_qty = product.eshop_unpack_qty
         else:
             rounded_qty = product.eshop_rounded_qty
