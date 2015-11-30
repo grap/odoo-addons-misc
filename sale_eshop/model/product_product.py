@@ -229,6 +229,8 @@ FROM (
     INNER JOIN product_uom uom on uom.id = pt.uom_id
     LEFT OUTER JOIN product_taxes_rel tax_rel ON tax_rel.prod_id = pt.id
     WHERE pt.company_id = %s
+    AND pt.sale_ok
+    AND pt.active
     AND (eshop_start_date < current_date or eshop_start_date is null)
     AND (current_date < eshop_end_date or eshop_end_date is null)
 ) as tmp
