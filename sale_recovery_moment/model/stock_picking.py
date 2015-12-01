@@ -73,6 +73,7 @@ class stock_picking(Model):
                     sm_obj.write(
                         cr, uid, sm_id, {'sequence': count}, context=context)
 
+
 # TODO: IMPROVE (in V8)
 # Actually it doesn't work if you don't redefine in stock_picking
 # the field defined in stock.picking.out
