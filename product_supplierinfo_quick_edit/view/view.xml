@@ -26,7 +26,8 @@
             <field name="model">product.supplierinfo</field>
             <field name="priority">20</field>
             <field name="arch" type="xml">
-                <tree string="Supplier Prices" editable="top" colors="blue: line_qty == 0; black: line_qty == 1; brown: line_qty &gt; 1">
+                <tree string="Supplier Prices"
+                    editable="top" colors="blue: lines_qty == 0; black: lines_qty == 1; brown: lines_qty &gt; 1">
                     <field name="product_id" domain="[('purchase_ok', '=', True)]"/>
                     <field name="sequence" widget="handle" invisible="context.get('search_default_name', False)"/>
                     <field name="name" invisible="context.get('search_default_name', False)"/>
@@ -34,19 +35,20 @@
                     <field name="product_name" string="Supp. Name"/>
                     <field name="min_qty" string="Min. Qty"/>
                     <field name="delay"/>
-                    <field name="simple_min_quantity" attrs="{'invisible': [('line_qty', '!=', 1)]}"/>
-                    <field name="simple_price" attrs="{'invisible': [('line_qty', '!=', 1)]}"/>
-                    <field name="template_cost_method" invisible="1"/>
+                    <field name="simple_min_quantity" attrs="{'invisible': [('lines_qty', '!=', 1)]}"/>
+                    <field name="simple_price" attrs="{'invisible': [('lines_qty', '!=', 1)]}"/>
                     <field name="template_standard_price" attrs="{
                         'invisible': [('product_id', '=', False)],
                         'readonly': [('template_cost_method', '!=', 'standard')]}"/>
-                    <field name="line_qty" invisible="1"/>
                     <button name="create_simple_line" string="Create" type="object" icon="gtk-add"
-                        attrs="{'invisible': [('line_qty', '!=', 0)]}"/>
-                    <button name="edit_multiple_lines" string="Edit Multiple Lines" type="object" icon="gtk-edit"
-                        attrs="{'invisible': [('line_qty', '&lt;', 2)]}"/>
+                        attrs="{'invisible': [('lines_qty', '!=', 0)]}"/>
+                    <button name="edit_multiple_lines" string="Edit Multiple Lines" type="object" icon="gtk-edit"/>
                     <button name="unlink" string="Unlink" type="object" icon="gtk-cancel"/>
                     <field name="company_id" groups="base.group_multi_company" />
+
+                    <field name="template_cost_method" invisible="1"/>
+                    <field name="lines_qty" invisible="1"/>
+
                 </tree>
             </field>
         </record>
@@ -59,9 +61,9 @@
                     <field name="name"/>
                     <field name="product_code"/>
                     <field name="product_name"/>
-                    <filter string="Without Prices Defined" name="without_line" domain="[('line_qty', '=', 0)]"/>
-                    <filter string="With One Price Defined" name="with_one_line" domain="[('line_qty', '=', 1)]"/>
-                    <filter string="With Many Prices Defined" name="with_many_line" domain="[('line_qty', '&gt;', 1)]"/>
+                    <filter string="Without Prices Defined" name="without_line" domain="[('lines_qty', '=', 0)]"/>
+                    <filter string="With One Price Defined" name="with_one_line" domain="[('lines_qty', '=', 1)]"/>
+                    <filter string="With Many Prices Defined" name="with_many_line" domain="[('lines_qty', '&gt;', 1)]"/>
                     <group string="Group By...">
                         <filter string="Supplier" context="{'group_by':'name'}"/>
                         <filter string="Product" context="{'group_by':'product_id'}"/>

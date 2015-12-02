@@ -25,6 +25,7 @@ from openerp.osv import fields
 from openerp.osv.orm import Model
 from openerp.osv.osv import except_osv
 from openerp.tools.translate import _
+from openerp.addons import decimal_precision as dp
 
 
 class product_supplierinfo(Model):
@@ -33,21 +34,28 @@ class product_supplierinfo(Model):
     # Function Fields Section
     def _get_simple_info(self, cr, uid, ids, name, args, context=None):
         res = {}
+
         for item in self.browse(cr, uid, ids, context=context):
             if len(item.pricelist_ids) == 1:
                 res[item.id] = {
                     'simple_min_quantity': item.pricelist_ids[0].min_quantity,
                     'simple_price': item.pricelist_ids[0].price,
-                    'line_qty': 1}
+                }
             else:
                 res[item.id] = {
-                    'simple_min_quantity': False,
-                    'simple_price': False,
-                    'line_qty': len(item.pricelist_ids)}
+                    'simple_min_quantity': 0,
+                    'simple_price': 0,
+                }
             res[item.id]['template_standard_price'] =\
                 item.product_id and item.product_id.standard_price or 0
             res[item.id]['template_cost_method'] =\
                 item.product_id and item.product_id.cost_method or ''
+        return res
+
+    def _get_lines_qty(self, cr, uid, ids, name, args, context=None):
+        res = {}
+        for item in self.browse(cr, uid, ids, context=context):
+            res[item.id] = len(item.pricelist_ids)
         return res
 
     def _set_simple_min_quantity(
@@ -99,17 +107,19 @@ class product_supplierinfo(Model):
             string='Cost', multi='simple_info', readonly=True),
         'template_standard_price': fields.function(
             _get_simple_info, fnct_inv=_set_template_standard_price,
-            type='float', string='Cost', multi='simple_info', required=True),
+            type='float', string='Cost', multi='simple_info', required=True,
+            digits_compute=dp.get_precision('Purchase Price')),
         'simple_min_quantity': fields.function(
             _get_simple_info, fnct_inv=_set_simple_min_quantity, type='float',
             string='Simple Minimum Quantity', multi='simple_info',
             required=True),
         'simple_price': fields.function(
             _get_simple_info, fnct_inv=_set_simple_price, type='float',
-            string='Simple Price', multi='simple_info', required=True),
-        'line_qty': fields.function(
-            _get_simple_info, type='integer', string='Lines Quantity',
-            multi='simple_info', store={
+            string='Simple Price', multi='simple_info', required=True,
+            digits_compute=dp.get_precision('Purchase Price')),
+        'lines_qty': fields.function(
+            _get_lines_qty, type='integer', string='Lines Quantity',
+            store={
                 'product.supplierinfo': (
                     lambda self, cr, uid, ids, context=None: ids, [
                         'pricelist_ids', 'name',

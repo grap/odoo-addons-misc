@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-25 00:51+0000\n"
-"PO-Revision-Date: 2015-11-25 00:51+0000\n"
+"POT-Creation-Date: 2015-12-02 22:46+0000\n"
+"PO-Revision-Date: 2015-12-02 22:46+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -43,7 +43,7 @@ msgid "Edit Multiple Lines"
 msgstr "Editer plusieurs lignes"
 
 #. module: product_supplierinfo_quick_edit
-#: code:addons/product_supplierinfo_quick_edit/model/product_supplierinfo.py:139
+#: code:addons/product_supplierinfo_quick_edit/model/product_supplierinfo.py:149
 #, python-format
 msgid "Error!"
 msgstr "Erreur !"
@@ -58,10 +58,10 @@ msgstr "Regrouper par ..."
 #: model:ir.model,name:product_supplierinfo_quick_edit.model_product_supplierinfo
 #, python-format
 msgid "Information about a product supplier"
-msgstr "Information sur le fournisseur de l'article"
+msgstr "Information sur le fournisseur du produit"
 
 #. module: product_supplierinfo_quick_edit
-#: field:product.supplierinfo,line_qty:0
+#: field:product.supplierinfo,lines_qty:0
 msgid "Lines Quantity"
 msgstr "Nombre de lignes"
 
@@ -157,7 +157,7 @@ msgid "Without Prices Defined"
 msgstr "Sans prix définis"
 
 #. module: product_supplierinfo_quick_edit
-#: code:addons/product_supplierinfo_quick_edit/model/product_supplierinfo.py:142
+#: code:addons/product_supplierinfo_quick_edit/model/product_supplierinfo.py:152
 #, python-format
 msgid "You can not create a simple supplier line for '%s' product because it has already one (or many) lines.\n"
 "\n"
@@ -172,7 +172,7 @@ msgid "or"
 msgstr "ou"
 
 #. module: product_supplierinfo_quick_edit
-#: code:addons/product_supplierinfo_quick_edit/model/product_supplierinfo.py:136
+#: code:addons/product_supplierinfo_quick_edit/model/product_supplierinfo.py:146
 #, python-format
 msgid "qty : %s - price : %s"
 msgstr "qté : %s - prix : %s"
