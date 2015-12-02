@@ -90,9 +90,8 @@ class product_supplierinfo_create_purchase_order(TransientModel):
                     'product_id': product_id,
                 }
                 line_data.update(line_obj.onchange_product_id(
-                    cr, uid, ids, order_data['pricelist_id'], product_id, 0,
+                    cr, uid, ids, order_data['pricelist_id'], product_id, 1,
                     False, order_data['partner_id'], context=context)['value'])
-
                 line_obj.create(cr, uid, line_data, context=context)
 
             order_ids.append(str(order_id))
