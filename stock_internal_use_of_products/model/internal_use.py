@@ -34,7 +34,7 @@ _INTERNAL_USE_STATE = [
 
 class InternalUse(Model):
     _name = 'internal.use'
-    _order = "date_done desc"
+    _order = 'date_done desc, name'
 
     # Columns section
     def _get_amount(self, cr, uid, ids, name, args, context=None):

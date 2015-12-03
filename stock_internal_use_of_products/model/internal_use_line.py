@@ -27,7 +27,7 @@ import openerp.addons.decimal_precision as dp
 
 class InternalUseLine(Model):
     _name = 'internal.use.line'
-    _order = 'create_date'
+    _order = 'date_done desc, product_id'
 
     # Columns section
     def _get_subtotal(self, cr, uid, ids, name, args, context=None):
@@ -39,36 +39,36 @@ class InternalUseLine(Model):
 
     _columns = {
         'name': fields.related(
-            'internal_use', 'name', string='Name', select=1),
-        'company_id': fields.related(
-            'internal_use', 'company_id', select=1,
-            type='many2one', relation='res.company', string='Company',
-            readonly=True, store=True),
+            'internal_use', 'name', string='Name', select=True),
         'internal_use': fields.many2one(
-            'internal.use', 'Internal Uses', select=1, ondelete='cascade'),
+            'internal.use', 'Internal Uses', select=True, ondelete='cascade'),
         'internal_use_case': fields.related(
             'internal_use', 'internal_use_case', string='Internal Use Case',
-            select=1, type='many2one', relation='internal.use.case',
+            select=True, type='many2one', relation='internal.use.case',
             readonly=True, store=True),
         'date_done': fields.related(
             'internal_use', 'date_done', string='Date',
-            select=1, type='date', readonly=True, store=True),
+            select=True, type='date', readonly=True, store=True),
         'product_id': fields.many2one(
-            'product.product', 'Product', required=True, select=1),
+            'product.product', 'Product', required=True, select=True),
         'product_qty': fields.float(
             'Quantity', digits_compute=dp.get_precision('Product UoM'),
             required=True),
         'product_uom_id': fields.many2one(
             'product.uom', 'Unit of Measure', required=True),
-        'state': fields.related(
-            'internal_use', 'state', type='char', string='State',
-            readonly=True, select=1),
         'price_unit': fields.float(
             'Unit Price Tax excluded',
             digits_compute=dp.get_precision('Product Price')),
         'subtotal': fields.function(
             _get_subtotal, type='float', string='Subtotal Tax excluded',
             digits_compute=dp.get_precision('Product Price'), store=True),
+        'company_id': fields.related(
+            'internal_use', 'company_id', select=True,
+            type='many2one', relation='res.company', string='Company',
+            readonly=True, store=True),
+        'state': fields.related(
+            'internal_use', 'state', type='char', string='State',
+            readonly=True, store=True, select=True),
     }
 
     # Defaults section
@@ -79,21 +79,19 @@ class InternalUseLine(Model):
     }
 
     # Views section
-    def on_change_product_id(self, cr, uid, ids, product):
-        """ Changes UoM and name if product_id changes.
-        @param product: Changed product_id
-        @param uom: UoM product
-        @return:  Dictionary of changed values
-        """
-        if not product:
+    def on_change_product_id(self, cr, uid, ids, product_id, context=None):
+        tax_obj = self.pool['account.tax']
+        product_obj = self.pool['product.product']
+        if not product_id:
             value = self._defaults
         else:
-            tax_obj = self.pool.get('account.tax')
-            obj_product = self.pool.get('product.product').browse(
-                cr, uid, product)
-            uom = obj_product.uom_id.id or False
+            product = product_obj.browse(
+                cr, uid, product_id, context=context)
             price_unit = tax_obj.compute_all(
-                cr, uid, obj_product.supplier_taxes_id,
-                obj_product.standard_price, 1, product, False)['total']
-            value = {'price_unit': price_unit, 'product_uom_id': uom}
+                cr, uid, product.supplier_taxes_id,
+                product.standard_price, 1, product_id, False)['total']
+            value = {
+                'price_unit': price_unit,
+                'product_uom_id': product.uom_id.id or False,
+            }
         return {'value': value}

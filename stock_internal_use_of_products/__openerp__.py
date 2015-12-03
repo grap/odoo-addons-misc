@@ -64,11 +64,13 @@ Copyright, Authors and Licence:
     ],
     'data': [
         'data/ir_sequence.xml',
-        'security/ir_model_access_data.yml',
-        'security/ir_rule_data.yml',
-        'view/view.xml',
-        'view/action.xml',
-        'view/menu.xml',
+        'security/ir_model_access.yml',
+        'security/ir_rule.yml',
+        'views/internal_use_view.xml',
+        'views/internal_use_line_view.xml',
+        'views/internal_use_case_view.xml',
+        'views/action.xml',
+        'views/menu.xml',
     ],
     'demo': [
         'demo/stock_location.yml',

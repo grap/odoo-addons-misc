@@ -33,6 +33,7 @@
                 It will allow you to declare the stockable products you use for specific cases (such as tastings, gifts, etc.) and will automatically register the stock moves and account moves corresponding.
               </p>
             </field>
+            <field name="context">{'search_default_to_process':1}</field>
         </record>
 
         <record id="action_internal_use_line_tree" model="ir.actions.act_window">
@@ -40,7 +41,8 @@
             <field name="res_model">internal.use.line</field>
             <field name="type">ir.actions.act_window</field>
             <field name="view_type">form</field>
-            <field name="view_mode">tree</field>
+            <field name="view_mode">tree,graph</field>
+            <field name="context">{'search_default_group_by_date_done': 1}</field>
         </record>
 
         <record id="action_internal_use_case_tree" model="ir.actions.act_window">
