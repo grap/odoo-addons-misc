@@ -1,0 +1,10 @@
+# -*- encoding: utf-8 -*-
+##############################################################################
+#    See ../__openerp__.py file for copyright and licences
+##############################################################################
+
+- !record {model: res.groups, id: group_sale_order_line_no_warning}:
+    name: Sale Order Line - Disable Warnings
+
+- !record {model: res.groups, id: group_sale_order_line_price_unchanged}:
+    name: Sale Order Line - Disable Changes on quantity
