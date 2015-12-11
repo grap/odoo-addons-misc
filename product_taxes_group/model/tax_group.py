@@ -173,13 +173,11 @@ class tax_group(Model):
         'supplier_tax_ids': fields.many2many(
             'account.tax', 'product_supplier_tax_rel',
             'prod_id', 'tax_id', 'Supplier Taxes', domain="""[
-                ('company_id', '=', company_id),
                 ('parent_id', '=', False),
                 ('type_tax_use', 'in', ['purchase', 'all'])]"""),
         'customer_tax_ids': fields.many2many(
             'account.tax', 'product_customer_tax_rel',
             'prod_id', 'tax_id', 'Customer Taxes', domain="""[
-                ('company_id', '=', company_id),
                 ('parent_id', '=', False),
                 ('type_tax_use', 'in', ['sale', 'all'])]"""),
     }
