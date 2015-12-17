@@ -51,8 +51,8 @@
                     <field name="internal_use_case"/>
                     <field name="description"/>
                     <field name="amount" sum="Total"/>
+                    <field name="state"/>
                     <field name="company_id" groups="base.group_multi_company"/>
-                    <field name="state" invisible="1"/>
                 </tree>
             </field>
         </record>
