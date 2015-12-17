@@ -25,27 +25,35 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 import time
 
-_INTERNAL_USE_STATE = [
-    ('draft', 'New'),
-    ('cancel', 'Cancelled'),
-    ('done', 'Done'),
-]
+
 
 
 class InternalUse(Model):
     _name = 'internal.use'
     _order = 'date_done desc, name'
 
+    _INTERNAL_USE_STATE = [
+        ('draft', 'New'),
+        ('confirmed', 'Confirmed'),
+        ('done', 'Done'),
+    ]
+
     # Columns section
     def _get_amount(self, cr, uid, ids, name, args, context=None):
         res = {}
-        for iu in self.pool.get('internal.use').browse(
-                cr, uid, ids, context=context):
+        for use in self.browse(cr, uid, ids, context=context):
             amount = 0
-            for line in iu.line_ids:
+            for line in use.line_ids:
                 amount += line.subtotal
-            res[iu.id] = amount
+            res[use.id] = amount
         return res
+
+    def _get_internal_use_from_line(self, cr, uid, ids, context=None):
+        """Return Internal Use ids depending on changes of Lines"""
+        res = []
+        line_obj = self.pool['internal.use.line']
+        lines = line_obj.browse(cr, uid, ids, context=context)
+        return list(set(line.internal_use.id for line in lines))
 
     _columns = {
         'name': fields.char(
@@ -53,18 +61,17 @@ class InternalUse(Model):
         'description': fields.char(
             'Description', size=128,
             states={
-                'done': [('readonly', True)],
-                'cancel': [('readonly', True)]}),
+                'done': [('readonly', True)]}),
         'date_done': fields.date(
             'Date', required=True,
             states={
                 'done': [('readonly', True)],
-                'cancel': [('readonly', True)]},),
+                'confirmed': [('readonly', True)]},),
         'internal_use_case': fields.many2one(
             'internal.use.case', 'Case', required=True,
             states={
                 'done': [('readonly', True)],
-                'cancel': [('readonly', True)]}),
+                'confirmed': [('readonly', True)]}),
         'company_id': fields.related(
             'internal_use_case', 'company_id',
             type='many2one', relation='res.company', string='Company',
@@ -75,16 +82,23 @@ class InternalUse(Model):
             'internal.use.line', 'internal_use', 'Lines',
             states={
                 'done': [('readonly', True)],
-                'cancel': [('readonly', True)]}),
+                'confirmed': [('readonly', True)]}),
         'picking_id': fields.many2one(
-            'stock.picking', 'Picking', readonly=True,),
+            'stock.picking', 'Picking', readonly=True),
         'stock_move_ids': fields.related(
             'picking_id', 'move_lines',
             type='many2many', relation='stock.move', string='Stock moves'),
         'account_move_id': fields.many2one(
             'account.move', 'Account Moves', readonly=True),
         'amount': fields.function(
-            _get_amount, type='float', string='Total Amount Tax excluded'),
+            _get_amount, string='Total Amount Tax excluded',
+            type='float', store={
+                'internal.use': (
+                    lambda self, cr, uid, ids, context=None: ids,
+                    ['line_ids', 'state'], 20),
+                'internal.use.line': (
+                    _get_internal_use_from_line, ['subtotal'], 20),
+            }),
     }
 
     # Defaults section
@@ -96,31 +110,26 @@ class InternalUse(Model):
 
     # Overload Section
     def create(self, cr, uid, vals, context=None):
-        vals['name'] = self.pool.get('ir.sequence').get(
-            cr, uid, 'internal.use')
+        sequence_obj = self.pool['ir.sequence']
+        vals['name'] = sequence_obj.get(cr, uid, 'internal.use')
         return super(InternalUse, self).create(cr, uid, vals, context=context)
 
-    def copy_data(self, cr, uid, record_id, default=None, context=None):
-        if not default:
-            default = {}
+    def copy_data(self, cr, uid, id, default=None, context=None):
+        default = default and default or {}
         default.update({'move_ids': [], 'line_ids': []})
         return super(InternalUse, self).copy_data(
-            cr, uid, record_id, default, context=context)
+            cr, uid, id, default, context=context)
 
     def unlink(self, cr, uid, ids, context=None):
-        if context is None:
-            context = {}
-        for iu in self.browse(cr, uid, ids, context=context):
-            if iu.state != 'draft':
+        for use in self.browse(cr, uid, ids, context=context):
+            if use.state != 'draft':
                 raise osv.except_osv(
                     _('User Error!'), _('You can only delete draft uses.'))
         return super(InternalUse, self).unlink(cr, uid, ids, context=context)
 
     # Actions section
     def action_confirm(self, cr, uid, ids, context=None):
-        """ Confirm the internal use and writes its finished date
-        @return: True
-        """
+        """ Confirm the internal use and writes its finished date"""
         account_move_obj = self.pool.get('account.move')
         product_obj = self.pool.get('product.product')
         stock_move_obj = self.pool.get('stock.move')
@@ -201,7 +210,7 @@ class InternalUse(Model):
                     'account_id':
                     product_obj.get_product_income_expense_accounts(
                         cr, uid, line.product_id.id,
-                        context)['account_expense']
+                        context=context)['account_expense']
                 }
                 amount = line.subtotal
                 if amount >= 0:
