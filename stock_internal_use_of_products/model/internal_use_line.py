@@ -38,17 +38,8 @@ class InternalUseLine(Model):
         return res
 
     _columns = {
-        'name': fields.related(
-            'internal_use', 'name', string='Name', select=True),
         'internal_use': fields.many2one(
             'internal.use', 'Internal Uses', select=True, ondelete='cascade'),
-        'internal_use_case': fields.related(
-            'internal_use', 'internal_use_case', string='Internal Use Case',
-            select=True, type='many2one', relation='internal.use.case',
-            readonly=True, store=True),
-        'date_done': fields.related(
-            'internal_use', 'date_done', string='Date',
-            select=True, type='date', readonly=True, store=True),
         'product_id': fields.many2one(
             'product.product', 'Product', required=True, select=True),
         'product_qty': fields.float(
@@ -61,7 +52,21 @@ class InternalUseLine(Model):
             digits_compute=dp.get_precision('Product Price')),
         'subtotal': fields.function(
             _get_subtotal, type='float', string='Subtotal Tax excluded',
-            digits_compute=dp.get_precision('Product Price'), store=True),
+            digits_compute=dp.get_precision('Product Price'), store={
+                'internal.use.line': (
+                    lambda self, cr, uid, ids, context=None: ids,
+                    ['product_qty', 'price_unit'], 10),
+            }),
+        # Related Fields
+        'name': fields.related(
+            'internal_use', 'name', string='Name', select=True),
+        'internal_use_case': fields.related(
+            'internal_use', 'internal_use_case', string='Internal Use Case',
+            select=True, type='many2one', relation='internal.use.case',
+            readonly=True, store=True),
+        'date_done': fields.related(
+            'internal_use', 'date_done', string='Date',
+            select=True, type='date', readonly=True, store=True),
         'company_id': fields.related(
             'internal_use', 'company_id', select=True,
             type='many2one', relation='res.company', string='Company',
