@@ -2,8 +2,9 @@
 ##############################################################################
 #
 #    Stock - Internal Use Of Products for Odoo
-#    Copyright (C) 2013 GRAP (http://www.grap.coop)
+#    Copyright (C) 2013-Today GRAP (http://www.grap.coop)
 #    @author Julien WESTE
+#    @author Sylvain LE GAL <https://www.twitter.com/legalsylvain>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -22,39 +23,42 @@
 
 from openerp.osv.orm import Model
 from openerp.osv import fields
+from openerp.tools.translate import _
 
 
 class internal_use_case(Model):
-    _name = "internal.use.case"
-    _description = "Case of Internal Uses"
+    _name = 'internal.use.case'
 
     # Columns Section
     _columns = {
-        'name': fields.char('Name', size=64, required=True,),
-        'company_id': fields.many2one('res.company', 'Company', required=True),
+        'name': fields.char(
+            'Name', required=True),
+        'company_id': fields.many2one(
+            'res.company', string='Company', required=True, select=True),
         'location_from': fields.many2one(
-            'stock.location', 'Origin Location', required=True,
+            'stock.location', string='Origin Location', required=True,
             domain="[('usage','=','internal')]"),
         'location_to': fields.many2one(
             'stock.location', 'Destination Location', required=True),
-        'expense_account': fields.property(
-            'account.account',
-            type='many2one',
-            relation='account.account',
-            string="Expense Account",
-            view_load=True,
-            required=True),
-        'active': fields.boolean(
-            'Active', help="""By unchecking the active field, you may hide"""
-            """ an INCOTERM without deleting it."""),
         'journal': fields.many2one(
-            'account.journal', 'Journal', required=True),
+            'account.journal', string='Journal', required=True, help="Set"
+            " the Accounting Journal used to generate Accounting Entries."),
+        'expense_account': fields.many2one(
+            'account.account', string='Expense Account', required=True,
+            domain="[('type','=','other')]",
+            help="Expense account of the Use Case. The generated"
+            " Entries will belong the following lines:\n\n"
+            " * Debit: This Expense Account;"
+            " * Credit: The Default Expense Account of the Product;"),
+        'active': fields.boolean(
+            string='Active', help="By unchecking the active field, you may"
+            "  hide an Use Case without deleting it."),
     }
 
     # Defaults section
     _defaults = {
         'company_id': (
-            lambda s, cr, uid, c: s.pool.get('res.users')._get_company(
+            lambda s, cr, uid, c: s.pool['res.users']._get_company(
                 cr, uid, context=c)),
         'active': True,
     }
@@ -104,12 +108,11 @@ class internal_use_case(Model):
         'Case of Internal uses name must be unique by company!')]
 
     # Overload Section
-    def copy_data(self, cr, uid, record_id, default=None, context=None):
-        if not default:
-            default = {}
+    def copy_data(self, cr, uid, id, default=None, context=None):
+        default = default and default or {}
         default.update({
-            'name': '%s (copy)' % (self.browse(
-                cr, uid, record_id, context=context).name)
+            'name': _('%s (copy)') % (self.browse(
+                cr, uid, id, context=context).name)
         })
         return super(internal_use_case, self).copy_data(
-            cr, uid, record_id, default, context=context)
+            cr, uid, id, default, context=context)
