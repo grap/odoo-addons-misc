@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    Stock - Internal Use Of Products for Odoo
-#    Copyright (C) 2013 GRAP (http://www.grap.coop)
+#    Copyright (C) 2013-Today GRAP (http://www.grap.coop)
 #    @author Julien WESTE
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -24,7 +24,7 @@ from openerp.osv.orm import Model
 
 
 class product_product(Model):
-    _inherit = "product.product"
+    _inherit = 'product.product'
 
     def get_product_income_expense_accounts(
             self, cr, uid, product_id, context=None):
@@ -33,8 +33,6 @@ class product_product(Model):
         @return: dictionary which contains information regarding
             income and expense accounts
         """
-        if context is None:
-            context = {}
         categ = self.pool.get('product.product').browse(
             cr, uid, product_id, context=context).categ_id
         product = self.browse(cr, uid, product_id, context=context)

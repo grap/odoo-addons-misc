@@ -24,8 +24,9 @@ from openerp.osv.orm import Model
 
 
 class stock_move(Model):
-    _inherit = "stock.move"
+    _inherit = 'stock.move'
 
+    # TODO understand why overload this function is necessary
     def _get_reference_accounting_values_for_valuation(
             self, cr, uid, move, context=None):
         tax_obj = self.pool.get('account.tax')
