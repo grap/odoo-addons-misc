@@ -26,8 +26,6 @@ from openerp.tools.translate import _
 import time
 
 
-
-
 class InternalUse(Model):
     _name = 'internal.use'
     _order = 'date_done desc, name'
@@ -48,6 +46,14 @@ class InternalUse(Model):
             res[use.id] = amount
         return res
 
+    def _get_period_id(self, cr, uid, ids, name, args, context=None):
+        res = {}
+        period_obj = self.pool['account.period']
+        for use in self.browse(cr, uid, ids, context=context):
+            res[use.id] = period_obj.find(
+                cr, uid, dt=use.date_done, context=context)[0]
+        return res
+
     def _get_internal_use_from_line(self, cr, uid, ids, context=None):
         """Return Internal Use ids depending on changes of Lines"""
         res = []
@@ -57,39 +63,39 @@ class InternalUse(Model):
 
     _columns = {
         'name': fields.char(
-            'Name', size=64, required=True),
+            'Name', required=True),
         'description': fields.char(
-            'Description', size=128,
-            states={
-                'done': [('readonly', True)]}),
+            'Description', states={
+            'done': [('readonly', True)],
+            'confirmed': [('readonly', True)]}),
         'date_done': fields.date(
-            'Date', required=True,
-            states={
-                'done': [('readonly', True)],
-                'confirmed': [('readonly', True)]},),
+            'Date', required=True, states={
+            'done': [('readonly', True)],
+            'confirmed': [('readonly', True)]}),
         'internal_use_case': fields.many2one(
-            'internal.use.case', 'Case', required=True,
-            states={
-                'done': [('readonly', True)],
-                'confirmed': [('readonly', True)]}),
+            'internal.use.case', 'Case', required=True, states={
+            'done': [('readonly', True)],
+            'confirmed': [('readonly', True)]}),
         'company_id': fields.related(
             'internal_use_case', 'company_id',
             type='many2one', relation='res.company', string='Company',
             readonly=True, store=True),
         'state': fields.selection(
-            _INTERNAL_USE_STATE, 'Status', readonly=True,),
+            _INTERNAL_USE_STATE, string='Status', readonly=True),
         'line_ids': fields.one2many(
-            'internal.use.line', 'internal_use', 'Lines',
-            states={
-                'done': [('readonly', True)],
-                'confirmed': [('readonly', True)]}),
+            'internal.use.line', 'internal_use', string='Lines', states={
+            'done': [('readonly', True)],
+            'confirmed': [('readonly', True)]}),
         'picking_id': fields.many2one(
-            'stock.picking', 'Picking', readonly=True),
+            'stock.picking', string='Picking', readonly=True),
         'stock_move_ids': fields.related(
-            'picking_id', 'move_lines',
-            type='many2many', relation='stock.move', string='Stock moves'),
+            'picking_id', 'move_lines', type='many2many',
+            relation='stock.move', string='Stock moves'),
         'account_move_id': fields.many2one(
-            'account.move', 'Account Moves', readonly=True),
+            'account.move', string='Account Moves', readonly=True),
+        'period_id': fields.function(
+            _get_period_id, string='Accounting Period',
+            type='many2one', relation='account.period'),
         'amount': fields.function(
             _get_amount, string='Total Amount Tax excluded',
             type='float', store={
@@ -127,31 +133,37 @@ class InternalUse(Model):
                     _('User Error!'), _('You can only delete draft uses.'))
         return super(InternalUse, self).unlink(cr, uid, ids, context=context)
 
+    # Custom Section
+    def _get_account_key(self, cr, uid, internal_use, context=None):
+        return (
+            internal_use.company_id.id,
+            internal_use.period_id.id,
+            internal_use.internal_use_case.id,
+            )
+
     # Actions section
     def action_confirm(self, cr, uid, ids, context=None):
-        """ Confirm the internal use and writes its finished date"""
-        account_move_obj = self.pool.get('account.move')
-        product_obj = self.pool.get('product.product')
-        stock_move_obj = self.pool.get('stock.move')
-        picking_obj = self.pool.get('stock.picking')
-        period_obj = self.pool.get('account.period')
+        """ Confirm the internal use and create stock move"""
+        stock_move_obj = self.pool['stock.move']
+        picking_obj = self.pool['stock.picking']
 
-        if context is None:
-            context = {}
-
-        for iu in self.browse(cr, uid, ids, context=context):
+        for use in self.browse(cr, uid, ids, context=context):
+            if len(use.line_ids) == 0:
+                raise osv.except_osv(
+                    _('User Error!'),
+                    _("You can not confirm empty Internal Use."))
             # Create picking
             picking_value = {
                 'type': 'out',
                 'move_type': 'direct',
-                'origin': iu.name,
+                'origin': use.name,
                 'invoice_state': 'none',
-                'company_id': iu.company_id.id,
+                'company_id': use.company_id.id,
             }
             picking_id = picking_obj.create(cr, uid, picking_value)
 
-            # Create stock moves
-            for line in iu.line_ids:
+            for line in use.line_ids:
+                # Create stock moves
                 qty = line.product_qty
                 if qty:
                     stock_move_value = {
@@ -159,50 +171,78 @@ class InternalUse(Model):
                         'product_id': line.product_id.id,
                         'picking_id': picking_id,
                         'product_uom': line.product_uom_id.id,
-                        'date': iu.date_done,
+                        'date': use.date_done,
                     }
 
                     if qty > 0:
                         stock_move_value.update({
                             'product_qty': qty,
                             'location_id':
-                            iu.internal_use_case.location_from.id,
+                            use.internal_use_case.location_from.id,
                             'location_dest_id':
-                            iu.internal_use_case.location_to.id,
+                            use.internal_use_case.location_to.id,
                         })
                     else:
                         stock_move_value.update({
                             'product_qty': -qty,
                             'location_id':
-                            iu.internal_use_case.location_to.id,
+                            use.internal_use_case.location_to.id,
                             'location_dest_id':
-                            iu.internal_use_case.location_from.id,
+                            use.internal_use_case.location_from.id,
                         })
-                stock_move_obj.create(cr, uid, stock_move_value)
+                stock_move_obj.create(
+                    cr, uid, stock_move_value, context=context)
+
+            # Validate picking (and associated stock moves)
+            picking_obj.draft_force_assign(cr, uid, [picking_id])
+            picking_obj.action_confirm(cr, uid, [picking_id], context=context)
+            picking_obj.action_move(cr, uid, [picking_id], context=context)
+
+            # associate internal use to stock moves and set to 'confirmed'
+            self.write(cr, uid, [use.id], {
+                'state': 'confirmed',
+                'picking_id': picking_id,
+            }, context=context)
+        return True
+
+    def action_done(self, cr, uid, ids, context=None):
+        """ Set the internal use to 'done' and create account moves"""
+        account_move_obj = self.pool['account.move']
+        product_obj = self.pool['product.product']
+
+        grouped_data = {}
+        for use in self.browse(cr, uid, ids, context=context):
+            key = self._get_account_key(cr, uid, use, context=context)
+
+
+            if not grouped_data[key]:
+                grouped_data[key].append(values.copy())
+            else:
+                current_value = grouped_data[key][0]
+        
+            period_id = use.period_id.id
 
             # Create account move
-            period_id = period_obj.find(
-                cr, uid, dt=iu.date_done, context=context)[0]
             aml_values = {
-                'name': iu.name,
-                'date': iu.date_done,
+                'name': use.name,
+                'date': use.date_done,
                 'period_id': period_id,
-                'account_id': iu.internal_use_case.expense_account.id,
+                'account_id': use.internal_use_case.expense_account.id,
             }
-            if iu.amount >= 0:
+            if use.amount >= 0:
                 aml_values.update({
-                    'debit': iu.amount,
+                    'debit': use.amount,
                 })
             else:
                 aml_values.update({
-                    'credit': -iu.amount,
+                    'credit': -use.amount,
                 })
             account_move_lines = [(0, 0, aml_values)]
 
-            for line in iu.line_ids:
+            for line in use.line_ids:
                 aml_values = {
                     'name': line.product_id.name,
-                    'date': iu.date_done,
+                    'date': use.date_done,
                     'period_id': period_id,
                     'product_id': line.product_id.id,
                     'product_uom_id': line.product_uom_id.id,
@@ -224,25 +264,19 @@ class InternalUse(Model):
 
                 account_move_lines.append((0, 0, aml_values))
             account_move_id = account_move_obj.create(cr, uid, {
-                'journal_id': iu.internal_use_case.journal.id,
+                'journal_id': use.internal_use_case.journal.id,
                 'line_id': account_move_lines,
-                'date': iu.date_done,
+                'date': use.date_done,
                 'period_id': period_id,
-                'ref': _('Expense Transfert (%s)') % (iu.name),
+                'ref': _('Expense Transfert (%s)') % (use.name),
             }, context=context)
             account_move_obj.button_validate(
                 cr, uid, [account_move_id], context=context)
 
-            # Validate picking (and associated stock moves)
-            picking_obj.draft_force_assign(cr, uid, [picking_id])
-            picking_obj.action_confirm(cr, uid, [picking_id], context=context)
-            picking_obj.action_move(cr, uid, [picking_id], context=context)
-
             # associate internal use to stock moves and account move
             # and set to 'done'
-            self.write(cr, uid, [iu.id], {
+            self.write(cr, uid, [use.id], {
                 'state': 'done',
-                'picking_id': picking_id,
                 'account_move_id': account_move_id,
             },
                 context=context)

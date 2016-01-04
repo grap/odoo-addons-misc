@@ -23,14 +23,14 @@
          <record id="view_internal_use_search" model="ir.ui.view">
             <field name="model">internal.use</field>
             <field name="arch" type="xml">
-                <search string="Search Internal Uses">
-                    <field name="name" string="Reference"/>
-                    <field name="date_done" string="Date"/>
+                <search string="Internal Uses">
+                    <field name="name"/>
+                    <field name="date_done"/>
                     <field name="company_id" groups="base.group_multi_company"/>
                     <field name="state"/>
-                    <filter string="To Process" name="to_process" domain="[('state', '=', 'draft')]"/>
-                    <filter string="To Post" name="to_post" domain="[('state', '=', 'done')]"/>
-                    <filter string="Done or Posted" name="done_or_posted" domain="[('state', 'in', ('done', 'posted'))]"/>
+                    <filter name="to_confirm" string="To Process" domain="[('state', '=', 'draft')]"/>
+                    <filter name="to_post" string="To Post" domain="[('state', '=', 'confirmed')]"/>
+                    <filter string="Confirmed or Posted" name="confirmed_or_posted" domain="[('state', 'in', ('confirmed', 'done'))]"/>
                     <group expand="0" string="Group By...">
                         <filter string="Status" domain="[]" context="{'group_by':'state'}"/>
                         <filter string="Date" domain="[]" context="{'group_by':'date_done'}"/>
@@ -45,7 +45,7 @@
         <record id="view_internal_use_tree" model="ir.ui.view">
             <field name="model">internal.use</field>
             <field name="arch" type="xml">
-                <tree string="Internal Uses" colors="grey:state == 'cancel'; blue:state == 'draft'; brown:state == 'done'">
+                <tree string="Internal Uses" colors="grey:state == 'cancel'; blue:state == 'draft'; brown:state == 'confirmed'">
                     <field name="date_done"/>
                     <field name="name"/>
                     <field name="internal_use_case"/>
@@ -61,24 +61,26 @@
             <field name="model">internal.use</field>
             <field name="priority" eval="6"/>
             <field name="arch" type="xml">
-                <form string="Internal Uses" version="7.0">
+                <form string="Internal Use" version="7.0">
                     <header>
-                        <button name="action_confirm" states="draft" string="Confirm Use" type="object" class="oe_highlight" groups="stock.group_stock_user"/>
-                        <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+                        <button name="action_confirm" states="draft" string="Confirm" type="object" class="oe_highlight"/>
+                        <button name="action_done" states="confirmed" string="Generate Accounting Entry" type="object" class="oe_highlight" groups="account.group_account_manager"/>
+                        <field name="state" widget="statusbar"/>
                     </header>
                     <sheet>
                         <div class="oe_title">
                             <h1>
-                                <label string="Internal use"/>
+                                <label string="Internal Use"/>
                                 <field name="name" class="oe_inline" readonly="1"/>
                             </h1>
                         </div>
                         <group>
                             <group>
                                 <field name="internal_use_case"/>
-                                <field name="date_done"/>
+                                <field name="period_id"/>
                             </group>
                             <group>
+                                <field name="date_done"/>
                                 <field name="description"/>
                                 <field name="company_id" groups="base.group_multi_company"/>
                             </group>
@@ -101,15 +103,14 @@
                                     </tree>
                                 </field>
                             </page>
-                            <page string="Posted Moves" 
-                                    attrs="{'invisible': [('state','&lt;&gt;','done')]}">
+                            <page string="Stock Moves" attrs="{'invisible': [('state','in', ['draft'])]}">
                                 <group>
-                                    <field name="picking_id" />
-                                    <field name="stock_move_ids"/>
+                                    <field name="picking_id" colspan="2"/>
+                                    <field name="stock_move_ids" nolabel="1" colspan="4"/>
                                 </group>
                             </page>
-                            <page string="Account Moves" 
-                                    attrs="{'invisible': [('state','&lt;&gt;','done')]}" 
+                            <page string="Accounting Entry" 
+                                    attrs="{'invisible': [('state','in', ['draft', 'confirmed'])]}"
                                     groups="account.group_account_manager">
                                 <group>
                                     <field name="account_move_id"/>

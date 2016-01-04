@@ -31,7 +31,7 @@
             <field name="body_html"><![CDATA[
 <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
     <p>Hello, ${object.name}</p>
-    <p>Here is your credentials to access to the eShop of ${object.company_id.name}:</p>
+    <p>Here is your credentials to access to the purchase website of ${object.company_id.name}:</p>
     <p>
         <ul>
             <li>Web Site: ${object.company_id.eshop_url}</li>

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- encoding: utf-8 -*-   
 ##############################################################################
 #
 #    Stock - Internal Use Of Products for Odoo
@@ -61,6 +61,7 @@ Copyright, Authors and Licence:
         'account',
         'product',
         'stock',
+        'mail',
     ],
     'data': [
         'data/ir_sequence.xml',

@@ -9,7 +9,6 @@ from openerp.osv.orm import Model
 class sale_order_line(Model):
     _inherit = 'sale.order.line'
 
-
     def product_id_change(
             self, cr, uid, ids, pricelist, product, qty=0, uom=False,
             qty_uos=0, uos=False, name='', partner_id=False, lang=False,
