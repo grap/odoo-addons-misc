@@ -37,7 +37,7 @@ class product_product(Model):
         res = super(product_product, self).fields_view_get(
             cr, uid, view_id=view_id, view_type=view_type, context=context,
             toolbar=toolbar, submenu=False)
-        if view_type == 'form':
+        if view_type in ('form', 'tree'):
             doc = etree.XML(res['arch'])
             nodes = doc.xpath("//field[@name='tax_group_id']")
             if nodes:
