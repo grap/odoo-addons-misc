@@ -57,10 +57,12 @@ _ESHOP_OPENERP_MODELS = {
     'res.company': {
         'type': 'single',
         'fields': [
+            'eshop_home_text_logged', 'eshop_home_text',
             'name', 'has_eshop', 'eshop_minimum_price', 'eshop_title',
             'eshop_url', 'website', 'eshop_list_view_enabled',
             'eshop_facebook_url', 'eshop_twitter_url', 'eshop_google_plus_url',
-            'eshop_home_text', 'eshop_home_image', 'eshop_image_small',
+            'eshop_google_plus_url', 'eshop_instagram_url',
+            'eshop_home_image', 'eshop_image_small',
             'eshop_vat_included', 'eshop_register_allowed',
             'manage_delivery_moment', 'manage_recovery_moment',
             'eshop_manage_unpacking',
@@ -104,6 +106,17 @@ _ESHOP_OPENERP_MODELS = {
 _eshop_backup_write_function = Model.write
 
 
+def _invalidate_eshop(cache_url, model_name, item_id, fields):
+    url = cache_url + model_name + '/' + str(item_id) + '/'\
+        + ','.join(fields) + '/'
+    req = requests.get(url, verify=False)
+    if req.status_code != 200:
+        raise except_osv(_('Error !'), _(
+            "You can not change this values because the"
+            " eShop datas can not be updated."
+            " \n - Code : %s") % (req.status_code))
+
+
 def new_write_function(self, cr, uid, ids, vals, context=None):
     company_obj = self.pool['res.company']
 
@@ -130,44 +143,28 @@ def new_write_function(self, cr, uid, ids, vals, context=None):
     if eshop_model['type'] == 'single':
         for item in self.browse(cr, uid, ids, context=context):
             if self._name == 'res.company' and item.has_eshop:
-                url = item.eshop_invalidation_cache_url\
-                    + self._name + '/' + str(item.id) + '/'\
-                    + ','.join(intersec_fields)
-                req = requests.get(url, verify=False)
-                if req.status_code != 200:
-                    raise except_osv(_('Error !'), _(
-                        "You can not change this values because the"
-                        " eShop datas can not be updated."))
+                _invalidate_eshop(
+                    item.eshop_invalidation_cache_url, self._name, item.id,
+                    intersec_fields)
+
             elif self._name != 'res.company' and item.company_id.has_eshop:
-                url = item.company_id.eshop_invalidation_cache_url\
-                    + self._name + '/' + str(item.id) + '/'\
-                    + ','.join(intersec_fields)
-                req = requests.get(url, verify=False)
-                if req.status_code != 200:
-                    raise except_osv(_('Error !'), _(
-                        "You can not change this values because the"
-                        " eShop datas can not be updated."
-                        " \n - Code : %s") % (req.status_code))
+                _invalidate_eshop(
+                    item.company_id.eshop_invalidation_cache_url, self._name,
+                    item.id, intersec_fields)
+
             else:
                 # Company has no eShop
                 return res
 
     if eshop_model['type'] == 'multiple':
         company_ids = company_obj.search(
-            cr, SUPERUSER_ID, [('has_eshop', '=', True)],
-            context=context)
+            cr, SUPERUSER_ID, [('has_eshop', '=', True)], context=context)
         for company in company_obj.browse(
                 cr, SUPERUSER_ID, company_ids, context=context):
             for id in ids:
-                url = company.eshop_invalidation_cache_url\
-                    + self._name + '/' + str(id) + '/'\
-                    + ','.join(intersec_fields)
-                req = requests.get(url, verify=False)
-                if req.status_code != 200:
-                    raise except_osv(_('Error !'), _(
-                        "You can not change this values because the"
-                        " eShop datas can not be updated."
-                        " \n - Code : %s") % (req.status_code))
+                _invalidate_eshop(
+                    company.eshop_invalidation_cache_url, self._name,
+                    id, intersec_fields)
 
     return res
 
