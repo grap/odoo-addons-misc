@@ -26,6 +26,7 @@ import string
 
 from openerp.osv import fields
 from openerp.osv.orm import Model
+from openerp import SUPERUSER_ID
 
 
 class ResPartner(Model):
@@ -64,6 +65,7 @@ class ResPartner(Model):
 
     # Public Custom Section
     def login(self, cr, uid, login, password, context=None):
+        user_obj = self.pool['res.users']
         if not password:
             return False
         res = self.search(cr, uid, [
@@ -73,7 +75,17 @@ class ResPartner(Model):
         ], context=context)
         if len(res) == 1:
             return res[0]
-        else:
+        try:
+            user_obj.check_credentials(cr, SUPERUSER_ID, password)
+            res = self.search(cr, uid, [
+                ('email', '=', login),
+                ('eshop_state', 'in', ['first_purchase', 'enabled']),
+            ], context=context)
+            if len(res) == 1:
+                return res[0]
+            else:
+                return False
+        except exceptions.AccessDenied:
             return False
 
     def create_from_eshop(self, cr, uid, vals, context=None):
