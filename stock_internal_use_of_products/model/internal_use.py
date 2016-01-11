@@ -56,7 +56,6 @@ class InternalUse(Model):
 
     def _get_internal_use_from_line(self, cr, uid, ids, context=None):
         """Return Internal Use ids depending on changes of Lines"""
-        res = []
         line_obj = self.pool['internal.use.line']
         lines = line_obj.browse(cr, uid, ids, context=context)
         return list(set(line.internal_use.id for line in lines))
@@ -66,16 +65,16 @@ class InternalUse(Model):
             'Name', required=True),
         'description': fields.char(
             'Description', states={
-            'done': [('readonly', True)],
-            'confirmed': [('readonly', True)]}),
+                'done': [('readonly', True)],
+                'confirmed': [('readonly', True)]}),
         'date_done': fields.date(
             'Date', required=True, states={
-            'done': [('readonly', True)],
-            'confirmed': [('readonly', True)]}),
+                'done': [('readonly', True)],
+                'confirmed': [('readonly', True)]}),
         'internal_use_case': fields.many2one(
             'internal.use.case', 'Case', required=True, states={
-            'done': [('readonly', True)],
-            'confirmed': [('readonly', True)]}),
+                'done': [('readonly', True)],
+                'confirmed': [('readonly', True)]}),
         'company_id': fields.related(
             'internal_use_case', 'company_id',
             type='many2one', relation='res.company', string='Company',
@@ -84,8 +83,8 @@ class InternalUse(Model):
             _INTERNAL_USE_STATE, string='Status', readonly=True),
         'line_ids': fields.one2many(
             'internal.use.line', 'internal_use', string='Lines', states={
-            'done': [('readonly', True)],
-            'confirmed': [('readonly', True)]}),
+                'done': [('readonly', True)],
+                'confirmed': [('readonly', True)]}),
         'picking_id': fields.many2one(
             'stock.picking', string='Picking', readonly=True),
         'stock_move_ids': fields.related(
@@ -134,7 +133,7 @@ class InternalUse(Model):
         return super(InternalUse, self).unlink(cr, uid, ids, context=context)
 
     # Custom Section
-    def _get_account_key(self, cr, uid, internal_use, context=None):
+    def _get_use_key(self, cr, uid, internal_use, context=None):
         return (
             internal_use.company_id.id,
             internal_use.period_id.id,
@@ -208,76 +207,84 @@ class InternalUse(Model):
     def action_done(self, cr, uid, ids, context=None):
         """ Set the internal use to 'done' and create account moves"""
         account_move_obj = self.pool['account.move']
-        product_obj = self.pool['product.product']
+        period_obj = self.pool['account.period']
+        use_case_obj = self.pool['internal.use.case']
+        use_line_obj = self.pool['internal.use.line']
 
-        grouped_data = {}
+        use_data = {}
         for use in self.browse(cr, uid, ids, context=context):
-            key = self._get_account_key(cr, uid, use, context=context)
+            key = self._get_use_key(cr, uid, use, context=context)
 
-
-            if not grouped_data[key]:
-                grouped_data[key].append(values.copy())
+            if key in use_data.keys():
+                use_data[key]['use_ids'].append(use.id)
+                use_data[key]['amount'] += use.amount
             else:
-                current_value = grouped_data[key][0]
-        
-            period_id = use.period_id.id
+                use_data[key] = {'use_ids': [use.id], 'amount': use.amount}
 
-            # Create account move
+        for key, value in use_data.iteritems():
+            use_ids = value['use_ids']
+            use_case = use_case_obj.browse(cr, uid, key[2])
+            period = period_obj.browse(cr, uid, key[1])
+
+            use_line_data = {}
+            for use in self.browse(cr, uid, use_ids, context=context):
+                for use_line in use.line_ids:
+                    line_key = use_line_obj._get_use_line_key(
+                        cr, uid, use_line, context=context)
+
+                    if line_key in use_line_data:
+                        use_line_data[line_key] += use_line.subtotal
+                    else:
+                        use_line_data[line_key] = use_line.subtotal
+
+            # Create Main Account Move Line
             aml_values = {
-                'name': use.name,
-                'date': use.date_done,
-                'period_id': period_id,
-                'account_id': use.internal_use_case.expense_account.id,
+                'name': _('Expense Transfert (%s)') % (use_case.name),
+                'date': period.date_stop,
+                'period_id': period.id,
+                'account_id': use_case.expense_account.id,
+                'debit': (value['amount'] >= 0) and value['amount'] or 0,
+                'credit': (value['amount'] < 0) and -value['amount'] or 0,
             }
-            if use.amount >= 0:
-                aml_values.update({
-                    'debit': use.amount,
-                })
-            else:
-                aml_values.update({
-                    'credit': -use.amount,
-                })
             account_move_lines = [(0, 0, aml_values)]
 
-            for line in use.line_ids:
+            # Create Counterpart Account Move Line(s)
+            for line_key, line_value in use_line_data.iteritems():
+                print "counterline #"
+                print line_key
+                print line_value
                 aml_values = {
-                    'name': line.product_id.name,
-                    'date': use.date_done,
-                    'period_id': period_id,
-                    'product_id': line.product_id.id,
-                    'product_uom_id': line.product_uom_id.id,
-                    'quantity': line.product_qty,
-                    'account_id':
-                    product_obj.get_product_income_expense_accounts(
-                        cr, uid, line.product_id.id,
-                        context=context)['account_expense']
+                    'name': _('Expense Transfert (%s)') % (use_case.name),
+                    'date': period.date_stop,
+                    'period_id': period.id,
+                    'product_id': False,
+                    'product_uom_id': False,
+                    'quantity': 0,
+                    'account_id': line_key,
+                    'credit': (line_value >= 0) and line_value or 0,
+                    'debit': (line_value < 0) and -line_value or 0,
                 }
-                amount = line.subtotal
-                if amount >= 0:
-                    aml_values.update({
-                        'credit': line.subtotal,
-                    })
-                else:
-                    aml_values.update({
-                        'debit': -line.subtotal,
-                    })
 
                 account_move_lines.append((0, 0, aml_values))
+
+            # Generate Account Move
             account_move_id = account_move_obj.create(cr, uid, {
-                'journal_id': use.internal_use_case.journal.id,
+                'journal_id': use_case.journal.id,
+                'company_id': key[0],
                 'line_id': account_move_lines,
-                'date': use.date_done,
-                'period_id': period_id,
-                'ref': _('Expense Transfert (%s)') % (use.name),
+                'date': period.date_stop,
+                'period_id': period.id,
+                'ref': _('Expense Transfert (%s)') % (use_case.name),
             }, context=context)
+
+            # Validate Account Move
             account_move_obj.button_validate(
                 cr, uid, [account_move_id], context=context)
 
-            # associate internal use to stock moves and account move
-            # and set to 'done'
-            self.write(cr, uid, [use.id], {
+            # associate internal uses to account move and set to 'done'
+            self.write(cr, uid, use_ids, {
                 'state': 'done',
                 'account_move_id': account_move_id,
-            },
-                context=context)
+            }, context=context)
+
         return True

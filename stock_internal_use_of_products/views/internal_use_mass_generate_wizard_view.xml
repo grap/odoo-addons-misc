@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_internal_use_mass_generate_wizard_form" model="ir.ui.view">
+            <field name="model">internal.use.mass.generate.wizard</field>
+            <field name="arch" type="xml">
+            <form string="Generate Accounting Entries" version="7.0">
+                <group>
+                    <field name="selected_use_qty"/>
+                </group>
+                <footer>
+                    <button name="apply_button" string="Apply" type="object" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+            </field>
+        </record>
+
+    </data>
+</openerp>

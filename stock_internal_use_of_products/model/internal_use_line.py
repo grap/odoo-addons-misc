@@ -100,3 +100,12 @@ class InternalUseLine(Model):
                 'product_uom_id': product.uom_id.id or False,
             }
         return {'value': value}
+
+    # Custom section
+    def _get_use_line_key(self, cr, uid, use_line, context=None):
+        product_obj = self.pool['product.product']
+        return (
+            product_obj.get_product_income_expense_accounts(
+                cr, uid, use_line.product_id.id,
+                context=context)['account_expense']
+            )

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-   
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 #    Stock - Internal Use Of Products for Odoo
@@ -21,7 +21,7 @@
 ##############################################################################
 
 {
-    'name': 'Stock Internal Use of products ',
+    'name': 'Stock Internal Use of products',
     'version': '1.0',
     'category': 'Stock',
     'description': """
@@ -72,6 +72,7 @@ Copyright, Authors and Licence:
         'views/internal_use_case_view.xml',
         'views/action.xml',
         'views/menu.xml',
+        'views/internal_use_mass_generate_wizard_view.xml',
     ],
     'demo': [
         'demo/stock_location.yml',

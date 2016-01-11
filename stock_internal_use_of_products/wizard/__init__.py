@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Stock - Internal Use Of Products for Odoo
-#    Copyright (C) 2013 GRAP (http://www.grap.coop)
-#    @author Julien WESTE
+#    Sale - Sale Order Mass Action module for Odoo
+#    Copyright (C) 2015-Today GRAP (http://www.grap.coop)
+#    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -20,17 +20,4 @@
 #
 ##############################################################################
 
-- !record {model: ir.rule, id: ir_rule_internal_use}:
-    name: u'Access to Internal Uses'
-    model_id: model_internal_use
-    domain_force: "['|', ('company_id','=', False), ('company_id','=', user.company_id.id)]"
-
-- !record {model: ir.rule, id: ir_rule_internal_use_case}:
-    name: u'Access to Internal Use Cases'
-    model_id: model_internal_use_case
-    domain_force: "['|', ('company_id','=', False), ('company_id','=', user.company_id.id)]"
-
-- !record {model: ir.rule, id: ir_rule_internal_use_line}:
-    name: u'Access to Internal Use Lines'
-    model_id: model_internal_use_line
-    domain_force: "['|', ('company_id','=', False), ('company_id','=', user.company_id.id)]"
+from . import sale_order_mass_action_wizard
