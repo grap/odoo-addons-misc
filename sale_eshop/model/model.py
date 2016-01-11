@@ -50,9 +50,10 @@ _ESHOP_OPENERP_MODELS = {
             'name', 'uom_id', 'image', 'image_medium', 'list_price',
             'eshop_category_id', 'label_ids', 'eshop_minimum_qty',
             'eshop_rounded_qty', 'origin_description', 'maker_description',
-            'fresh_category', 'description', 'country_id', 'department_id',
-            'default_code', 'delivery_categ_id', 'eshop_taxes_description',
-            'eshop_unpack_qty', 'eshop_unpack_surcharge'],
+            'fresh_category', 'eshop_description', 'country_id',
+            'department_id', 'default_code', 'delivery_categ_id',
+            'eshop_taxes_description', 'eshop_unpack_qty',
+            'eshop_unpack_surcharge'],
     },
     'res.company': {
         'type': 'single',

@@ -24,9 +24,10 @@ import os
 import random
 import string
 
+from openerp import SUPERUSER_ID
+from openerp import exceptions
 from openerp.osv import fields
 from openerp.osv.orm import Model
-from openerp import SUPERUSER_ID
 
 
 class ResPartner(Model):
