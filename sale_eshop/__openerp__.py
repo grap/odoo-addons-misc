@@ -51,6 +51,7 @@ Copyright, Authors and Licence:
         'mail',
         'sale',
         'sale_recovery_moment',
+        'simple_tax_sale',
     ],
     'data': [
         'security/ir_rule.xml',

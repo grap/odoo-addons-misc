@@ -69,6 +69,14 @@ _ESHOP_OPENERP_MODELS = {
             'eshop_manage_unpacking',
         ],
     },
+    'res.partner': {
+        'type': 'single',
+        'fields': [
+            'name', 'lang', 'email', 'eshop_active', 'eshop_state',
+            'phone', 'mobile', 'street', 'street2', 'zip', 'city',
+            'delivery_categ_id', 'simple_tax_type',
+        ],
+    },
     'eshop.category': {
         'type': 'single',
         'fields': [
