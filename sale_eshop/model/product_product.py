@@ -166,6 +166,8 @@ class ProductProduct(Model):
         'eshop_taxes_description': fields.function(
             _get_eshop_taxes_description, type='char',
             string='Eshop Taxes Description'),
+        'eshop_description': fields.text(
+            type='Text', string='Eshop Description'),
     }
 
     # Defaults Section

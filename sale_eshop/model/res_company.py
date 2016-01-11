@@ -52,10 +52,14 @@ class ResCompany(Model):
             'Facebook URL'),
         'eshop_twitter_url': fields.char(
             'Twitter URL'),
+        'eshop_instagram_url': fields.char(
+            'Instagram URL'),
         'eshop_google_plus_url': fields.char(
             'Google Plus URL'),
         'eshop_home_text': fields.html(
             'Text for the eShop Home Page'),
+        'eshop_home_text_logged': fields.html(
+            'Text for the eShop Home Page, when logged'),
         'eshop_home_image': fields.binary(
             'Image for the eShop Home Page', oldname="eshop_image"),
         'eshop_image_small': fields.binary(
