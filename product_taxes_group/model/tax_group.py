@@ -34,8 +34,9 @@ class tax_group(Model):
     """Group of customer and supplier taxes.
     This group is linked to a product to select a group of taxes in one
     time."""
-    _name = "tax.group"
-    _description = "Tax Group"
+    _name = 'tax.group'
+    _description = 'Tax Group'
+    _order = 'name, company_id'
     _MAX_LENGTH_NAME = 256
 
     def get_or_create(self, cr, uid, values, context=None):
