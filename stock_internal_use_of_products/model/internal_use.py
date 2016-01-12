@@ -250,9 +250,6 @@ class InternalUse(Model):
 
             # Create Counterpart Account Move Line(s)
             for line_key, line_value in use_line_data.iteritems():
-                print "counterline #"
-                print line_key
-                print line_value
                 aml_values = {
                     'name': _('Expense Transfert (%s)') % (use_case.name),
                     'date': period.date_stop,
