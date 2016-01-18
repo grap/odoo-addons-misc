@@ -46,8 +46,8 @@ class AccountInvoice(Model):
                     cr, uid, ai.partner_id.id, ail.price_unit,
                     [x.id for x in ail.invoice_line_tax_id], context=context)
                 if (set(info['tax_ids']) !=
-                        set([x.id for x in ail.invoice_line_tax_id])
-                        or ail.price_unit != info['price_unit']):
+                        set([x.id for x in ail.invoice_line_tax_id]) or
+                        ail.price_unit != info['price_unit']):
                     ail_obj.write(cr, uid, [ail.id], {
                         'price_unit': info['price_unit'],
                         'invoice_line_tax_id': [(6, 0, info['tax_ids'])],

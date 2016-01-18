@@ -62,10 +62,10 @@ class AccountTax(Model):
             # Developer Note: This algorithm could be improved to manage this
             # case.
             return res
-        if ((not at_lst[0].price_include
-                and rp.simple_tax_type == 'excluded') or
-            (at_lst[0].price_include
-                and rp.simple_tax_type == 'included')):
+        if ((not at_lst[0].price_include and
+                rp.simple_tax_type == 'excluded') or
+            (at_lst[0].price_include and
+                rp.simple_tax_type == 'included')):
             # Tax changes is not required
             return res
         new_tax_ids = []

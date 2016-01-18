@@ -90,9 +90,9 @@ class SaleDeliveryMoment(Model):
         if not categ_id:
             return True
         return (
-            date_now
-            + timedelta(days=categ_id.sale_delay)
-            + timedelta(hours=moment.offset)) <=\
+            date_now +
+            timedelta(days=categ_id.sale_delay) +
+            timedelta(hours=moment.offset)) <=\
             datetime.strptime(moment.min_delivery_date, '%Y-%m-%d %H:%M:%S')
 
     # Field Functions Section

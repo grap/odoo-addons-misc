@@ -46,8 +46,9 @@ class PurchaseOrder(Model):
                 info = at_obj._translate_simple_tax(
                     cr, uid, po.partner_id.id, pol.price_unit,
                     [x.id for x in pol.taxes_id], context=context)
-                if (set(info['tax_ids']) != set([x.id for x in pol.taxes_id])
-                        or pol.price_unit != info['price_unit']):
+                if (set(info['tax_ids']) !=
+                        set([x.id for x in pol.taxes_id]) or
+                        pol.price_unit != info['price_unit']):
                     pol_obj.write(cr, uid, [pol.id], {
                         'price_unit': info['price_unit'],
                         'taxes_id': [(6, 0, info['tax_ids'])],

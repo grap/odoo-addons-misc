@@ -25,6 +25,7 @@
             <field name="model">product.product</field>
             <field name="arch" type="xml">
                 <tree string="Products (Stock)">
+                    <field name="code"/>
                     <field name="name"/>
                     <field name="categ_id"/>
                     <field name="uom_id"/>

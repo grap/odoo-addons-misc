@@ -166,8 +166,8 @@ class SaleOrder(Model):
 
         if not delivery_moment_data:
             return False
-        if not (delivery_moment_data['is_delay_possible']
-                and delivery_moment_data['is_limit_ok']):
+        if not (delivery_moment_data['is_delay_possible'] and
+                delivery_moment_data['is_limit_ok']):
             return False
         if delivery_moment_data['is_partial']:
             # Create a New Draft Order and move some lines

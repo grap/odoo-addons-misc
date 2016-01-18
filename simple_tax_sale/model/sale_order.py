@@ -46,8 +46,8 @@ class SaleOrder(Model):
                 info = at_obj._translate_simple_tax(
                     cr, uid, so.partner_id.id, sol.price_unit,
                     [x.id for x in sol.tax_id], context=context)
-                if (set(info['tax_ids']) != set([x.id for x in sol.tax_id])
-                        or sol.price_unit != info['price_unit']):
+                if (set(info['tax_ids']) != set([x.id for x in sol.tax_id]) or
+                        sol.price_unit != info['price_unit']):
                     sol_obj.write(cr, uid, [sol.id], {
                         'price_unit': info['price_unit'],
                         'tax_id': [(6, 0, info['tax_ids'])],
