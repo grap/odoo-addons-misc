@@ -83,7 +83,10 @@ class SaleOrder(Model):
             line_data = {k: v for k, v in res['value'].items()}
 
             # F& !! ORM
-            line_data['tax_id'] = [[6, False, line_data['tax_id']]]
+            if line_data['tax_id']:
+                line_data['tax_id'] = [[6, False, line_data['tax_id']]]
+            else:
+                line_data['tax_id'] = [[6, False, []]]
 
             # Create line if needed
             if not current_line_id:
