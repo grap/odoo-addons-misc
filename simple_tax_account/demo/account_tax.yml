@@ -20,22 +20,38 @@
 #
 ##############################################################################
 
-- !record {model: account.tax, id: vat_excluded}:
-    name: VAT 10% Excluded
+- !record {model: account.tax, id: vat_5_exclude}:
+    name: Tax 5% (Price Excl.)
     type: percent
-    amount: 0.1
+    amount: 0.05
     price_include: False
     company_id: base.main_company
 
-- !record {model: account.tax, id: vat_included}:
-    name: VAT 10% Included
+- !record {model: account.tax, id: vat_5_include}:
+    name: Tax 5% (Price Incl.)
     type: percent
-    amount: 0.1
+    amount: 0.05
     price_include: True
     company_id: base.main_company
+    simple_tax_id: vat_5_exclude
 
-- !record {model: account.tax, id: vat_excluded}:
-    simple_tax_id: vat_included
+- !record {model: account.tax, id: vat_5_exclude}:
+    simple_tax_id: vat_5_include
 
-- !record {model: account.tax, id: vat_included}:
-    simple_tax_id: vat_excluded
+- !record {model: account.tax, id: vat_20_exclude}:
+    name: Tax 20% (Price Excl.)
+    type: percent
+    amount: 0.2
+    price_include: False
+    company_id: base.main_company
+
+- !record {model: account.tax, id: vat_20_include}:
+    name: Tax 20% (Price Incl.)
+    type: percent
+    amount: 0.2
+    price_include: True
+    company_id: base.main_company
+    simple_tax_id: vat_20_exclude
+
+- !record {model: account.tax, id: vat_20_exclude}:
+    simple_tax_id: vat_20_include

@@ -21,25 +21,25 @@
 ##############################################################################
 
 - !record {model: product.product, id: product_tax_included}:
-    name: Product (TAX Included)
+    name: Product (VAT 5% - Price Incl.)
     categ_id: product.product_category_all
     type: consu
     list_price: 100
     uom_id: product.product_uom_unit
     uom_po_id: product.product_uom_unit
     taxes_id:
-      - vat_included
+      - vat_5_include
     supplier_taxes_id:
-      - vat_included
+      - vat_5_include
 
 - !record {model: product.product, id: product_tax_excluded}:
-    name: Product (TAX Excluded)
+    name: Product (VAT 5% - Price Excl.)
     categ_id: product.product_category_all
     type: consu
     list_price: 100
     uom_id: product.product_uom_unit
     uom_po_id: product.product_uom_unit
     taxes_id:
-      - vat_excluded
+      - vat_5_exclude
     supplier_taxes_id:
-      - vat_excluded
+      - vat_5_exclude

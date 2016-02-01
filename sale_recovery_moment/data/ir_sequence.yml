@@ -20,9 +20,8 @@
 #
 ##############################################################################
 
--
-  !context
-   noupdate: 0
+- !context
+    noupdate: 0
 
 - !record {model: ir.sequence, id: sequence_sale_recovery_moment}:
     name: Sale Recovery Moment - Sequence
