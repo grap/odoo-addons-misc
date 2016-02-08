@@ -76,8 +76,8 @@ class account_invoice(Model):
     # Columns Section
     _columns = {
         'partner_pricelist_id': fields.function(
-            readonly=True, type='many2one', relation='product.pricelist',
             get_partner_pricelist_id, string='Partner Pricelist',
+            readonly=True, type='many2one', relation='product.pricelist',
             help="""The pricelist of the partner, when the invoice is"""
             """ created or the partner has changed. This is a technical"""
             """ field used to reporting.""",
