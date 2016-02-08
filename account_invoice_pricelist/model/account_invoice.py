@@ -20,6 +20,8 @@
 #
 ##############################################################################
 
+
+from openerp import SUPERUSER_ID
 from openerp.osv import fields, osv
 from openerp.osv.orm import Model
 from openerp.tools.translate import _
@@ -28,7 +30,7 @@ from openerp.tools.translate import _
 class account_invoice(Model):
     _inherit = 'account.invoice'
 
-    def _get_partner_pricelist_id(
+    def get_partner_pricelist_id(
             self, cr, uid, ids, name, arg, context=None):
         res = {}
         if context == {}:
@@ -74,8 +76,8 @@ class account_invoice(Model):
     # Columns Section
     _columns = {
         'partner_pricelist_id': fields.function(
-            _get_partner_pricelist_id, string='Partner Pricelist',
             readonly=True, type='many2one', relation='product.pricelist',
+            get_partner_pricelist_id, string='Partner Pricelist',
             help="""The pricelist of the partner, when the invoice is"""
             """ created or the partner has changed. This is a technical"""
             """ field used to reporting.""",
