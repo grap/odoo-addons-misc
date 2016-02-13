@@ -103,10 +103,10 @@ class product_product(Model):
                     if isinstance(value, (str, unicode)) and \
                             self._SEPARATOR in value:
                         criterias = value.split(self._SEPARATOR)
-                        new_arg_tmp = [(name, operator, x) for x in criterias]
-                        new_arg = ['&'] * (len(new_arg_tmp) - 1) + new_arg_tmp
-                        args.remove(arg)
-                        args += new_arg
+                        new_arg = ['&'] * (len(new_arg_tmp) - 1) +\
+                            [(name, operator, x) for x in criterias]
+                        args = args[:args.index(arg)] +\
+                            new_arg + args[args.index(arg)+1:]
         except:
             pass
         return super(product_product, self).search(
