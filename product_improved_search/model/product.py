@@ -96,16 +96,15 @@ class product_product(Model):
             self, cr, uid, args, offset=0, limit=None, order=None,
             context=None, count=False):
         try:
-                if isinstance(arg, (tuple, list)):
-                    if isinstance(arg[2], (str, unicode)) and \
-                            self._SEPARATOR in arg[2]:
-                        criterias = arg[2].split(self._SEPARATOR)
-                        new_arg_tmp = [(arg[0], arg[1], x) for x in criterias]
-                        l = len(new_arg_tmp) - 1
-                        init_string = ['&'] * l
-                        new_arg = init_string + new_arg_tmp
             copy_args = list(args)
             for arg in copy_args:
+                if isinstance(arg, (tuple, list)) and len(arg) == 3:
+                    name, operator, value = arg
+                    if isinstance(value, (str, unicode)) and \
+                            self._SEPARATOR in value:
+                        criterias = value.split(self._SEPARATOR)
+                        new_arg_tmp = [(name, operator, x) for x in criterias]
+                        new_arg = ['&'] * (len(new_arg_tmp) - 1) + new_arg_tmp
                         args.remove(arg)
                         args += new_arg
         except:
