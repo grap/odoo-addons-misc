@@ -96,8 +96,6 @@ class product_product(Model):
             self, cr, uid, args, offset=0, limit=None, order=None,
             context=None, count=False):
         try:
-            args2 = args
-            for arg in args2:
                 if isinstance(arg, (tuple, list)):
                     if isinstance(arg[2], (str, unicode)) and \
                             self._SEPARATOR in arg[2]:
@@ -106,6 +104,8 @@ class product_product(Model):
                         l = len(new_arg_tmp) - 1
                         init_string = ['&'] * l
                         new_arg = init_string + new_arg_tmp
+            copy_args = list(args)
+            for arg in copy_args:
                         args.remove(arg)
                         args += new_arg
         except:
