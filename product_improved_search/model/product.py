@@ -30,8 +30,8 @@ class product_product(Model):
     _inherit = 'product.product'
 
     # Constant Values
-    _SEPARATOR = ':'
-    _REPLACEMENT = ''
+    _MULTI_SEARCH_SEPARATOR = ':'
+    _MULTI_SEARCH_REPLACEMENT = ''
 
     _MULTI_SEARCH_OPERATORS = ['not ilike', 'ilike']
     _MULTI_SEARCH_FIELDS = ['name', 'default_code']
@@ -59,7 +59,7 @@ class product_product(Model):
             if operator in ('=ilike', '=like'):
                 operator = operator[1:]
 
-            names = name.split(self._SEPARATOR)
+            names = name.split(self._MULTI_SEARCH_SEPARATOR)
             pwc = ""
             for n in names:
                 search_name = '%%%s%%' % n if percent else n
@@ -98,32 +98,32 @@ class product_product(Model):
     def search(
             self, cr, uid, args, offset=0, limit=None, order=None,
             context=None, count=False):
-        try:
-            copy_args = list(args)
-            for arg in copy_args:
-                if isinstance(arg, (tuple, list)) and len(arg) == 3:
-                    name, operator, value = arg
-                    if isinstance(value, (str, unicode)) and \
-                            self._SEPARATOR in value:
-                        criterias = value.split(self._SEPARATOR)
-                        new_arg = ['&'] * (len(new_arg_tmp) - 1) +\
-                            [(name, operator, x) for x in criterias]
-                        args = args[:args.index(arg)] +\
-                            new_arg + args[args.index(arg)+1:]
-        except:
-            pass
+        copy_args = list(args)
+        for arg in copy_args:
+            if isinstance(arg, (tuple, list)) and len(arg) == 3:
+                name, operator, value = arg
+                if name in self._MULTI_SEARCH_FIELDS and\
+                        operator in self._MULTI_SEARCH_OPERATORS and\
+                        self._MULTI_SEARCH_SEPARATOR in value:
+                    criterias = value.split(self._MULTI_SEARCH_SEPARATOR)
+                    new_arg_lst = [
+                        (name, operator, x) for x in criterias if x != '']
+                    args = args[:args.index(arg)] +\
+                        ['&'] * (len(new_arg_lst) - 1) + new_arg_lst +\
+                        args[args.index(arg)+1:]
         return super(product_product, self).search(
             cr, uid, args, offset=offset, limit=limit, order=order,
             context=context, count=count)
 
     def _replace_separator(self, cr, uid, ids=None, context=None):
         product_ids = super(product_product, self).search(cr, SUPERUSER_ID, [
-            ('name', 'like', '%' + self._SEPARATOR + '%')],
+            ('name', 'like', '%' + self._MULTI_SEARCH_SEPARATOR + '%')],
             context=context)
         for product in self.browse(
                 cr, SUPERUSER_ID, product_ids, context=context):
             new_name = string.replace(
-                product.name, self._SEPARATOR, self._REPLACEMENT)
+                product.name, self._MULTI_SEARCH_SEPARATOR,
+                self._MULTI_SEARCH_REPLACEMENT)
             self.write(
                 cr, SUPERUSER_ID, [product.id], {
                     'name': new_name,
