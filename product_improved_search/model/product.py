@@ -33,6 +33,9 @@ class product_product(Model):
     _SEPARATOR = ':'
     _REPLACEMENT = ''
 
+    _MULTI_SEARCH_OPERATORS = ['not ilike', 'ilike']
+    _MULTI_SEARCH_FIELDS = ['name', 'default_code']
+
     def name_search(
             self, cr, uid, name, args=None, operator='ilike', context=None,
             limit=100):
