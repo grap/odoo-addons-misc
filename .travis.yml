@@ -24,6 +24,7 @@ before_install:
   - sudo pip install GitPython bzr
   - sudo pip install cairosvg
   - sudo pip install barcode    # FIXME bad version of barcode in pip
+  - sudo pip install unicodecsv
 
 virtualenv:
   system_site_packages: true
