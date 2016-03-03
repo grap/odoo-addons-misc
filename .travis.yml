@@ -23,7 +23,7 @@ env:
 before_install:
   - sudo pip install GitPython bzr
   - sudo pip install cairosvg
-  - sudo pip install barcode    # FIXME bad version of barcode in pip
+  - sudo pip install pyBarcode
   - sudo pip install unicodecsv
 
 virtualenv:

@@ -75,7 +75,7 @@ Copyright, Authors and Licence:
         'views/menu.xml',
     ],
     'external_dependencies': {
-        'python': ['barcode', 'cairosvg'],
+        'python': ['cairosvg'],
         'bin': ['wkhtmltopdf'],
     },
 }
