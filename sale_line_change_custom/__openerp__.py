@@ -24,7 +24,7 @@
 
 {
     'name': 'Sale - Custom Behaviour on Line Changes',
-    'version': '1.0',
+    'version': '1.1',
     'category': 'Sale',
     'description': """
 Customization when Sale Order Lines Change during quotation
@@ -33,9 +33,6 @@ Customization when Sale Order Lines Change during quotation
 Let users customize quotation options:
 
 * Possibility to disable stock warning;
-
-* Possibility to disable data changes (and above all prices), when user change
-  quantity;
 
 Note
 ----
@@ -51,6 +48,5 @@ because there are managed by groups.
     ],
     'data': [
         'security/res_groups.yml',
-        'views/sale_order_view.xml',
     ],
 }
