@@ -27,15 +27,18 @@
 
 <!-- Model: product.pricetag.type -->
         <menuitem id="menu_product_pricetag_type" 
-            name="Price Tag Types"
             parent="menu_sale_food" sequence="1" 
             action="action_product_pricetag_type"/>
 
 <!-- Model: product.label -->
         <menuitem id="menu_product_label" 
-            name="Labels"
             parent="menu_sale_food" sequence="2" 
             action="action_product_label"/>
+
+        <menuitem id="menu_certifier_organization" 
+            parent="menu_sale_food" sequence="3" 
+            action="action_certifier_organization"/>
+
 
 <!-- Model: product.product -->
         <menuitem id="menu_product_product_food_3" 

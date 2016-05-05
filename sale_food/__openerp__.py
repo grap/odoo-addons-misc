@@ -44,6 +44,24 @@ Python librairies required on Debian System:
         * #!/usr/bin/env sh
         * xvfb-run -a -s "-screen 0 640x480x16" wkhtmltopdf $*
     * sudo chmod 755 wkhtmltopdf.sh
+
+
+TODO
+----
+
+new model:
+* res.company.certification
+    * company_id
+    * organization_id
+    * date_start (default = get last end date);
+    * date_end (default = 31/12/Current_year);
+
+* res.partner.certification
+    * partner_id
+    * organization_id
+    * date_start (default = get last end date);
+    * date_end (default = 31/12/Current_year);
+
     """,
     'author': 'GRAP',
     'website': 'http://www.grap.coop',

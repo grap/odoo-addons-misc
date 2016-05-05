@@ -21,6 +21,23 @@
 #
 ##############################################################################
 
+- !record {model: ir.model.access, id: ir_model_access_certifier_organization_all}:
+    model_id: sale_food.model_certifier_organization
+    name: Certifier Organization Access
+    perm_read: true
+    perm_create: false
+    perm_write: false
+    perm_unlink: false
+
+- !record {model: ir.model.access, id: ir_model_access_certifier_organization_manager}:
+    model_id: sale_food.model_certifier_organization
+    group_id: group_food_manager
+    name: Certifier Organization Manager Access
+    perm_read: true
+    perm_create: true
+    perm_write: true
+    perm_unlink: grue
+
 - !record {model: ir.model.access, id: ir_model_access_product_label_all}:
     model_id: sale_food.model_product_label
     name: Product Label Access

@@ -38,6 +38,8 @@ class res_company(Model):
         'pricetag_color': fields.char(
             'Price Tag Color', required=True, size=7,
             help="Color of the Price Tag by default. Format #RRGGBB"),
+        'certifier_organization_id': fields.many2one(
+            'certifier.organization', 'Certifier Organization'),
     }
 
     _defaults = {

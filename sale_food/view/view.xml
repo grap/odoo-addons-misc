@@ -123,6 +123,34 @@
             </field>
         </record>
 
+<!-- Model: certifier.organization -->
+        <record id="view_certifier_organization_tree" model="ir.ui.view">
+            <field name="model">certifier.organization</field>
+            <field name="arch" type="xml">
+                <tree string="Label">
+                    <field name="code"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_certifier_organization_form" model="ir.ui.view">
+            <field name="model">certifier.organization</field>
+            <field name="arch" type="xml">
+                <form string="Label" version="7.0">
+                    <sheet>
+                        <div class="oe_title">
+                            <div class="oe_edit_only"><label for="name"/></div>
+                            <h1><field name="name"/></h1>
+                            <label for="code" class="oe_edit_only"/>
+                            <h2><field name="code"/></h2>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
 <!-- Model: product.pricetag.wizard -->
         <record id="view_product_pricetag_wizard_form" model="ir.ui.view">
               <field name="model">product.pricetag.wizard</field>
@@ -175,6 +203,19 @@
                         <field name="pricetag_color"/>
                     </group>
                 </xpath>
+                <field name="company_registry" position="after">
+                    <field name="certifier_organization_id"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_res_company_tree" model="ir.ui.view" >
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_tree"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="certifier_organization_id"/>
+                </field>
             </field>
         </record>
 
