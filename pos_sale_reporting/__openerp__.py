@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Sale / Point Of Sale Report module for OpenERP
@@ -68,7 +68,7 @@ Copyright, Authors and Licence:
     'depends': [
         'sale',
         'point_of_sale',
-        'account_invoice_pricelist',
+        'invoice_pricelist',
     ],
     'data': [
         'data/ir_cron.xml',

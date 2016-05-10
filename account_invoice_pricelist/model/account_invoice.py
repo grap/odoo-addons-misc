@@ -56,7 +56,7 @@ class account_invoice(Model):
             # Note : In a functional field, SUPERUSER_ID is used in uid
             # So, we will used preferently context('uid') value
             if uid == SUPERUSER_ID:
-                uid = context.get('uid', False) or uid
+                uid = context and context.get('uid', False) or uid
 
             for ai in self.browse(cr, uid, ids, context=context):
                 if ai.type in ('out_invoice', 'out_refund'):

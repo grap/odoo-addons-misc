@@ -23,7 +23,29 @@
     <data>
 
 <!-- Model: pos.sale.net.sales.report -->
-        <record id="view_pos_sale_net_sales_report_graph" model="ir.ui.view">
+        <record id="view_pos_sale_net_sales_report_search" model="ir.ui.view">
+            <field name="model">pos.sale.net.sales.report</field>
+            <field name="arch" type="xml">
+                <search string="Net Sales Evolution (VAT Excl.)">
+                    <field name="pricelist_id"/>
+                    <field name="partner_id"/>
+                    <group expand="0" string="Extended Filters...">
+                        <filter name="type_01_invoice_sale" string="Invoice - Via Sale" domain="[('line_type', '=', '01_invoice_sale')]"/>
+                        <filter name="type_02_invoice_pos" string="Invoice - Via Point Of Sale" domain="[('line_type', '=', '02_invoice_pos')]"/>
+                        <filter name="type_03_pos_normal" string="Point of Sale - Normal" domain="[('line_type', '=', '03_pos_normal')]"/>
+                    </group>
+                    <group expand="1" string="Group By...">
+                        <filter string="Month" context="{'group_by':'month_date'}"/>
+                        <filter string="Price List" context="{'group_by':'pricelist_id'}"/>
+                        <filter string="Partner" context="{'group_by':'partner_id'}"/>
+                        <filter string="Type" context="{'group_by':'line_type'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="view_pos_sale_net_sales_report_graph_evolution" model="ir.ui.view">
             <field name="model">pos.sale.net.sales.report</field>
             <field name="arch" type="xml">
                 <graph orientation="vertical" string="Net Sales Evolution (VAT Excl.)" type="bar">
@@ -34,22 +56,32 @@
             </field>
         </record>
 
-        <record id="view_pos_sale_net_sales_report_search" model="ir.ui.view">
+        <record id="view_pos_sale_net_sales_report_graph_distribution" model="ir.ui.view">
             <field name="model">pos.sale.net.sales.report</field>
             <field name="arch" type="xml">
-                <search string="Net Sales Evolution (VAT Excl.)">
-                    <group expand="0" string="Extended Filters...">
-                        <field name="pricelist_id"/>
-                        <field name="partner_id"/>
-                    </group>
-                    <group expand="1" string="Group By...">
-                        <filter string="Month" context="{'group_by':'month_date'}"/>
-                        <filter string="Price List" context="{'group_by':'pricelist_id'}"/>
-                        <filter string="Partner" context="{'group_by':'partner_id'}"/>
-                    </group>
-                </search>
+                <graph string="Net Sales Distribution (VAT Excl.)" type="pie">
+                    <field name="pricelist_id"/>
+                    <field name="total" operator="+"/>
+                </graph>
             </field>
         </record>
+
+        <record id="view_pos_sale_net_sales_report_tree" model="ir.ui.view">
+            <field name="model">pos.sale.net.sales.report</field>
+            <field name="arch" type="xml">
+                <tree string="Net Sales Evolution (VAT Excl.)">
+                    <field name="month_date"/>
+                    <field name="line_type"/>
+                    <field name="pricelist_id"/>
+                    <field name="partner_id"/>
+                    <field name="total" sum="Total"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                </tree>
+            </field>
+        </record>
+
+
+
 
 <!-- Model: pos.sale.category.report -->
     <record id="view_pos_sale_category_report_tree" model="ir.ui.view">

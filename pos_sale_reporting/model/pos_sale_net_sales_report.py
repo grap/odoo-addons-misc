@@ -61,7 +61,7 @@ class pos_sale_net_sales_report(materialized_model.MaterializedModel):
                         date(date_trunc('month', date_invoice)) AS month_date,
                         company_id,
                         partner_id,
-                        partner_pricelist_id as pricelist_id
+                        pricelist_id
                     FROM account_invoice
                     WHERE date_invoice IS NOT NULL
                     AND type IN ('out_invoice', 'out_refund')
@@ -69,7 +69,7 @@ class pos_sale_net_sales_report(materialized_model.MaterializedModel):
                     GROUP BY
                         month_date,company_id,
                         partner_id,
-                        partner_pricelist_id
+                        pricelist_id
                 ) AS month_temp
                 GROUP BY month_date, company_id, partner_id, pricelist_id
             )""")
@@ -154,7 +154,7 @@ class pos_sale_net_sales_report(materialized_model.MaterializedModel):
                 company_id,
                 date(date_trunc('month', date_invoice)) month_date,
                 partner_id,
-                partner_pricelist_id as pricelist_id,
+                pricelist_id,
                 sum(amount_untaxed) total_out_invoice
             FROM account_invoice
             WHERE
@@ -165,7 +165,7 @@ class pos_sale_net_sales_report(materialized_model.MaterializedModel):
                     FROM pos_order
                     WHERE invoice_id IS NOT NULL)
                 AND date_invoice IS NOT NULL
-            GROUP BY company_id, month_date, partner_id, partner_pricelist_id
+            GROUP BY company_id, month_date, partner_id, pricelist_id
             ) AS result_invoice
             ON result_invoice.company_id = pos_sale_month_date.company_id
             AND result_invoice.month_date = pos_sale_month_date.month_date
@@ -176,7 +176,7 @@ class pos_sale_net_sales_report(materialized_model.MaterializedModel):
                 company_id,
                 date(date_trunc('month', date_invoice)) month_date,
                 partner_id,
-                partner_pricelist_id pricelist_id,
+                pricelist_id,
                 sum(amount_untaxed) total_out_refund
             FROM account_invoice
             WHERE
@@ -187,7 +187,7 @@ class pos_sale_net_sales_report(materialized_model.MaterializedModel):
                     FROM pos_order
                     WHERE invoice_id IS NOT NULL)
             AND date_invoice IS NOT NULL
-            GROUP BY company_id, month_date, partner_id, partner_pricelist_id
+            GROUP BY company_id, month_date, partner_id, pricelist_id
             ) AS result_refund
             ON result_invoice.company_id = pos_sale_month_date.company_id
             AND result_invoice.month_date = pos_sale_month_date.month_date
@@ -210,7 +210,7 @@ class pos_sale_net_sales_report(materialized_model.MaterializedModel):
                 company_id,
                 date(date_trunc('month', date_invoice)) month_date,
                 partner_id,
-                partner_pricelist_id as pricelist_id,
+                pricelist_id as pricelist_id,
                 sum(amount_untaxed) total_out_invoice
             FROM account_invoice
             WHERE
@@ -221,7 +221,7 @@ class pos_sale_net_sales_report(materialized_model.MaterializedModel):
                     FROM pos_order
                     WHERE invoice_id IS NOT NULL)
                 AND date_invoice IS NOT NULL
-            GROUP BY company_id, month_date, partner_id, partner_pricelist_id
+            GROUP BY company_id, month_date, partner_id, pricelist_id
             ) AS result_invoice
             ON result_invoice.company_id = pos_sale_month_date.company_id
             AND result_invoice.month_date = pos_sale_month_date.month_date
@@ -232,7 +232,7 @@ class pos_sale_net_sales_report(materialized_model.MaterializedModel):
                 company_id,
                 date(date_trunc('month', date_invoice)) month_date,
                 partner_id,
-                partner_pricelist_id as pricelist_id,
+                pricelist_id as pricelist_id,
                 sum(amount_untaxed) total_out_refund
             FROM account_invoice
             WHERE
