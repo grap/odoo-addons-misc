@@ -70,9 +70,9 @@ class SaleOrderLine(Model):
                                 " The quantity '%.3f' for the product '%s' is"
                                 " under the minimum quantity '%.3f'. A %d%%"
                                 " surcharge has been applied.") % (
-                                    qty, product.name,
-                                    product.eshop_minimum_qty,
-                                    product.eshop_unpack_surcharge))
+                                qty, product.name,
+                                product.eshop_minimum_qty,
+                                product.eshop_unpack_surcharge))
                             discount = - product.eshop_unpack_surcharge
                         else:
                             infos.append(_(
@@ -80,14 +80,14 @@ class SaleOrderLine(Model):
                                 " minimum quantity is '%.3f'. The quantity"
                                 "  has been automatically increased in your"
                                 " shopping cart.") % (
-                                    qty, product.name,
-                                    product.eshop_minimum_qty))
+                                qty, product.name,
+                                product.eshop_minimum_qty))
                         if qty != rounded_qty:
                             # The quantity has been rounded
                             infos.append(_(
                                 "'%.3f' is not a valid quantity for %s, the"
                                 " quantity has been rounded to '%.3f'.") % (
-                                    qty, product.name, rounded_qty))
+                                qty, product.name, rounded_qty))
                             qty = rounded_qty
                     else:
                         infos.append(_(
@@ -95,7 +95,7 @@ class SaleOrderLine(Model):
                             " minimum quantity is %'%.3f'. The quantity has"
                             " been automatically increased in your shopping"
                             " cart.") % (
-                                qty, product.name, product.eshop_minimum_qty))
+                            qty, product.name, product.eshop_minimum_qty))
                         qty = product.eshop_minimum_qty
                 else:
                     if qty != rounded_qty:
@@ -103,7 +103,7 @@ class SaleOrderLine(Model):
                         infos.append(_(
                             "'%.3f' is not a valid quantity for %s, the"
                             " quantity has been rounded to '%.3f'.") % (
-                                qty, product.name, rounded_qty))
+                            qty, product.name, rounded_qty))
                         qty = rounded_qty
 
         res = super(SaleOrderLine, self).product_id_change(

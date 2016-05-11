@@ -4,7 +4,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 
-from openerp.osv import fields
 from openerp.osv.orm import Model
 
 
@@ -16,7 +15,7 @@ class AccountInvoiceLine(Model):
             self, cr, uid, ids, product, uom_id, qty=0, name='',
             type='out_invoice', partner_id=False, fposition_id=False,
             price_unit=False, currency_id=False, context=None,
-        company_id=None):
+            company_id=None):
         res = super(AccountInvoiceLine, self).product_id_change(
             cr, uid, ids, product, uom_id, qty=qty, name=name, type=type,
             partner_id=partner_id, fposition_id=fposition_id,
@@ -24,7 +23,7 @@ class AccountInvoiceLine(Model):
             company_id=company_id)
         res['value'].pop('price_unit')
         return res
-    
+
     def onchange_product_id_pricelist(
             self, cr, uid, ids, product, uom_id, qty=0, name='',
             type='out_invoice', partner_id=False, fposition_id=False,

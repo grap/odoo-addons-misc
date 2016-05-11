@@ -56,7 +56,7 @@ class stock_picking(Model):
                 if sm.product_id.prepare_categ_id:
                     product_list[
                         sm.product_id.prepare_categ_id.id].append(
-                            sm.product_id.id)
+                        sm.product_id.id)
                 else:
                     product_list[0].append(sm.product_id.id)
             count = 0

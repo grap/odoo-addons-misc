@@ -43,12 +43,12 @@ class MassSortWizard(TransientModel):
         return _(
             "You will sort the field '%(field)s' for %(qty)d %(model)s(s)"
             ". \n\nThe sorting will be done by %(field_list)s.") % ({
-                'field': config.one2many_field_id.field_description,
-                'qty': len(context.get('active_ids', False)),
-                'model': config.model_id.name,
-                'field_list': ', '.join(
-                    [x.field_id.field_description for x in config.line_ids])
-                })
+            'field': config.one2many_field_id.field_description,
+            'qty': len(context.get('active_ids', False)),
+            'model': config.model_id.name,
+            'field_list': ', '.join(
+                [x.field_id.field_description for x in config.line_ids])
+            })
 
     def _default_allow_custom_setting(self, cr, uid, context=None):
         config_obj = self.pool['mass.sort.config']

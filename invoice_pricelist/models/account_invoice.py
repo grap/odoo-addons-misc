@@ -30,7 +30,7 @@ class AccountInvoice(Model):
         partner = partner_obj.browse(cr, uid, partner_id)
         if type in ('out_invoice', 'out_refund'):
             # Customer part
-             return partner.property_product_pricelist and\
+            return partner.property_product_pricelist and\
                 partner.property_product_pricelist.id or False
 
         elif type in ('in_invoice', 'in_refund'):
@@ -92,7 +92,8 @@ class AccountInvoice(Model):
             return {'value': value}
         warning = {
             'title': _('Pricelist Warning!'),
-            'message' : _("If you change the pricelist of this invoice"
+            'message': _(
+                "If you change the pricelist of this invoice"
                 " (and eventually the currency), prices of existing"
                 " invoice lines will not be updated.")
         }
