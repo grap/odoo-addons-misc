@@ -23,6 +23,8 @@
 from openerp import tools
 from openerp.osv import fields
 from openerp.osv.orm import Model
+from openerp.osv.osv import except_osv
+from openerp.tools.translate import _
 from openerp.addons import decimal_precision as dp
 
 
@@ -44,7 +46,7 @@ class ProductSimplePricelistItem(Model):
         return int(str_id[9:])
 
     # Button Section
-    def change_price_wizard(self, cr, uid, ids, context=None):
+    def set_price_wizard(self, cr, uid, ids, context=None):
         ctx = context.copy()
         ctx['pricelist_version_id'] = self._get_pricelist_version_id_from_id(
             ids[0])
@@ -57,6 +59,13 @@ class ProductSimplePricelistItem(Model):
             'target': 'new',
             'context': ctx,
         }
+
+    def remove_price(self, cr, uid, ids, context=None):
+        item_obj = self.pool['product.pricelist.item']
+        for transient in self.browse(cr, uid, ids, context=context):
+            item_obj.unlink(
+                cr, uid, [transient.pricelist_item_id.id], context=context)
+        return True
 
     def _get_price(self, cr, uid, ids, name, arg, context=None):
         res = {}
@@ -96,6 +105,11 @@ class ProductSimplePricelistItem(Model):
         'product_active': fields.boolean('Product Active'),
         'product_sale_ok': fields.boolean('Product Can be sold'),
     }
+
+    # OVERWRITE unlink function
+    def unlink(self, cr, uid, ids, context=None):
+        raise except_osv(_('Not Implemented!'), _(
+            "Please unlink specific price by using according button."))
 
     # View Section
     def init(self, cr):

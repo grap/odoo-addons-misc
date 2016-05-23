@@ -64,7 +64,9 @@
                     <field name="difference"/>
                     <field name="company_id" groups="base.group_multi_company"/>
                     <field name="state" invisible="1"/>
-                    <button name="change_price_wizard" string="Set Price" type="object" icon="gtk-add"/>
+                    <button name="set_price_wizard" string="Set Price" type="object" icon="gtk-add" attrs="{'invisible': [('state', '=', 'set')]}"/>
+                    <button name="set_price_wizard" string="Update Price" type="object" icon="gtk-edit" attrs="{'invisible': [('state', '=', 'not_set')]}"/>
+                    <button name="remove_price" string="Remove Specific Price" type="object" icon="gtk-remove" attrs="{'invisible': [('state', '=', 'not_set')]}"/>
                 </tree>
             </field>
         </record>
@@ -81,7 +83,7 @@
                         <field name="specific_price" />
                     </group>
                     <group colspan="4">
-                        <button name="set_price" type="object" string="Set Price" icon="gtk-add"/>
+                        <button name="set_price" type="object" string="Set Price"/>
                     </group>
                 </form>
             </field>

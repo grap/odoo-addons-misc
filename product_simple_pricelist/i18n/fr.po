@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-28 19:07+0000\n"
-"PO-Revision-Date: 2015-04-28 19:07+0000\n"
+"POT-Creation-Date: 2016-05-23 15:50+0000\n"
+"PO-Revision-Date: 2016-05-23 15:50+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -37,10 +37,15 @@ msgid "Edit By Product"
 msgstr "Editer par produit"
 
 #. module: product_simple_pricelist
-#: code:addons/product_simple_pricelist/model/product_pricelist.py:49
+#: code:addons/product_simple_pricelist/model/product_pricelist.py:63
 #, python-format
 msgid "Error!"
 msgstr "Erreur !"
+
+#. module: product_simple_pricelist
+#: constraint:product.pricelist:0
+msgid "Error: Simple Pricelist must have a company defined"
+msgstr "Erreur : Une liste de prix simple doit avoir une société définie"
 
 #. module: product_simple_pricelist
 #: field:product.pricelist,is_simple:0
@@ -54,9 +59,21 @@ msgid "List Price"
 msgstr "Prix Catalogue"
 
 #. module: product_simple_pricelist
+#: code:addons/product_simple_pricelist/model/product_simple_pricelist_item.py:110
+#, python-format
+msgid "Not Implemented!"
+msgstr "Non implémenté !"
+
+#. module: product_simple_pricelist
 #: selection:product.simple.pricelist.item,state:0
 msgid "Not Set"
 msgstr "Non défini"
+
+#. module: product_simple_pricelist
+#: code:addons/product_simple_pricelist/model/product_simple_pricelist_item.py:110
+#, python-format
+msgid "Please unlink specific price by using according button."
+msgstr "Veuillez supprimer le prix spécifique en utilisant le bouton correspondant."
 
 #. module: product_simple_pricelist
 #: field:product.simple.pricelist.item,price:0
@@ -96,6 +113,21 @@ msgid "Product"
 msgstr "Article"
 
 #. module: product_simple_pricelist
+#: field:product.simple.pricelist.item,product_active:0
+msgid "Product Active"
+msgstr "Article actif"
+
+#. module: product_simple_pricelist
+#: field:product.simple.pricelist.item,product_sale_ok:0
+msgid "Product Can be sold"
+msgstr "Article peut-être vendu"
+
+#. module: product_simple_pricelist
+#: view:product.simple.pricelist.item:0
+msgid "Remove Specific Price"
+msgstr "Retirer le prix spécifique"
+
+#. module: product_simple_pricelist
 #: selection:product.simple.pricelist.item,state:0
 msgid "Set"
 msgstr "Défini"
@@ -122,7 +154,27 @@ msgid "State"
 msgstr "Etat"
 
 #. module: product_simple_pricelist
-#: code:addons/product_simple_pricelist/model/product_pricelist.py:50
+#: view:product.simple.pricelist.item:0
+msgid "Update Price"
+msgstr "Mettre à jour le prix"
+
+#. module: product_simple_pricelist
+#: code:addons/product_simple_pricelist/model/product_pricelist.py:64
 #, python-format
 msgid "You can not Edit simple pricelist for many pricelists"
 msgstr "Vous ne pouvez pas éditer des listes de prix simple pour plusieurs listes de prix"
+
+#. module: product_simple_pricelist
+#: code:_description:0
+#: model:ir.model,name:product_simple_pricelist.model_product_simple_pricelist_item
+#, python-format
+msgid "product.simple.pricelist.item"
+msgstr "product.simple.pricelist.item"
+
+#. module: product_simple_pricelist
+#: code:_description:0
+#: model:ir.model,name:product_simple_pricelist.model_product_simple_pricelist_item_update_wizard
+#, python-format
+msgid "product.simple.pricelist.item.update.wizard"
+msgstr "product.simple.pricelist.item.update.wizard"
+

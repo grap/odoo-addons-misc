@@ -82,11 +82,10 @@ class productSimplePricelistItemUpdateWizard(TransientModel):
                 if pspiuw.specific_price == 0:
                     # Unlink specific price
                     ppli_obj.unlink(cr, uid, [item_id], context=context)
-                else:
-                    # Update specific price
-                    ppli_obj.write(cr, uid, [item_id], {
-                        'price_surcharge': pspiuw.specific_price,
-                        }, context=context)
+                # Update specific price
+                ppli_obj.write(cr, uid, [item_id], {
+                    'price_surcharge': pspiuw.specific_price,
+                    }, context=context)
             else:
                 # Create new item
                 ppli_obj.create(cr, uid, {
