@@ -18,13 +18,19 @@
 <!--You should have received a copy of the GNU Affero General Public License-->
 <!--along with this program.  If not, see <http://www.gnu.org/licenses/>.   -->
 <!-- ********************************************************************** -->
-<openerp>
-    <data noupdate="0">
-        <record id="rule_product_pricetag_type" model="ir.rule">
-            <field name="name">Product Price Tag Type Rule</field>
-            <field name="model_id" ref="sale_food.model_product_pricetag_type" />
-            <field name="global" eval="True" />
-            <field name="domain_force">[('company_id', '=', user.company_id.id)]</field>
-        </record>
-    </data>
-</openerp>
+<openerp><data>
+    <record id="rule_product_pricetag_type" model="ir.rule">
+        <field name="name">Product Price Tag Type Rule</field>
+        <field name="model_id" ref="model_product_pricetag_type" />
+        <field name="global" eval="True" />
+        <field name="domain_force">[('company_id', '=', user.company_id.id)]</field>
+    </record>
+
+    <record id="rule_product_label" model="ir.rule">
+        <field name="name">Product Label</field>
+        <field name="model_id" ref="model_product_label" />
+        <field name="global" eval="True" />
+        <field name="domain_force">['|', ('company_id', '=', user.company_id.id), ('company_id','=',False)]</field>
+    </record>
+
+</data></openerp>

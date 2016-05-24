@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-07 16:17+0000\n"
-"PO-Revision-Date: 2015-10-07 16:17+0000\n"
+"POT-Creation-Date: 2016-05-24 09:58+0000\n"
+"PO-Revision-Date: 2016-05-24 09:58+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -65,8 +65,8 @@ msgstr "6 - Déshydraté et longue conservation"
 
 #. module: sale_food
 #: help:product.product,is_mercuriale:0
-msgid "A product in mercuriale has pricethat changes very regularly."
-msgstr "A product in mercuriale has pricethat changes very regularly."
+msgid "A product in mercuriale has price that changes very regularly."
+msgstr "Un produit en mercuriale change de prix très régulièrement."
 
 #. module: sale_food
 #: code:addons/sale_food/model/product_product.py:111
@@ -88,11 +88,6 @@ msgstr "Bords"
 #: help:product.label,mandatory_on_invoice:0
 msgid "By checking this field, the label will be printed on all the customers invoices."
 msgstr "En cochant cette case, le label sera imprimé sur toutes les factures clients."
-
-#. module: sale_food
-#: help:product.label,active:0
-msgid "By unchecking the active field you can disable a label without deleting it."
-msgstr "En décochant cette case, vous pouvez désactiver ce label sans le supprimer."
 
 #. module: sale_food
 #: view:product.pricetag.wizard:0
@@ -125,11 +120,23 @@ msgid "Category: "
 msgstr "Catégorie : "
 
 #. module: sale_food
+#: field:res.company,certifier_organization_id:0
+msgid "Certifier Organization"
+msgstr "Organisation certificatrice"
+
+#. module: sale_food
+#: model:ir.actions.act_window,name:sale_food.action_certifier_organization
+#: model:ir.ui.menu,name:sale_food.menu_certifier_organization
+msgid "Certifier Organizations"
+msgstr "Organisations certificatrices"
+
+#. module: sale_food
 #: help:product.label,is_organic:0
 msgid "Check this box if this label is an organic label. If products has no organic label, a text will be displayed on Price Tag."
 msgstr "Cochez cette case si ce label est un label biologique. Si des articles n'ont aucun label biologique, un texte sera affiché sur l'étiquette."
 
 #. module: sale_food
+#: field:certifier.organization,code:0
 #: field:product.label,code:0
 msgid "Code"
 msgstr "Code"
@@ -158,6 +165,7 @@ msgid "Companies"
 msgstr "Sociétés"
 
 #. module: sale_food
+#: field:product.label,company_id:0
 #: field:product.pricetag.type,company_id:0
 msgid "Company"
 msgstr "Société"
@@ -193,7 +201,7 @@ msgid "Do not print"
 msgstr "Ne pas imprimer"
 
 #. module: sale_food
-#: code:addons/sale_food/model/product_product.py:298
+#: code:addons/sale_food/model/product_product.py:314
 #: constraint:product.product:0
 #, python-format
 msgid "Error ! Department must belong to the country."
@@ -236,9 +244,9 @@ msgid "Food Informations"
 msgstr "Informations Alimentaires"
 
 #. module: sale_food
-#: view:product.label:0
-msgid "General"
-msgstr "Géneral"
+#: model:ir.ui.menu,name:sale_food.menu_sale_food
+msgid "Food Sales"
+msgstr "Food Sales"
 
 #. module: sale_food
 #: help:product.product,pricetag_organic_text_ignore:0
@@ -276,6 +284,7 @@ msgid "Is Organic"
 msgstr "Est biologique"
 
 #. module: sale_food
+#: view:certifier.organization:0
 #: view:product.label:0
 msgid "Label"
 msgstr "Label"
@@ -286,6 +295,11 @@ msgstr "Label"
 #: field:product.product,label_ids:0
 msgid "Labels"
 msgstr "Labels"
+
+#. module: sale_food
+#: field:product.product,labels_description:0
+msgid "Labels Description"
+msgstr "Description des labels"
 
 #. module: sale_food
 #: field:product.product,local_notation:0
@@ -311,6 +325,11 @@ msgstr "Responsable"
 #: field:product.label,mandatory_on_invoice:0
 msgid "Mandatory on invoice"
 msgstr "Obligatoire sur les factures"
+
+#. module: sale_food
+#: field:product.label,image_medium:0
+msgid "Medium-sized image"
+msgstr "Image moyenne"
 
 #. module: sale_food
 #: view:product.product:0
@@ -339,6 +358,7 @@ msgid "Minimum Social Notation"
 msgstr "Notation Social Minimum"
 
 #. module: sale_food
+#: field:certifier.organization,name:0
 #: field:product.label,name:0
 msgid "Name"
 msgstr "Nom"
@@ -358,6 +378,11 @@ msgstr "Notation"
 #: view:product.product:0
 msgid "Notations"
 msgstr "Notations"
+
+#. module: sale_food
+#: field:product.label,note:0
+msgid "Note"
+msgstr "Note"
 
 #. module: sale_food
 #: field:product.pricetag.wizard,offset:0
@@ -535,15 +560,22 @@ msgstr "Articles"
 
 #. module: sale_food
 #: model:ir.actions.act_window,name:sale_food.action_product_product_food
+#: model:ir.ui.menu,name:sale_food.menu_product_product_food_3
 #: view:product.product:0
 msgid "Products (Food)"
 msgstr "Produits (Alimentaire)"
 
 #. module: sale_food
 #: model:ir.actions.act_window,name:sale_food.action_product_product_origin
+#: model:ir.ui.menu,name:sale_food.menu_product_product_origin_3
 #: view:product.product:0
 msgid "Products (Origin)"
 msgstr "Produits (Origine)"
+
+#. module: sale_food
+#: model:ir.ui.menu,name:sale_food.menu_product_product_pricetag_3
+msgid "Products (Price Tag)"
+msgstr "Products (Price Tag)"
 
 #. module: sale_food
 #: model:ir.actions.act_window,name:sale_food.action_product_product_pricetag
@@ -573,9 +605,13 @@ msgstr "Recommandé"
 
 #. module: sale_food
 #: model:ir.module.category,name:sale_food.module_category_food
-#: model:ir.ui.menu,name:sale_food.menu_sale_food
 msgid "Sale Food"
 msgstr "Vente Alimentaire"
+
+#. module: sale_food
+#: field:product.label,image_small:0
+msgid "Small-sized image"
+msgstr "Image petite"
 
 #. module: sale_food
 #: field:product.product,social_notation:0
@@ -627,9 +663,21 @@ msgid "User"
 msgstr "Utilisateur"
 
 #. module: sale_food
+#: field:product.label,website:0
+msgid "Website"
+msgstr "Site Web"
+
+#. module: sale_food
 #: field:product.pricetag.wizard.line,wizard_id:0
 msgid "Wizard"
 msgstr "Wizard"
+
+#. module: sale_food
+#: code:_description:0
+#: model:ir.model,name:sale_food.model_certifier_organization
+#, python-format
+msgid "certifier.organization"
+msgstr "certifier.organization"
 
 #. module: sale_food
 #: code:addons/sale_food/model/product_product.py:113
@@ -670,21 +718,6 @@ msgstr "product.pricetag.wizard"
 #, python-format
 msgid "product.pricetag.wizard.line"
 msgstr "product.pricetag.wizard.line"
-
-#. module: sale_food
-#: model:ir.ui.menu,name:sale_food.menu_product_product_food
-msgid "sale_food.menu_product_product_food"
-msgstr "sale_food.menu_product_product_food"
-
-#. module: sale_food
-#: model:ir.ui.menu,name:sale_food.menu_product_product_origin
-msgid "sale_food.menu_product_product_origin"
-msgstr "sale_food.menu_product_product_origin"
-
-#. module: sale_food
-#: model:ir.ui.menu,name:sale_food.menu_product_product_pricetag
-msgid "sale_food.menu_product_product_pricetag"
-msgstr "sale_food.menu_product_product_pricetag"
 
 #. module: sale_food
 #: code:addons/sale_food/model/product_product.py:114

@@ -46,11 +46,14 @@ class product_label(Model):
 
     # Columns Section
     _columns = {
-        'code': fields.char(
-            'Code', required=True, size=32),
-        'name': fields.char(
-            'Name', required=True, size=64),
-        'image': fields.binary('Image'),
+        'code': fields.char(string='Code', required=True),
+        'name': fields.char(string='Name', required=True),
+        'image': fields.binary(string='Image'),
+        'active': fields.boolean(string='Active'),
+        'company_id': fields.many2one(
+            'res.company', 'Company'),
+        'website': fields.char(string='Website'),
+        'note': fields.text(string='Note'),
         'image_small': fields.function(
             _get_image, fnct_inv=_set_image,
             string='Small-sized image', type='binary', multi='_get_image',
@@ -63,10 +66,6 @@ class product_label(Model):
             store={
                 'product.label': (
                     lambda self, cr, uid, ids, c={}: ids, ['image'], 10)}),
-        'active': fields.boolean(
-            'Active',
-            help="""By unchecking the active field you can disable a label"""
-            """ without deleting it."""),
         'mandatory_on_invoice': fields.boolean(
             'Mandatory on invoice',
             help="""By checking this field, the label will be printed on"""

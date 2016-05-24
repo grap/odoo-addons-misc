@@ -201,7 +201,7 @@ class product_product(Model):
     _columns = {
         'is_mercuriale': fields.boolean(
             'Mercuriale Product', help="A product in mercuriale has price"
-            "that changes very regularly."),
+            " that changes very regularly."),
         'price_volume': fields.function(
             _get_price_volume, type='char',
             string='Price by volume'),
