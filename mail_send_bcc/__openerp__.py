@@ -58,5 +58,5 @@ Copyright, Author and Licence:
     'data': [
         'view/res_users_view.xml',
     ],
-    'installable': False,
+    'installable': True,
 }
