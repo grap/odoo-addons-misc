@@ -43,4 +43,5 @@ Copyright, Author and Licence
     ],
     'demo': [
     ],
+    'installable': False,
 }

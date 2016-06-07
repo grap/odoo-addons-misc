@@ -49,4 +49,5 @@ because there are managed by groups.
     'data': [
         'security/res_groups.yml',
     ],
+    'installable': False,
 }

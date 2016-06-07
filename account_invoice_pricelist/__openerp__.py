@@ -59,4 +59,5 @@ Copyright, Author and Licence:
     'demo': [
         'demo/res_groups.yml',
     ],
+    'installable': False,
 }

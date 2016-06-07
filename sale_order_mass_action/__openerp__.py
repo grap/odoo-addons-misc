@@ -70,4 +70,5 @@ To contribute to this module, please visit http://odoo-community.org.
     'data': [
         'wizard/sale_order_mass_action_view.xml',
     ],
+    'installable': False,
 }

@@ -51,4 +51,5 @@ Roadmap / Limits
     'js': [
         'static/src/js/web_prevent_shortcut.js'
     ],
+    'installable': False,
 }

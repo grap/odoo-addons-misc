@@ -65,4 +65,5 @@ Copyright, Authors and Licence:
     'css': [
         'static/src/css/pos_check_session_state.css',
     ],
+    'installable': False,
 }

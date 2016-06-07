@@ -77,4 +77,5 @@ Copyright, Authors and Licence:
         'view/action.xml',
         'view/view.xml',
     ],
+    'installable': False,
 }

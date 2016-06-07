@@ -52,4 +52,5 @@ Copyright, Authors and Licence:
     ],
     'demo': [
     ],
+    'installable': False,
 }

@@ -60,4 +60,5 @@ Copyright, Author and Licence :
         'demo/account_tax.yml',
         'demo/product_template.yml',
     ],
+    'installable': False,
 }

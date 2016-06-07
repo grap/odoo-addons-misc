@@ -59,4 +59,5 @@ Copyright, Authors and Licence:
     'qweb': [
         'static/src/xml/pt.xml',
     ],
+    'installable': False,
 }

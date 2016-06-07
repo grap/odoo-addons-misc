@@ -61,4 +61,5 @@ Copyright, Authors and Licence:
         'view/action.xml',
         'view/menu.xml',
     ],
+    'installable': False,
 }

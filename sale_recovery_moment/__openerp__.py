@@ -96,4 +96,5 @@ Copyright, Authors and Licence:
     ],
     'images': [
     ],
+    'installable': False,
 }

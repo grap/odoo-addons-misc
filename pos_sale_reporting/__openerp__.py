@@ -81,4 +81,5 @@ Copyright, Authors and Licence:
     'images': [
         'static/src/img/screenshots/1.png'
     ],
+    'installable': False,
 }
