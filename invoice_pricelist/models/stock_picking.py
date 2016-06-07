@@ -3,18 +3,17 @@
 # @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp.osv.orm import Model
+from openerp import models, api
 
 
-class StockPicking(Model):
+class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
     # Prepare Section
-    def _prepare_invoice(
-            self, cr, uid, picking, partner, inv_type, journal_id,
-            context=None):
+    @api.model
+    def _prepare_invoice(self, picking, partner, inv_type, journal_id):
         res = super(StockPicking, self)._prepare_invoice(
-            cr, uid, picking, partner, inv_type, journal_id, context=context)
+            picking, partner, inv_type, journal_id)
         if picking.sale_id:
             res['pricelist_id'] = picking.sale_id.pricelist_id.id
         elif picking.purchase_id:
