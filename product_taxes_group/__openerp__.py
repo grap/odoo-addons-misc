@@ -77,4 +77,5 @@ Copyright, Authors and Licence:
         'demo/tax_group.yml',
         'demo/product_product.yml',
     ],
+    'installable': False,
 }

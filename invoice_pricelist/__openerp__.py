@@ -71,4 +71,5 @@ Copyright, Author and Licence
         'demo/product_pricelist.yml',
         'demo/res_partner.yml',
     ],
+    'installable': False,
 }

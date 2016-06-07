@@ -72,4 +72,5 @@ Copyright, Authors and Licence:
     'demo': [
         'demo/pos_config.yml',
     ],
+    'installable': False,
 }

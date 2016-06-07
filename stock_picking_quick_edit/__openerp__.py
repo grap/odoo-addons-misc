@@ -53,4 +53,5 @@ Copyright, Authors and Licence:
         'view/view.xml',
         'view/action.xml',
     ],
+    'installable': False,
 }

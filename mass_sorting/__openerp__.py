@@ -41,4 +41,5 @@ This module is highly inspired by 'mass_editing' module. (by OCA and SerpentCS)
         'static/description/4_before.png',
         'static/description/5_after.png',
     ],
+    'installable': False,
 }

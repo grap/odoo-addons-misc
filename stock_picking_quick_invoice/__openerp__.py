@@ -55,4 +55,5 @@ Copyright, Authors and Licence:
         'views/view_stock_picking.xml',
         'views/view_stock_picking_quick_invoice_wizard.xml',
     ],
+    'installable': False,
 }
