@@ -1,18 +1,17 @@
 language: python
+sudo: false
+cache: pip
 
 python:
   - "2.7"
-
-sudo: true
-cache: pip
 
 addons:
   apt:
     packages:
       - expect-dev  # provides unbuffer utility
       - python-lxml # because pip installation is slow
-      - bzr
-      - wkhtmltopdf
+#      - bzr
+#      - wkhtmltopdf
 
 # Exclusion reason.
 # pos_keep_draft_orders
@@ -21,25 +20,29 @@ addons:
 # /home/travis/build/grap/odoo-addons-misc/pos_keep_draft_orders/model/pos_session.py
 
 env:
-  - VERSION="7.0" LINT_CHECK="1"
-  - VERSION="7.0" ODOO_REPO="odoo/odoo" LINT_CHECK="0" EXCLUDE="pos_keep_draft_orders"
-  - VERSION="7.0" ODOO_REPO="OCA/OCB" LINT_CHECK="0" EXCLUDE="pos_keep_draft_orders"
-  - VERSION="7.0" UNIT_TEST="1" LINT_CHECK="0" EXCLUDE="pos_keep_draft_orders"
+  global:
+  - VERSION="8.0" TESTS="0" LINT_CHECK="0" TRANSIFEX="0"
 
-before_install:
-  - sudo pip install GitPython bzr
-  - sudo pip install cairosvg==1.0.22
-  - sudo pip install unicodecsv
-  - sudo pip install pyBarcode==0.7
+  matrix:
+  - LINT_CHECK="1"
+  - TESTS="1" ODOO_REPO="odoo/odoo"
+  - TESTS="1" ODOO_REPO="OCA/OCB"
+  - UNIT_TEST="1"
 
 virtualenv:
   system_site_packages: true
 
+#before_install:
+#  - sudo pip install GitPython bzr
+#  - sudo pip install cairosvg
+#  - sudo pip install unicodecsv
+
 install:
-  - git clone https://github.com/oca/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
+  - git clone https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
   - travis_install_nightly
-
+  - printf '[options]\n\nrunning_env = dev\n' > ${HOME}/.openerp_serverrc
+  - ln -s ${TRAVIS_BUILD_DIR}/server_environment_files_sample ${TRAVIS_BUILD_DIR}/server_environment_files
 script:
   - travis_run_tests
 
