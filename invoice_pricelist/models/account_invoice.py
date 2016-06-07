@@ -5,58 +5,52 @@
 
 from lxml import etree
 
-from openerp.osv import fields
-from openerp.osv.orm import Model
-
+from openerp import models, fields, api, _
 from openerp.osv.orm import setup_modifiers
-from openerp.tools.translate import _
 
 
-class AccountInvoice(Model):
+class AccountInvoice(models.Model):
     _inherit = 'account.invoice'
 
     # Columns Section
-    _columns = {
-        'pricelist_id': fields.many2one(
-            'product.pricelist', 'Pricelist',
-            readonly=True, states={'draft': [('readonly', False)]}),
-    }
+    pricelist_id = fields.Many2one(
+        comodel_name='product.pricelist', string='Pricelist',
+        readonly=True, states={'draft': [('readonly', False)]})
 
     # Custom Section
-    def _compute_pricelist_id(self, cr, uid, type, partner_id):
-        partner_obj = self.pool['res.partner']
+    @api.model
+    def _compute_pricelist_id(self, type, partner_id):
+        partner_obj = self.env['res.partner']
         if not partner_id:
             return False
-        partner = partner_obj.browse(cr, uid, partner_id)
+        partner = partner_obj.browse(partner_id)
         if type in ('out_invoice', 'out_refund'):
             # Customer part
             return partner.property_product_pricelist and\
                 partner.property_product_pricelist.id or False
-
         elif type in ('in_invoice', 'in_refund'):
             # Supplier Part
             return partner.property_product_pricelist_purchase and\
                 partner.property_product_pricelist_purchase.id or False
-
         return False
 
-    def create(self, cr, uid, vals, context=None):
+    @api.model
+    def create(self, vals):
         # Overload to avoid bugs if creation is not made by UI
         if not vals.get('pricelist_id', False):
             vals['pricelist_id'] = self._compute_pricelist_id(
-                cr, uid, context.get('type', 'out_invoice'),
+                self._context.get('type', 'out_invoice'),
                 vals['partner_id'])
-        return super(AccountInvoice, self).create(
-            cr, uid, vals, context=context)
+        return super(AccountInvoice, self).create(vals)
 
     # View Section
+    @api.model
     def fields_view_get(
-            self, cr, uid, view_id=None, view_type='form', context=None,
-            toolbar=False, submenu=False):
-        context = context and context or {}
+            self, view_id=None, view_type='form', toolbar=False,
+            submenu=False):
         res = super(AccountInvoice, self).fields_view_get(
-            cr, uid, view_id=view_id, view_type=view_type, context=context,
-            toolbar=toolbar, submenu=False)
+            view_id=view_id, view_type=view_type, toolbar=toolbar,
+            submenu=False)
         if view_type == 'form':
             doc = etree.XML(res['arch'])
             nodes = doc.xpath("//field[@name='pricelist_id']")
@@ -66,29 +60,27 @@ class AccountInvoice(Model):
                 res['arch'] = etree.tostring(doc)
         return res
 
+    @api.multi
     def onchange_partner_id(
-            self, cr, uid, ids, type, partner_id, date_invoice=False,
-            payment_term=False, partner_bank_id=False, company_id=False):
-
+            self, type, partner_id, date_invoice=False, payment_term=False,
+            partner_bank_id=False, company_id=False):
         res = super(AccountInvoice, self).onchange_partner_id(
-            cr, uid, ids, type, partner_id, date_invoice=date_invoice,
+            type, partner_id, date_invoice=date_invoice,
             payment_term=payment_term, partner_bank_id=partner_bank_id,
             company_id=company_id)
         res['value']['pricelist_id'] = self._compute_pricelist_id(
-            cr, uid, type, partner_id)
+            type, partner_id)
         return res
 
-    def onchange_pricelist_id(
-            self, cr, uid, ids, pricelist_id, invoice_lines, context=None):
-        pricelist_obj = self.pool['product.pricelist']
-        context = context and context or {}
+    @api.multi
+    def onchange_pricelist_id(self, pricelist_id, invoice_line):
+        pricelist_obj = self.env['product.pricelist']
         if not pricelist_id:
             return {}
         value = {
-            'currency_id': pricelist_obj.browse(
-                cr, uid, pricelist_id, context=context).currency_id.id
+            'currency_id': pricelist_obj.browse(pricelist_id).currency_id.id
         }
-        if not invoice_lines:
+        if not invoice_line or invoice_line == [(6, 0, [])]:
             return {'value': value}
         warning = {
             'title': _('Pricelist Warning!'),

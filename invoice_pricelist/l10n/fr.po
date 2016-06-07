@@ -57,9 +57,3 @@ msgstr "Liste de prix"
 #, python-format
 msgid "Pricelist Warning!"
 msgstr "Avertissement sur les listes de prix!"
-
-#. module: invoice_pricelist
-#: view:account.invoice:0
-msgid "onchange_product_id_pricelist(product_id, uos_id, quantity, name, parent.type, parent.partner_id, parent.fiscal_position, price_unit, parent.currency_id, context, parent.company_id, parent.pricelist_id)"
-msgstr "onchange_product_id_pricelist(product_id, uos_id, quantity, name, parent.type, parent.partner_id, parent.fiscal_position, price_unit, parent.currency_id, context, parent.company_id, parent.pricelist_id)"
-
