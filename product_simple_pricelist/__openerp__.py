@@ -38,6 +38,11 @@ Functionality:
     * A wizard is available to edit the "simple pricelist", that allow users,
       in an editable tree view, to set price by product;
 
+Roadmad / Issue
+---------------
+
+create a simple pricelist should be more intuitive or more documented.
+Create a simple pricelist without creating a version will fail)
 
 Copyright, Authors and Licence:
 -------------------------------
@@ -57,5 +62,5 @@ Copyright, Authors and Licence:
         'view/view.xml',
         'view/action.xml',
     ],
-    'installable': False,
+    'installable': True,
 }

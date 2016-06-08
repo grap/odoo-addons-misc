@@ -124,7 +124,6 @@ class ProductSimplePricelistItem(Model):
                 pt.sale_ok AS product_sale_ok,
                 pp.active AS product_active,
                 pp.id AS product_id,
-                pt.standard_price,
                 pt.list_price,
                 ppl.name,
                 ppl.id as pricelist_id,

@@ -55,7 +55,6 @@
                     <field name="pricelist_id"/>
                     <field name="pricelist_version_id" invisible="1"/>
                     <field name="pricelist_item_id" invisible="1"/>
-                    <field name="standard_price" invisible="1"/>
                     <field name="product_active" invisible="1"/>
                     <field name="product_sale_ok" invisible="1"/>
                     <field name="list_price"/>
