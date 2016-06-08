@@ -51,5 +51,5 @@ Copyright, Author and Licence:
         'view/action.xml',
         'view/view_1.xml',
     ],
-    'installable': False,
+    'installable': True,
 }
