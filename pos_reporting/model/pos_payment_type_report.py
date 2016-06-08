@@ -57,7 +57,6 @@ class pos_payment_type_report(Model):
                     SELECT
                         absl.id,
                         absl.journal_id,
-                        absl.type,
                         absl.date,
                         absl.company_id,
                         absl.amount,
@@ -68,7 +67,6 @@ class pos_payment_type_report(Model):
                     ON aj.id = absl.journal_id
                 WHERE
                     absl.journal_id IS NOT NULL
-                    AND absl.type = 'customer'
                 GROUP BY
                     absl.company_id,
                     absl.journal_id,

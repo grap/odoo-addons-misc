@@ -51,5 +51,5 @@ Copyright, Authors and Licence:
         'security/ir_model_access.yml',
         'security/ir_rule.xml',
     ],
-    'installable': False,
+    'installable': True,
 }
