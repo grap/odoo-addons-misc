@@ -59,5 +59,5 @@ Copyright, Author and Licence :
     'data': [
         'init/init.xml',
     ],
-    'installable': False,
+    'installable': True,
 }
