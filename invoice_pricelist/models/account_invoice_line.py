@@ -45,7 +45,6 @@ class AccountInvoiceLine(models.Model):
                 partner_id=partner_id, lang=False, update_tax=True,
                 date_order=False, packaging=False,
                 fiscal_position=fposition_id, flag=False)
-            print sale_res
             if 'price_unit' in sale_res['value']:
                 res['value']['price_unit'] = sale_res['value']['price_unit']
 
