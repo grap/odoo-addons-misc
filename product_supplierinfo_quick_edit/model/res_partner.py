@@ -37,7 +37,7 @@ class res_partner(Model):
                 ('name', '=', partner.id)], context=context)
             supplierinfos = supplierinfo_obj.browse(
                 cr, uid, supplierinfo_ids, context=context)
-            template_ids = [x.product_id for x in supplierinfos]
+            template_ids = [x. product_tmpl_id for x in supplierinfos]
             res[partner.id] = {
                 'template_ids': template_ids,
                 'template_count': len(template_ids)}

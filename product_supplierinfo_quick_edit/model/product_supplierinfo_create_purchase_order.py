@@ -59,7 +59,7 @@ class product_supplierinfo_create_purchase_order(TransientModel):
         for supplierinfo in supplierinfo_obj.browse(
                 cr, uid, supplierinfo_ids, context=context):
             product_ids = self._get_product_from_template(
-                cr, uid, [supplierinfo.product_id.id], context=context)
+                cr, uid, [supplierinfo.product_tmpl_id.id], context=context)
             if supplierinfo.name.id in create_data:
                 create_data[supplierinfo.name.id] += product_ids
             else:
@@ -71,7 +71,7 @@ class product_supplierinfo_create_purchase_order(TransientModel):
                 cr, uid, {}, context=context)
             order_data['partner_id'] = partner_id
             order_data.update(order_obj.onchange_partner_id(
-                cr, uid, False, partner_id)['value'])
+                cr, uid, False, partner_id, context=context )['value'])
 
             # Get default warehouse
             warehouse_id = value_obj.get_default(
@@ -79,8 +79,11 @@ class product_supplierinfo_create_purchase_order(TransientModel):
                 company_id=user_obj._get_company(cr, uid))
 
             # Get default stock location
-            order_data['location_id'] = order_obj.onchange_warehouse_id(
-                cr, uid, [], warehouse_id)['value']['location_id']
+            order_data['picking_type_id'] = order_obj._get_picking_in(
+                cr, uid, context=context)
+            order_data['location_id'] = order_obj.onchange_picking_type_id(
+                cr, uid, False, order_data['picking_type_id'],
+                context=context)['value']['location_id']
 
             order_data['order_line'] = []
             for product_id in product_ids:

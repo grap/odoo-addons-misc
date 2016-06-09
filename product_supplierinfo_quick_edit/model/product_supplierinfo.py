@@ -49,9 +49,10 @@ class product_supplierinfo(Model):
                     'simple_discount': 0,
                 }
             res[item.id]['template_standard_price'] =\
-                item.product_id and item.product_id.standard_price or 0
+                item.product_tmpl_id and\
+                item.product_tmpl_id.standard_price or 0
             res[item.id]['template_cost_method'] =\
-                item.product_id and item.product_id.cost_method or ''
+                item.product_tmpl_id and item.product_tmpl_id.cost_method or ''
         return res
 
     def _get_lines_qty(self, cr, uid, ids, name, args, context=None):
@@ -97,10 +98,10 @@ class product_supplierinfo(Model):
             self, cr, uid, id, name, value, args, context=None):
         template_obj = self.pool['product.template']
         supplierinfo = self.browse(cr, uid, id, context=context)
-        if supplierinfo.product_id.id:
+        if supplierinfo.product__tmplid.id:
             return template_obj.write(
-                cr, uid, supplierinfo.product_id.id, {'standard_price': value},
-                context=context)
+                cr, uid, supplierinfo.product_tmpl_id.id,
+                {'standard_price': value}, context=context)
         else:
             return True
 
@@ -166,7 +167,7 @@ class product_supplierinfo(Model):
                 raise except_osv(_('Error!'), _(
                     "You can not create a simple supplier line for '%s'"
                     " product because it has already one (or many)"
-                    " lines.\n\n - %s" % (item.product_id.name, lines)))
+                    " lines.\n\n - %s" % (item.product_tmpl_id.name, lines)))
         return True
 
     def edit_multiple_lines(self, cr, uid, ids, context=None):

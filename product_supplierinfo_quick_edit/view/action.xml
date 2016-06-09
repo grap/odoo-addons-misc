@@ -32,6 +32,7 @@
     
 <!-- Model: product.supplierinfo -->
     <record id="action_res_partner_2_product_supplierinfo" model="ir.actions.act_window">
+            <field name="name">Supplier Prices</field>
             <field name="res_model">product.supplierinfo</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree</field>
@@ -48,7 +49,5 @@
         multi="True"
         key2="client_action_multi"/>
 
-
-<!--        context="{'search_default_draft': 1, 'search_default_approved': False}"-->
     </data>
 </openerp>
