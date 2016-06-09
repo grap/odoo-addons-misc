@@ -211,7 +211,7 @@
             <field name="model">res.company</field>
             <field name="inherit_id" ref="base.view_company_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//group[@string='Report Footer Configuration']" position="after">
+                <xpath expr="//page[@string='Report Configuration']/group[@string='Configuration']" position="after">
                     <group string="Price Tag">
                         <field widget="image" name="pricetag_image"/>
                         <field name="pricetag_color"/>

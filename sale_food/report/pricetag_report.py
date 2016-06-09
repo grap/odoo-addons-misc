@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import time
-from report import report_sxw
+from openerp.addons.report_webkit import webkit_report
+from openerp.report import report_sxw
 
 
 class report_webkit_html(report_sxw.rml_parse):
@@ -22,8 +23,7 @@ class report_webkit_html(report_sxw.rml_parse):
             'uid': uid,
         })
 
-
-report_sxw.report_sxw(
+webkit_report.WebKitParser(
     'report.pricetag.report',
     'product.pricetag.wizard',
     'addons/sale_food/report/pricetag_report.mako',

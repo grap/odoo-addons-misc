@@ -98,5 +98,5 @@ new model:
         'python': ['cairosvg'],
         'bin': ['wkhtmltopdf'],
     },
-    'installable': False,
+    'installable': True,
 }
