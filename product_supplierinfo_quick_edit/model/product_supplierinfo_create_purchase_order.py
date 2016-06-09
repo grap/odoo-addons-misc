@@ -71,12 +71,7 @@ class product_supplierinfo_create_purchase_order(TransientModel):
                 cr, uid, {}, context=context)
             order_data['partner_id'] = partner_id
             order_data.update(order_obj.onchange_partner_id(
-                cr, uid, False, partner_id, context=context )['value'])
-
-            # Get default warehouse
-            warehouse_id = value_obj.get_default(
-                cr, uid, 'purchase.order', 'warehouse_id',
-                company_id=user_obj._get_company(cr, uid))
+                cr, uid, False, partner_id, context=context)['value'])
 
             # Get default stock location
             order_data['picking_type_id'] = order_obj._get_picking_in(
