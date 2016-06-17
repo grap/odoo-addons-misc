@@ -34,25 +34,3 @@ class AccountInvoiceLine(models.Model):
             })
 
         return res
-
-#    def product_id_change(
-#            self, cr, uid, ids, product, uom_id, qty=0, name='',
-#            type='out_invoice', partner_id=False, fposition_id=False,
-#            price_unit=False, currency_id=False, context=None,
-#            company_id=None):
-#        at_obj = self.pool['account.tax']
-#        res = super(AccountInvoiceLine, self).product_id_change(
-#            cr, uid, ids, product, uom_id, qty=qty, name=name,
-#            type=type, partner_id=partner_id, fposition_id=fposition_id,
-#            price_unit=price_unit, currency_id=currency_id, context=context,
-#            company_id=company_id)
-
-#        if res['value'].get('price_unit', False):
-#            info = at_obj._translate_simple_tax(
-#                cr, uid, partner_id, res['value']['price_unit'],
-#                res['value']['invoice_line_tax_id'], context=context)
-#            res['value'].update({
-#                'price_unit': info['price_unit'],
-#                'invoice_line_tax_id': info['tax_ids'],
-#            })
-#        return res

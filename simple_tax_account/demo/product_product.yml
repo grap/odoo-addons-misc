@@ -8,7 +8,8 @@
     name: Product (VAT 5% - Price Incl.)
     categ_id: product.product_category_all
     type: consu
-    list_price: 100
+    list_price: 200
+    standard_price: 150
     uom_id: product.product_uom_unit
     uom_po_id: product.product_uom_unit
     taxes_id:
@@ -21,6 +22,7 @@
     categ_id: product.product_category_all
     type: consu
     list_price: 100
+    standard_price: 80
     uom_id: product.product_uom_unit
     uom_po_id: product.product_uom_unit
     taxes_id:

@@ -12,7 +12,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
         <field name="inherit_id" ref="account.invoice_form" />
         <field name="arch" type="xml">
             <field name="partner_id" position="after">
-                <group colspan="2" col="3" attrs="{'invisible':['|', ('simple_tax_type','=', 'none'), ('state', 'not in', ('draft'))]}">
+                <group colspan="2" col="3" attrs="{'invisible':[('state', 'not in', ('draft'))]}">
                     <field name="simple_tax_type" />
                     <button name="recompute_simple_tax" type="object" string="VAT Exc - VAT Incl" />
                 </group>
@@ -25,7 +25,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
         <field name="inherit_id" ref="account.invoice_supplier_form" />
         <field name="arch" type="xml">
             <field name="partner_id" position="after">
-                <group colspan="2" col="3" attrs="{'invisible':['|', ('simple_tax_type','=', 'none'), ('state', 'not in', ('draft'))]}">
+                <group colspan="2" col="3" attrs="{'invisible':[('state', 'not in', ('draft'))]}">
                     <field name="simple_tax_type" />
                     <button name="recompute_simple_tax" type="object" string="VAT Exc - VAT Incl" />
                 </group>
