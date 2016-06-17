@@ -62,12 +62,12 @@ class SaleRecoveryMoment(Model):
 
     def _get_picking(self, cr, uid, ids, field_name, arg, context=None):
         res = {}
-        spo_obj = self.pool['stock.picking.out']
+        sp_obj = self.pool['stock.picking']
         for srm in self.browse(cr, uid, ids, context=context):
             order_ids = [x.id for x in srm.order_ids]
-            picking_ids = spo_obj.search(cr, uid, [
+            picking_ids = sp_obj.search(cr, uid, [
                 ('sale_id', 'in', order_ids)], context=context)
-            valid_picking_ids = spo_obj.search(cr, uid, [
+            valid_picking_ids = sp_obj.search(cr, uid, [
                 ('sale_id', 'in', order_ids),
                 ('state', 'not in', ('draft', 'cancel'))], context=context)
             res[srm.id] = {
@@ -159,7 +159,7 @@ class SaleRecoveryMoment(Model):
             string='Quota Description'),
         'picking_ids': fields.function(
             _get_picking, type='one2many', multi='picking',
-            relation='stock.picking.out', string='Delivery Orders'),
+            relation='stock.picking', string='Delivery Orders'),
         'picking_qty': fields.function(
             _get_picking, type='integer', multi='picking',
             string='Delivery Orders Quantity'),

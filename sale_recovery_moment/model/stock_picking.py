@@ -31,11 +31,11 @@ class stock_picking(Model):
     # Column Section
     _columns = {
         'recovery_moment_id': fields.many2one(
-            'sale.recovery.moment', 'Recovery Moment', oldname='moment_id'),
+            'sale.recovery.moment', 'Recovery Moment'),
         'recovery_group_id': fields.related(
             'recovery_moment_id', 'group_id', type='many2one',
             relation='sale.recovery.moment.group', store=True,
-            string='Recovery Moment Group', readonly=True, oldname='group_id'),
+            string='Recovery Moment Group', readonly=True),
         'delivery_moment_id': fields.many2one(
             'sale.delivery.moment', 'Delivery Moment'),
     }
@@ -72,22 +72,3 @@ class stock_picking(Model):
                     count += 1
                     sm_obj.write(
                         cr, uid, sm_id, {'sequence': count}, context=context)
-
-
-# TODO: IMPROVE (in V8)
-# Actually it doesn't work if you don't redefine in stock_picking
-# the field defined in stock.picking.out
-class stock_picking_out(Model):
-    _inherit = 'stock.picking.out'
-
-    # Column Section
-    _columns = {
-        'recovery_moment_id': fields.many2one(
-            'sale.recovery.moment', 'Recovery Moment', oldname='moment_id'),
-        'recovery_group_id': fields.related(
-            'recovery_moment_id', 'group_id', type='many2one',
-            relation='sale.recovery.moment.group', store=True,
-            string='Recovery Moment Group', readonly=True, oldname='group_id'),
-        'delivery_moment_id': fields.many2one(
-            'sale.delivery.moment', 'Delivery Moment'),
-    }

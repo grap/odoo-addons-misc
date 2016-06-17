@@ -203,12 +203,6 @@ msgid "Error ! The minimum date of Sale must be before the maximum date of Sale.
 msgstr "Erreur ! La date de début de vente doit être avant la date de fin."
 
 #. module: sale_recovery_moment
-#: constraint:sale.recovery.moment.group:0
-#: constraint:sale.recovery.place:0
-msgid "Error ! You have to select a shop that belong to the company."
-msgstr "Erreur ! Vous devez sélectionner une boutique qui appartienne à la société."
-
-#. module: sale_recovery_moment
 #: code:addons/sale_recovery_moment/model/sale_delivery_moment.py:230
 #: code:addons/sale_recovery_moment/model/sale_recovery_moment.py:199
 #: code:addons/sale_recovery_moment/model/sale_recovery_moment_group.py:275
@@ -262,16 +256,6 @@ msgstr "Image"
 #: field:sale.recovery.moment,is_complete:0
 msgid "Is Complete"
 msgstr "Est complet"
-
-#. module: sale_recovery_moment
-#: field:sale.shop,manage_delivery_moment:0
-msgid "Manage Delivery Moment"
-msgstr "Gérer les moments de livraisons"
-
-#. module: sale_recovery_moment
-#: field:sale.shop,manage_recovery_moment:0
-msgid "Manage Recovery Moment"
-msgstr "Gérer les moments de récupération"
 
 #. module: sale_recovery_moment
 #: model:res.groups,name:sale_recovery_moment.delivery_manager
@@ -533,11 +517,6 @@ msgid "Recovery Places"
 msgstr "Lieux de récupération"
 
 #. module: sale_recovery_moment
-#: view:sale.shop:0
-msgid "Recovery Sale"
-msgstr "Vente avec récupération"
-
-#. module: sale_recovery_moment
 #: model:ir.module.category,name:sale_recovery_moment.module_category_recovery
 #: model:ir.ui.menu,name:sale_recovery_moment.menu_sale_recovery_config
 #: model:ir.ui.menu,name:sale_recovery_moment.menu_sale_recovery_work
@@ -599,13 +578,6 @@ msgid "Sales Order Line"
 msgstr "Ligne de commandes de vente"
 
 #. module: sale_recovery_moment
-#: code:_description:0
-#: model:ir.model,name:sale_recovery_moment.model_sale_shop
-#, python-format
-msgid "Sales Shop"
-msgstr "Magasin"
-
-#. module: sale_recovery_moment
 #: view:sale.delivery.moment:0
 #: view:sale.recovery.moment:0
 msgid "See"
@@ -626,12 +598,6 @@ msgstr "Séquence"
 #: help:sale.delivery.moment,offset:0
 msgid "Set positive value to increase delay or negative value to reduce delay."
 msgstr "Mettre une valeur positive pour augmenter le délai ou une valeur négative pour le réduire."
-
-#. module: sale_recovery_moment
-#: field:sale.recovery.moment.group,shop_id:0
-#: field:sale.recovery.place,shop_id:0
-msgid "Shop"
-msgstr "Magasin"
 
 #. module: sale_recovery_moment
 #: field:sale.recovery.moment.group,short_name:0
@@ -678,11 +644,6 @@ msgstr "Rue...(Complément)"
 #: field:sale.recovery.place,street2:0
 msgid "Street2"
 msgstr "Rue (Complément)"
-
-#. module: sale_recovery_moment
-#: field:sale.shop,reminder_template:0
-msgid "Template of Reminder Mail"
-msgstr "Modèle de mail de rappel"
 
 #. module: sale_recovery_moment
 #: code:addons/sale_recovery_moment/model/sale_recovery_moment_group.py:48

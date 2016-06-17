@@ -35,3 +35,14 @@ class stock_move(Model):
             relation='product.prepare.category', store=True,
             string='Prepare Category', readonly=True),
     }
+
+    def _prepare_picking_assign(self, cr, uid, move, context=None):
+        res = super(stock_move, self)._prepare_picking_assign(
+            cr, uid, move, context=context)
+        res.update({
+            'recovery_moment_id':
+            move.procurement_id.group_id.recovery_moment_id.id,
+            'delivery_moment_id':
+            move.procurement_id.group_id.delivery_moment_id.id,
+        })
+        return res

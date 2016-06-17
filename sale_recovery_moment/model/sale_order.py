@@ -39,12 +39,11 @@ class SaleOrder(Model):
     _columns = {
         'recovery_moment_id': fields.many2one(
             'sale.recovery.moment', 'Recovery Moment',
-            readonly=True, states={'draft': [('readonly', False)]},
-            oldname='moment_id'),
+            readonly=True, states={'draft': [('readonly', False)]}),
         'recovery_group_id': fields.related(
             'recovery_moment_id', 'group_id', type='many2one',
             relation='sale.recovery.moment.group', readonly=True,
-            string='Recovery Moment Group', oldname='group_id', store=True),
+            string='Recovery Moment Group', store=True),
         'delivery_moment_id': fields.many2one(
             'sale.delivery.moment', 'Delivery Moment'),
         'reminder_state': fields.selection(
@@ -54,8 +53,7 @@ class SaleOrder(Model):
             " recovery date ;\n"
             "Do Not Send - The Reminder will not be sent before the"
             " recovery date ;\n"
-            "Sent - The Reminder has been sent;",
-            oldname='recovery_reminder_state'),
+            "Sent - The Reminder has been sent;"),
     }
 
     _defaults = {
@@ -85,13 +83,13 @@ class SaleOrder(Model):
             cr, uid, ids, vals, context=context)
         return res
 
-    def _prepare_order_picking(self, cr, uid, order, context=None):
-        """Set the moment id of the sale.order to the new stock.picking.out
-        created."""
-        res = super(SaleOrder, self)._prepare_order_picking(
+    def _prepare_procurement_group(self, cr, uid, order, context=None):
+        res = super(SaleOrder, self)._prepare_procurement_group(
             cr, uid, order, context=context)
-        res['recovery_moment_id'] = order.recovery_moment_id.id
-        res['delivery_moment_id'] = order.delivery_moment_id.id
+        res.update({
+            'recovery_moment_id': order.recovery_moment_id.id,
+            'delivery_moment_id': order.delivery_moment_id.id,
+        })
         return res
 
     def _prepare_order_line_move(
@@ -106,7 +104,7 @@ class SaleOrder(Model):
             # We take into account the min date of the recovery moment
             res['date_expected'] =\
                 line.order_id.recovery_moment_id.min_recovery_date
-        if line.order_id.delivery_moment_id:
+        elif line.order_id.delivery_moment_id:
             # We take into account the min date of the delivery moment
             res['date_expected'] =\
                 line.order_id.delivery_moment_id.min_delivery_date
@@ -156,8 +154,8 @@ class SaleOrder(Model):
                 if datetime.now() + timedelta(hours=hours) > datetime.strptime(
                         so.recovery_moment_id.min_recovery_date,
                         '%Y-%m-%d %H:%M:%S'):
-                    et_id = so.shop_id.reminder_template\
-                        and so.shop_id.reminder_template.id or et.id
+                    et_id = so.company_id.reminder_template\
+                        and so.company_id.reminder_template.id or et.id
                     et_obj.send_mail(
                         cr, uid, et_id, so.id, True, context=context)
                     sent_so_ids.append(so.id)

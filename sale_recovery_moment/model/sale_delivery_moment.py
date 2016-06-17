@@ -63,7 +63,7 @@ class SaleDeliveryMoment(Model):
                 is_partial = is_partial or not line_ok
                 if line_ok:
                     amount_vat_excluded += line.price_subtotal
-                    amount_vat_included += line.price_subtotal_taxinc
+                    amount_vat_included += line.price_subtotal_gross
             if minimum_price:
                 if vat_included:
                     is_limit_ok = (minimum_price <= amount_vat_included)
@@ -126,12 +126,12 @@ class SaleDeliveryMoment(Model):
 
     def _get_picking(self, cr, uid, ids, field_name, arg, context=None):
         res = {}
-        spo_obj = self.pool['stock.picking.out']
+        sp_obj = self.pool['stock.picking']
         for sdm in self.browse(cr, uid, ids, context=context):
             order_ids = [x.id for x in sdm.order_ids]
-            picking_ids = spo_obj.search(cr, uid, [
+            picking_ids = sp_obj.search(cr, uid, [
                 ('sale_id', 'in', order_ids)], context=context)
-            valid_picking_ids = spo_obj.search(cr, uid, [
+            valid_picking_ids = sp_obj.search(cr, uid, [
                 ('sale_id', 'in', order_ids),
                 ('state', 'not in', ('draft', 'cancel'))], context=context)
             res[sdm.id] = {
@@ -189,7 +189,7 @@ class SaleDeliveryMoment(Model):
             string='Quota Description'),
         'picking_ids': fields.function(
             _get_picking, type='one2many', multi='picking',
-            relation='stock.picking.out', string='Delivery Orders'),
+            relation='stock.picking', string='Delivery Orders'),
         'picking_qty': fields.function(
             _get_picking, type='integer', multi='picking',
             string='Delivery Orders Quantity'),

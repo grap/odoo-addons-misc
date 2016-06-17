@@ -21,9 +21,9 @@
     <data>
 
 <!-- Model: stock.picking -->
-        <record id="view_stock_picking_out_tree" model="ir.ui.view">
-            <field name="model">stock.picking.out</field>
-            <field name="inherit_id" ref="stock.view_picking_out_tree"/>
+        <record id="view_stock_picking_tree" model="ir.ui.view">
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.vpicktree"/>
             <field name="arch" type="xml">
                 <field name="partner_id" position="after">
                     <field name="recovery_moment_id" groups="sale_recovery_moment.recovery_user"/>
@@ -33,9 +33,9 @@
             </field>
         </record>
 
-        <record id="view_stock_picking_out_search" model="ir.ui.view">
-            <field name="model">stock.picking.out</field>
-            <field name="inherit_id" ref="stock.view_picking_out_search"/>
+        <record id="view_stock_picking_search" model="ir.ui.view">
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_internal_search"/>
             <field name="arch" type="xml">
                 <field name="partner_id" position="after">
                     <field name="recovery_moment_id" groups="sale_recovery_moment.recovery_user"/>

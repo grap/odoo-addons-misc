@@ -189,10 +189,6 @@ class sale_recovery_moment_group(Model):
             selection=_STATE_SELECTION),
         'moment_ids': fields.one2many(
             'sale.recovery.moment', 'group_id', 'Recovery Moments'),
-        'shop_id': fields.many2one(
-            'sale.shop', string='Shop', required=True,
-            domain="[('company_id', '=', company_id)]",
-            states={'futur': [('readonly', False)]}, readonly=True),
         'company_id': fields.many2one(
             'res.company', string='Company', required=True,
             states={'futur': [('readonly', False)]}, readonly=True),
@@ -222,34 +218,16 @@ class sale_recovery_moment_group(Model):
             string='Total (VAT Include)'),
     }
 
-    # Default Section
-    def _default_shop_id(self, cr, uid, context=None):
-        company_id = self.pool.get('res.users')._get_company(
-            cr, uid, context=context)
-        shop_ids = self.pool.get('sale.shop').search(
-            cr, uid, [('company_id', '=', company_id)], context=context)
-        if not shop_ids:
-            return False
-        return shop_ids[0]
-
     _defaults = {
         'code': (
             lambda obj, cr, uid, context:
             obj.pool.get('ir.sequence').get(
                 cr, uid, 'sale.recovery.moment.group')),
         'name': '/',
-        'shop_id': _default_shop_id,
         'company_id': (
             lambda s, cr, uid, c: s.pool.get('res.users')._get_company(
                 cr, uid, context=c)),
     }
-
-    # Constraint Section
-    def _check_shop_company(self, cr, uid, ids, context=None):
-        for srmg in self.browse(cr, uid, ids, context=context):
-            if srmg.shop_id.company_id.id != srmg.company_id.id:
-                return False
-        return True
 
     def _check_sale_dates(self, cr, uid, ids, context=None):
         for srmg in self.browse(cr, uid, ids, context=context):
@@ -258,10 +236,6 @@ class sale_recovery_moment_group(Model):
         return True
 
     _constraints = [
-        (
-            _check_shop_company,
-            'Error ! You have to select a shop that belong to the company.',
-            ['shop_id', 'company_id']),
         (
             _check_sale_dates,
             'Error ! The minimum date of Sale must be before the maximum'

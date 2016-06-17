@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    Sale - Recovery Moment Module for Odoo
-#    Copyright (C) 2014 - Today GRAP (http://www.grap.coop)
+#    Copyright (C) 2015-Today GRAP (http://www.grap.coop)
 #    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -12,7 +12,7 @@
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 #    GNU Affero General Public License for more details.
 #
 #    You should have received a copy of the GNU Affero General Public License
@@ -20,20 +20,18 @@
 #
 ##############################################################################
 
-from . import sale_delivery_moment
-from . import sale_delivery_category
-from . import res_partner
-from . import res_company
-from . import sale_order
-from . import sale_order_line
-from . import product_product
-from . import product_delivery_category
-from . import product_prepare_category
-from . import stock_move
-from . import stock_picking
-from . import stock_picking_reorder
-from . import procurement_group
-from . import sale_recovery_moment
-from . import sale_recovery_place
-from . import sale_recovery_moment_group
-from . import sale_recovery_moment_group_wizard_duplicate
+
+from openerp.osv import fields
+from openerp.osv.orm import Model
+
+
+class procurement_group(Model):
+    _inherit = 'procurement.group'
+
+    # Column Section
+    _columns = {
+        'recovery_moment_id': fields.many2one(
+            'sale.recovery.moment', 'Recovery Moment'),
+        'delivery_moment_id': fields.many2one(
+            'sale.delivery.moment', 'Delivery Moment'),
+    }

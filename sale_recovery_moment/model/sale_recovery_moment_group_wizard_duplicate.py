@@ -48,7 +48,6 @@ class sale_recovery_moment_group_wizard_duplicate(TransientModel):
                     srmgwd.group_id.max_sale_date, '%Y-%m-%d %H:%M:%S') +
                     relativedelta(days=srmgwd.day_delay)).strftime(
                     '%Y-%m-%d %H:%M:%S'),
-                'shop_id': srmgwd.group_id.shop_id.id,
                 'company_id': srmgwd.group_id.company_id.id,
             }
             srmg_id = srmg_obj.create(cr, uid, vals, context=context)

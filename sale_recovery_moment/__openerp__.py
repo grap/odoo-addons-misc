@@ -62,11 +62,12 @@ Copyright, Authors and Licence:
     'website': 'http://www.grap.coop',
     'license': 'AGPL-3',
     'depends': [
-        'sale_stock',
+        'sale',
+        'stock',
         'report_webkit',
         'sale_order_dates',
-        'sale_visible_tax',
         'stock_picking_reorder_lines',
+        'web_widget_color',
     ],
     'data': [
         'security/ir_rule.xml',
@@ -87,6 +88,7 @@ Copyright, Authors and Licence:
         'demo/sale_recovery_moment.yml',
         'demo/sale_delivery_category.yml',
         'demo/product_delivery_category.yml',
+        'demo/product_prepare_category.yml',
         'demo/res_partner.yml',
         'demo/sale_order.yml',
         'demo/res_groups.yml',
@@ -94,7 +96,5 @@ Copyright, Authors and Licence:
     'css': [
         'static/src/css/css.css',
     ],
-    'images': [
-    ],
-    'installable': False,
+    'installable': True,
 }

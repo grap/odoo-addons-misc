@@ -62,9 +62,6 @@ class sale_recovery_place(Model):
                     lambda self, cr, uid, ids, context=None: ids, [
                         'name', 'street', 'street2', 'zip', 'city', 'state_id',
                         'country_id'], 10)}),
-        'shop_id': fields.many2one(
-            'sale.shop', string='Shop', required=True,
-            domain="[('company_id', '=', company_id)]"),
         'company_id': fields.many2one(
             'res.company', string='Company', required=True),
         'active': fields.boolean('Active'),
@@ -76,37 +73,12 @@ class sale_recovery_place(Model):
         'country_id': fields.many2one('res.country', 'Country'),
     }
 
-    # Default Section
-    def _default_shop_id(self, cr, uid, context=None):
-        company_id = self.pool.get('res.users')._get_company(
-            cr, uid, context=context)
-        shop_ids = self.pool.get('sale.shop').search(
-            cr, uid, [('company_id', '=', company_id)], context=context)
-        if not shop_ids:
-            return False
-        return shop_ids[0]
-
     _defaults = {
-        'shop_id': _default_shop_id,
         'company_id': (
             lambda s, cr, uid, c: s.pool.get('res.users')._get_company(
                 cr, uid, context=c)),
         'active': True,
     }
-
-    # Constraint Section
-    def _check_shop_company(self, cr, uid, ids, context=None):
-        for srp in self.browse(cr, uid, ids, context=context):
-            if srp.shop_id.company_id.id != srp.company_id.id:
-                return False
-        return True
-
-    _constraints = [
-        (
-            _check_shop_company,
-            'Error ! You have to select a shop that belong to the company.',
-            ['shop_id', 'company_id'])
-    ]
 
     # View Section
     def onchange_state_id(self, cr, uid, ids, state_id, context=None):
