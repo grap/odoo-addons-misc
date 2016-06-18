@@ -46,8 +46,6 @@ class product_supplierinfo_create_purchase_order(TransientModel):
 
     def create_purchase_order(self, cr, uid, ids, context=None):
         supplierinfo_ids = context.get('active_ids', [])
-        user_obj = self.pool['res.users']
-        value_obj = self.pool['ir.values']
         supplierinfo_obj = self.pool['product.supplierinfo']
         order_obj = self.pool['purchase.order']
         line_obj = self.pool['purchase.order.line']
