@@ -47,11 +47,12 @@ Copyright, Authors and Licence:
     'website': 'http://www.grap.coop',
     'license': 'AGPL-3',
     'depends': [
+        'sale',
         'stock',
     ],
     'data': [
         'view/view.xml',
         'view/action.xml',
     ],
-    'installable': False,
+    'installable': True,
 }

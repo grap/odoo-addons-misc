@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Web - Prevent Shortcut module for Odoo
+#    Stock - Picking Quick Edit module for Odoo
 #    Copyright (C) 2015-Today GRAP (http://www.grap.coop)
 #    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
 #
@@ -19,37 +19,25 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    'name': 'Web - Prevent Shortcut',
-    'summary': 'Prevent Some Web Shortcut',
-    'version': '1.0',
-    'category': 'Web',
-    'description': """
-Web - Prevent Shortcut
-======================
-* if back button is pressed out of input field, the event is blocked.
-  (this prevent non wanted history.back behaviour in some browsers);
-* Prevent F5 reloading, if Ctrl button is not pressed;
+
+from openerp.osv.orm import Model
 
 
-Roadmap / Limits
-----------------
-* Port this module in V8;
-* Make this module generic, making a web_prevent_shortcut table;
-    * prevent_field : example 'BODY';
-    * prevent_alt : True / False ;
-    * prevent_ctrl : True / False ;
-    * prevent_key_value : 116 ;
-    * prevent_on_input_fields : True / False ;
+class StockPicking(Model):
+    _inherit = 'stock.picking'
 
-    """,
-    'author': 'GRAP',
-    'website': 'http://www.grap.coop/',
-    'depends': [
-        'web',
-    ],
-    'js': [
-        'static/src/js/web_prevent_shortcut.js'
-    ],
-    'installable': False,
-}
+    def button_quick_edit_wizard(self, cr, uid, ids, context=None):
+        context.update({
+            'active_model': self._name,
+            'active_ids': ids,
+            'active_id': len(ids) and ids[0] or False
+        })
+        return {
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'stock.picking.quick.edit.wizard',
+            'type': 'ir.actions.act_window',
+            'target': 'new',
+            'context': context,
+            'nodestroy': True,
+        }

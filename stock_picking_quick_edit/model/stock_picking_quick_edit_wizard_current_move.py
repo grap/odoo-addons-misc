@@ -35,8 +35,8 @@ class StockPickingQuickEditWizardCurrentMove(orm.TransientModel):
             'stock.move', 'Existing Move', required=True, readonly=True),
         'product_id': fields.many2one(
             'product.product', 'Product', required=True, readonly=True),
-        'product_qty': fields.float(
+        'product_uom_qty': fields.float(
             'Quantity', required=True),
-        'product_uom': fields.many2one(
+        'product_uom_id': fields.many2one(
             'product.uom', 'UoM', required=True, readonly=True),
     }

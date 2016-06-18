@@ -33,11 +33,11 @@ class StockPickingMassChangeWizardLine(TransientModel):
         'wizard_id': fields.many2one(
             'stock.picking.mass.change.wizard', 'Wizard', select=True),
         'picking_id': fields.many2one(
-            'stock.picking.out', 'Picking', required=True, readonly=True),
+            'stock.picking', 'Picking', required=True, readonly=True),
         'move_id': fields.many2one(
             'stock.move', 'Picking', required=True, readonly=True),
         'sale_id': fields.many2one(
-            'sale.order', 'Sale Order', required=True, readonly=True),
+            'sale.order', 'Sale Order', readonly=True),
         'ordered_qty': fields.float(
             'Ordered Qty', required=True, readonly=True,
             digits_compute=dp.get_precision('Product Unit of Measure')),

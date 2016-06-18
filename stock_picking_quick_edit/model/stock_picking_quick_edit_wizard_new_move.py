@@ -33,9 +33,9 @@ class StockPickingQuickEditWizardNewMove(orm.TransientModel):
             select=True),
         'product_id': fields.many2one(
             'product.product', 'Product', required=True),
-        'product_qty': fields.float(
+        'product_uom_qty': fields.float(
             'Quantity', required=True),
-        'product_uom': fields.many2one(
+        'product_uom_id': fields.many2one(
             'product.uom', 'UoM', readonly=True),
     }
 
@@ -44,11 +44,11 @@ class StockPickingQuickEditWizardNewMove(orm.TransientModel):
         pp_obj = self.pool['product.product']
         if not product_id:
             return {
-                'product_qty': 0,
-                'product_uom': False,
+                'product_uom_qty': 0,
+                'product_uom_id': False,
             }
         pp = pp_obj.browse(cr, uid, product_id, context=context)
         return {'value': {
-            'product_uom': pp.uom_id.id,
-            'product_qty': 1.00,
+            'product_uom_qty': 1.00,
+            'product_uom_id': pp.uom_id.id,
         }}

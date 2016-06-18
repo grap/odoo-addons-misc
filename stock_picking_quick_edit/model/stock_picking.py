@@ -23,8 +23,8 @@
 from openerp.osv.orm import Model
 
 
-class StockPickingOut(Model):
-    _inherit = 'stock.picking.out'
+class StockPicking(Model):
+    _inherit = 'stock.picking'
 
     def button_quick_edit_wizard(self, cr, uid, ids, context=None):
         context.update({

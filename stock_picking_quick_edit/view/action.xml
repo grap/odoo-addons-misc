@@ -21,23 +21,6 @@
 <openerp>
     <data>
 
-<!--        <record id="action_stock_picking_quick_edit_wizard" model="ir.actions.act_window">-->
-<!--            <field name="name">Quick Edit</field>-->
-<!--            <field name="res_model">stock.picking.quick.edit.wizard</field>-->
-<!--            <field name="view_type">form</field>-->
-<!--            <field name="view_mode">form</field>-->
-<!--            <field name="target">new</field>-->
-<!--        </record>-->
-
-<!--        <record id="action_stock_picking_quick_edit_wizard_values" model="ir.values">-->
-<!--            <field name="model_id" ref="stock.model_stock_picking_out" />-->
-<!--            <field name="name">Quick Edit</field>-->
-<!--            <field name="key2">client_action_multi</field>-->
-<!--            <field name="value" eval="'ir.actions.act_window,' + str(ref('action_stock_picking_quick_edit_wizard'))"/>-->
-<!--            <field name="key">action</field>-->
-<!--            <field name="model">stock.picking.out</field>-->
-<!--        </record>-->
-
         <record id="action_stock_picking_mass_change_wizard" model="ir.actions.act_window">
             <field name="name">Mass Quantity Change</field>
             <field name="res_model">stock.picking.mass.change.wizard</field>
@@ -47,12 +30,12 @@
         </record>
 
         <record id="action_picking_mass_change_wizard_all_values" model="ir.values">
-            <field name="model_id" ref="stock.model_stock_picking_out" />
+            <field name="model_id" ref="stock.model_stock_picking" />
             <field name="name">Mass Quantity Change</field>
             <field name="key2">client_action_multi</field>
             <field name="value" eval="'ir.actions.act_window,' + str(ref('action_stock_picking_mass_change_wizard'))"/>
             <field name="key">action</field>
-            <field name="model">stock.picking.out</field>
+            <field name="model">stock.picking</field>
         </record>
 
     </data>

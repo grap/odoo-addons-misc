@@ -21,12 +21,12 @@
 <openerp>
     <data>
 
-<!-- Model: stock.picking.out -->
-        <record id="view_stock_picking_out_form" model="ir.ui.view">
-            <field name="model">stock.picking.out</field>
-            <field name="inherit_id" ref="stock.view_picking_out_form" />
+<!-- Model: stock.picking -->
+        <record id="view_stock_picking_form" model="ir.ui.view">
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form" />
             <field name="arch" type="xml">
-                <button name="draft_validate" position="after">
+                <button name="action_confirm" position="after">
                     <button name="button_quick_edit_wizard" type="object" string="Quick Edit" states="draft,auto,confirmed,assigned"/>
                 </button>
             </field>
@@ -43,15 +43,15 @@
                             <tree string="Edit Current Moves" editable="bottom">
                                 <field name="move_id" />
                                 <field name="product_id" />
-                                <field name="product_qty" />
-                                <field name="product_uom" />
+                                <field name="product_uom_qty" />
+                                <field name="product_uom_id" />
                             </tree>
                         </field>
                         <field name="new_move_ids" nolabel="1" colspan="2">
                             <tree string="Create New Moves" editable="bottom">
                                 <field name="product_id" on_change="onchange_product_id(product_id)"/>
-                                <field name="product_qty" />
-                                <field name="product_uom" />
+                                <field name="product_uom_qty" />
+                                <field name="product_uom_id" />
                             </tree>
                         </field>
                     </group>
@@ -72,16 +72,15 @@
                     <group colspan="2">
                         <group string="Selection" col="2" colspan="2">
                             <field name="picking_qty"/>
-                            <field name="picking_ids" invisible="1"/>
                         </group>
                         <group string="Parameters" col="4" colspan="2">
-                            <field name="product_id" on_change="onchange_product_id(product_id, picking_ids)"/>
+                            <field name="product_id" on_change="onchange_product_id(product_id)"/>
                             <field name="concerned_picking_qty"/>
                             <field name="ordered_product_qty"/>
 
-                            <field name="target_product_qty" on_change="onchange_change_setting(product_id, rounding, ordered_product_qty, change_method, target_product_qty, picking_ids)"/>
-                            <field name="change_method" on_change="onchange_change_setting(product_id, rounding, ordered_product_qty, change_method, target_product_qty, picking_ids)"/>
-                            <field name="rounding" on_change="onchange_change_setting(product_id, rounding, ordered_product_qty, change_method, target_product_qty, picking_ids)"/>
+                            <field name="target_product_qty" on_change="onchange_change_setting(product_id, rounding, ordered_product_qty, change_method, target_product_qty)"/>
+                            <field name="change_method" on_change="onchange_change_setting(product_id, rounding, ordered_product_qty, change_method, target_product_qty)"/>
+                            <field name="rounding" on_change="onchange_change_setting(product_id, rounding, ordered_product_qty, change_method, target_product_qty)"/>
                             <field name="computed_product_qty"/>
                         </group>
                         <group string="Lines" col="2" colspan="2">

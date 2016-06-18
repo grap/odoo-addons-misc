@@ -30,11 +30,6 @@ import openerp.addons.decimal_precision as dp
 class StockPickingMassChangeWizard(TransientModel):
     _name = 'stock.picking.mass.change.wizard'
 
-    # Function Section
-    def _get_picking_ids(self, cr, uid, ids, fields, arg, context=None):
-        """useless function, needed by the ORM"""
-        return {x: 0 for x in ids}
-
     # Columns Section
     _columns = {
         'product_id': fields.many2one(
@@ -62,9 +57,6 @@ class StockPickingMassChangeWizard(TransientModel):
         'line_ids': fields.one2many(
             'stock.picking.mass.change.wizard.line', 'wizard_id',
             string='Lines'),
-        'picking_ids': fields.function(
-            _get_picking_ids, type='one2many', relation='stock.picking.out',
-            string='Delivery Orders'),
     }
 
     # Default Section
@@ -74,25 +66,21 @@ class StockPickingMassChangeWizard(TransientModel):
         else:
             return 0
 
-    def _default_picking_ids(self, cr, uid, context=None):
-        return context.get('active_ids')
-
     _defaults = {
         'change_method': 'pro_rata',
         'picking_qty': _default_picking_qty,
-        'picking_ids': _default_picking_ids,
     }
 
     # On Change Section
     def onchange_product_id(
-            self, cr, uid, ids, product_id, picking_ids, context=None):
-        spo_obj = self.pool['stock.picking.out']
+            self, cr, uid, ids, product_id, context=None):
+        spo_obj = self.pool['stock.picking']
         pp_obj = self.pool['product.product']
         ordered_product_qty = 0
         concerned_picking_qty = 0
         line_ids = []
         rounding = 1
-        picking_ids = [x[1] for x in picking_ids]
+        picking_ids = context.get('active_ids', [])
         if product_id:
             rounding = pp_obj.browse(
                 cr, uid, product_id, context=context).uom_id.rounding
@@ -104,8 +92,8 @@ class StockPickingMassChangeWizard(TransientModel):
                         concerned_picking = True
                         ordered_product_qty += move.product_qty
                         line_ids.append((0, 0, {
-                            'picking_id': picking.id,
                             'move_id': move.id,
+                            'picking_id': picking.id,
                             'sale_id': picking.sale_id.id,
                             'partner_id': picking.partner_id.id,
                             'ordered_qty': move.product_qty,
@@ -114,21 +102,23 @@ class StockPickingMassChangeWizard(TransientModel):
                         }))
                 if concerned_picking:
                     concerned_picking_qty += 1
-        return {'value': {
+        res = {'value': {
             'rounding': rounding,
             'concerned_picking_qty': concerned_picking_qty,
             'ordered_product_qty': ordered_product_qty,
             'line_ids': line_ids,
         }}
+        print res
+        return res
 
     def onchange_change_setting(
             self, cr, uid, ids, product_id, rounding, ordered_product_qty,
-            change_method, target_product_qty, picking_ids, context=None):
-        spo_obj = self.pool['stock.picking.out']
+            change_method, target_product_qty, context=None):
+        spo_obj = self.pool['stock.picking']
         computed_product_qty = 0
         line_ids = []
 
-        picking_ids = [x[1] for x in picking_ids]
+        picking_ids = context.get('active_ids', [])
         if product_id and ordered_product_qty != 0:
             for picking in spo_obj.browse(
                     cr, uid, picking_ids, context=context):
@@ -181,7 +171,7 @@ class StockPickingMassChangeWizard(TransientModel):
                 sm_obj.write(cr, uid, [line.move_id.id], {
                     'name': line.move_id.name + ' (%s -> %s)' % (
                         line.move_id.product_qty, line.target_qty),
-                    'product_qty': line.target_qty,
+                    'product_uom_qty': line.target_qty,
                     'product_uos_qty': product_uos_qty,
                 }, context=context)
         return True

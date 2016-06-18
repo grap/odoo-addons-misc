@@ -50,8 +50,8 @@ class StockPickingQuickEditWizard(orm.TransientModel):
                 res.append((0, 0, {
                     'move_id': move.id,
                     'product_id': move.product_id.id,
-                    'product_qty': move.product_qty,
-                    'product_uom': move.product_uom.id,
+                    'product_uom_qty': move.product_uom_qty,
+                    'product_uom_id': move.product_uom.id,
                 }))
         return res
 
@@ -80,10 +80,10 @@ class StockPickingQuickEditWizard(orm.TransientModel):
                     if current_move.move_id.id == sm.id:
                         product_uos_qty = sm_obj.onchange_quantity(
                             cr, uid, [sm.id], sm.product_id.id,
-                            current_move.product_qty, sm.product_uom.id,
+                            current_move.product_uom_qty, sm.product_uom.id,
                             sm.product_uos.id)['value']['product_uos_qty']
                         sm_obj.write(cr, uid, [sm.id], {
-                            'product_qty': current_move.product_qty,
+                            'product_uom_qty': current_move.product_uom_qty,
                             'product_uos_qty': product_uos_qty,
                         }, context=context)
                         found = True
@@ -91,7 +91,7 @@ class StockPickingQuickEditWizard(orm.TransientModel):
                 # We set quantity to 0
                 if not found:
                     sm_obj.write(cr, uid, [sm.id], {
-                        'product_qty': 0,
+                        'product_uom_qty': 0,
                         'product_uos_qty': 0,
                     }, context=context)
 
@@ -107,11 +107,10 @@ class StockPickingQuickEditWizard(orm.TransientModel):
                         new_move.product_id.code, new_move.product_id.name),
                     'date_expected': picking.min_date,
                     'company_id': picking.company_id.id,
-                    'type': picking.type,
                     'picking_id': picking.id,
                     'product_id': new_move.product_id.id,
-                    'product_qty': new_move.product_qty,
-                    'product_uos_qty': new_move.product_qty,
+                    'product_uom_qty': new_move.product_uom_qty,
+                    'product_uos_qty': new_move.product_uom_qty,
                     'weight_uom_id': new_move.product_id.uom_id.id,
                     'product_uom': new_move.product_id.uom_id.id,
                     'location_id': location_id[0],
