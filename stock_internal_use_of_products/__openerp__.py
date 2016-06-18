@@ -83,5 +83,5 @@ Copyright, Authors and Licence:
     'css': [
         'static/src/css/css.css'
     ],
-    'installable': False,
+    'installable': True,
 }
