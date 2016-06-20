@@ -11,7 +11,7 @@ addons:
       - expect-dev  # provides unbuffer utility
       - python-lxml # because pip installation is slow
 #      - bzr
-#      - wkhtmltopdf
+      - wkhtmltopdf
 
 # Exclusion reason.
 # pos_keep_draft_orders
