@@ -102,14 +102,12 @@ class StockPickingMassChangeWizard(TransientModel):
                         }))
                 if concerned_picking:
                     concerned_picking_qty += 1
-        res = {'value': {
+        return {'value': {
             'rounding': rounding,
             'concerned_picking_qty': concerned_picking_qty,
             'ordered_product_qty': ordered_product_qty,
             'line_ids': line_ids,
         }}
-        print res
-        return res
 
     def onchange_change_setting(
             self, cr, uid, ids, product_id, rounding, ordered_product_qty,
