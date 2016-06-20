@@ -163,8 +163,14 @@ class product_product(Model):
             for pl in pp.label_ids:
                 if pl.is_organic:
                     organic = True
-            if organic or pp.pricetag_organic_text_ignore:
+            if pp.pricetag_organic_text_ignore:
                 res[pp.id] = ""
+            elif organic:
+                if pp.company_id.certifier_organization_id:
+                    res[pp.id] = _("Organic Product, certified by %s") % (
+                        pp.company_id.certifier_organization_id.code)
+                else:
+                    res[pp.id] = ""
             else:
                 res[pp.id] = _("Not From Organic Farming")
         return res
