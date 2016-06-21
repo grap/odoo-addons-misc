@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp><data>
+    <record model="product.product" id="product_banana">
+        <field name="name">Banana</field>
+        <field name="categ_id" ref="product.product_category_all" />
+        <field name="list_price">2.45</field>
+        <field name="eshop_category_id" ref="category_fruit" />
+        <field name="eshop_minimum_qty">0.5</field>
+        <field name="eshop_rounded_qty">0.1</field>
+        <field name="uom_id" ref="product.product_uom_kgm" />
+        <field name="uom_po_id" ref="product.product_uom_kgm"/>
+        <field name="uos_id" ref="product.product_uom_kgm" />
+        <field name="description_sale">Description of Banana</field>
+        <field name="type">consu</field>
+        <field name="image" type="base64" file="sale_eshop/static/src/img/demo/product_product/product_banana.jpg"/>
+    </record>
+
+    <record model="product.product" id="product_strawberry">
+        <field name="name">Strawberry (250 gr)</field>
+        <field name="categ_id" ref="product.product_category_all" />
+        <field name="list_price">3.10</field>
+        <field name="eshop_category_id" ref="category_fruit" />
+        <field name="eshop_minimum_qty">0.5</field>
+        <field name="eshop_rounded_qty">0.1</field>
+        <field name="uom_id" ref="product.product_uom_unit" />
+        <field name="uom_po_id" ref="product.product_uom_unit"/>
+        <field name="uos_id" ref="product.product_uom_unit" />
+        <field name="description_sale">Description of Strawberry. 250 gram container</field>
+        <field name="type">consu</field>
+        <field name="image" type="base64" file="sale_eshop/static/src/img/demo/product_product/product_strawberry.jpg"/>
+    </record>
+
+    <record model="product.product" id="product_apple">
+        <field name="name">Apple</field>
+        <field name="categ_id" ref="product.product_category_all" />
+        <field name="list_price">2.45</field>
+        <field name="eshop_category_id" ref="category_fruit" />
+        <field name="eshop_minimum_qty">1.0</field>
+        <field name="eshop_rounded_qty">0.2</field>
+        <field name="eshop_unpack_qty">0.5</field>
+        <field name="eshop_unpack_surcharge">20</field>
+        <field name="uom_id" ref="product.product_uom_kgm" />
+        <field name="uom_po_id" ref="product.product_uom_kgm"/>
+        <field name="uos_id" ref="product.product_uom_kgm" />
+        <field name="description_sale">Description of Apple</field>
+        <field name="type">consu</field>
+        <field name="image" type="base64" file="sale_eshop/static/src/img/demo/product_product/product_apple.jpg"/>
+    </record>
+
+    <record model="product.product" id="product_potato">
+        <field name="name">Potato</field>
+        <field name="categ_id" ref="product.product_category_all" />
+        <field name="list_price">1.95</field>
+        <field name="eshop_category_id" ref="category_vegetable" />
+        <field name="eshop_minimum_qty">1.0</field>
+        <field name="eshop_rounded_qty">0.5</field>
+        <field name="uom_id" ref="product.product_uom_kgm" />
+        <field name="uom_po_id" ref="product.product_uom_kgm"/>
+        <field name="uos_id" ref="product.product_uom_kgm" />
+        <field name="description_sale">Description of Potato</field>
+        <field name="type">consu</field>
+        <field name="image" type="base64" file="sale_eshop/static/src/img/demo/product_product/product_potato.jpg"/>
+    </record>
+
+    <record model="product.product" id="product_leek">
+        <field name="name">Leek</field>
+        <field name="categ_id" ref="product.product_category_all" />
+        <field name="list_price">2.90</field>
+        <field name="eshop_category_id" ref="category_vegetable" />
+        <field name="eshop_minimum_qty">0.4</field>
+        <field name="eshop_rounded_qty">0.2</field>
+        <field name="uom_id" ref="product.product_uom_kgm" />
+        <field name="uom_po_id" ref="product.product_uom_kgm"/>
+        <field name="uos_id" ref="product.product_uom_kgm" />
+        <field name="description_sale">Description of Leek</field>
+        <field name="type">consu</field>
+        <field name="image" type="base64" file="sale_eshop/static/src/img/demo/product_product/product_leek.jpg"/>
+    </record>
+
+    <record model="product.product" id="product_onion">
+        <field name="name">Onion</field>
+        <field name="categ_id" ref="product.product_category_all" />
+        <field name="list_price">3.00</field>
+        <field name="eshop_category_id" ref="category_vegetable" />
+        <field name="eshop_minimum_qty">0.5</field>
+        <field name="eshop_rounded_qty">0.1</field>
+        <field name="uom_id" ref="product.product_uom_kgm" />
+        <field name="uom_po_id" ref="product.product_uom_kgm"/>
+        <field name="uos_id" ref="product.product_uom_kgm" />
+        <field name="description_sale">Description of Onions</field>
+        <field name="type">consu</field>
+        <field name="image" type="base64" file="sale_eshop/static/src/img/demo/product_product/product_onion.jpg"/>
+    </record>
+
+    <record model="product.product" id="product_garlic">
+        <field name="name">Garlic</field>
+        <field name="categ_id" ref="product.product_category_all" />
+        <field name="list_price">7.00</field>
+        <field name="eshop_category_id" ref="category_vegetable" />
+        <field name="eshop_minimum_qty">0.1</field>
+        <field name="eshop_rounded_qty">0.02</field>
+        <field name="uom_id" ref="product.product_uom_kgm" />
+        <field name="uom_po_id" ref="product.product_uom_kgm"/>
+        <field name="uos_id" ref="product.product_uom_kgm" />
+        <field name="description_sale">Description of Garlic</field>
+        <field name="type">consu</field>
+        <field name="image" type="base64" file="sale_eshop/static/src/img/demo/product_product/product_garlic.jpg"/>
+    </record>
+
+    <record model="product.product" id="product_pepper">
+        <field name="name">Pepper</field>
+        <field name="categ_id" ref="product.product_category_all" />
+        <field name="list_price">6.00</field>
+        <field name="eshop_category_id" ref="category_vegetable" />
+        <field name="eshop_minimum_qty">0.4</field>
+        <field name="eshop_rounded_qty">0.1</field>
+        <field name="uom_id" ref="product.product_uom_kgm" />
+        <field name="uom_po_id" ref="product.product_uom_kgm"/>
+        <field name="uos_id" ref="product.product_uom_kgm" />
+        <field name="description_sale">Description of Pepper</field>
+        <field name="type">consu</field>
+        <field name="image" type="base64" file="sale_eshop/static/src/img/demo/product_product/product_pepper.jpg"/>
+    </record>
+
+    <record model="product.product" id="product_without_image">
+        <field name="name">Product Without Image</field>
+        <field name="categ_id" ref="product.product_category_all" />
+        <field name="list_price">100</field>
+        <field name="eshop_category_id" ref="category_without_image" />
+        <field name="eshop_minimum_qty">1.0</field>
+        <field name="eshop_rounded_qty">1.0</field>
+        <field name="uom_id" ref="product.product_uom_unit" />
+        <field name="uom_po_id" ref="product.product_uom_unit"/>
+        <field name="uos_id" ref="product.product_uom_unit" />
+        <field name="type">consu</field>
+    </record>
+
+</data></openerp>

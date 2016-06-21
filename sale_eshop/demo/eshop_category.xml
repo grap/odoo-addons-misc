@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp><data>
+    <record model="eshop.category" id="category_without_image">
+        <field name="name">Category without Image</field>
+        <field name="type">normal</field>
+    </record>
+
+    <record model="eshop.category" id="category_fruit_vegetable">
+        <field name="name">Fruits and Vegetables</field>
+        <field name="type">view</field>
+        <field name="image" type="base64" file="sale_eshop/static/src/img/demo/eshop_category/category_fruit_vegetable.jpg"/>
+    </record>
+
+    <record model="eshop.category" id="category_fruit">
+        <field name="name">Fruits</field>
+        <field name="type">normal</field>
+        <field name="parent_id" ref="category_fruit_vegetable" />
+        <field name="image" type="base64" file="sale_eshop/static/src/img/demo/eshop_category/category_fruit.jpg"/>
+    </record>
+
+    <record model="eshop.category" id="category_vegetable">
+        <field name="name">Vegetables</field>
+        <field name="type">normal</field>
+        <field name="parent_id" ref="category_fruit_vegetable" />
+        <field name="image" type="base64" file="sale_eshop/static/src/img/demo/eshop_category/category_vegetable.jpg"/>
+    </record>
+
+</data></openerp>

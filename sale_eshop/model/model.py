@@ -22,7 +22,7 @@
 
 import requests
 
-
+from openerp import api
 from openerp import SUPERUSER_ID
 from openerp.osv.osv import except_osv
 from openerp.osv.orm import Model
@@ -125,12 +125,12 @@ def _invalidate_eshop(cache_url, model_name, item_id, fields):
             " eShop datas can not be updated."
             " \n - Code : %s") % (req.status_code))
 
-
-def new_write_function(self, cr, uid, ids, vals, context=None):
-    company_obj = self.pool['res.company']
+@api.multi
+def new_write_function(self, vals):
+    company_obj = self.env['res.company']
 
     res = _eshop_backup_write_function(
-        self, cr, uid, ids, vals, context=context)
+        self, vals)
 
     if 'has_eshop' not in company_obj._all_columns.keys():
         # The module is not installed
@@ -150,7 +150,7 @@ def new_write_function(self, cr, uid, ids, vals, context=None):
 
     # Some fields are loaded and cached by the eShop
     if eshop_model['type'] == 'single':
-        for item in self.browse(cr, uid, ids, context=context):
+        for item in self:
             if self._name == 'res.company' and item.has_eshop:
                 _invalidate_eshop(
                     item.eshop_invalidation_cache_url, self._name, item.id,
@@ -166,10 +166,7 @@ def new_write_function(self, cr, uid, ids, vals, context=None):
                 return res
 
     if eshop_model['type'] == 'multiple':
-        company_ids = company_obj.search(
-            cr, SUPERUSER_ID, [('has_eshop', '=', True)], context=context)
-        for company in company_obj.browse(
-                cr, SUPERUSER_ID, company_ids, context=context):
+        for company in company_obj.sudo().search([('has_eshop', '=', True)]):
             for id in ids:
                 _invalidate_eshop(
                     company.eshop_invalidation_cache_url, self._name,

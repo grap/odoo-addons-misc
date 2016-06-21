@@ -22,27 +22,9 @@
 
 {
     'name': 'Sale - eShop',
-    'version': '0.1',
+    'version': '8.0.1.0.0',
     'summary': "Allow connection to Odoo eShop Project",
     'category': 'Sale',
-    'description': """
-Allow connection to Odoo eShop Project
-======================================
-
-Functionality
--------------
-    * Create a new category eshop_category for products;
-    * Add fields on product.product:
-        * 'eShop Category': category in the eShop;
-        * 'Min date' and 'Max Date' that make product available for sale;
-    * Add fields on res.partner:
-        * 'Can purchase on eShop';
-        * 'eShop password';
-
-Copyright, Authors and Licence:
--------------------------------
-    * Copyright: 2014, GRAP: Groupement Régional Alimentaire de Proximité;
-    * Author: Sylvain LE GAL (https://twitter.com/legalsylvain);""",
     'author': 'GRAP',
     'website': 'http://www.grap.coop',
     'license': 'AGPL-3',
@@ -67,12 +49,11 @@ Copyright, Authors and Licence:
     ],
     'demo': [
         'demo/res_partner.yml',
-        'demo/eshop_category.yml',
-        'demo/product_product.yml',
+        'demo/eshop_category.xml',
+        'demo/product_product.xml',
         'demo/product_uom.yml',
-        'demo/function.xml',
         'demo/res_users.yml',
         'demo/res_groups.yml',
     ],
-    'installable': False,
+    'installable': True,
 }

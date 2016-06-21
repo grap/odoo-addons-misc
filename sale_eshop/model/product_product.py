@@ -29,8 +29,6 @@ from openerp.osv.orm import Model
 from openerp.osv.orm import except_orm
 from openerp.tools.translate import _
 
-from openerp.addons.sale_eshop import demo_image
-
 
 class ProductProduct(Model):
     _inherit = 'product.product'
@@ -181,12 +179,6 @@ class ProductProduct(Model):
         'eshop_unpack_qty': 0,
         'eshop_unpack_surcharge': 0,
     }
-
-    # Demo Function Section
-    def _demo_init_image(self, cr, uid, ids=None, context=None):
-        demo_image.init_image(
-            self.pool, cr, uid, 'product.product', 'image',
-            '/static/src/img/demo/product_product/', context=context)
 
     # Custom Section
     def get_current_eshop_product_list(self, cr, uid, order_id, context=None):
