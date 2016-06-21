@@ -1,44 +1,36 @@
-/******************************************************************************
-    Point Of Sale - Tare module for OpenERP
-    Copyright (C) 2015-Today GRAP (http://www.grap.coop)
-    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation, either version 3 of the
-    License, or (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
-
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-******************************************************************************/
+/*
+Copyright (C) 2015-Today GRAP (http://www.grap.coop)
+@author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+*/
 
 openerp.pos_tare = function(instance){
     var module = instance.point_of_sale;
+    _t = instance.web._t;
 
+    /*************************************************************************
+        Extend : Widget 'PosWidget'
+    */
     module.PosWidget = module.PosWidget.extend({
         build_widgets: function(){
+            this._super();
+
             // Add a new screen 'TareScreenWidget'
             this.tare_screen = new module.TareScreenWidget(this,{});
-            this.tare_screen.appendTo($('#rightpane'));
-            this._super();
+            this.tare_screen.appendTo(this.$('.screens'));
             this.screen_selector.add_screen('tare', this.tare_screen);
         },
     });
 
     /*************************************************************************
-        Overload : Widget 'ScaleScreenWidget'
+        Extend : Widget 'ScaleScreenWidget'
     */
-    module.ScaleInviteScreenWidget = module.ScaleInviteScreenWidget.extend({
+    module.ScaleScreenWidget = module.ScaleScreenWidget.extend({
         next_screen: 'tare',
 
         // Overwrite 'show' function to display TareScreenWidget
         show: function(){
-            this.pos_widget.screen_selector.set_current_screen(this.next_screen);
+            this.pos_widget.screen_selector.set_current_screen(this.next_screen,{product: this.get_product()});
         },
     });
 
@@ -47,9 +39,9 @@ openerp.pos_tare = function(instance){
     */
     module.TareScreenWidget = module.ScreenWidget.extend({
         template:'TareScreenWidget',
-
         next_screen: 'products',
         previous_screen: 'products',
+        show_leftpane: false,
 
         init: function(parent, options) {
             this._super(parent, options);
@@ -59,6 +51,9 @@ openerp.pos_tare = function(instance){
         },
 
         show: function(){
+            this.current_product = this.get_product();
+            this.current_product_name = this.get_product().display_name;
+            this.current_unit_price = this.get_product().price;
             this._super();
             this.renderElement();
             var self = this;
@@ -66,24 +61,19 @@ openerp.pos_tare = function(instance){
             this.tare_weight = 0;
             this.net_weight = 0;
 
-            // Add 'Cancel' Button
             this.add_action_button({
-                label: _t('Back'),
-                icon: '/point_of_sale/static/src/img/icons/png48/go-previous.png',
-                click: function(){
-                    self.pos_widget.screen_selector.set_current_screen(self.previous_screen);
-                }
-            });
+                    label: _t('Back'),
+                    icon: '/point_of_sale/static/src/img/icons/png48/go-previous.png',
+                    click: function(){  
+                        self.pos_widget.screen_selector.set_current_screen(self.previous_screen);
+                    },
+                });
 
-            // Add 'Validate' Button
-            this.validate_button = this.add_action_button({
-                label: _t('Validate'),
-                icon: '/point_of_sale/static/src/img/icons/png48/validate.png',
-                click: function(){
-                    self.order_product();
-                    self.pos_widget.screen_selector.set_current_screen(self.next_screen);
-                },
-            });
+            this.order_button = this.add_action_button({
+                    label: _t('Order'),
+                    icon: '/point_of_sale/static/src/img/icons/png48/go-next.png',
+                    click: function() { self.order_product_click(); },
+                });
 
             // Focus on Gross Weight
             this.$('#gross-weight').focus();
@@ -128,17 +118,16 @@ openerp.pos_tare = function(instance){
         },
 
         updateInvalidNetWeight: function(){
-            this.validate_button.set_disabled(true);
+            this.order_button.set_disabled(true);
         },
 
         updateValidNetWeight: function(){
             // get a number without floating bug
-            this.net_weight = (this.gross_weight - this.tare_weight ).toFixed(3);
-            this.$('#net-weight').html(this.net_weight);
-            var price = this.get_product().get('price') * this.net_weight;
-            this.$('#total-price').html(price.toFixed(2));
-            
-            this.validate_button.set_disabled(false);
+            this.net_weight = (this.gross_weight - this.tare_weight).toFixed(3);
+            this.$('#net-weight')[0].value = this.net_weight;
+            var price = this.current_product.price * this.net_weight;
+            this.$('#total-price')[0].value = price.toFixed(2);
+            this.order_button.set_disabled(false);
         },
 
         get_product: function(){
@@ -150,13 +139,9 @@ openerp.pos_tare = function(instance){
             }
         },
 
-        get_product_name: function(){
-            var product = this.get_product();
-            return (product ? product.get('name') : undefined) || 'Unnamed Product';
-        },
-
-        order_product: function(){
-            this.pos.get('selectedOrder').addProduct(this.get_product(),{ quantity:this.net_weight });
+        order_product_click: function(){
+            this.pos.get('selectedOrder').addProduct(this.current_product,{ quantity:this.net_weight });
+            this.pos_widget.screen_selector.set_current_screen(this.next_screen);
         },
 
     });
