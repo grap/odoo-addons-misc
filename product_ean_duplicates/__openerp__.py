@@ -9,20 +9,6 @@
     'summary': 'Detect and fix easily EAN duplicates',
     'version': '8.0.1.0.0',
     'category': 'product',
-    'description': """
-Detect and fix easily EAN duplicates
-====================================
-
-Functionality:
---------------
-    * Add a view to detect and fix EAN duplicates of products into a company;
-    * Remove in the copy fields of product product the field ean;
-
-Copyright, Authors and Licence:
--------------------------------
-    * Copyright: 2014, GRAP: Groupement Régional Alimentaire de Proximité;
-    * Author:
-        * Sylvain LE GAL (https://twitter.com/legalsylvain);""",
     'author': 'GRAP',
     'website': 'http://www.grap.coop',
     'license': 'AGPL-3',
@@ -30,11 +16,12 @@ Copyright, Authors and Licence:
         'product',
     ],
     'data': [
-        'view/view.xml',
-        'view/action.xml',
-        'view/menu.xml',
+        'views/view_product_product.xml',
+        'views/action.xml',
+        'views/menu.xml',
     ],
     'demo': [
+        'demo/res_groups.yml',
     ],
     'installable': True,
 }
