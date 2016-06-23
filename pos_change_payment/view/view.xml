@@ -80,10 +80,12 @@
                 <form string="Change Payments" version="7.0">
                     <group col="4">
                         <field name="order_id" />
+                        <field name="session_id" />
                         <field name="amount_total" />
                         <field name="line_ids" colspan="4">
                             <tree string="Payment Lines" editable="bottom">
-                                <field name="journal_id" />
+                                <field name="bank_statement_id"
+                                    domain="[('pos_session_id', '=', parent.session_id)]"/>
                                 <field name="amount" />
                             </tree>
                         </field>
