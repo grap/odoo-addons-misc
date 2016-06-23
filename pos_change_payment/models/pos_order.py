@@ -1,26 +1,10 @@
-# -*- encoding: utf-8 -*-
-##############################################################################
-#
-#    Point Of Sale - Change Payment module for Odoo
-#    Copyright (C) 2013-Today GRAP (http://www.grap.coop)
-#    @author Julien WESTE
-#    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
+# -*- coding: utf-8 -*-
+# Copyright (C) 2015-Today GRAP (http://www.grap.coop)
+# @author: Julien WESTE
+# @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
-
+from openerp import api
 from openerp.osv.orm import Model
 from openerp.osv.osv import except_osv
 from openerp.tools.translate import _
@@ -28,6 +12,13 @@ from openerp.tools.translate import _
 
 class pos_order(Model):
     _inherit = 'pos.order'
+
+    @api.multi
+    def add_payment_v8(self, data):
+        """Hack to call old api. TODO-V10 : remove me."""
+        for order in self:
+            self.pool['pos.order'].add_payment(
+                self._cr, self._uid, order.id, data, context=self._context)
 
     def _merge_cash_payment(self, cr, uid, ids, context=None):
         absl_obj = self.pool['account.bank.statement.line']

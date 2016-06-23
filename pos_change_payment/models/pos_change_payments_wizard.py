@@ -7,21 +7,18 @@ from openerp import fields, models, _, api
 from openerp.osv.osv import except_osv
 
 
-class pos_change_payments_wizard(models.TransientModel):
+class PosChangePaymentsWizard(models.TransientModel):
     _name = 'pos.change.payments.wizard'
 
     # View Section
-    def default_get(self, cr, uid, fields, context=None):
-        po_obj = self.pool['pos.order']
-        if context.get('active_model', False) != 'pos.order':
-            raise except_osv(_('Error!'), _('Incorrect Call!'))
-        res = super(pos_change_payments_wizard, self).default_get(
-            cr, uid, fields, context=context)
-        po = po_obj.browse(
-            cr, uid, context.get('active_id'), context=context)
-        res.update({'order_id': po.id})
-        res.update({'session_id': po.session_id.id})
-        res.update({'amount_total': po.amount_total})
+    @api.model
+    def default_get(self, fields):
+        order_obj = self.env['pos.order']
+        res = super(PosChangePaymentsWizard, self).default_get(fields)
+        order = order_obj.browse(self._context.get('active_id'))
+        res.update({'order_id': order.id})
+        res.update({'session_id': order.session_id.id})
+        res.update({'amount_total': order.amount_total})
         return res
 
     # Column Section
@@ -62,7 +59,7 @@ class pos_change_payments_wizard(models.TransientModel):
 
         # Create new payment
         for line in wizard.line_ids:
-            order.add_payment({
+            order.add_payment_v8({
                 'journal': int(line.bank_statement_id.journal_id.id),
                 'amount': line.amount,
             })
