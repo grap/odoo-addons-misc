@@ -12,7 +12,7 @@ class AccountBankStatementLine(models.Model):
     _inherit = 'account.bank.statement.line'
 
     _POS_PAYMENT_ALLOW_WRITE = [
-        'sequence', 'move_ids',
+        'sequence', 'journal_entry_id',
     ]
 
     # Private Function Section
