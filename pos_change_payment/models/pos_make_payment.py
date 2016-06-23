@@ -23,7 +23,7 @@ class PosMakePayment(models.TransientModel):
         order = order_obj.browse(active_id)
         amount = order.amount_total - order.amount_paid
         data = self.read()[0]
-        data['journal'] = data['journal_id']
+        data['journal'] = int(data['journal_id'])
 
         if amount != 0.0:
             order.add_payment_v8(data)

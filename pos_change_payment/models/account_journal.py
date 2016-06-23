@@ -16,8 +16,11 @@ class account_journal(models.Model):
         """Return Account Journal available for payment in PoS Module"""
         session_obj = self.env['pos.session']
 
+        if not self._context.get('pos_session_id', False):
+            return []
+
         # Get Session of the Current PoS
-        session = session_obj.browse(self._context.get('pos_session_id'))
+        session = session_obj.browse(int(self._context.get('pos_session_id')))
 
         # Get Journals, order by type (cash before), and name
         cash_journals = self.search(
