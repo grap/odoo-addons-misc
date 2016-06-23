@@ -23,7 +23,6 @@
 import requests
 
 from openerp import api
-from openerp import SUPERUSER_ID
 from openerp.osv.osv import except_osv
 from openerp.osv.orm import Model
 from openerp.tools.translate import _
@@ -125,6 +124,7 @@ def _invalidate_eshop(cache_url, model_name, item_id, fields):
             " eShop datas can not be updated."
             " \n - Code : %s") % (req.status_code))
 
+
 @api.multi
 def new_write_function(self, vals):
     company_obj = self.env['res.company']
@@ -167,7 +167,7 @@ def new_write_function(self, vals):
 
     if eshop_model['type'] == 'multiple':
         for company in company_obj.sudo().search([('has_eshop', '=', True)]):
-            for id in ids:
+            for id in self.ids:
                 _invalidate_eshop(
                     company.eshop_invalidation_cache_url, self._name,
                     id, intersec_fields)
