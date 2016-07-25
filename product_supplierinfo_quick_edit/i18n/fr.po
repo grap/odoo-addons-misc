@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-02 22:46+0000\n"
-"PO-Revision-Date: 2015-12-02 22:46+0000\n"
+"POT-Creation-Date: 2016-07-25 13:11+0000\n"
+"PO-Revision-Date: 2016-07-25 13:11+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -43,7 +43,7 @@ msgid "Edit Multiple Lines"
 msgstr "Editer plusieurs lignes"
 
 #. module: product_supplierinfo_quick_edit
-#: code:addons/product_supplierinfo_quick_edit/model/product_supplierinfo.py:149
+#: code:addons/product_supplierinfo_quick_edit/model/product_supplierinfo.py:166
 #, python-format
 msgid "Error!"
 msgstr "Erreur !"
@@ -94,20 +94,25 @@ msgid "Products Quantity"
 msgstr "Nombre d'articles"
 
 #. module: product_supplierinfo_quick_edit
-#: code:addons/product_supplierinfo_quick_edit/model/product_supplierinfo_create_purchase_order.py:102
+#: code:addons/product_supplierinfo_quick_edit/model/product_supplierinfo_create_purchase_order.py:101
 #, python-format
 msgid "Purchase Orders"
 msgstr "Bon de commandes"
 
 #. module: product_supplierinfo_quick_edit
+#: field:product.supplierinfo,simple_discount:0
+msgid "Simple Discount"
+msgstr "Remise % (Simple)"
+
+#. module: product_supplierinfo_quick_edit
 #: field:product.supplierinfo,simple_min_quantity:0
 msgid "Simple Minimum Quantity"
-msgstr "Quantité minimum (Une Ligne)"
+msgstr "Quantité minimum (Simple)"
 
 #. module: product_supplierinfo_quick_edit
 #: field:product.supplierinfo,simple_price:0
 msgid "Simple Price"
-msgstr "Prix (Une Ligne)"
+msgstr "Prix (Simple)"
 
 #. module: product_supplierinfo_quick_edit
 #: view:product.supplierinfo:0
@@ -157,7 +162,7 @@ msgid "Without Prices Defined"
 msgstr "Sans prix définis"
 
 #. module: product_supplierinfo_quick_edit
-#: code:addons/product_supplierinfo_quick_edit/model/product_supplierinfo.py:152
+#: code:addons/product_supplierinfo_quick_edit/model/product_supplierinfo.py:169
 #, python-format
 msgid "You can not create a simple supplier line for '%s' product because it has already one (or many) lines.\n"
 "\n"
@@ -172,7 +177,14 @@ msgid "or"
 msgstr "ou"
 
 #. module: product_supplierinfo_quick_edit
-#: code:addons/product_supplierinfo_quick_edit/model/product_supplierinfo.py:146
+#: code:_description:0
+#: model:ir.model,name:product_supplierinfo_quick_edit.model_product_supplierinfo_create_purchase_order
+#, python-format
+msgid "product.supplierinfo.create.purchase.order"
+msgstr "product.supplierinfo.create.purchase.order"
+
+#. module: product_supplierinfo_quick_edit
+#: code:addons/product_supplierinfo_quick_edit/model/product_supplierinfo.py:163
 #, python-format
 msgid "qty : %s - price : %s"
 msgstr "qté : %s - prix : %s"

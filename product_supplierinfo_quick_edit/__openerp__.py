@@ -52,6 +52,7 @@ Copyright, Authors and Licence:
     'depends': [
         'product',
         'purchase',
+        'product_supplierinfo_discount',
     ],
     'data': [
         'view/view.xml',

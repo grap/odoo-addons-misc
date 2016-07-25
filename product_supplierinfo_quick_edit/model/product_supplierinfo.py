@@ -40,11 +40,13 @@ class product_supplierinfo(Model):
                 res[item.id] = {
                     'simple_min_quantity': item.pricelist_ids[0].min_quantity,
                     'simple_price': item.pricelist_ids[0].price,
+                    'simple_discount': item.pricelist_ids[0].discount,
                 }
             else:
                 res[item.id] = {
                     'simple_min_quantity': 0,
                     'simple_price': 0,
+                    'simple_discount': 0,
                 }
             res[item.id]['template_standard_price'] =\
                 item.product_id and item.product_id.standard_price or 0
@@ -77,6 +79,17 @@ class product_supplierinfo(Model):
             return partnerinfo_obj.write(
                 cr, uid, supplierinfo.pricelist_ids[0].id,
                 {'price': value}, context=context)
+        else:
+            return True
+
+    def _set_simple_discount(
+            self, cr, uid, id, name, value, args, context=None):
+        partnerinfo_obj = self.pool['pricelist.partnerinfo']
+        supplierinfo = self.browse(cr, uid, id, context=context)
+        if len(supplierinfo.pricelist_ids) == 1:
+            return partnerinfo_obj.write(
+                cr, uid, supplierinfo.pricelist_ids[0].id,
+                {'discount': value}, context=context)
         else:
             return True
 
@@ -117,6 +130,10 @@ class product_supplierinfo(Model):
             _get_simple_info, fnct_inv=_set_simple_price, type='float',
             string='Simple Price', multi='simple_info', required=True,
             digits_compute=dp.get_precision('Purchase Price')),
+        'simple_discount': fields.function(
+            _get_simple_info, fnct_inv=_set_simple_discount, type='float',
+            string='Simple Discount', multi='simple_info', required=True,
+            digits=(16, 2)),
         'lines_qty': fields.function(
             _get_lines_qty, type='integer', string='Lines Quantity',
             store={
