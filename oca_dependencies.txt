@@ -1,4 +1,4 @@
 web
-pos
+pos https://github.com/grap/pos.git 7.0_BACKPORT_barcodes
 l10n-france
 sale-workflow
