@@ -24,6 +24,7 @@ before_install:
   - sudo pip install GitPython bzr
   - sudo pip install cairosvg
   - sudo pip install unicodecsv
+  - sudo pip install pyBarcode
 
 virtualenv:
   system_site_packages: true
