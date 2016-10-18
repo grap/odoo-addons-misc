@@ -145,12 +145,12 @@ class StockPickingQuickInvoiceWizard(orm.TransientModel):
                 ttype='sale', company_id=wizard.invoice_id.company_id.id,
                 context=context)['value'])
             voucher_vals.update({
-                    'partner_id': wizard.invoice_id.partner_id.id,
-                    'amount': line.amount,
-                    'journal_id': line.journal_id.id,
-                    'date': wizard.date_invoice,
-                    'reference': wizard.invoice_id.name,
-                    'type': 'receipt',
+                'partner_id': wizard.invoice_id.partner_id.id,
+                'amount': line.amount,
+                'journal_id': line.journal_id.id,
+                'date': wizard.date_invoice,
+                'reference': wizard.invoice_id.name,
+                'type': 'receipt',
             })
             voucher_id = voucher_obj.create(
                 cr, uid, voucher_vals, context=context)
