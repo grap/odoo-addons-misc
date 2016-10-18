@@ -80,7 +80,7 @@ class TestProductTaxesGroup(TransactionCase):
             'supplier_taxes_id': [[6, 0, []]],
             'taxes_id': [[6, 0, [self.at_sale_2_id]]],
         }
-        self.pp_obj.write(cr, uid, pp_id, vals)
+        self.pp_obj.write(cr, uid, [pp_id], vals)
         pp = self.pp_obj.browse(cr, uid, pp_id)
         self.assertEqual(
             pp.tax_group_id.id, self.tg2_id,
