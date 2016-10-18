@@ -127,29 +127,23 @@ class StockPickingQuickInvoiceWizard(orm.TransientModel):
                 " %d.") % (total_payment, wizard.amount_total))
 
         # Create payment
-        print ">>>>>>>>>>>>>>>>>>>>>> VOUCHER"
         voucher_ids = []
-#        partner_id = partner_obj._find_accounting_partner(
-#            wizard.invoice_id.partner_id).id
+        partner_id = partner_obj._find_accounting_partner(
+            wizard.invoice_id.partner_id).id
         for line in wizard.line_ids:
             ctx = context.copy()
-            ctx['invoice_id'] = invoice_id
+            ctx['invoice_id'] = wizard.invoice_id
             voucher_vals = voucher_obj.onchange_partner_id(
                 cr, uid, False, wizard.invoice_id.partner_id.id,
                 line.journal_id.id, line.amount,
                 wizard.invoice_id.currency_id.id,
                 'sale', wizard.date_invoice, context=context)['value']
-#            print res1
-#            import pdb; pdb.set_trace()
             voucher_vals.update(voucher_obj.onchange_amount(
                 cr, uid, False, line_ids=False, tax_id=False,
                 price=line.amount, partner_id=partner_id,
                 journal_id=line.journal_id.id,
                 ttype='sale', company_id=wizard.invoice_id.company_id.id,
                 context=context)['value'])
-#            value = 
-#            print ">>>>>>>>>>"
-#            print voucher_vals
             voucher_vals.update({
                     'partner_id': wizard.invoice_id.partner_id.id,
                     'amount': line.amount,
@@ -158,31 +152,10 @@ class StockPickingQuickInvoiceWizard(orm.TransientModel):
                     'reference': wizard.invoice_id.name,
                     'type': 'receipt',
             })
-            print ">>>>>>>>>>"
-            print voucher_vals
             voucher_id = voucher_obj.create(
                 cr, uid, voucher_vals, context=context)
-            print voucher_id
             voucher_ids.append(voucher_id)
 
-        print voucher_ids
         voucher_obj.button_proforma_voucher(
             cr, uid, voucher_ids, context=context)
         return True
-
-class AccountVoucher(orm.Model):
-    _inherit = 'account.voucher'
-
-    def create(self, cr, uid, vals, context=None):
-        print "-----------"
-        print vals
-        print "-----------"
-        return super(AccountVoucher, self).create(
-            cr, uid, vals, context=context)
-
-    def write(self, cr, uid, ids, vals, context=None):
-        print "-----------"
-        print vals
-        print "-----------"
-        return super(AccountVoucher, self).write(
-            cr, uid, ids, vals, context=context)
