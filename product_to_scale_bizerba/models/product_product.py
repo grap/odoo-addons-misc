@@ -100,10 +100,11 @@ class product_product(Model):
         res = super(product_product, self).write(
             cr, uid, ids, vals, context=context)
 
+        send_image = any(['image' in x for x in bob.keys()])
         for product_id, action in defered.iteritems():
             product = self.browse(cr, uid, product_id, context=context)
             self._send_to_scale_bizerba(
-                cr, uid, action, product, context=context)
+                cr, uid, action, product, send_image, context=context)
 
         return res
 
@@ -111,6 +112,6 @@ class product_product(Model):
         for product in self.browse(cr, uid, ids, context=context):
             if product.scale_group_id:
                 self._send_to_scale_bizerba(
-                    cr, uid, 'unlink', product, context=context)
+                    cr, uid, 'unlink', product, False, context=context)
         return super(product_product, self).unlink(
             cr, uid, ids, context=context)
