@@ -62,12 +62,6 @@ class product_scale_system_product_line(Model):
             " 'Text Field' or 'External Text Constant', to indicate wich text"
             " will be used to mention break lines."),
         # TODO Improve. Set contrains.
-        'suffix': fields.char(
-            string='Suffix', help="Used if type is"
-            " 'External Text Field', to indicate how to suffix the field.\n"
-            " Make sure to have a uniq value by Scale System, and all with the"
-            " same size.\n\n Used if type is Product Image to mention the end"
-            " of the file. Exemple : '_01.jpg'."),
         'numeric_coefficient': fields.float(
             string='Numeric Coefficient', help="Used if type is"
             " 'Numeric Field', to mention with coefficient numeric"

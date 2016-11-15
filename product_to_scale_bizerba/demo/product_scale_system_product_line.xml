@@ -333,7 +333,6 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
         <field name="sequence">32</field>
         <field name="type">product_image</field>
         <field name="field_id" ref="product.field_product_product_image"/>
-        <field name="suffix">.PNG</field>
         <field name="delimiter">#</field>
     </record>
 

@@ -445,11 +445,6 @@ msgstr "Mettre ici la poid constant de la tare pour l'article. Cette tare sera s
 "La tare est défini au kg."
 
 #. module: product_to_scale_bizerba
-#: model:ir.model.fields,field_description:product_to_scale_bizerba.field_product_scale_system_product_line_suffix
-msgid "Suffix"
-msgstr "Suffixe"
-
-#. module: product_to_scale_bizerba
 #: model:ir.model.fields,field_description:product_to_scale_bizerba.field_product_scale_system_product_line_type
 msgid "Type"
 msgstr "Type"
@@ -458,17 +453,6 @@ msgstr "Type"
 #: selection:product.scale.log,action:0
 msgid "Update"
 msgstr "Update"
-
-#. module: product_to_scale_bizerba
-#: model:ir.model.fields,help:product_to_scale_bizerba.field_product_scale_system_product_line_suffix
-msgid "Used if type is 'External Text Field', to indicate how to suffix the field.\n"
-" Make sure to have a uniq value by Scale System, and all with the same size.\n"
-"\n"
-" Used if type is Product Image to mention the end of the file. Exemple : '_01.jpg'."
-msgstr "Utilisé si le type est Champ Texte externe, pour indiquer comment suffixer le champs.\n"
-" Faire attention d'avoir une valeur unique pour tout le sytème de balance, et toujours de la même taille.\n"
-"\n"
-" Utilisé si le type est 'Image d'article', pour mentionné la fin du type de fichier. Exemple : '_01.jpg'."
 
 #. module: product_to_scale_bizerba
 #: model:ir.model.fields,help:product_to_scale_bizerba.field_product_scale_system_product_line_x2many_range
