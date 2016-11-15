@@ -392,7 +392,7 @@ class product_scale_log(Model):
                     self.ftp_connection_push_text_file(
                         cr, uid, ftp, scale_system.csv_relative_path,
                         folder_path, scale_system.screen_text_file_pattern,
-                        [log.screen_text], scale_system.encoding,
+                        [last_log.screen_text], scale_system.encoding,
                         context=context)
 
             # Close FTP Connection
