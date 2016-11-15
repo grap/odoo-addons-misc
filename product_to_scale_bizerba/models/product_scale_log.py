@@ -30,8 +30,6 @@ class product_scale_log(Model):
 
     _EXTERNAL_SIZE_ID_RIGHT = 4
 
-    _DELIMITER = '#'
-
     _ACTION_SELECTION = [
         ('create', 'Creation'),
         ('write', 'Update'),
@@ -48,9 +46,13 @@ class product_scale_log(Model):
         'iso-8859-1': '\r\n',
     }
 
+    _DELIMITER = '#'
+
     _EXTERNAL_TEXT_ACTION_CODE = 'C'
 
     _EXTERNAL_TEXT_DELIMITER = '#'
+
+    _SCREEN_TEXT_DELIMITER = '#'
 
     # Private Section
     def _clean_value(self, value, product_line):
@@ -79,6 +81,28 @@ class product_scale_log(Model):
             self._clean_value(value, product_line),             # TEXT Code
         ]
         return self._EXTERNAL_TEXT_DELIMITER.join(external_text_list)
+
+    def _generate_screen_text(self, log):
+        lines = []
+        used_keys = []
+        scale_group = log.scale_group_id
+        for product in scale_group.product_ids:
+            used_keys.append(product.scale_sequence)
+            lines.append(self._SCREEN_TEXT_DELIMITER.join([
+                scale_group.screen_identity,                    # ABNR Code
+                str(product.scale_sequence),                    # KEYNUM Code
+                scale_group.external_identity,                  # TSAB Code
+                str(product.id),                                # TSDA Code
+            ]))
+        for x in range(1, scale_group.screen_product_qty):
+            if x not in used_keys:
+                lines.append(self._SCREEN_TEXT_DELIMITER.join([
+                    scale_group.screen_identity,                # ABNR Code
+                    str(x),                                     # KEYNUM Code
+                    scale_group.external_identity,              # TSAB Code
+                    '0',                                        # TSDA Code
+                ]))
+        return lines
 
     # Compute Section
     def _compute_text(
@@ -159,8 +183,14 @@ class product_scale_log(Model):
                 if product_line.delimiter:
                     product_text += product_line.delimiter
             break_line = self._ENCODING_MAPPING[log.scale_system_id.encoding]
+
+            screen_texts = (self._generate_screen_text(log))
+
             res[log.id] = {
                 'product_text': product_text + break_line,
+                'screen_text': break_line.join(screen_texts) + break_line,
+                'screen_text_display': '\n'.join(
+                    [x.replace('\n', '') for x in screen_texts]),
                 'external_text': break_line.join(external_texts) + break_line,
                 'external_text_display': '\n'.join(
                     [x.replace('\n', '') for x in external_texts]),
@@ -170,25 +200,46 @@ class product_scale_log(Model):
     # Column Section
     _columns = {
         'log_date': fields.datetime('Log Date', required=True),
+
+        'scale_group_id': fields.many2one(
+            'product.scale.group', string='Scale Group', required=True),
+
         'scale_system_id': fields.many2one(
             'product.scale.system', string='Scale System', required=True),
+
         'product_id': fields.many2one(
             'product.product', string='Product'),
+
+        'screen_text': fields.function(
+            _compute_text, type='text', string='Screen Text',
+            multi='compute_text', store={'product.scale.log': (
+                lambda self, cr, uid, ids, context=None:
+                    ids, ['scale_group_id'], 10)}),
+
+        'screen_text_display': fields.function(
+            _compute_text, type='text', string='Screen Text (Display)',
+            multi='compute_text', store={'product.scale.log': (
+                lambda self, cr, uid, ids, context=None:
+                    ids, ['scale_group_id'], 10)}),
+
         'product_text': fields.function(
             _compute_text, type='text', string='Product Text',
             multi='compute_text', store={'product.scale.log': (
                 lambda self, cr, uid, ids, context=None:
                     ids, ['scale_system_id', 'product_id'], 10)}),
+
         'external_text': fields.function(
             _compute_text, type='text', string='External Text',
             multi='compute_text', store={'product.scale.log': (
-                lambda self, cr, uid, ids, context=None: ids, [
-                    'scale_system_id', 'product_id', 'product_id'], 10)}),
+                lambda self, cr, uid, ids, context=None:
+                    ids, ['scale_system_id', 'product_id'], 10)}),
+
         'external_text_display': fields.function(
             _compute_text, type='text', string='External Text (Display)',
             multi='compute_text', store={'product.scale.log': (
-                lambda self, cr, uid, ids, context=None: ids, [
-                    'scale_system_id', 'product_id', 'product_id'], 10)}),
+                lambda self, cr, uid, ids, context=None:
+                    ids, ['scale_system_id', 'product_id'], 10)}),
+
         'action': fields.selection(
             _ACTION_SELECTION, string='Action', required=True),
         'sent': fields.boolean(string='Is Sent'),
@@ -276,7 +327,7 @@ class product_scale_log(Model):
     def _generate_image_file_name(self, cr, uid, obj, field, context=None):
         if getattr(obj, field.name):
             model_name = obj._model._name.replace('.', '_')
-            extension = '.PNG'  # TODO FIXME
+            extension = '.PNG'
             return "%s__%s__%d%s" % (model_name, field.name, obj.id, extension)
         else:
             return ''
@@ -287,11 +338,16 @@ class product_scale_log(Model):
             cr, uid, 'bizerba.local_folder_path', context=context)
 
         system_map = {}
+        group_map = {}
         for log in self.browse(cr, uid, ids, context=context):
             if log.scale_system_id in system_map.keys():
                 system_map[log.scale_system_id].append(log)
             else:
                 system_map[log.scale_system_id] = [log]
+            if log.scale_group_id in group_map.keys():
+                group_map[log.scale_group_id].append(log)
+            else:
+                group_map[log.scale_group_id] = [log]
 
         for scale_system, logs in system_map.iteritems():
 
@@ -328,6 +384,16 @@ class product_scale_log(Model):
                         scale_system.product_image_relative_path,
                         folder_path, log.product_id,
                         product_line.field_id, context=context)
+
+            for scale_group, logs in group_map.iteritems():
+                last_log = logs[len(logs) - 1]
+                if (scale_group.scale_system_id.id == scale_system.id and
+                        scale_group.screen_product_qty != 0):
+                    self.ftp_connection_push_text_file(
+                        cr, uid, ftp, scale_system.csv_relative_path,
+                        folder_path, scale_system.screen_text_file_pattern,
+                        [log.screen_text], scale_system.encoding,
+                        context=context)
 
             # Close FTP Connection
             self.ftp_connection_close(cr, uid, ftp, context=context)

@@ -51,6 +51,7 @@ class product_product(Model):
         log_obj = self.pool['product.scale.log']
         log_obj.create(cr, uid, {
             'log_date': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            'scale_group_id': product.scale_group_id.id,
             'scale_system_id': product.scale_group_id.scale_system_id.id,
             'product_id': product.id,
             'action': action,

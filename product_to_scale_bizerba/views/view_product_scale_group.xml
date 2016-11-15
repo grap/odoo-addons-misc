@@ -34,6 +34,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                         </group>
                         <group>
                             <group>
+                                <label for="screen_product_qty"/>
                                 <field name="scale_system_id" />
                                 <field name="company_id" groups="base.group_multi_company"/>
                                 <field name="active"/>

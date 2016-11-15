@@ -14,6 +14,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                 <field name="log_date"/>
                 <field name="sent"/>
                 <field name="last_send_date"/>
+                <field name="scale_group_id"/>
                 <field name="scale_system_id"/>
                 <field name="product_id"/>
                 <field name="action"/>
@@ -36,8 +37,9 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                                 <button name="send_log" string="Send to FTP Server" type="object"/>
                             </group>
                             <group>
-                                <field name="scale_system_id"/>
                                 <field name="product_id"/>
+                                <field name="scale_group_id"/>
+                                <field name="scale_system_id"/>
                                 <field name="action"/>
                             </group>
                         </group>
@@ -45,7 +47,10 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                     <group>
                         <field name="product_text" colspan="4"/>
                         <field name="external_text_display" colspan="4"/>
+                        <field name="screen_text_display" colspan="4"/>
                     </group>
+                    
+                    
                 </sheet>
             </form>
         </field>

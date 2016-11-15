@@ -55,6 +55,10 @@ class product_scale_system(Model):
             string='External Text File Pattern', required=True, help="Pattern"
             " of the External Text file. Use % to include dated information.\n"
             " Ref: https://docs.python.org/2/library/time.html#time.strftime"),
+        'screen_text_file_pattern': fields.char(
+            string='Screen Text File Pattern', required=True, help="Pattern"
+            " of the Screen Text file. Use % to include dated information.\n"
+            " Ref: https://docs.python.org/2/library/time.html#time.strftime"),
         'product_line_ids': fields.one2many(
             'product.scale.system.product.line', 'scale_system_id',
             'Product Lines'),

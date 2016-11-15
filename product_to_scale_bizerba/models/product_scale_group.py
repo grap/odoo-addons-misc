@@ -26,6 +26,12 @@ class product_scale_group(Model):
             string='Active'),
         'external_identity': fields.char(
             string='External ID', required=True),
+        'screen_identity': fields.char(
+            string='Screen ID'),
+        'screen_product_qty': fields.integer(
+            string='Products quantity on Screen', help="Set the number of"
+            " products available for this Scale group.\n"
+            " Set 0, if your scale do not have tactile screen."),
         'company_id': fields.many2one(
             'res.company', string='Company', select=True),
         'scale_system_id': fields.many2one(
