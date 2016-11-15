@@ -220,6 +220,10 @@ class product_product(Model):
         'department_id': fields.many2one(
             'res.country.department', 'Origin Department',
             help="Department of production of the product"),
+        'expiration_date_day': fields.integer(
+            string='Day quantity Before Expiration Date'),
+        'ingredients': fields.text(
+            string='Ingredients'),
         'origin_description': fields.char(
             'Origin Complement', size=64,
             help="Production location complementary information",),

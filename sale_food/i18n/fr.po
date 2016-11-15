@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-20 10:00+0000\n"
-"PO-Revision-Date: 2016-06-20 10:00+0000\n"
+"POT-Creation-Date: 2016-11-15 19:39+0000\n"
+"PO-Revision-Date: 2016-11-15 19:39+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -181,6 +181,11 @@ msgid "Country of production of the product"
 msgstr "Pays de production de l'article"
 
 #. module: sale_food
+#: field:product.product,expiration_date_day:0
+msgid "Day quantity Before Expiration Date"
+msgstr "Nombre de jour avant DLC"
+
+#. module: sale_food
 #: help:product.product,department_id:0
 msgid "Department of production of the product"
 msgstr "Département de production de l'article"
@@ -201,7 +206,7 @@ msgid "Do not print"
 msgstr "Ne pas imprimer"
 
 #. module: sale_food
-#: code:addons/sale_food/model/product_product.py:320
+#: code:addons/sale_food/model/product_product.py:324
 #: constraint:product.product:0
 #, python-format
 msgid "Error ! Department must belong to the country."
@@ -272,6 +277,11 @@ msgstr "Image sur l'étiquette"
 #: view:product.label:0
 msgid "Information"
 msgstr "Information"
+
+#. module: sale_food
+#: field:product.product,ingredients:0
+msgid "Ingredients"
+msgstr "Ingrédients"
 
 #. module: sale_food
 #: view:product.pricetag.wizard:0
@@ -579,12 +589,8 @@ msgid "Products (Origin)"
 msgstr "Articles (Origine)"
 
 #. module: sale_food
-#: model:ir.ui.menu,name:sale_food.menu_product_product_pricetag_3
-msgid "Products (Price Tag)"
-msgstr "Articles (Etiquette)"
-
-#. module: sale_food
 #: model:ir.actions.act_window,name:sale_food.action_product_product_pricetag
+#: model:ir.ui.menu,name:sale_food.menu_product_product_pricetag_3
 #: view:product.product:0
 msgid "Products (Price Tags)"
 msgstr "Articles (Etiquettes)"
