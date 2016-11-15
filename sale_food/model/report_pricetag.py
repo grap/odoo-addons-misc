@@ -43,6 +43,7 @@ class report_pricetag(report_sxw.rml_parse):
             'uid': uid,
         })
 
+
 report_sxw.report_sxw(
     'report.pricetag',
     'product.pricetag.wizard',

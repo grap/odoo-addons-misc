@@ -177,4 +177,5 @@ def new_write_function(self, cr, uid, ids, vals, context=None):
 
     return res
 
+
 Model.write = new_write_function

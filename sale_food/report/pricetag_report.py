@@ -22,6 +22,7 @@ class report_webkit_html(report_sxw.rml_parse):
             'uid': uid,
         })
 
+
 report_sxw.report_sxw(
     'report.pricetag.report',
     'product.pricetag.wizard',
