@@ -244,6 +244,10 @@ class product_scale_log(Model):
             _ACTION_SELECTION, string='Action', required=True),
         'sent': fields.boolean(string='Is Sent'),
         'last_send_date': fields.datetime('Last Send Date'),
+
+        'company_id': fields.related(
+            'scale_system_id', 'company_id', type='many2one', store=True,
+            relation='res.company', string='Company', readonly='True'),
     }
 
     # View Section

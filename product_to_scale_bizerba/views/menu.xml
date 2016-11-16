@@ -13,14 +13,14 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
     <menuitem id="menu_product_scale_system"
         parent="menu_scale_root" sequence="1"
-        action="action_product_scale_system"/>
+        action="action_product_scale_system" groups="product_to_scale_bizerba.group_manager"/>
 
     <menuitem id="menu_product_scale_group"
         parent="menu_scale_root" sequence="2"
-        action="action_product_scale_group"/>
+        action="action_product_scale_group" groups="product_to_scale_bizerba.group_user"/>
 
     <menuitem id="menu_product_scale_log"
         parent="menu_scale_root" sequence="3"
-        action="action_product_scale_log"/>
+        action="action_product_scale_log" groups="product_to_scale_bizerba.group_manager"/>
 
 </data></openerp>

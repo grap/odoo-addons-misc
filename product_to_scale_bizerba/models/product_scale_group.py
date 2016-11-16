@@ -32,8 +32,9 @@ class product_scale_group(Model):
             string='Products quantity on Screen', help="Set the number of"
             " products available for this Scale group.\n"
             " Set 0, if your scale do not have tactile screen."),
-        'company_id': fields.many2one(
-            'res.company', string='Company', select=True),
+        'company_id': fields.related(
+            'scale_system_id', 'company_id', type='many2one', store=True,
+            relation='res.company', string='Company', readonly='True'),
         'scale_system_id': fields.many2one(
             'product.scale.system', string='Scale System', required=True),
         'product_ids': fields.one2many(
@@ -44,6 +45,4 @@ class product_scale_group(Model):
 
     _defaults = {
         'active': True,
-        'company_id': lambda s, cr, uid, c: s.pool.get('res.company').
-        _company_default_get(cr, uid, 'product.product', context=c),
     }

@@ -32,6 +32,7 @@ Roadmap / Know Issues
         'security/ir_module_category.xml',
         'security/res_groups.xml',
         'security/ir.model.access.csv',
+        'security/ir_rule.xml',
         'data/ir_config_parameter.xml',
         'data/ir_cron.xml',
         'views/view_product_product.xml',
