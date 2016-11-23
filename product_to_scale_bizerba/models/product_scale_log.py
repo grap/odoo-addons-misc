@@ -314,7 +314,7 @@ class product_scale_log(Model):
         image_base64 = getattr(obj, field.name)
         # Resize and save image
         image_resize_image(
-            base64_source=image_base64, size=(500, 500), encoding='base64',
+            base64_source=image_base64, size=(120, 120), encoding='base64',
             filetype='PNG')
         image_data = base64.b64decode(image_base64)
         f = open(local_path, 'wb')
