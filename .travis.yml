@@ -10,7 +10,6 @@ addons:
     packages:
       - expect-dev  # provides unbuffer utility
       - python-lxml # because pip installation is slow
-#      - bzr
       - wkhtmltopdf
 
 # Exclusion reason.
@@ -33,9 +32,8 @@ virtualenv:
   system_site_packages: true
 
 before_install:
+  - sudo pip install pyBarcode
   - sudo pip install cairosvg
-#  - sudo pip install GitPython bzr
-#  - sudo pip install unicodecsv
 
 install:
   - git clone https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
