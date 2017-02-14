@@ -1,5 +1,5 @@
 web
-pos https://github.com/grap/pos.git 7.0_BACKPORT_barcodes
+pos_01_barcodes https://github.com/grap/pos.git 8.0_BACKPORT_barcodes
 l10n-france
 sale-workflow
 purchase-workflow
