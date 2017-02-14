@@ -3,10 +3,17 @@
 # @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-import barcode
+import logging
 
 from openerp.osv import fields
 from openerp.osv.orm import AbstractModel
+
+_logger = logging.getLogger(__name__)
+
+try:
+    import barcode
+except (ImportError, IOError) as err:
+    _logger.info("barcode_generate_mixin : Can not import 'barcode' librairy.")
 
 
 class barcode_generate_mixin(AbstractModel):

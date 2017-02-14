@@ -22,7 +22,7 @@
 ##############################################################################
 
 import base64
-import cairosvg
+import logging
 import StringIO
 
 from openerp.osv.orm import Model
@@ -30,6 +30,13 @@ from openerp.osv import fields
 from openerp.tools.translate import _
 
 from openerp.addons.sale_food import radar_template
+
+_logger = logging.getLogger(__name__)
+
+try:
+    import cairosvg
+except (ImportError, IOError) as err:
+    _logger.info("sale_food : Can not import 'cairosvg' librairy.")
 
 
 class product_product(Model):

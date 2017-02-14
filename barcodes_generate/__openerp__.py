@@ -54,6 +54,11 @@ http://www.iconarchive.com/show/oxygen-icons-by-oxygen-icons.org.html
         'barcodes',
         'point_of_sale',
     ],
+    'external_dependencies': {
+        'python': [
+            'barcode',
+        ],
+    },
     'data': [
         'security/res_groups.xml',
         'views/view_res_partner.xml',
