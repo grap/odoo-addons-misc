@@ -31,10 +31,6 @@ env:
 virtualenv:
   system_site_packages: true
 
-before_install:
-  - sudo pip install pyBarcode==0.7
-  - sudo pip install cairosvg==1.0.22
-
 install:
   - git clone https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
