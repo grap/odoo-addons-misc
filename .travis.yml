@@ -1,5 +1,5 @@
 language: python
-sudo: true
+sudo: false
 cache: pip
 
 python:
@@ -35,8 +35,7 @@ install:
   - git clone https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
   - travis_install_nightly
-  - printf '[options]\n\nrunning_env = dev\n' > ${HOME}/.openerp_serverrc
-  - ln -s ${TRAVIS_BUILD_DIR}/server_environment_files_sample ${TRAVIS_BUILD_DIR}/server_environment_files
+
 script:
   - travis_run_tests
 
