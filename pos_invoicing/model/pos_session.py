@@ -52,8 +52,15 @@ class pos_session(Model):
             # Search all move Line to reconcile in Sale Journal
             aml_sale_ids = []
             aml_sale_total = 0
+
+            # Get accounting partner
+            if po.partner_id.parent_id:
+                partner = po.partner_id.parent_id
+            else:
+                partner = po.partner_id
+
             for aml in po.invoice_id.move_id.line_id:
-                if (aml.partner_id.id == po.partner_id.id and
+                if (aml.partner_id.id == partner.id and
                         aml.account_id.type == 'receivable'):
                     aml_sale_ids.append(aml.id)
                     aml_sale_total += aml.debit - aml.credit
@@ -64,7 +71,7 @@ class pos_session(Model):
             abs_ids = list(set([x.statement_id.id for x in po.statement_ids]))
             aml_ids = aml_obj.search(cr, uid, [
                 ('statement_id', 'in', abs_ids),
-                ('partner_id', '=', po.partner_id.id),
+                ('partner_id', '=', partner.id),
                 ('reconcile_id', '=', False)], context=context)
             for aml in aml_obj.browse(
                     cr, uid, aml_ids, context=context):
@@ -78,7 +85,7 @@ class pos_session(Model):
                 _logger.warning(
                     "Unable to reconcile the payment of %s #%s."
                     "(partner : %s)" % (
-                        po.name, po.id, po.partner_id.name))
+                        po.name, po.id, partner.name))
             else:
                 aml_obj.reconcile(
                     cr, uid, aml_payment_ids + aml_sale_ids, 'manual',
