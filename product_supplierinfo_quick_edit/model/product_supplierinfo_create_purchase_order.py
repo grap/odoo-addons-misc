@@ -82,17 +82,16 @@ class product_supplierinfo_create_purchase_order(TransientModel):
             order_data['location_id'] = order_obj.onchange_warehouse_id(
                 cr, uid, [], warehouse_id)['value']['location_id']
 
-            order_id = order_obj.create(cr, uid, order_data, context=context)
-
+            order_data['order_line'] = []
             for product_id in product_ids:
-                line_data = {
-                    'order_id': order_id,
-                    'product_id': product_id,
-                }
+                line_data = {'product_id': product_id}
                 line_data.update(line_obj.onchange_product_id(
                     cr, uid, ids, order_data['pricelist_id'], product_id, 1,
                     False, order_data['partner_id'], context=context)['value'])
-                line_obj.create(cr, uid, line_data, context=context)
+                line_data['taxes_id'] = [[6, False, line_data['taxes_id']]]
+                order_data['order_line'].append([0, False, line_data])
+
+            order_id = order_obj.create(cr, uid, order_data, context=context)
 
             order_ids.append(str(order_id))
 
