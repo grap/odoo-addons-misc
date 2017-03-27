@@ -15,7 +15,7 @@ class SaleOrder(models.Model):
 
     simple_tax_type = fields.Selection(
         related='partner_id.simple_tax_type', type='selection',
-        selection=SIMPLE_TAX_TYPE_KEYS, string='Tax Type')
+        selection=SIMPLE_TAX_TYPE_KEYS, string='Tax Type', readonly=True)
 
     @api.multi
     def recompute_simple_tax(self):
