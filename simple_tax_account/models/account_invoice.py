@@ -13,7 +13,7 @@ class AccountInvoice(models.Model):
 
     simple_tax_type = fields.Selection(
         related='partner_id.simple_tax_type', string='Tax Type',
-        selection=SIMPLE_TAX_TYPE_KEYS)
+        readonly=True, selection=SIMPLE_TAX_TYPE_KEYS)
 
     @api.multi
     def recompute_simple_tax(self):

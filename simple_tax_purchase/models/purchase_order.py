@@ -14,7 +14,7 @@ class PurchaseOrder(models.Model):
     _inherit = 'purchase.order'
 
     simple_tax_type = fields.Selection(
-        related='partner_id.simple_tax_type', type='selection',
+        related='partner_id.simple_tax_type', type='selection', readonly=True,
         selection=SIMPLE_TAX_TYPE_KEYS, string='Tax Type')
 
     @api.multi
