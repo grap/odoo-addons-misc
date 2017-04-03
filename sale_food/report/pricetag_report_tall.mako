@@ -12,7 +12,7 @@
             }
             .label_container{
                 page-break-inside: avoid;
-                width:12.85cm; height:5.2cm; float:left;
+                width:12.85cm; height:8.2cm; float:left;
             }
             .label_border{
                 margin-left:1.15cm;
@@ -22,12 +22,13 @@
                 padding:0.15cm;
             }
             .label{
-                width:10.3cm; height:4.2cm;
+                width:10.3cm; height:5.6cm;
                 }
             .label_left{
-                width:6.7cm; height:4.2cm; float:left;
+                width:6.7cm; height:5.6cm; float:left;
                 }
             div.product_name{
+                margin-top:0.7cm;
                 width:6.7cm; height:1.3cm;
                 font-size:17px; font-weight:bold;
                 }
@@ -51,6 +52,7 @@
                 width:3.6cm; height:4.2cm; float:left;
             }
             div.product_price{
+                margin-top:0.7cm;
                 width:3.6cm; height:1.2cm;
                 line-height: 1.2cm;
                 text-align:center; font-size:22px; font-weight:bold;
