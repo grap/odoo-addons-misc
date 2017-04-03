@@ -66,7 +66,7 @@ class product_pricetag_wizard(TransientModel):
             if custom_format == 'normal':
                 limit = 14
             elif custom_format == 'tall':
-                limit = 4
+                limit = 8
             else:
                 limit = 1
             pp_ids = pp_obj.search(cr, uid, [
