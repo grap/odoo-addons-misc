@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-15 19:39+0000\n"
-"PO-Revision-Date: 2016-11-15 19:39+0000\n"
+"POT-Creation-Date: 2017-04-03 16:46+0000\n"
+"PO-Revision-Date: 2017-04-03 16:46+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -116,6 +116,7 @@ msgstr "Catégorie de produits frais"
 
 #. module: sale_food
 #: report:addons/sale_food/report/pricetag_report.mako:94
+#: report:addons/sale_food/report/pricetag_report_tall.mako:94
 msgid "Category: "
 msgstr "Catégorie : "
 
@@ -143,6 +144,7 @@ msgstr "Code"
 
 #. module: sale_food
 #: report:addons/sale_food/report/pricetag_report.mako:91
+#: report:addons/sale_food/report/pricetag_report_tall.mako:91
 msgid "Code: "
 msgstr "Code : "
 
@@ -323,6 +325,7 @@ msgstr "Producteur"
 
 #. module: sale_food
 #: report:addons/sale_food/report/pricetag_report.mako:110
+#: report:addons/sale_food/report/pricetag_report_tall.mako:110
 msgid "Maker: "
 msgstr "Producteur : "
 
@@ -372,6 +375,11 @@ msgstr "Notation Social Minimum"
 #: field:product.label,name:0
 msgid "Name"
 msgstr "Nom"
+
+#. module: sale_food
+#: selection:product.pricetag.wizard,format:0
+msgid "Normal"
+msgstr "Normal"
 
 #. module: sale_food
 #: code:addons/sale_food/model/product_product.py:175
@@ -432,6 +440,7 @@ msgstr "Département d'Origine"
 
 #. module: sale_food
 #: report:addons/sale_food/report/pricetag_report.mako:106
+#: report:addons/sale_food/report/pricetag_report_tall.mako:106
 msgid "Origin: "
 msgstr "Origine : "
 
@@ -442,16 +451,19 @@ msgstr "Notation Emballage"
 
 #. module: sale_food
 #: report:addons/sale_food/report/pricetag_report.mako:100
+#: report:addons/sale_food/report/pricetag_report_tall.mako:100
 msgid "Price Per Kilo: "
 msgstr "Prix au Kilo : "
 
 #. module: sale_food
 #: report:addons/sale_food/report/pricetag_report.mako:98
+#: report:addons/sale_food/report/pricetag_report_tall.mako:98
 msgid "Price Per Liter: "
 msgstr "Prix au Litre : "
 
 #. module: sale_food
 #: model:ir.actions.report.xml,name:sale_food.report_pricetag_report
+#: model:ir.actions.report.xml,name:sale_food.report_pricetag_report_tall
 #: view:product.product:0
 #: view:res.company:0
 msgid "Price Tag"
@@ -503,7 +515,12 @@ msgstr "Prix par Poid Net"
 #. module: sale_food
 #: view:product.pricetag.wizard:0
 msgid "Print"
-msgstr "imprimer"
+msgstr "Imprimer"
+
+#. module: sale_food
+#: view:product.pricetag.wizard:0
+msgid "Print (Tall Format)"
+msgstr "Imprimer (Grand format)"
 
 #. module: sale_food
 #: view:product.product:0
@@ -522,7 +539,7 @@ msgid "Print Price Tag"
 msgstr "Imprimer Etiquette"
 
 #. module: sale_food
-#: code:addons/sale_food/model/product_pricetag_wizard.py:43
+#: code:addons/sale_food/model/product_pricetag_wizard.py:51
 #: view:product.pricetag.wizard:0
 #, python-format
 msgid "Print Price Tags"
@@ -637,6 +654,11 @@ msgid "Spider Chart"
 msgstr "Radar"
 
 #. module: sale_food
+#: selection:product.pricetag.wizard,format:0
+msgid "Tall"
+msgstr "Grand"
+
+#. module: sale_food
 #: field:product.product,pricetag_origin:0
 msgid "Text about origin"
 msgstr "Texte concernant l'origine"
@@ -653,6 +675,7 @@ msgstr "Nom du Type"
 
 #. module: sale_food
 #: report:addons/sale_food/report/pricetag_report.mako:102
+#: report:addons/sale_food/report/pricetag_report_tall.mako:102
 msgid "Unit Price: "
 msgstr "Prix Unitaire : "
 
@@ -696,6 +719,11 @@ msgstr "certifier.organization"
 #, python-format
 msgid "emballage"
 msgstr "emballage"
+
+#. module: sale_food
+#: field:product.pricetag.wizard,format:0
+msgid "format"
+msgstr "format"
 
 #. module: sale_food
 #: code:addons/sale_food/model/product_product.py:112
