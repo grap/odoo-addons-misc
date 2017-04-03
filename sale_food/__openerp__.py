@@ -77,6 +77,7 @@ new model:
         'security/res_groups.yml',
         'security/ir_model_access.yml',
         'report/pricetag_report.xml',
+        'report/pricetag_report_tall.xml',
         'view/view.xml',
         'view/action.xml',
         'view/menu.xml',

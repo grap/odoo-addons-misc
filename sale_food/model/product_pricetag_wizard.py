@@ -31,6 +31,11 @@ class product_pricetag_wizard(TransientModel):
     _inherit = 'ir.needaction_mixin'
     _rec_name = 'offset'
 
+    _FORMAT_SELECTION = [
+        ('normal', 'Normal'),
+        ('tall', 'Tall'),
+    ]
+
     def _needaction_count(self, cr, uid, domain=None, context=None):
         pp_obj = self.pool['product.product']
         pp_ids = pp_obj.search(cr, uid, [
@@ -38,6 +43,9 @@ class product_pricetag_wizard(TransientModel):
         return len(pp_ids)
 
     def initialize_product(self, cr, uid, ids, context=None):
+        wizard = self.browse(cr, uid, ids[0], context=context)
+        ctx = context.copy()
+        ctx['format'] = wizard.format
         return {
             'type': 'ir.actions.act_window',
             'name': _('Print Price Tags'),
@@ -46,18 +54,25 @@ class product_pricetag_wizard(TransientModel):
             'res_model': 'product.pricetag.wizard',
             'res_id': None,
             'target': 'new',
-            'context': context,
+            'context': ctx,
         }
 
-    # Fields Function Section
+    # Fields Default Section
     def _get_line_ids(self, cr, uid, context=None):
         res = []
         if context.get('active_id', False):
             pp_obj = self.pool['product.product']
+            custom_format = context.get('format', 'normal')
+            if custom_format == 'normal':
+                limit = 14
+            elif custom_format == 'tall':
+                limit = 4
+            else:
+                limit = 1
             pp_ids = pp_obj.search(cr, uid, [
                 ('pricetag_state', 'in', ['1', '2'])],
                 order='pricetag_state desc',
-                limit=14,
+                limit=limit,
             )
             for pp_id in pp_ids:
                 res.append((0, 0, {
@@ -66,6 +81,10 @@ class product_pricetag_wizard(TransientModel):
                     'print_unit_price': True,
                 }))
         return res
+
+    # Fields Default Section
+    def _get_format(self, cr, uid, context=None):
+        return context.get('format', 'normal')
 
     # Columns Section
     _columns = {
@@ -77,6 +96,8 @@ class product_pricetag_wizard(TransientModel):
             'Radar Chart', help="Display Radar Chart if available"),
         'line_ids': fields.one2many(
             'product.pricetag.wizard.line', 'wizard_id', 'Products'),
+        'format': fields.selection(
+            selection=_FORMAT_SELECTION, string='format'),
     }
 
     # Default values Section
@@ -85,4 +106,5 @@ class product_pricetag_wizard(TransientModel):
         'radar_chart': True,
         'offset': 0,
         'line_ids': _get_line_ids,
+        'format': _get_format,
     }

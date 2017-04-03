@@ -28,3 +28,10 @@ report_sxw.report_sxw(
     'product.pricetag.wizard',
     'addons/sale_food/report/pricetag_report.mako',
     parser=report_webkit_html)
+
+
+report_sxw.report_sxw(
+    'report.pricetag.report.tall',
+    'product.pricetag.wizard',
+    'addons/sale_food/report/pricetag_report_tall.mako',
+    parser=report_webkit_html)
