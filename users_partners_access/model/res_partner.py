@@ -39,6 +39,7 @@ class res_partner(Model):
         self._disable_users_partners(cr, uid, partner_ids, context=context)
 
     def _check_users_partners_access(self, cr, uid, ids, vals, context=None):
+        ids = type(ids) == int and [ids] or ids
         user_obj = self.pool['res.users']
         # We use SUPERUSER_ID to be sure to not skip some users, due to
         # some custom access rules deployed on databases
