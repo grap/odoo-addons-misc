@@ -23,7 +23,3 @@
 
 
 from . import test_sale_food
-
-fast_suite = [
-    test_sale_food,
-]

@@ -22,7 +22,3 @@
 
 
 # from . import test_sale_eshop
-
-# fast_suite = [
-#    test_sale_eshop,
-# ]

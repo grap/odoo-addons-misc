@@ -22,7 +22,3 @@
 
 
 from . import test_product_taxes_group
-
-fast_suite = [
-    test_product_taxes_group,
-]

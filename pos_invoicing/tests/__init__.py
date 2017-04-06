@@ -22,7 +22,3 @@
 ##############################################################################
 
 from . import test_pos_invoicing
-
-fast_suite = [
-    test_pos_invoicing,
-]
