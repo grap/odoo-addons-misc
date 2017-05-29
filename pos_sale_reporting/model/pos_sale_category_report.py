@@ -89,7 +89,6 @@ class pos_sale_category_report(materialized_model.MaterializedModel):
 
     _materialized_sql = """
     SELECT
-/* Invoice Not From Point Of Sale And not in 'draft' state ***************** */
         row_number() OVER () AS id,
         lines.company_id,
         lines.type,
@@ -115,7 +114,7 @@ class pos_sale_category_report(materialized_model.MaterializedModel):
 /* Out Invoices not in 'draft / cancel' state ****************************** */
         SELECT
             ai.company_id,
-            'invoice' AS type,
+            'invoice'::varchar AS type,
             date_trunc('day', ai.date_invoice)::date AS date,
             ail.product_id,
             pp.active as product_active,
@@ -150,11 +149,11 @@ class pos_sale_category_report(materialized_model.MaterializedModel):
                 SELECT invoice_id
                 FROM pos_order
                 WHERE invoice_id IS NOT NULL)
-    UNION
+    UNION ALL
 /* Pos Order not in 'draft' state ****************************************** */
         SELECT
             po.company_id,
-            'point_of_sale' AS type,
+            'point_of_sale'::varchar AS type,
             date_trunc('day', po.date_order)::date AS date,
             pol.product_id,
             pp.active as product_active,
