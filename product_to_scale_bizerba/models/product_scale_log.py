@@ -82,26 +82,44 @@ class product_scale_log(Model):
         ]
         return self._EXTERNAL_TEXT_DELIMITER.join(external_text_list)
 
-    def _generate_screen_text(self, log):
+    def _generate_screen_text(self, cr, uid, group_ids, context=None):
+        scale_group_obj = self.pool['product.scale.group']
+        product_obj = self.pool['product.product']
         lines = []
-        used_keys = []
-        scale_group = log.scale_group_id
-        for product in scale_group.product_ids:
-            used_keys.append(product.scale_sequence)
-            lines.append(self._SCREEN_TEXT_DELIMITER.join([
-                scale_group.screen_identity,                    # ABNR Code
-                str(product.scale_sequence),                    # KEYNUM Code
-                scale_group.external_identity,                  # TSAB Code
-                str(product.id),                                # TSDA Code
-            ]))
-        for x in range(1, scale_group.screen_product_qty):
-            if x not in used_keys:
+
+        for scale_group in scale_group_obj.browse(
+                cr, uid, group_ids, context=context):
+            product_ids = product_obj.search(
+                cr, uid, [('scale_group_id', '=', scale_group.id)],
+                order='name', limit=scale_group.screen_product_qty,
+                context=context)
+            position = scale_group.screen_offset
+            # Add products
+            for product in product_obj.browse(
+                    cr, uid, product_ids, context=context):
+                product_id_field_id =\
+                    scale_group.scale_system_id.product_id_field_id
+                if not product_id_field_id:
+                    product_id = product.id
+                else:
+                    product_id = \
+                        getattr(product, product_id_field_id.name)
                 lines.append(self._SCREEN_TEXT_DELIMITER.join([
-                    scale_group.screen_identity,                # ABNR Code
-                    str(x),                                     # KEYNUM Code
+                    str(position),                              # KEYNUM Code
+                    scale_group.external_identity,              # TSAB Code
+                    str(product_id),                            # TSDA Code
+                ]))
+                position += 1
+            initial_position = position
+            final_position =\
+                scale_group.screen_product_qty + scale_group.screen_offset
+            for x in range(initial_position, final_position):
+                lines.append(self._SCREEN_TEXT_DELIMITER.join([
+                    str(position),                              # KEYNUM Code
                     scale_group.external_identity,              # TSAB Code
                     '0',                                        # TSDA Code
                 ]))
+                position += 1
         return lines
 
     # Compute Section
@@ -171,7 +189,7 @@ class product_scale_log(Model):
                             item_value = getattr(
                                 item, product_line.related_field_id.name)
                         else:
-                            item_value = item.id
+                            item_value = str(item.id)
                         product_text += self._clean_value(
                             item_value, product_line)
 
@@ -184,13 +202,8 @@ class product_scale_log(Model):
                     product_text += product_line.delimiter
             break_line = self._ENCODING_MAPPING[log.scale_system_id.encoding]
 
-            screen_texts = (self._generate_screen_text(log))
-
             res[log.id] = {
                 'product_text': product_text + break_line,
-                'screen_text': break_line.join(screen_texts) + break_line,
-                'screen_text_display': '\n'.join(
-                    [x.replace('\n', '') for x in screen_texts]),
                 'external_text': break_line.join(external_texts) + break_line,
                 'external_text_display': '\n'.join(
                     [x.replace('\n', '') for x in external_texts]),
@@ -210,17 +223,11 @@ class product_scale_log(Model):
         'product_id': fields.many2one(
             'product.product', string='Product'),
 
-        'screen_text': fields.function(
-            _compute_text, type='text', string='Screen Text',
-            multi='compute_text', store={'product.scale.log': (
-                lambda self, cr, uid, ids, context=None:
-                    ids, ['scale_group_id'], 10)}),
+        'screen_text': fields.text(
+            string='Screen Text'),
 
-        'screen_text_display': fields.function(
-            _compute_text, type='text', string='Screen Text (Display)',
-            multi='compute_text', store={'product.scale.log': (
-                lambda self, cr, uid, ids, context=None:
-                    ids, ['scale_group_id'], 10)}),
+        'screen_text_display': fields.text(
+            string='Screen Text (Display)'),
 
         'product_text': fields.function(
             _compute_text, type='text', string='Product Text',
@@ -337,9 +344,35 @@ class product_scale_log(Model):
             return ''
 
     def send_log(self, cr, uid, ids, context=None):
+        if not ids:
+            return True
+
+        scale_group_obj = self.pool['product.scale.group']
         config_obj = self.pool['ir.config_parameter']
         folder_path = config_obj.get_param(
             cr, uid, 'bizerba.local_folder_path', context=context)
+
+        # Generate Screen logs if needed
+        group_ids = scale_group_obj.search(
+            cr, uid, [('screen_obsolete', '=', True)],
+            order='screen_offset', context=context)
+        if group_ids:
+            # FIXME define better break_line in multi company context
+            group = scale_group_obj.browse(
+                cr, uid, group_ids[0], context=context)
+            break_line =\
+                self._ENCODING_MAPPING[group.scale_system_id.encoding]
+            # TODO
+            screen_texts = self._generate_screen_text(
+                cr, uid, group_ids, context=context)
+            screen_text = break_line.join(screen_texts) + break_line,
+            screen_text_display = '\n'.join(
+                [x.replace('\n', '') for x in screen_texts])
+
+            self.write(cr, uid, [ids[-1]], {
+                'screen_text': screen_text,
+                'screen_text_display': screen_text_display,
+            }, context=context)
 
         system_map = {}
         group_map = {}
@@ -365,39 +398,46 @@ class product_scale_log(Model):
             now = datetime.now()
             product_text_lst = []
             external_text_lst = []
+            screen_text_lst = []
 
             for log in logs:
                 if log.product_text:
                     product_text_lst.append(log.product_text)
                 if log.external_text:
                     external_text_lst.append(log.external_text)
-            self.ftp_connection_push_text_file(
-                cr, uid, ftp, scale_system.csv_relative_path,
-                folder_path, scale_system.external_text_file_pattern,
-                external_text_lst, scale_system.encoding, context=context)
-            self.ftp_connection_push_text_file(
-                cr, uid, ftp, scale_system.csv_relative_path,
-                folder_path, scale_system.product_text_file_pattern,
-                product_text_lst, scale_system.encoding, context=context)
+                if log.screen_text:
+                    screen_text_lst.append(log.screen_text)
 
-            for product_line in scale_system.product_line_ids:
-                if product_line.type == 'product_image':
-                    # send product image
-                    self.ftp_connection_push_image_file(
-                        cr, uid, ftp,
-                        scale_system.product_image_relative_path,
-                        folder_path, log.product_id,
-                        product_line.field_id, context=context)
+            # TODO
+            # for product_line in scale_system.product_line_ids:
+            #    if product_line.type == 'product_image':
+            #        # send product image
+            #        self.ftp_connection_push_image_file(
+            #            cr, uid, ftp,
+            #            scale_system.product_image_relative_path,
+            #            folder_path, log.product_id,
+            #            product_line.field_id, context=context)
 
-            for scale_group, logs in group_map.iteritems():
-                last_log = logs[len(logs) - 1]
-                if (scale_group.scale_system_id.id == scale_system.id and
-                        scale_group.screen_product_qty != 0):
-                    self.ftp_connection_push_text_file(
-                        cr, uid, ftp, scale_system.csv_relative_path,
-                        folder_path, scale_system.screen_text_file_pattern,
-                        [last_log.screen_text], scale_system.encoding,
-                        context=context)
+            # Push First External Text for constrains reason
+            if external_text_lst:
+                self.ftp_connection_push_text_file(
+                    cr, uid, ftp, scale_system.csv_relative_path,
+                    folder_path, scale_system.external_text_file_pattern,
+                    external_text_lst, scale_system.encoding, context=context)
+
+            # Push Product list
+            if product_text_lst:
+                self.ftp_connection_push_text_file(
+                    cr, uid, ftp, scale_system.csv_relative_path,
+                    folder_path, scale_system.product_text_file_pattern,
+                    product_text_lst, scale_system.encoding, context=context)
+
+            # Push Screen display
+            if screen_text_lst:
+                self.ftp_connection_push_text_file(
+                    cr, uid, ftp, scale_system.csv_relative_path,
+                    folder_path, scale_system.screen_text_file_pattern,
+                    screen_text_lst, scale_system.encoding, context=context)
 
             # Close FTP Connection
             self.ftp_connection_close(cr, uid, ftp, context=context)

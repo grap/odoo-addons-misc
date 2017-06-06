@@ -16,7 +16,6 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                     <group string="Scale Communication">
                         <group>
                             <field name="scale_group_id"/>
-                            <field name="scale_sequence"/>
                             <field name="scale_tare_weight"/>
                         </group>
                         <group groups="base.group_no_one">

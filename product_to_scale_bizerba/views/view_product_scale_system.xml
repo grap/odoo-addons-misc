@@ -34,6 +34,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                             <field name="company_id" groups="base.group_multi_company"/>
                             <field name="active"/>
                             <field name="field_ids" widget="many2many_tags"/>
+                            <field name="product_id_field_id" />
                             <field name="product_text_file_pattern"/>
                             <field name="external_text_file_pattern"/>
                             <field name="screen_text_file_pattern"/>

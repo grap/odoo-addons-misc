@@ -35,7 +35,10 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                         </group>
                         <group>
                             <group>
-                                <label for="screen_product_qty"/>
+                                <field name="screen_display"/>
+                                <field name="screen_obsolete"/>
+                                <field name="screen_offset"/>
+                                <field name="screen_product_qty"/>
                                 <field name="scale_system_id" />
                                 <field name="company_id" groups="base.group_multi_company"/>
                                 <field name="active"/>
@@ -49,7 +52,6 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                                 <separator string="Products" colspan="4"/>
                                 <field name="product_ids" nolabel="1">
                                     <tree editable="bottom">
-                                        <field name="scale_sequence"/>
                                         <field name="name"/>
                                         <field name="list_price"/>
                                         <field name="uom_id"/>

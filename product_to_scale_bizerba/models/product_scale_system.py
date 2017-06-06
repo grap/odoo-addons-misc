@@ -65,6 +65,13 @@ class product_scale_system(Model):
         'field_ids': fields.function(
             _get_field_ids, type='one2many', string='Fields',
             relation='ir.model.fields'),
+        'product_id_field_id': fields.many2one(
+            'ir.model.fields', string='Product ID Field', domain="["
+            "('model', 'in', ['product.product', 'product.template'])]",
+            help="Set the field that will be used as the ID of the product"
+            " in the extra CSV file in Bizerba. Set the same field as the"
+            " field used in the PLNR field. Let empty, if you want to use"
+            " the product ID"),
     }
 
     _defaults = {

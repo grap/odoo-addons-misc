@@ -25,9 +25,18 @@ class product_scale_group(Model):
         'active': fields.boolean(
             string='Active'),
         'external_identity': fields.char(
-            string='External ID', required=True),
+            string='External ID', required=True, help="Unused field"
+            " for the time being. Define shelf products"),
         'screen_identity': fields.char(
             string='Screen ID'),
+        'screen_display': fields.boolean(
+            string='Display on Screen', help="Check this box if you want"
+            " to display the products on Customer Scale."),
+        'screen_obsolete': fields.boolean(
+            string='Screen Obsolete', readonly=True,
+            help="This box is checked if the display of screen is obsolete"),
+        'screen_offset': fields.integer(
+            string='Screen Offset'),
         'screen_product_qty': fields.integer(
             string='Products quantity on Screen', help="Set the number of"
             " products available for this Scale group.\n"
@@ -45,4 +54,6 @@ class product_scale_group(Model):
 
     _defaults = {
         'active': True,
+        'external_identity': 1,
+        'screen_obsolete': False,
     }

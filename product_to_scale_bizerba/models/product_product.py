@@ -17,11 +17,9 @@ class product_product(Model):
     _columns = {
         'scale_group_id': fields.many2one(
             'product.scale.group', string='Scale Group'),
-        'scale_sequence': fields.integer(
-            string='Scale Sequence'),
         'scale_tare_weight': fields.float(
             digits_compute=dp.get_precision('Stock Weight'),
-            string='Scale Tare Weight',  help="Set here Constant tare weight"
+            string='Scale Tare Weight', help="Set here Constant tare weight"
             " for the given product. This tare will be substracted when"
             " the product is weighted. Usefull only for weightable product.\n"
             "The tare is defined with kg uom."),
@@ -49,13 +47,20 @@ class product_product(Model):
     # Custom Section
     def _send_to_scale_bizerba(self, cr, uid, action, product, context=None):
         log_obj = self.pool['product.scale.log']
+        scale_group_obj = self.pool['product.scale.group']
         log_obj.create(cr, uid, {
             'log_date': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
             'scale_group_id': product.scale_group_id.id,
             'scale_system_id': product.scale_group_id.scale_system_id.id,
             'product_id': product.id,
             'action': action,
-            }, context=context)
+        }, context=context)
+        # Set group as 'to refresh'
+        if product.scale_group_id.screen_display and\
+                not product.scale_group_id.screen_obsolete:
+            scale_group_obj.write(
+                cr, uid, [product.scale_group_id.id],
+                {'screen_obsolete': True}, context=context)
 
     def _check_vals_scale_bizerba(self, cr, uid, vals, product, context=None):
         system = product.scale_group_id.scale_system_id
