@@ -97,17 +97,10 @@ class product_scale_log(Model):
             # Add products
             for product in product_obj.browse(
                     cr, uid, product_ids, context=context):
-                product_id_field_id =\
-                    scale_group.scale_system_id.product_id_field_id
-                if not product_id_field_id:
-                    product_id = product.id
-                else:
-                    product_id = \
-                        getattr(product, product_id_field_id.name)
                 lines.append(self._SCREEN_TEXT_DELIMITER.join([
                     str(position),                              # KEYNUM Code
                     scale_group.external_identity,              # TSAB Code
-                    str(product_id),                            # TSDA Code
+                    str(product.external_id_bizerba),           # TSDA Code
                 ]))
                 position += 1
             initial_position = position
@@ -139,7 +132,7 @@ class product_scale_log(Model):
                     value = getattr(log.product_id, product_line.field_id.name)
 
                 if product_line.type == 'id':
-                    product_text += str(log.product_id.id)
+                    product_text += str(log.product_id.external_id_bizerba)
 
                 elif product_line.type == 'numeric':
                     value = tools.float_round(

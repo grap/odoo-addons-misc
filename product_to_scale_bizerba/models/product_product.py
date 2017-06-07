@@ -13,10 +13,30 @@ import openerp.addons.decimal_precision as dp
 class product_product(Model):
     _inherit = 'product.product'
 
+    # Compute Section
+    def _compute_external_id_bizerba(
+            self, cr, uid, ids, field_name, arg, context=None):
+        res = {}
+        for product in self.browse(cr, uid, ids, context=context):
+            res[product.id] = product.id
+            if not product.scale_group_id:
+                product_id_field =\
+                    product.scale_group_id.scale_system_id.product_id_field_id
+                if product_id_field:
+                    res[product.id] = getattr(product, product_id_field.name)
+        return res
+
     # Column Section
     _columns = {
         'scale_group_id': fields.many2one(
             'product.scale.group', string='Scale Group'),
+        'external_id_bizerba': fields.function(
+            _compute_external_id_bizerba, type='char',
+            string='External Id for Bizerba System',
+            help="External ID for bizerba system. equal to the id of the"
+            " product in Odoo, of another field, depending on a setting of"
+            " the the scale system of the product.\n"
+            "field : product_id_field_id"),
         'scale_tare_weight': fields.float(
             digits_compute=dp.get_precision('Stock Weight'),
             string='Scale Tare Weight', help="Set here Constant tare weight"
@@ -46,6 +66,7 @@ class product_product(Model):
 
     # Custom Section
     def _send_to_scale_bizerba(self, cr, uid, action, product, context=None):
+        # TODO Check if product id for bizerba is correct
         log_obj = self.pool['product.scale.log']
         scale_group_obj = self.pool['product.scale.group']
         log_obj.create(cr, uid, {
