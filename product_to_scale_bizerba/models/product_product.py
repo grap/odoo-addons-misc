@@ -5,8 +5,10 @@
 
 from datetime import datetime
 
-from openerp.osv import fields
+from openerp.osv import fields, osv
 from openerp.osv.orm import Model
+from openerp.tools.translate import _
+
 import openerp.addons.decimal_precision as dp
 
 
@@ -19,7 +21,7 @@ class product_product(Model):
         res = {}
         for product in self.browse(cr, uid, ids, context=context):
             res[product.id] = product.id
-            if not product.scale_group_id:
+            if product.scale_group_id:
                 product_id_field =\
                     product.scale_group_id.scale_system_id.product_id_field_id
                 if product_id_field:
@@ -49,30 +51,41 @@ class product_product(Model):
     def send_scale_create(self, cr, uid, ids, context=None):
         for product in self.browse(cr, uid, ids, context=context):
             self._send_to_scale_bizerba(
-                cr, uid, 'create', product, context=context)
+                cr, uid, 'create', product, product.scale_group_id,
+                product.scale_group_id.scale_system_id, context=context)
         return True
 
     def send_scale_write(self, cr, uid, ids, context=None):
         for product in self.browse(cr, uid, ids, context=context):
             self._send_to_scale_bizerba(
-                cr, uid, 'write', product, context=context)
+                cr, uid, 'write', product, product.scale_group_id,
+                product.scale_group_id.scale_system_id, context=context)
         return True
 
     def send_scale_unlink(self, cr, uid, ids, context=None):
         for product in self.browse(cr, uid, ids, context=context):
             self._send_to_scale_bizerba(
-                cr, uid, 'unlink', product, context=context)
+                cr, uid, 'unlink', product, product.scale_group_id,
+                product.scale_group_id.scale_system_id, context=context)
         return True
 
     # Custom Section
-    def _send_to_scale_bizerba(self, cr, uid, action, product, context=None):
+    def _send_to_scale_bizerba(
+            self, cr, uid, action, product, scale_group, scale_system,
+            context=None):
         # TODO Check if product id for bizerba is correct
+        if not product.external_id_bizerba:
+            raise osv.except_osv(_('Incorrect Setting!'), _(
+                "You have to set the field '%s' used as an ID for the Bizerba"
+                " if you set scale category to this product %s" % (
+                    scale_system.product_id_field_id.name,
+                    product.name)))
         log_obj = self.pool['product.scale.log']
         scale_group_obj = self.pool['product.scale.group']
         log_obj.create(cr, uid, {
             'log_date': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-            'scale_group_id': product.scale_group_id.id,
-            'scale_system_id': product.scale_group_id.scale_system_id.id,
+            'scale_group_id': scale_group.id,
+            'scale_system_id': scale_system.id,
             'product_id': product.id,
             'action': action,
         }, context=context)
@@ -97,32 +110,43 @@ class product_product(Model):
         if send_to_scale:
             product = self.browse(cr, uid, res, context=context)
             self._send_to_scale_bizerba(
-                cr, uid, 'create', product, context=context)
+                cr, uid, 'create', product, product.scale_group_id,
+                product.scale_group_id.scale_system_id, context=context)
         return res
 
     def write(self, cr, uid, ids, vals, context=None):
         defered = {}
         for product in self.browse(cr, uid, ids, context=context):
-            ignore = not product.scale_group_id\
-                and 'scale_group_id' not in vals.keys()
-            if not ignore:
-                if not product.scale_group_id:
-                    # (the product is new on this group)
-                    defered[product.id] = 'create'
-                else:
-                    if vals.get('scale_group_id', False) and (
-                            vals.get('scale_group_id', False) !=
-                            product.scale_group_id):
-                        # (the product has moved from a group to another)
-                        # Remove from obsolete group
-                        self._send_to_scale_bizerba(
-                            cr, uid, 'unlink', product, context=context)
-                        # Create in the new group
-                        defered[product.id] = 'create'
-                    elif self._check_vals_scale_bizerba(
+            if product.scale_group_id:
+                # The product is currently in a group (before update)
+                if 'scale_group_id' not in vals.keys():
+                    # Regular update of some informations
+                    if self._check_vals_scale_bizerba(
                             cr, uid, vals, product, context=context):
                         # Data related to the scale
                         defered[product.id] = 'write'
+                else:
+                    if vals.get('scale_group_id') is False:
+                        # the product has moved out of the scale group
+                        # Remove from obsolete group
+                        self._send_to_scale_bizerba(
+                            cr, uid, 'unlink', product, product.scale_group_id,
+                            product.scale_group_id.scale_system_id,
+                            context=context)
+                    else:
+                        # The product move from a category to another
+                        # Remove from obsolete group
+                        self._send_to_scale_bizerba(
+                            cr, uid, 'unlink', product, product.scale_group_id,
+                            product.scale_group_id.scale_system_id,
+                            context=context)
+                        # Create in the new group
+                        defered[product.id] = 'create'
+            else:
+                # The product is not currently in a group
+                if 'scale_group_id' in vals.keys():
+                    # The product has just been added
+                    defered[product.id] = 'create'
 
         res = super(product_product, self).write(
             cr, uid, ids, vals, context=context)
@@ -131,7 +155,8 @@ class product_product(Model):
         for product_id, action in defered.iteritems():
             product = self.browse(cr, uid, product_id, context=context)
             self._send_to_scale_bizerba(
-                cr, uid, action, product, context=context)
+                cr, uid, action, product, product.scale_group_id,
+                product.scale_group_id.scale_system_id, context=context)
 
         return res
 
@@ -139,6 +164,7 @@ class product_product(Model):
         for product in self.browse(cr, uid, ids, context=context):
             if product.scale_group_id:
                 self._send_to_scale_bizerba(
-                    cr, uid, 'unlink', product, context=context)
+                    cr, uid, 'unlink', product, product.scale_group_id,
+                    product.scale_group_id.scale_system_id, context=context)
         return super(product_product, self).unlink(
             cr, uid, ids, context=context)
