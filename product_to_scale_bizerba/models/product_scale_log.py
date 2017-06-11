@@ -82,7 +82,7 @@ class product_scale_log(Model):
         ]
         return self._EXTERNAL_TEXT_DELIMITER.join(external_text_list)
 
-    def _generate_screen_text(self, cr, uid, group_ids, context=None):
+    def _generate_screen_texts(self, cr, uid, group_ids, context=None):
         scale_group_obj = self.pool['product.scale.group']
         product_obj = self.pool['product.product']
         lines = []
@@ -97,21 +97,21 @@ class product_scale_log(Model):
             # Add products
             for product in product_obj.browse(
                     cr, uid, product_ids, context=context):
-                lines.append(self._SCREEN_TEXT_DELIMITER.join([
+                lines.append(str(self._SCREEN_TEXT_DELIMITER.join([
                     str(position),                              # KEYNUM Code
                     scale_group.external_identity,              # TSAB Code
                     str(product.external_id_bizerba),           # TSDA Code
-                ]))
+                ])))
                 position += 1
             initial_position = position
             final_position =\
                 scale_group.screen_product_qty + scale_group.screen_offset
             for x in range(initial_position, final_position):
-                lines.append(self._SCREEN_TEXT_DELIMITER.join([
+                lines.append(str(self._SCREEN_TEXT_DELIMITER.join([
                     str(position),                              # KEYNUM Code
                     scale_group.external_identity,              # TSAB Code
                     '0',                                        # TSDA Code
-                ]))
+                ])))
                 position += 1
         return lines
 
@@ -355,10 +355,10 @@ class product_scale_log(Model):
                 cr, uid, group_ids[0], context=context)
             break_line =\
                 self._ENCODING_MAPPING[group.scale_system_id.encoding]
-            # TODO
-            screen_texts = self._generate_screen_text(
+            screen_texts = self._generate_screen_texts(
                 cr, uid, group_ids, context=context)
-            screen_text = break_line.join(screen_texts) + break_line,
+            screen_text = break_line.join(screen_texts) + break_line
+            
             screen_text_display = '\n'.join(
                 [x.replace('\n', '') for x in screen_texts])
 
@@ -401,15 +401,15 @@ class product_scale_log(Model):
                 if log.screen_text:
                     screen_text_lst.append(log.screen_text)
 
-            # TODO
-            # for product_line in scale_system.product_line_ids:
-            #    if product_line.type == 'product_image':
-            #        # send product image
-            #        self.ftp_connection_push_image_file(
-            #            cr, uid, ftp,
-            #            scale_system.product_image_relative_path,
-            #            folder_path, log.product_id,
-            #            product_line.field_id, context=context)
+            # Push First Image for constrains reason
+            for product_line in scale_system.product_line_ids:
+                if product_line.type == 'product_image':
+                    # send product image
+                    self.ftp_connection_push_image_file(
+                        cr, uid, ftp,
+                        scale_system.product_image_relative_path,
+                        folder_path, log.product_id,
+                        product_line.field_id, context=context)
 
             # Push First External Text for constrains reason
             if external_text_lst:
