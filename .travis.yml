@@ -12,12 +12,6 @@ addons:
       - python-lxml # because pip installation is slow
       - wkhtmltopdf
 
-# Exclusion reason.
-# pos_keep_draft_orders
-# TODO Investigate : https://travis-ci.org/grap/odoo-addons-misc/jobs/175394815
-#  Cannot eval u'wkf_action_closing_control()'
-# /home/travis/build/grap/odoo-addons-misc/pos_keep_draft_orders/model/pos_session.py
-
 env:
   global:
   - VERSION="8.0" TESTS="0" LINT_CHECK="0" TRANSIFEX="0"
