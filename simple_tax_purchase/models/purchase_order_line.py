@@ -12,15 +12,16 @@ class PurchaseOrderLine(models.Model):
     @api.multi
     def onchange_product_id(
             self, pricelist_id, product_id, qty, uom_id, partner_id,
-            date_order=False, fiscal_position_id=False, date_planned=False,
-            name=False, price_unit=False, state='draft'):
+            date_order=False, fiscal_position_id=False,
+            date_planned=False, name=False, price_unit=False, state='draft'):
         partner_obj = self.env['res.partner']
         tax_obj = self.env['account.tax']
 
         res = super(PurchaseOrderLine, self).onchange_product_id(
             pricelist_id, product_id, qty, uom_id, partner_id,
             date_order=date_order, fiscal_position_id=fiscal_position_id,
-            date_planned=date_planned, name=name, price_unit=price_unit)
+            date_planned=date_planned, name=name, price_unit=price_unit,
+            state=state)
 
         if res['value'].get('price_unit', False) and\
                 res['value'].get('taxes_id', False):
