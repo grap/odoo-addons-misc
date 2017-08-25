@@ -34,13 +34,11 @@
                     <field name="product_code" string="Supp. Code"/>
                     <field name="product_name" string="Supp. Name"/>
                     <field name="min_qty" string="Min. Qty"/>
-                    <field name="delay"/>
                     <field name="simple_min_quantity" attrs="{'invisible': [('lines_qty', '!=', 1)]}"/>
                     <field name="simple_price" attrs="{'invisible': [('lines_qty', '!=', 1)]}"/>
                     <field name="simple_discount" attrs="{'invisible': [('lines_qty', '!=', 1)]}"/>
                     <field name="template_standard_price" attrs="{
-                        'invisible': [('product_tmpl_id', '=', False)],
-                        'readonly': [('template_cost_method', '!=', 'standard')]}"/>
+                        'invisible': [('product_tmpl_id', '=', False)]}"/>
                     <button name="create_simple_line" string="Create" type="object" icon="gtk-add"
                         attrs="{'invisible': [('lines_qty', '!=', 0)]}"/>
                     <button name="edit_multiple_lines" string="Edit Multiple Lines" type="object" icon="gtk-edit"/>

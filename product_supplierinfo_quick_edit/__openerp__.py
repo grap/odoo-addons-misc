@@ -40,6 +40,9 @@ Provides Wizard to manage easily Supplierinfo
 * Possibility to select various products to create quickly a new draft purchase
   order;
 
+TODO : add edition in line on template view. disable possibility to have
+many pricelist_ids. (that will could be reintroduced in V10.)
+
 Copyright, Authors and Licence:
 -------------------------------
     * Copyright: 2015, GRAP: Groupement Régional Alimentaire de Proximité;

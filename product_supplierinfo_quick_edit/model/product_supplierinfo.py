@@ -94,17 +94,6 @@ class product_supplierinfo(Model):
         else:
             return True
 
-    def _set_template_standard_price(
-            self, cr, uid, id, name, value, args, context=None):
-        template_obj = self.pool['product.template']
-        supplierinfo = self.browse(cr, uid, id, context=context)
-        if supplierinfo.product__tmplid.id:
-            return template_obj.write(
-                cr, uid, supplierinfo.product_tmpl_id.id,
-                {'standard_price': value}, context=context)
-        else:
-            return True
-
     def _get_product_supplierinfo_pricelist_partnerinfo(
             self, cr, uid, ids, context=None):
         """Return 'product.supplierinfo' Info
@@ -120,7 +109,7 @@ class product_supplierinfo(Model):
             _get_simple_info, type='char',
             string='Cost', multi='simple_info', readonly=True),
         'template_standard_price': fields.function(
-            _get_simple_info, fnct_inv=_set_template_standard_price,
+            _get_simple_info,
             type='float', string='Cost', multi='simple_info', required=True,
             digits_compute=dp.get_precision('Purchase Price')),
         'simple_min_quantity': fields.function(
