@@ -7,14 +7,32 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 <openerp><data>
 
-    <record id="base.user_root" model="res.users">
-        <field name="groups_id" eval="[
-            (4, ref('base.group_no_one')),
-            (4, ref('base.group_sale_manager')),
-            (4, ref('product.group_uom')),
-            (4, ref('product.group_uos')),
-            (4, ref('product.group_product_variant')),
-            ]" />
+    <record id="base.group_no_one" model="res.groups">
+        <field name="users" eval="[(4, ref('base.user_root'))]"/>
+    </record>
+
+    <record id="base.group_sale_manager" model="res.groups">
+        <field name="users" eval="[(4, ref('base.user_root'))]"/>
+    </record>
+
+    <record id="product.group_uom" model="res.groups">
+        <field name="users" eval="[(4, ref('base.user_root'))]"/>
+    </record>
+
+    <record id="product.group_uos" model="res.groups">
+        <field name="users" eval="[(4, ref('base.user_root'))]"/>
+    </record>
+
+    <record id="product.group_product_variant" model="res.groups">
+        <field name="users" eval="[(4, ref('base.user_root'))]"/>
+    </record>
+
+    <record model="res.groups" id="product_to_scale_bizerba.group_user">
+        <field name="users" eval="[(4, ref('base.user_demo'))]"/>
+    </record>
+
+    <record model="res.groups" id="product_to_scale_bizerba.group_manager">
+        <field name="users" eval="[(4, ref('base.user_root'))]"/>
     </record>
 
 </data></openerp>

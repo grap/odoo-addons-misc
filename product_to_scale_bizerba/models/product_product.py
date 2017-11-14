@@ -73,7 +73,6 @@ class product_product(Model):
     def _send_to_scale_bizerba(
             self, cr, uid, action, product, scale_group, scale_system,
             context=None):
-        # TODO Check if product id for bizerba is correct
         if not product.external_id_bizerba:
             raise osv.except_osv(_('Incorrect Setting!'), _(
                 "You have to set the field '%s' used as an ID for the Bizerba"
@@ -151,7 +150,6 @@ class product_product(Model):
         res = super(product_product, self).write(
             cr, uid, ids, vals, context=context)
 
-        # send_image = any(['image' in x for x in bob.keys()])
         for product_id, action in defered.iteritems():
             product = self.browse(cr, uid, product_id, context=context)
             self._send_to_scale_bizerba(

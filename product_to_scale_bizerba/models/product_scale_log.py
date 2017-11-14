@@ -10,6 +10,7 @@ from datetime import datetime
 
 from openerp import tools
 from openerp.osv import fields
+from openerp.osv.orm import except_orm
 from openerp.tools import image_resize_image
 from openerp.osv.orm import Model
 
@@ -76,43 +77,39 @@ class product_scale_log(Model):
     def _generate_external_text(self, value, product_line, external_id, log):
         external_text_list = [
             self._EXTERNAL_TEXT_ACTION_CODE,                    # WALO Code
-            log.product_id.scale_group_id.external_identity,    # ABNR Code
+            log.product_id.scale_group_id.external_shelf_id,    # ABNR Code
             external_id,                                        # TXNR Code
             self._clean_value(value, product_line),             # TEXT Code
         ]
         return self._EXTERNAL_TEXT_DELIMITER.join(external_text_list)
 
-    def _generate_screen_texts(self, cr, uid, group_ids, context=None):
-        scale_group_obj = self.pool['product.scale.group']
+    def _generate_screen_texts(self, cr, uid, scale_group, context=None):
         product_obj = self.pool['product.product']
         lines = []
 
-        for scale_group in scale_group_obj.browse(
-                cr, uid, group_ids, context=context):
-            product_ids = product_obj.search(
-                cr, uid, [('scale_group_id', '=', scale_group.id)],
-                order='name', limit=scale_group.screen_product_qty,
-                context=context)
-            position = scale_group.screen_offset
-            # Add products
-            for product in product_obj.browse(
-                    cr, uid, product_ids, context=context):
-                lines.append(str(self._SCREEN_TEXT_DELIMITER.join([
-                    str(position),                              # KEYNUM Code
-                    scale_group.external_identity,              # TSAB Code
-                    str(product.external_id_bizerba),           # TSDA Code
-                ])))
-                position += 1
-            initial_position = position
-            final_position =\
-                scale_group.screen_product_qty + scale_group.screen_offset
-            for x in range(initial_position, final_position):
-                lines.append(str(self._SCREEN_TEXT_DELIMITER.join([
-                    str(position),                              # KEYNUM Code
-                    scale_group.external_identity,              # TSAB Code
-                    '0',                                        # TSDA Code
-                ])))
-                position += 1
+        product_ids = product_obj.search(
+            cr, uid, [('scale_group_id', '=', scale_group.id)],
+            order='name', limit=scale_group.screen_product_qty,
+            context=context)
+        position = scale_group.screen_offset
+        # Add products
+        for product in product_obj.browse(
+                cr, uid, product_ids, context=context):
+            lines.append(str(self._SCREEN_TEXT_DELIMITER.join([
+                str(position),                              # KEYNUM Code
+                scale_group.external_shelf_id,              # TSAB Code
+                str(product.external_id_bizerba),           # TSDA Code
+            ])))
+            position += 1
+        initial_position = position
+        for x in range(
+                initial_position, scale_group.last_product_position + 1):
+            lines.append(str(self._SCREEN_TEXT_DELIMITER.join([
+                str(position),                              # KEYNUM Code
+                scale_group.external_shelf_id,              # TSAB Code
+                '0',                                        # TSDA Code
+            ])))
+            position += 1
         return lines
 
     # Compute Section
@@ -242,7 +239,9 @@ class product_scale_log(Model):
 
         'action': fields.selection(
             _ACTION_SELECTION, string='Action', required=True),
+
         'sent': fields.boolean(string='Is Sent'),
+
         'last_send_date': fields.datetime('Last Send Date'),
 
         'company_id': fields.related(
@@ -269,15 +268,16 @@ class product_scale_log(Model):
                 ftp.login()
             return ftp
         except:
-            _logger.error("Connection to ftp://%s@%s failed." % (
-                scale_system.ftp_login, scale_system.ftp_url))
-            return False
+            raise except_orm(
+                "Connexion Error",
+                "Connection to ftp://%s@%s failed." % (
+                    scale_system.ftp_login, scale_system.ftp_url))
 
     def ftp_connection_close(self, cr, uid, ftp, context=None):
         try:
             ftp.quit()
         except:
-            pass
+            _logger.warning("Connection to ftp has not been properly closed")
 
     def ftp_connection_push_text_file(
             self, cr, uid, ftp, distant_folder_path, local_folder_path,
@@ -294,7 +294,16 @@ class product_scale_log(Model):
 
             # Send File by FTP
             f = open(local_path, 'r')
-            ftp.storbinary('STOR ' + distant_path, f)
+            try:
+                ftp.storbinary('STOR ' + distant_path, f)
+            except:
+                raise except_orm(
+                    "Write Error!",
+                    "Unable to push the file %s on the FTP server.\n"
+                    "Possible reasons :\n"
+                    " * Incorrect access right for the current FTP user\n"
+                    " * Distant folder '%s' doesn't exist" % (
+                        f_name, distant_folder_path, ))
 
             # Delete temporary file
             os.remove(local_path)
@@ -345,39 +354,40 @@ class product_scale_log(Model):
         folder_path = config_obj.get_param(
             cr, uid, 'bizerba.local_folder_path', context=context)
 
-        # Generate Screen logs if needed
-        group_ids = scale_group_obj.search(
-            cr, uid, [('screen_obsolete', '=', True)],
-            order='screen_offset', context=context)
-        if group_ids:
-            # FIXME define better break_line in multi company context
-            group = scale_group_obj.browse(
-                cr, uid, group_ids[0], context=context)
+        log_group_ids = {}
+        order_log_ids = self.search(
+            cr, uid, [('id', 'in', ids)], order='log_date desc',
+            context=context)
+
+        for log in self.browse(cr, uid, order_log_ids, context=context):
+            if log.scale_group_id.id not in log_group_ids.keys() and\
+                    log.scale_group_id.screen_obsolete:
+                log_group_ids[log.scale_group_id.id] = log.id
+
+        for group_id, log_id in log_group_ids.iteritems():
+            group = scale_group_obj.browse(cr, uid, group_id, context=context)
             break_line =\
                 self._ENCODING_MAPPING[group.scale_system_id.encoding]
             screen_texts = self._generate_screen_texts(
-                cr, uid, group_ids, context=context)
+                cr, uid, group, context=context)
             screen_text = break_line.join(screen_texts) + break_line
-            
             screen_text_display = '\n'.join(
                 [x.replace('\n', '') for x in screen_texts])
 
-            self.write(cr, uid, [ids[-1]], {
+            self.write(cr, uid, [log_id], {
                 'screen_text': screen_text,
                 'screen_text_display': screen_text_display,
             }, context=context)
+            scale_group_obj.write(cr, uid, [group_id], {
+                'screen_obsolete': False,
+            }, context=context)
 
         system_map = {}
-        group_map = {}
         for log in self.browse(cr, uid, ids, context=context):
             if log.scale_system_id in system_map.keys():
                 system_map[log.scale_system_id].append(log)
             else:
                 system_map[log.scale_system_id] = [log]
-            if log.scale_group_id in group_map.keys():
-                group_map[log.scale_group_id].append(log)
-            else:
-                group_map[log.scale_group_id] = [log]
 
         for scale_system, logs in system_map.iteritems():
 

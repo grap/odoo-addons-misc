@@ -14,7 +14,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
         <field name="sequence">2</field>
         <field name="type">many2one</field>
         <field name="field_id" ref="product_to_scale_bizerba.field_product_product_scale_group_id"/>
-        <field name="related_field_id" ref="product_to_scale_bizerba.field_product_scale_group_external_identity"/>
+        <field name="related_field_id" ref="product_to_scale_bizerba.field_product_scale_group_external_shelf_id"/>
         <field name="delimiter">#</field>
     </record>
 
@@ -43,11 +43,11 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
     <record id="demo_scale_system_product_line_WGNR" model="product.scale.system.product.line">
         <field name="scale_system_id" ref="demo_scale_system"/>
         <field name="code">WGNR</field>
-        <field name="name">PoS Category ID</field>
+        <field name="name">Bizerba Family ID</field>
         <field name="sequence">5</field>
-        <!-- TODO Set Dynamic value -->
-        <field name="type">constant</field>
-        <field name="constant_value">0</field>
+        <field name="type">many2one</field>
+        <field name="field_id" ref="product_to_scale_bizerba.field_product_product_scale_group_id"/>
+        <field name="related_field_id" ref="product_to_scale_bizerba.field_product_scale_group_external_family_id"/>
         <field name="delimiter">#</field>
     </record>
 
@@ -68,7 +68,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
         <field name="code">HAL1</field>
         <field name="name">Days before Sale End</field>
         <field name="sequence">7</field>
-        <!-- TODO Set Dynamic value -->
+        <!-- Set Dynamic value with custom module, if desired -->
         <field name="type">constant</field>
         <field name="constant_value">7</field>
         <field name="delimiter">#</field>
@@ -79,7 +79,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
         <field name="code">HAL2</field>
         <field name="name">Days before Consumption End</field>
         <field name="sequence">8</field>
-        <!-- TODO Set Dynamic value -->
+        <!-- Set Dynamic value with custom module, if desired -->
         <field name="type">constant</field>
         <field name="constant_value">14</field>
         <field name="delimiter">#</field>
@@ -98,7 +98,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
     <record id="demo_scale_system_product_line_AART" model="product.scale.system.product.line">
         <field name="scale_system_id" ref="demo_scale_system"/>
         <field name="code">AART</field>
-        <field name="name">To Weight ('P' / 'F')</field>
+        <field name="name">To Weight ('P' / 'Q')</field>
         <field name="sequence">10</field>
         <field name="type">many2one</field>
         <field name="field_id" ref="product.field_product_template_uom_id"/>
@@ -145,7 +145,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
         <field name="code">LOG1</field>
         <field name="name">Logo #2</field>
         <field name="sequence">14</field>
-        <!-- TODO Change with Many2many -->
+        <!-- Change with Many2many with custom module, if desired -->
         <field name="type">constant</field>
         <field name="constant_value">0</field>
         <field name="delimiter">#</field>
@@ -156,7 +156,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
         <field name="code">LOG3</field>
         <field name="name">Logo #3</field>
         <field name="sequence">15</field>
-        <!-- TODO Change with Many2many -->
+        <!-- Change with Many2many with custom module, if desired -->
         <field name="type">constant</field>
         <field name="constant_value">0</field>
         <field name="delimiter">#</field>
@@ -167,7 +167,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
         <field name="code">LOG4</field>
         <field name="name">Logo #4</field>
         <field name="sequence">16</field>
-        <!-- TODO Change with Many2many -->
+        <!-- Change with Many2many with custom module, if desired -->
         <field name="type">constant</field>
         <field name="constant_value">0</field>
         <field name="delimiter">#</field>
@@ -178,7 +178,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
         <field name="code">LOG5</field>
         <field name="name">Logo #5</field>
         <field name="sequence">17</field>
-        <!-- TODO Change with Many2many -->
+        <!-- Change with Many2many with custom module, if desired -->
         <field name="type">constant</field>
         <field name="constant_value">0</field>
         <field name="delimiter">#</field>
@@ -249,7 +249,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
         <field name="code">TX03</field>
         <field name="name">Text (#03)</field>
         <field name="sequence">24</field>
-        <!-- TODO Set Dynamic value -->
+        <!-- Set Dynamic value with custom module, if desired -->
         <field name="type">external_constant</field>
         <field name="constant_value">TODO - Conservation Text</field>
         <field name="delimiter">#</field>
@@ -260,7 +260,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
         <field name="code">TX04</field>
         <field name="name">Text (#04)</field>
         <field name="sequence">25</field>
-        <!-- TODO Set Dynamic value -->
+        <!-- Set Dynamic value with custom module, if desired-->
         <field name="type">external_constant</field>
         <field name="constant_value">TODO - Freeze Text</field>
         <field name="delimiter">#</field>

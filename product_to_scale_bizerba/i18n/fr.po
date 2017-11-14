@@ -114,11 +114,6 @@ msgid "External Constant Text Value"
 msgstr "Constante externe"
 
 #. module: product_to_scale_bizerba
-#: model:ir.model.fields,field_description:product_to_scale_bizerba.field_product_scale_group_external_identity
-msgid "External ID"
-msgstr "ID Externe"
-
-#. module: product_to_scale_bizerba
 #: model:ir.model.fields,field_description:product_to_scale_bizerba.field_product_scale_log_external_text
 msgid "External Text"
 msgstr "Texte externe"

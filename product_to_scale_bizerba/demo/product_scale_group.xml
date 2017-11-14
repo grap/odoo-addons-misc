@@ -10,16 +10,16 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
     <record id="demo_scale_group_fruits" model="product.scale.group">
         <field name="name">Fruits</field>
         <field name="scale_system_id" ref="demo_scale_system" />
-        <field name="external_identity">1</field>
-        <field name="screen_identity">10</field>
+        <field name="external_shelf_id">1</field>
+        <field name="external_family_id">1</field>
         <field name="screen_product_qty">50</field>
     </record>
 
     <record id="demo_scale_group_vegetables" model="product.scale.group">
         <field name="name">Végetables</field>
         <field name="scale_system_id" ref="demo_scale_system" />
-        <field name="external_identity">2</field>
-        <field name="screen_identity">10</field>
+        <field name="external_shelf_id">1</field>
+        <field name="external_family_id">2</field>
         <field name="screen_product_qty">80</field>
     </record>
 
