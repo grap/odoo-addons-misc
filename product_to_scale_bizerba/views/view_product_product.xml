@@ -32,4 +32,19 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
         </field>
     </record>
 
+    <record id="view_product_product_search" model="ir.ui.view">
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_search_form_view"/>
+        <field name="arch" type="xml">
+            <field name="categ_id" position="after">
+                <field name="scale_group_id"
+                        groups="product_to_scale_bizerba.group_user"/>
+            </field>
+            <xpath expr="//filter[@string='Category']" position="after">
+               <filter string="Category" context="{'group_by' : 'scale_group_id'}" 
+                        groups="product_to_scale_bizerba.group_user"/>
+            </xpath>
+        </field>
+    </record>
+
 </data></openerp>

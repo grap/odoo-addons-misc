@@ -202,22 +202,24 @@ class product_scale_log(Model):
 
     # Column Section
     _columns = {
-        'log_date': fields.datetime('Log Date', required=True),
+        'log_date': fields.datetime('Log Date', required=True, readonly=True),
 
         'scale_group_id': fields.many2one(
-            'product.scale.group', string='Scale Group', required=True),
+            'product.scale.group', string='Scale Group', required=True,
+            readonly=True),
 
         'scale_system_id': fields.many2one(
-            'product.scale.system', string='Scale System', required=True),
+            'product.scale.system', string='Scale System', required=True,
+            readonly=True),
 
         'product_id': fields.many2one(
-            'product.product', string='Product'),
+            'product.product', string='Product', readonly=True),
 
         'screen_text': fields.text(
-            string='Screen Text'),
+            string='Screen Text', readonly=True),
 
         'screen_text_display': fields.text(
-            string='Screen Text (Display)'),
+            string='Screen Text (Display)', readonly=True),
 
         'product_text': fields.function(
             _compute_text, type='text', string='Product Text',
@@ -238,11 +240,11 @@ class product_scale_log(Model):
                     ids, ['scale_system_id', 'product_id'], 10)}),
 
         'action': fields.selection(
-            _ACTION_SELECTION, string='Action', required=True),
+            _ACTION_SELECTION, string='Action', required=True, readonly=True),
 
-        'sent': fields.boolean(string='Is Sent'),
+        'sent': fields.boolean(string='Is Sent', readonly=True),
 
-        'last_send_date': fields.datetime('Last Send Date'),
+        'last_send_date': fields.datetime('Last Send Date', readonly=True),
 
         'company_id': fields.related(
             'scale_system_id', 'company_id', type='many2one', store=True,

@@ -21,6 +21,6 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
     <menuitem id="menu_product_scale_log"
         parent="menu_scale_root" sequence="3"
-        action="action_product_scale_log" groups="product_to_scale_bizerba.group_manager"/>
+        action="action_product_scale_log" groups="product_to_scale_bizerba.group_user"/>
 
 </data></openerp>
