@@ -78,6 +78,7 @@ new model:
         'security/ir_model_access.yml',
         'report/pricetag_report.xml',
         'report/pricetag_report_tall.xml',
+        'report/pricetag_report_small.xml',
         'view/view.xml',
         'view/action.xml',
         'view/menu.xml',

@@ -32,8 +32,9 @@ class product_pricetag_wizard(TransientModel):
     _rec_name = 'offset'
 
     _FORMAT_SELECTION = [
-        ('normal', 'Normal'),
-        ('tall', 'Tall'),
+        ('small', 'Small (Epicerie des Halles)'),
+        ('normal', 'Normal (GRAP)'),
+        ('tall', 'Tall (Vrac En Vert)'),
     ]
 
     def _needaction_count(self, cr, uid, domain=None, context=None):

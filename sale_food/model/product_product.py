@@ -139,7 +139,7 @@ class product_product(Model):
             if pp.department_id:
                 tmp = pp.department_id.name + \
                     (' - ' + tmp if tmp else '')
-            if pp.country_id:
+            if pp.country_id and not pp.department_id:
                 tmp = pp.country_id.name + \
                     (' - ' + tmp if tmp else '')
             res[pp.id] = tmp

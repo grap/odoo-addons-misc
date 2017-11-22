@@ -172,6 +172,9 @@
                         <group col="4" colspan="2">
                             <button icon="gtk-cancel" special="cancel" string="Cancel"/>
                             <button name="initialize_product" type="object" string="Initialize Products"/>
+                            <button name="%(report_pricetag_report_small)d" string="Print"
+                                type="action" icon="gtk-print"
+                                attrs="{'invisible': [('format', '!=', 'small')]}"/>
                             <button name="%(report_pricetag_report)d" string="Print"
                                 type="action" icon="gtk-print"
                                 attrs="{'invisible': [('format', '!=', 'normal')]}"/>
