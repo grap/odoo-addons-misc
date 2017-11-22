@@ -29,7 +29,7 @@ from openerp.tools.translate import _
 class product_pricetag_wizard(TransientModel):
     _name = 'product.pricetag.wizard'
     _inherit = 'ir.needaction_mixin'
-    _rec_name = 'offset'
+    _rec_name = 'border'
 
     _FORMAT_SELECTION = [
         ('small', 'Small (Epicerie des Halles)'),
@@ -63,23 +63,13 @@ class product_pricetag_wizard(TransientModel):
         res = []
         if context.get('active_id', False):
             pp_obj = self.pool['product.product']
-            custom_format = context.get('format', 'normal')
-            if custom_format == 'normal':
-                limit = 14
-            elif custom_format == 'tall':
-                limit = 8
-            else:
-                limit = 1
             pp_ids = pp_obj.search(cr, uid, [
                 ('pricetag_state', 'in', ['1', '2'])],
-                order='pricetag_state desc',
-                limit=limit,
-            )
+                order='pricetag_state desc')
             for pp_id in pp_ids:
                 res.append((0, 0, {
                     'product_id': pp_id,
                     'quantity': 1,
-                    'print_unit_price': True,
                 }))
         return res
 
@@ -89,8 +79,6 @@ class product_pricetag_wizard(TransientModel):
 
     # Columns Section
     _columns = {
-        'offset': fields.integer(
-            'Offset', required=True, help="Price Tag number not to print"),
         'border': fields.boolean(
             'Border', help="Design a border on Price Tags"),
         'radar_chart': fields.boolean(
@@ -105,7 +93,6 @@ class product_pricetag_wizard(TransientModel):
     _defaults = {
         'border': True,
         'radar_chart': True,
-        'offset': 0,
         'line_ids': _get_line_ids,
         'format': _get_format,
     }

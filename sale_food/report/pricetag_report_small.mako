@@ -62,11 +62,6 @@
             img.product_label{
                 width:0.8cm; height:0.8cm; margin:0.1cm;
             }
-/*            div.organic_text{
-                width:6.7cm; height:0.4cm;
-                font-size:9px;
-                float:left;
-            }*/
             div.label_right{
                 background-color:red;
                 width:3.6cm; height:3.3cm; float:left;
@@ -101,10 +96,6 @@
                 width:10.3cm; height:0.7cm;
                 overflow:hidden;
             }
-/*            div.product_image{
-                width:3.1cm; height:3cm;
-                }
-*/
             img.ean13_image{
                 margin-left:0.05cm;
                 width:100%; 
@@ -113,12 +104,6 @@
     </head>
     <body>
     %for wizard in objects :
-        <!-- Empty labels -->
-        %for i in range(0,wizard.offset):
-        <div class="label_container">
-        </div>
-        %endfor
-
         <!-- Product labels -->
         %for line in wizard.line_ids:
             %for i in range(0,line.quantity):

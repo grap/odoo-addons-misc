@@ -161,18 +161,17 @@
                     <group colspan="2">
                         <group string="Print Parameters" col="4" colspan="2">
                             <group>
-                                <field name="offset"/>
+                                <field name="format"/>
                                 <field name="border"/>
                             </group>
                             <group>
                                 <field name="radar_chart"/>
-                                <field name="format"/>
                             </group>
                         </group>
-                        <group col="4" colspan="2">
+                        <group col="5" colspan="2">
                             <button icon="gtk-cancel" special="cancel" string="Cancel"/>
                             <button name="initialize_product" type="object" string="Initialize Products"/>
-                            <button name="%(report_pricetag_report_small)d" string="Print"
+                            <button name="%(report_pricetag_report_small)d" string="Print (Small Format)"
                                 type="action" icon="gtk-print"
                                 attrs="{'invisible': [('format', '!=', 'small')]}"/>
                             <button name="%(report_pricetag_report)d" string="Print"
@@ -187,7 +186,6 @@
                                 <tree string="Products" editable="top">
                                     <field name="product_id"/>
                                     <field name="quantity"/>
-                                    <field name="print_unit_price"/>
                                 </tree>
                             </field>
                         </group>

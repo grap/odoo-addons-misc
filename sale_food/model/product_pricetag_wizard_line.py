@@ -37,12 +37,9 @@ class product_pricetag_wizard_line(TransientModel):
             'product.product', 'Product', required=True),
         'quantity': fields.integer(
             'Quantity', required=True),
-        'print_unit_price': fields.boolean(
-            'Print unit price'),
     }
 
     # Defaults Section
     _defaults = {
         'quantity': 1,
-        'print_unit_price': True,
     }

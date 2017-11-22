@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-03 16:46+0000\n"
-"PO-Revision-Date: 2017-04-03 16:46+0000\n"
+"POT-Creation-Date: 2017-11-22 13:43+0000\n"
+"PO-Revision-Date: 2017-11-22 13:43+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,19 +16,19 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: sale_food
-#: code:addons/sale_food/model/product_product.py:188
+#: code:addons/sale_food/model/product_product.py:192
 #, python-format
 msgid " - Category: "
 msgstr " - Catégorie : "
 
 #. module: sale_food
-#: code:addons/sale_food/model/product_product.py:185
+#: code:addons/sale_food/model/product_product.py:189
 #, python-format
 msgid " - Country: "
 msgstr " - Pays : "
 
 #. module: sale_food
-#: code:addons/sale_food/model/product_product.py:194
+#: code:addons/sale_food/model/product_product.py:198
 #, python-format
 msgid " - Label: "
 msgstr " - Label: "
@@ -69,7 +69,7 @@ msgid "A product in mercuriale has price that changes very regularly."
 msgstr "Un produit en mercuriale voit son prix changer très fréquemment."
 
 #. module: sale_food
-#: code:addons/sale_food/model/product_product.py:111
+#: code:addons/sale_food/model/product_product.py:115
 #, python-format
 msgid "AE"
 msgstr "AE"
@@ -115,8 +115,8 @@ msgid "Category for Fresh Product"
 msgstr "Catégorie de produits frais"
 
 #. module: sale_food
-#: report:addons/sale_food/report/pricetag_report.mako:94
-#: report:addons/sale_food/report/pricetag_report_tall.mako:94
+#: report:addons/sale_food/report/pricetag_report.mako:88
+#: report:addons/sale_food/report/pricetag_report_tall.mako:90
 msgid "Category: "
 msgstr "Catégorie : "
 
@@ -143,8 +143,8 @@ msgid "Code"
 msgstr "Code"
 
 #. module: sale_food
-#: report:addons/sale_food/report/pricetag_report.mako:91
-#: report:addons/sale_food/report/pricetag_report_tall.mako:91
+#: report:addons/sale_food/report/pricetag_report.mako:85
+#: report:addons/sale_food/report/pricetag_report_tall.mako:87
 msgid "Code: "
 msgstr "Code : "
 
@@ -208,7 +208,7 @@ msgid "Do not print"
 msgstr "Ne pas imprimer"
 
 #. module: sale_food
-#: code:addons/sale_food/model/product_product.py:324
+#: code:addons/sale_food/model/product_product.py:328
 #: constraint:product.product:0
 #, python-format
 msgid "Error ! Department must belong to the country."
@@ -324,8 +324,9 @@ msgid "Maker"
 msgstr "Producteur"
 
 #. module: sale_food
-#: report:addons/sale_food/report/pricetag_report.mako:110
-#: report:addons/sale_food/report/pricetag_report_tall.mako:110
+#: report:addons/sale_food/report/pricetag_report.mako:104
+#: report:addons/sale_food/report/pricetag_report_small.mako:129
+#: report:addons/sale_food/report/pricetag_report_tall.mako:106
 msgid "Maker: "
 msgstr "Producteur : "
 
@@ -342,7 +343,7 @@ msgstr "Obligatoire sur les factures"
 #. module: sale_food
 #: field:product.label,image_medium:0
 msgid "Medium-sized image"
-msgstr "Medium-sized image"
+msgstr "Image de taille moyenne"
 
 #. module: sale_food
 #: view:product.product:0
@@ -377,12 +378,17 @@ msgid "Name"
 msgstr "Nom"
 
 #. module: sale_food
-#: selection:product.pricetag.wizard,format:0
-msgid "Normal"
-msgstr "Normal"
+#: report:addons/sale_food/report/pricetag_report_small.mako:158
+msgid "Net Weight"
+msgstr "Poid net"
 
 #. module: sale_food
-#: code:addons/sale_food/model/product_product.py:175
+#: selection:product.pricetag.wizard,format:0
+msgid "Normal (GRAP)"
+msgstr "Normal (GRAP)"
+
+#. module: sale_food
+#: code:addons/sale_food/model/product_product.py:179
 #, python-format
 msgid "Not From Organic Farming"
 msgstr "Non issu de l'agriculture biologique"
@@ -403,12 +409,7 @@ msgid "Note"
 msgstr "Note"
 
 #. module: sale_food
-#: field:product.pricetag.wizard,offset:0
-msgid "Offset"
-msgstr "Décallage"
-
-#. module: sale_food
-#: code:addons/sale_food/model/product_product.py:170
+#: code:addons/sale_food/model/product_product.py:174
 #, python-format
 msgid "Organic Product, certified by %s"
 msgstr "Produit issu de l'agriculture biologique, certifié par %s"
@@ -439,8 +440,9 @@ msgid "Origin Department"
 msgstr "Département d'Origine"
 
 #. module: sale_food
-#: report:addons/sale_food/report/pricetag_report.mako:106
-#: report:addons/sale_food/report/pricetag_report_tall.mako:106
+#: report:addons/sale_food/report/pricetag_report.mako:100
+#: report:addons/sale_food/report/pricetag_report_small.mako:125
+#: report:addons/sale_food/report/pricetag_report_tall.mako:102
 msgid "Origin: "
 msgstr "Origine : "
 
@@ -450,19 +452,30 @@ msgid "Packaging notation"
 msgstr "Notation Emballage"
 
 #. module: sale_food
-#: report:addons/sale_food/report/pricetag_report.mako:100
-#: report:addons/sale_food/report/pricetag_report_tall.mako:100
+#: report:addons/sale_food/report/pricetag_report_small.mako:165
+msgid "Price Per Kilo"
+msgstr "prix au kilo"
+
+#. module: sale_food
+#: report:addons/sale_food/report/pricetag_report.mako:94
+#: report:addons/sale_food/report/pricetag_report_tall.mako:96
 msgid "Price Per Kilo: "
 msgstr "Prix au Kilo : "
 
 #. module: sale_food
-#: report:addons/sale_food/report/pricetag_report.mako:98
-#: report:addons/sale_food/report/pricetag_report_tall.mako:98
+#: report:addons/sale_food/report/pricetag_report_small.mako:163
+msgid "Price Per Liter"
+msgstr "prix au litre"
+
+#. module: sale_food
+#: report:addons/sale_food/report/pricetag_report.mako:92
+#: report:addons/sale_food/report/pricetag_report_tall.mako:94
 msgid "Price Per Liter: "
 msgstr "Prix au Litre : "
 
 #. module: sale_food
 #: model:ir.actions.report.xml,name:sale_food.report_pricetag_report
+#: model:ir.actions.report.xml,name:sale_food.report_pricetag_report_small
 #: model:ir.actions.report.xml,name:sale_food.report_pricetag_report_tall
 #: view:product.product:0
 #: view:res.company:0
@@ -498,11 +511,6 @@ msgid "Price Tag Types"
 msgstr "Types d'étiquette"
 
 #. module: sale_food
-#: help:product.pricetag.wizard,offset:0
-msgid "Price Tag number not to print"
-msgstr "Nombre d'étiquette à ne pas imprimer"
-
-#. module: sale_food
 #: field:product.product,price_volume:0
 msgid "Price by volume"
 msgstr "Prix au Volume"
@@ -510,12 +518,17 @@ msgstr "Prix au Volume"
 #. module: sale_food
 #: field:product.product,price_weight_net:0
 msgid "Price by weight net"
-msgstr "Prix par Poid Net"
+msgstr "Prix au Poid Net"
 
 #. module: sale_food
 #: view:product.pricetag.wizard:0
 msgid "Print"
 msgstr "Imprimer"
+
+#. module: sale_food
+#: view:product.pricetag.wizard:0
+msgid "Print (Small Format)"
+msgstr "Imprimer (Petit Format)"
 
 #. module: sale_food
 #: view:product.pricetag.wizard:0
@@ -539,7 +552,7 @@ msgid "Print Price Tag"
 msgstr "Imprimer Etiquette"
 
 #. module: sale_food
-#: code:addons/sale_food/model/product_pricetag_wizard.py:51
+#: code:addons/sale_food/model/product_pricetag_wizard.py:52
 #: view:product.pricetag.wizard:0
 #, python-format
 msgid "Print Price Tags"
@@ -559,11 +572,6 @@ msgstr "Imprimer sur l'étiquette"
 #: view:product.product:0
 msgid "Print to do"
 msgstr "Impression à Réaliser"
-
-#. module: sale_food
-#: field:product.pricetag.wizard.line,print_unit_price:0
-msgid "Print unit price"
-msgstr "Imprimer le prix unitaire"
 
 #. module: sale_food
 #: code:_description:0
@@ -638,6 +646,11 @@ msgid "Sale Food"
 msgstr "Vente Alimentaire"
 
 #. module: sale_food
+#: selection:product.pricetag.wizard,format:0
+msgid "Small (Epicerie des Halles)"
+msgstr "Petit (Epicerie des Halles)"
+
+#. module: sale_food
 #: field:product.label,image_small:0
 msgid "Small-sized image"
 msgstr "Image de taille moyenne"
@@ -655,8 +668,8 @@ msgstr "Radar"
 
 #. module: sale_food
 #: selection:product.pricetag.wizard,format:0
-msgid "Tall"
-msgstr "Grand"
+msgid "Tall (Vrac En Vert)"
+msgstr "Grand (Vrac En Vert)"
 
 #. module: sale_food
 #: field:product.product,pricetag_origin:0
@@ -674,8 +687,8 @@ msgid "Type Name"
 msgstr "Nom du Type"
 
 #. module: sale_food
-#: report:addons/sale_food/report/pricetag_report.mako:102
-#: report:addons/sale_food/report/pricetag_report_tall.mako:102
+#: report:addons/sale_food/report/pricetag_report.mako:96
+#: report:addons/sale_food/report/pricetag_report_tall.mako:98
 msgid "Unit Price: "
 msgstr "Prix Unitaire : "
 
@@ -698,6 +711,11 @@ msgid "User"
 msgstr "Utilisateur"
 
 #. module: sale_food
+#: report:addons/sale_food/report/pricetag_report_small.mako:156
+msgid "Volume"
+msgstr "Volume"
+
+#. module: sale_food
 #: field:product.label,website:0
 msgid "Website"
 msgstr "Site Web"
@@ -715,7 +733,7 @@ msgid "certifier.organization"
 msgstr "certifier.organization"
 
 #. module: sale_food
-#: code:addons/sale_food/model/product_product.py:113
+#: code:addons/sale_food/model/product_product.py:117
 #, python-format
 msgid "emballage"
 msgstr "emballage"
@@ -726,7 +744,7 @@ msgid "format"
 msgstr "format"
 
 #. module: sale_food
-#: code:addons/sale_food/model/product_product.py:112
+#: code:addons/sale_food/model/product_product.py:116
 #, python-format
 msgid "local"
 msgstr "local"
@@ -760,7 +778,7 @@ msgid "product.pricetag.wizard.line"
 msgstr "product.pricetag.wizard.line"
 
 #. module: sale_food
-#: code:addons/sale_food/model/product_product.py:114
+#: code:addons/sale_food/model/product_product.py:118
 #, python-format
 msgid "social"
 msgstr "social"

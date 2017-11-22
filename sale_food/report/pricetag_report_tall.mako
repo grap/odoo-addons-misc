@@ -68,12 +68,6 @@
     </head>
     <body>
     %for wizard in objects :
-        <!-- Empty labels -->
-        %for i in range(0,wizard.offset):
-        <div class="label_container">
-        </div>
-        %endfor
-
         <!-- Product labels -->
         %for line in wizard.line_ids:
             %for i in range(0,line.quantity):
@@ -124,11 +118,7 @@
                         </div>
                         <div class="label_right">
                             <div class="product_price" style="background-color:${line.product_id.pricetag_color};">
-                %if line.print_unit_price:
                                 ${line.product_id.list_price} &#128;
-                %else:
-                                &nbsp;&nbsp;&nbsp;&nbsp; &#128;
-                %endif
                 %if line.product_id.uom_id.category_id.pricetag_printable:
 &nbsp;/&nbsp;${line.product_id.uom_id.name}
                 %endif
