@@ -30,17 +30,16 @@
                 overflow:hidden;
                 }
             .label_left{
-                background-color: #aaf;
                 width:6.7cm; height:3.3cm; float:left;
                 overflow: hidden;
                 }
             div.product_name{
-                width:6.7cm; height:1.2cm;
-                font-size:17px; font-weight:bold;
+                width:6.7cm; height:1.1cm;
+                font-size:16px; font-weight:bold;
                 overflow: hidden;
                 }
             div.product_informations{
-                width:6.7cm;height:1.1cm;
+                width:6.7cm;height:1.2cm;
                 font-size:11px;
                 overflow: hidden;
                 }
@@ -50,11 +49,9 @@
                 }
             div.product_labels_left{
                 width:4.2cm; height:1.0cm;
-                background-color:#ddd;
                 overflow: hidden; float:left;
             }
             div.product_labels_right{
-                background-color:#efa;
                 font-size:9px;
                 width:2.5cm; height:1.0cm;
                 overflow: hidden; float:left;
@@ -64,7 +61,6 @@
                 width:0.8cm; height:0.8cm; margin:0.1cm;
             }
             div.label_right{
-                background-color:red;
                 width:3.6cm; height:3.3cm; float:left;
                 overflow: hidden;
             }
@@ -80,20 +76,16 @@
                 width:3.6cm; height:1.2cm;
                 text-align:center; font-size:11px;
                 overflow:hidden;
-                background-color:yellow;
             }
             div.product_price_per_uom_qty{
                 width: 1.8cm; height: 1.2cm; float: left;
                 overflow: hidden;
-                background-color: #def;
             }
             div.product_price_per_uom_price{
                 width: 1.8cm; height: 1.2cm; float: left;
                 overflow: hidden;
-                background-color: #edf;
             }
             div.label_bottom{
-                background-color: green;
                 width:10.3cm; height:0.7cm;
                 overflow:hidden;
             }
@@ -120,19 +112,15 @@
         %for line in wizard.line_ids:
             %for i in range(0,line.quantity):
         <div class="label_container">
-                %if wizard.border:
-                <div class="label_border" style="border: 1px solid; background-color:${line.product_id.pricetag_color};">
-                %else:
-                <div class="label_border" style="background-color:${line.product_id.pricetag_color};">
-                %endif
+                <div class="label_border" style="border: 1px solid;">
                     <div class="label">
                         <div class="label_left">
                             <!-- Product Name -->
-                            <div class="product_name">
+                            <div class="product_name" style="background-color:${line.product_id.pricetag_color};">
                             ${line.product_id.name}
                             </div>
                             <!-- Product Information -->
-                            <div class="product_informations">
+                            <div class="product_informations" style="background-color:${line.product_id.pricetag_color};">
                 %if line.product_id.pricetag_origin:
                                 ${_('Origin: ')}<b>${line.product_id.pricetag_origin}</b>
                                 <br />
