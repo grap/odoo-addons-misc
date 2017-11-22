@@ -50,12 +50,13 @@
                 }
             div.product_labels_left{
                 width:4.2cm; height:1.0cm;
+                background-color:#ddd;
                 overflow: hidden; float:left;
             }
             div.product_labels_right{
-                margin-top:0.2cm;
+                background-color:#efa;
                 font-size:9px;
-                width:2.5cm; height:0.8cm;
+                width:2.5cm; height:1.0cm;
                 overflow: hidden; float:left;
                 text-align:center;
             }
@@ -75,19 +76,19 @@
                 overflow: hidden;
                 }
             div.product_price_per_uom{
-                margin-top:0.6cm;
-                width:3.6cm; height:1.0cm;
+                margin-top:0.4cm;
+                width:3.6cm; height:1.2cm;
                 text-align:center; font-size:11px;
                 overflow:hidden;
                 background-color:yellow;
             }
             div.product_price_per_uom_qty{
-                width: 1.8cm; height: 1.cm; float: left;
+                width: 1.8cm; height: 1.2cm; float: left;
                 overflow: hidden;
                 background-color: #def;
             }
             div.product_price_per_uom_price{
-                width: 1.8cm; height: 1.cm; float: left;
+                width: 1.8cm; height: 1.2cm; float: left;
                 overflow: hidden;
                 background-color: #edf;
             }
@@ -95,6 +96,17 @@
                 background-color: green;
                 width:10.3cm; height:0.7cm;
                 overflow:hidden;
+            }
+            div.label_bottom_left{
+                width:6.7cm; height:100%; float:left;
+                overflow:hidden;
+            }
+            div.label_bottom_right{
+                margin-top:0.2cm;
+                width:3.6cm; height:100%; float:left;
+                text-align:center; font-size:9px;
+                overflow:hidden;
+                font-family:monospace;
             }
             img.ean13_image{
                 margin-left:0.05cm;
@@ -169,9 +181,18 @@
                             
                         </div>
                         <div class="label_bottom">
+                            <div class="label_bottom_left">
                 %if line.product_id.ean13:
                                 <img class="ean13_image" src="data:image/png;base64,${line.product_id.ean13_image}"/>
                 %endif
+                            </div>
+                            <div class="label_bottom_right">
+                %if line.product_id.ean13:
+                                ${line.product_id.ean13}
+                %else:
+                                ${line.product_id.code}
+                %endif
+                            </div>
                         </div>
                     </div>
                 </div>
