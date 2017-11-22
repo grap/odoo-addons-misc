@@ -12,7 +12,7 @@
             }
             .label_container{
                 page-break-inside: avoid;
-                width:12.85cm; height:8.2cm; float:left;
+                width:12.85cm; height:5.2cm; float:left;
             }
             /* Border of the label */
             .label_border{
@@ -24,22 +24,23 @@
             }
             /* usefull space */
             .label{
-                margin-top: 1cm;
-                margin-bottom: 1cm;
-                width:10.3cm; height:4.6cm;
+                margin-top: 0.25cm;
+                margin-bottom: 0.25cm;
+                width:10.3cm; height:4.0cm;
+                overflow:hidden;
                 }
             .label_left{
-                background-color: blue;
-                width:6.7cm; height:3.4cm; float:left;
+                background-color: #aaf;
+                width:6.7cm; height:3.3cm; float:left;
                 overflow: hidden;
                 }
             div.product_name{
-                width:6.7cm; height:1.3cm;
+                width:6.7cm; height:1.2cm;
                 font-size:17px; font-weight:bold;
                 overflow: hidden;
                 }
             div.product_informations{
-                width:6.7cm;height:1.2cm;
+                width:6.7cm;height:1.1cm;
                 font-size:11px;
                 overflow: hidden;
                 }
@@ -68,24 +69,36 @@
             }*/
             div.label_right{
                 background-color:red;
-                width:3.6cm; height:3.4cm; float:left;
+                width:3.6cm; height:3.3cm; float:left;
                 overflow: hidden;
             }
             div.product_price{
                 margin-top:0.7cm;
                 width:3.6cm; height:1.2cm;
                 line-height: 1.2cm;
-                text-align:center; font-size:30px; font-weight:bold;
+                text-align: center; font-size:30px; font-weight:bold;
+                overflow: hidden;
                 }
             div.product_price_per_uom{
                 margin-top:0.6cm;
                 width:3.6cm; height:1.0cm;
                 text-align:center; font-size:11px;
+                overflow:hidden;
+                background-color:yellow;
             }
-
+            div.product_price_per_uom_qty{
+                width: 1.8cm; height: 1.cm; float: left;
+                overflow: hidden;
+                background-color: #def;
+            }
+            div.product_price_per_uom_price{
+                width: 1.8cm; height: 1.cm; float: left;
+                overflow: hidden;
+                background-color: #edf;
+            }
             div.label_bottom{
                 background-color: green;
-                width:10.3cm; height:1.2cm;
+                width:10.3cm; height:0.7cm;
                 overflow:hidden;
             }
 /*            div.product_image{
@@ -94,7 +107,7 @@
 */
             img.ean13_image{
                 margin-left:0.05cm;
-                width:100%; height:3cm;
+                width:100%; 
                 }
         </style>
     </head>
@@ -153,12 +166,20 @@
                                 ${line.product_id.list_price} &#128;
                             </div>
                             <div class="product_price_per_uom">
+                                <div class="product_price_per_uom_qty">
                 %if line.product_id.volume:
-                                ${_('Price Per Liter: ')}<br /><b>${line.product_id.price_volume} &#128;</b>
+                                    ${_('Volume')}<br /><b>${line.product_id.volume} L</b>
                 %elif line.product_id.weight_net:
-                                ${_('Price Per Kilo: ')}<br /><b>${line.product_id.price_weight_net} &#128;</b>
+                                    ${_('Net Weight')}<br /><b>${line.product_id.weight_net} kg</b>
                 %endif
-
+                                </div>
+                                <div class="product_price_per_uom_price">
+                %if line.product_id.volume:
+                                    ${_('Price Per Liter')}<br /><b>${line.product_id.price_volume} &#128;</b>
+                %elif line.product_id.weight_net:
+                                    ${_('Price Per Kilo')}<br /><b>${line.product_id.price_weight_net} &#128;</b>
+                %endif
+                                </div>
                             </div>
                             
                         </div>

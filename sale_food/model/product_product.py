@@ -80,7 +80,9 @@ class product_product(Model):
         res = {}
         for p in self.browse(cr, uid, ids, context=context):
             if p.list_price and p.volume:
-                res[p.id] = "%.2f" % round(p.list_price / p.volume, 2)
+                res[p.id] =\
+                    ("%.2f" % round(p.list_price / p.volume, 2)).replace(
+                        '.', ',')
             else:
                 res[p.id] = ""
         return res
@@ -91,8 +93,10 @@ class product_product(Model):
         res = {}
         for product in self.browse(cr, uid, ids, context=context):
             if product.list_price and product.weight_net:
-                res[product.id] = "%.2f" % round(
-                    product.list_price / product.weight_net, 2)
+                res[product.id] =\
+                    ("%.2f" % round(
+                        product.list_price / product.weight_net, 2)).replace(
+                            '.', ',')
             else:
                 res[product.id] = ""
         return res
