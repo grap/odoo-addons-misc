@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-22 13:43+0000\n"
-"PO-Revision-Date: 2017-11-22 13:43+0000\n"
+"POT-Creation-Date: 2017-11-23 02:37+0000\n"
+"PO-Revision-Date: 2017-11-23 02:37+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -286,6 +286,11 @@ msgid "Ingredients"
 msgstr "Ingrédients"
 
 #. module: sale_food
+#: field:product.pricetag.wizard,limit:0
+msgid "Initialization Limit"
+msgstr "Quantité limite pour l'initialisation"
+
+#. module: sale_food
 #: view:product.pricetag.wizard:0
 msgid "Initialize Products"
 msgstr "Initialiser les Articles"
@@ -541,6 +546,11 @@ msgid "Print Ignored"
 msgstr "Impression ignorée"
 
 #. module: sale_food
+#: model:ir.actions.act_window,name:sale_food.action_product_product_pricetag_wizard
+msgid "Print Labels"
+msgstr "Imprimer étiquettes"
+
+#. module: sale_food
 #: view:product.pricetag.wizard:0
 msgid "Print Parameters"
 msgstr "Paramétrage d'impression"
@@ -552,7 +562,7 @@ msgid "Print Price Tag"
 msgstr "Imprimer Etiquette"
 
 #. module: sale_food
-#: code:addons/sale_food/model/product_pricetag_wizard.py:52
+#: code:addons/sale_food/model/product_pricetag_wizard.py:63
 #: view:product.pricetag.wizard:0
 #, python-format
 msgid "Print Price Tags"

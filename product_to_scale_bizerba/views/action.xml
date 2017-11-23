@@ -31,4 +31,22 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
         <field name="view_mode">tree,form</field>
     </record>
 
+    <record id="action_product_scale_log_wizard" model="ir.actions.act_window">
+        <field name="name">Send Scale Log</field>
+        <field name="res_model">product.scale.log.wizard</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="value_product_scale_log_wizard" model="ir.values">
+        <field name="model_id" ref="product.model_product_product" />
+        <field name="name">Send Scale Log</field>
+        <field name="key2">client_action_multi</field>
+        <field name="value" eval="'ir.actions.act_window,' + str(ref('action_product_scale_log_wizard'))"/>
+        <field name="key">action</field>
+        <field name="model">product.product</field>
+    </record>
+
+
 </data></openerp>

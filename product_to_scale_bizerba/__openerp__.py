@@ -40,6 +40,7 @@ Roadmap / Know Issues
         'views/view_product_scale_system.xml',
         'views/view_product_scale_group.xml',
         'views/view_product_scale_log.xml',
+        'views/view_product_scale_log_wizard.xml',
         'views/action.xml',
         'views/menu.xml',
     ],

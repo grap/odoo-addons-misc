@@ -5,3 +5,4 @@ from . import product_scale_log
 from . import product_scale_group
 from . import product_product
 from . import product_uom
+from . import product_scale_log_wizard

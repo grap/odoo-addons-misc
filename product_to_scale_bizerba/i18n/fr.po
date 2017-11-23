@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-16 18:40+0000\n"
-"PO-Revision-Date: 2017-11-16 18:40+0000\n"
+"POT-Creation-Date: 2017-11-23 02:33+0000\n"
+"PO-Revision-Date: 2017-11-23 02:33+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -52,6 +52,11 @@ msgid "Bizerba Scale User"
 msgstr "Utilisateur de Balance Bizerba"
 
 #. module: product_to_scale_bizerba
+#: view:product.scale.log.wizard:0
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: product_to_scale_bizerba
 #: view:product.product:0
 msgid "Category"
 msgstr "Catégorie"
@@ -79,6 +84,11 @@ msgstr "Société"
 #: selection:product.scale.system.product.line,type:0
 msgid "Constant Value"
 msgstr "Constante"
+
+#. module: product_to_scale_bizerba
+#: selection:product.scale.log.wizard,log_type:0
+msgid "Create"
+msgstr "Créer"
 
 #. module: product_to_scale_bizerba
 #: selection:product.scale.log,action:0
@@ -243,6 +253,11 @@ msgid "Log Date"
 msgstr "Date du log"
 
 #. module: product_to_scale_bizerba
+#: field:product.scale.log.wizard,log_type:0
+msgid "Log Type"
+msgstr "Type de Log"
+
+#. module: product_to_scale_bizerba
 #: model:ir.actions.act_window,name:product_to_scale_bizerba.action_product_scale_log
 #: model:ir.ui.menu,name:product_to_scale_bizerba.menu_product_scale_log
 msgid "Logs"
@@ -267,6 +282,11 @@ msgstr "Champ many2Many"
 #: selection:product.scale.system.product.line,type:0
 msgid "ManyOne Field"
 msgstr "Champ manyOne"
+
+#. module: product_to_scale_bizerba
+#: view:product.scale.log.wizard:0
+msgid "Mass Log to Bizerba"
+msgstr "Envoie en Masse à Bizerba"
 
 #. module: product_to_scale_bizerba
 #: field:product.scale.group,name:0
@@ -338,6 +358,11 @@ msgstr "Image de l'article"
 #: field:product.scale.system,product_line_ids:0
 msgid "Product Lines"
 msgstr "Lignes de produit"
+
+#. module: product_to_scale_bizerba
+#: field:product.scale.log.wizard,product_qty:0
+msgid "Product Quantity"
+msgstr "Nombre de produits"
 
 #. module: product_to_scale_bizerba
 #: field:product.scale.log,product_text:0
@@ -487,6 +512,16 @@ msgid "Screen Text File Pattern"
 msgstr "Motif du fichier de position"
 
 #. module: product_to_scale_bizerba
+#: view:product.scale.log.wizard:0
+msgid "Send Log"
+msgstr "Envoyer les logs"
+
+#. module: product_to_scale_bizerba
+#: model:ir.actions.act_window,name:product_to_scale_bizerba.action_product_scale_log_wizard
+msgid "Send Scale Log"
+msgstr "Envoyer les logs à la balance"
+
+#. module: product_to_scale_bizerba
 #: view:product.scale.log:0
 msgid "Send to FTP Server"
 msgstr "Envoyer au serveur FTP"
@@ -533,12 +568,18 @@ msgid "Type"
 msgstr "Type"
 
 #. module: product_to_scale_bizerba
+#: selection:product.scale.log.wizard,log_type:0
+msgid "Unlink"
+msgstr "Supprimer"
+
+#. module: product_to_scale_bizerba
 #: help:product.scale.group,external_shelf_id:0
 msgid "Unused field for the time being. Define shelf products."
 msgstr "Champ inutilisé pour le moment. Définir le rayon."
 
 #. module: product_to_scale_bizerba
 #: selection:product.scale.log,action:0
+#: selection:product.scale.log.wizard,log_type:0
 msgid "Update"
 msgstr "Mettre à jour"
 
@@ -591,6 +632,11 @@ msgid "You have to set the field '%s' used as an ID for the Bizerba if you set s
 msgstr "Vous devez définir le champ '%s' utilisé comme identifiant par Bizerba, si vous voulez appliquer une catégorie balance au produit %s"
 
 #. module: product_to_scale_bizerba
+#: view:product.scale.log.wizard:0
+msgid "or"
+msgstr "ou"
+
+#. module: product_to_scale_bizerba
 #: code:_description:0
 #: model:ir.model,name:product_to_scale_bizerba.model_product_scale_group
 #, python-format
@@ -603,6 +649,13 @@ msgstr "product.scale.group"
 #, python-format
 msgid "product.scale.log"
 msgstr "product.scale.log"
+
+#. module: product_to_scale_bizerba
+#: code:_description:0
+#: model:ir.model,name:product_to_scale_bizerba.model_product_scale_log_wizard
+#, python-format
+msgid "product.scale.log.wizard"
+msgstr "product.scale.log.wizard"
 
 #. module: product_to_scale_bizerba
 #: code:_description:0
