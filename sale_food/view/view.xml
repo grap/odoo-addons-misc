@@ -166,6 +166,7 @@
                             </group>
                             <group>
                                 <field name="radar_chart"/>
+                                <field name="limit"/>
                             </group>
                         </group>
                         <group col="5" colspan="2">

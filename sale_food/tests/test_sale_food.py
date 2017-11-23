@@ -45,7 +45,9 @@ class TestSaleFood(TransactionCase):
             len(pp_ids), self.ppw_obj._needaction_count(cr, uid),
             "Incorrect computation of Needed Pricetag Quantity.")
 
-        ppw_id = self.ppw_obj.create(cr, uid, {}, {'active_id': True})
+        ppw_id = self.ppw_obj.create(cr, uid, {
+            'limit': 14,
+        }, {'active_id': True})
         context = {  # noqa
             'active_model': u'product.pricetag.wizard',
             'active_ids': [ppw_id],

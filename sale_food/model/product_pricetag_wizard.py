@@ -45,8 +45,19 @@ class product_pricetag_wizard(TransientModel):
 
     def initialize_product(self, cr, uid, ids, context=None):
         wizard = self.browse(cr, uid, ids[0], context=context)
+        product_obj = self.pool['product.product']
+        product_ids = product_obj.search(cr, uid, [
+            ('pricetag_state', 'in', ['1', '2'])],
+            order='pricetag_state desc', limit=wizard.limit)
         ctx = context.copy()
-        ctx['format'] = wizard.format
+        ctx.update({
+            'active_model': 'product.product',
+            'active_ids': product_ids,
+            'border': wizard.border,
+            'radar_chart': wizard.radar_chart,
+            'format': wizard.format,
+            'limit': wizard.limit,
+        })
         return {
             'type': 'ir.actions.act_window',
             'name': _('Print Price Tags'),
@@ -61,38 +72,46 @@ class product_pricetag_wizard(TransientModel):
     # Fields Default Section
     def _get_line_ids(self, cr, uid, context=None):
         res = []
-        if context.get('active_id', False):
-            pp_obj = self.pool['product.product']
-            pp_ids = pp_obj.search(cr, uid, [
-                ('pricetag_state', 'in', ['1', '2'])],
-                order='pricetag_state desc')
-            for pp_id in pp_ids:
+        context = context and context or {}
+        if context.get('active_model', False) == 'product.product':
+            product_ids = context.get('active_ids', [])
+            for product_id in product_ids:
                 res.append((0, 0, {
-                    'product_id': pp_id,
+                    'product_id': product_id,
                     'quantity': 1,
                 }))
         return res
 
-    # Fields Default Section
+    def _get_border(self, cr, uid, context=None):
+        return context.get('border', True)
+
+    def _get_radar_chart(self, cr, uid, context=None):
+        return context.get('radar_chart', True)
+
     def _get_format(self, cr, uid, context=None):
         return context.get('format', 'normal')
+
+    def _get_limit(self, cr, uid, context=None):
+        return context.get('limit', 10000)
 
     # Columns Section
     _columns = {
         'border': fields.boolean(
             'Border', help="Design a border on Price Tags"),
+        'limit': fields.integer('Initialization Limit', required=True),
         'radar_chart': fields.boolean(
             'Radar Chart', help="Display Radar Chart if available"),
         'line_ids': fields.one2many(
             'product.pricetag.wizard.line', 'wizard_id', 'Products'),
         'format': fields.selection(
-            selection=_FORMAT_SELECTION, string='format'),
+            selection=_FORMAT_SELECTION, string='format', required=True),
     }
 
     # Default values Section
     _defaults = {
-        'border': True,
-        'radar_chart': True,
-        'line_ids': _get_line_ids,
+        'border': _get_border,
+        'radar_chart': _get_radar_chart,
         'format': _get_format,
+        'limit': _get_limit,
+        'line_ids': _get_line_ids,
     }
