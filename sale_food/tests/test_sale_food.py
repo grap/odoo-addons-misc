@@ -22,7 +22,7 @@
 ##############################################################################
 
 from openerp.tests.common import TransactionCase
-import openerp.netsvc as netsvc
+# import openerp.netsvc as netsvc
 
 
 class TestSaleFood(TransactionCase):
