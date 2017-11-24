@@ -71,6 +71,7 @@ class product_product(Model):
         'volume',
         'weight_net',
         'uom_id',
+        'ean13',
     ]
 
     # Columns section
