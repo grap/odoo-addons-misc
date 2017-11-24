@@ -102,8 +102,8 @@
             }
             img.ean13_image{
                 margin-left:0.05cm;
-                width:100%; 
-                }
+                width:6.7cm; height:1.0cm;
+            }
         </style>
     </head>
     <body>
