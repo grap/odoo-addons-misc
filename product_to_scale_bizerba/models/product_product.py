@@ -102,6 +102,12 @@ class product_product(Model):
         return set(system_fields).intersection(vals_fields)
 
     # Overload Section
+    def copy(self, cr, uid, id, default=None, context=None):
+        default = default and default or {}
+        default['scale_group_id'] = False
+        return super(product_product, self).copy(
+            cr, uid, id, default=default, context=context)
+
     def create(self, cr, uid, vals, context=None):
         send_to_scale = vals.get('scale_group_id', False)
         res = super(product_product, self).create(
