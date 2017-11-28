@@ -367,8 +367,6 @@ class product_scale_log(Model):
                 log_group_ids[log.scale_group_id.id] = log.id
 
         for group_id, log_id in log_group_ids.iteritems():
-            print ">>>>>>>>>>>>>>>>>"
-            print group_id, log_id
             group = scale_group_obj.browse(cr, uid, group_id, context=context)
             break_line =\
                 self._ENCODING_MAPPING[group.scale_system_id.encoding]
