@@ -415,13 +415,14 @@ class product_scale_log(Model):
 
             # Push First Image for constrains reason
             for product_line in scale_system.product_line_ids:
-                if product_line.type == 'product_image':
-                    # send product image
-                    self.ftp_connection_push_image_file(
-                        cr, uid, ftp,
-                        scale_system.product_image_relative_path,
-                        folder_path, log.product_id,
-                        product_line.field_id, context=context)
+                for log in logs:
+                    if product_line.type == 'product_image':
+                        # send product image
+                        self.ftp_connection_push_image_file(
+                            cr, uid, ftp,
+                            scale_system.product_image_relative_path,
+                            folder_path, log.product_id,
+                            product_line.field_id, context=context)
 
             # Push First External Text for constrains reason
             if external_text_lst:
