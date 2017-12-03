@@ -367,8 +367,6 @@ class product_scale_log(Model):
                 log_group_ids[log.scale_group_id.id] = log.id
 
         for group_id, log_id in log_group_ids.iteritems():
-            print ">>>>>>>>>>>>>>>>>"
-            print group_id, log_id
             group = scale_group_obj.browse(cr, uid, group_id, context=context)
             break_line =\
                 self._ENCODING_MAPPING[group.scale_system_id.encoding]
@@ -461,4 +459,12 @@ class product_scale_log(Model):
     def cron_send_to_scale(self, cr, uid, context=None):
         log_ids = self.search(
             cr, uid, [('sent', '=', False)], order='log_date', context=context)
+        self.send_log(cr, uid, log_ids, context=context)
+
+    def cron_send_to_scale_per_system(
+            self, cr, uid, scale_system_id, context=None):
+        log_ids = self.search(cr, uid, [
+            ('sent', '=', False),
+            ('scale_system_id', '=', scale_system_id)],
+            order='log_date', context=context)
         self.send_log(cr, uid, log_ids, context=context)
