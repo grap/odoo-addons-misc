@@ -220,6 +220,7 @@ FROM (
     ec.sequence category_sequence,
     ec.name category_name,
     ec.complete_name category_complete_name,
+    encode(digest(to_char(ec.write_date, 'YYYY-MM-DD HH24:MI:SS US'), 'sha1'), 'hex') category_sha1,
     ec.write_date category_write_date,
     pt.uom_id,
     uom.eshop_description uom_eshop_description,
