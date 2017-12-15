@@ -203,6 +203,7 @@ class ProductProduct(Model):
                 }
 
         company_id = ru_obj.browse(cr, uid, uid, context=context).company_id.id
+
         cr.execute("""
 SELECT
     distinct tmp.*,
@@ -262,6 +263,8 @@ order by category_sequence, category_name, name;
                 tmp.update({'qty': 0, 'discount': 0})
             if tmp['delivery_categ_id'] is None:
                 tmp['delivery_categ_id'] = False
+            if tmp['uom_eshop_description'] is None:
+                tmp['uom_eshop_description'] = False
             res.append(tmp)
 
         return res
