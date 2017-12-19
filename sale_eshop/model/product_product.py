@@ -20,6 +20,8 @@
 #
 ##############################################################################
 
+import hashlib
+
 from datetime import datetime
 
 from openerp.osv import fields
@@ -220,7 +222,6 @@ FROM (
     ec.sequence category_sequence,
     ec.name category_name,
     ec.complete_name category_complete_name,
-    encode(digest(to_char(ec.write_date, 'YYYY-MM-DD HH24:MI:SS US'), 'sha1'), 'hex') category_sha1,
     ec.write_date category_write_date,
     pt.uom_id,
     uom.eshop_description uom_eshop_description,
@@ -266,6 +267,7 @@ order by category_sequence, category_name, name;
                 tmp['delivery_categ_id'] = False
             if tmp['uom_eshop_description'] is None:
                 tmp['uom_eshop_description'] = False
+            tmp['category_sha1'] = hashlib.sha1(str(tmp['category_write_date'])).hexdigest()
             res.append(tmp)
 
         return res
