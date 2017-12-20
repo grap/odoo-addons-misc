@@ -62,12 +62,14 @@ class EshopCategory(Model):
     def _get_product_multi(self, cr, uid, ids, field_name, arg, context=None):
         pp_obj = self.pool['product.product']
         res = {}
+        all_pp_ids = pp_obj.search(
+            cr, uid, [('eshop_category_id', 'in', ids)], context=context)
+        all_available_pp_ids = pp_obj.search(cr, uid, [
+            ('id', 'in', all_pp_ids), ('eshop_state', '=', 'available')],
+            context=context)
         for ec in self.browse(cr, uid, ids, context):
             pp_ids = [pp.id for pp in ec.product_ids]
-            available_pp_ids = pp_ids
-            available_pp_ids = pp_obj.search(cr, uid, [
-                ('id', 'in', pp_ids), ('eshop_state', '=', 'available')],
-                context=context)
+            available_pp_ids = list(set(all_available_pp_ids) & set(pp_ids))
             res[ec.id] = {
                 'product_qty': len(pp_ids),
                 'available_product_ids': available_pp_ids,

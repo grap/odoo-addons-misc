@@ -267,7 +267,8 @@ order by category_sequence, category_name, name;
                 tmp['delivery_categ_id'] = False
             if tmp['uom_eshop_description'] is None:
                 tmp['uom_eshop_description'] = False
-            tmp['category_sha1'] = hashlib.sha1(str(tmp['category_write_date'])).hexdigest()
+            tmp['category_sha1'] = hashlib.sha1(
+                str(tmp['category_write_date'])).hexdigest()
             res.append(tmp)
 
         return res
