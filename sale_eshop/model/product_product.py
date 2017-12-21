@@ -156,7 +156,9 @@ class ProductProduct(Model):
             'End Date of Sale'),
         'eshop_state': fields.function(
             _get_eshop_state, type='selection', string='eShop State',
-            fnct_search=_eshop_state, selection=_ESHOP_STATE_SELECTION),
+            selection=_ESHOP_STATE_SELECTION,
+            # fnct_search=_eshop_state,
+            store=True),
         'eshop_minimum_qty': fields.float(
             'Minimum Quantity for eShop', required=True),
         'eshop_rounded_qty': fields.float(
