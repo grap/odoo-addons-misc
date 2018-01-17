@@ -69,6 +69,7 @@
 <!-- Sale Delivery Configuration Part -->
         <menuitem id="menu_sale_delivery_config"
             name="Delivery Sales"
+            groups="sale_recovery_moment.delivery_user"
             parent="base.menu_base_config" />
 
         <menuitem id="menu_sale_delivery_category"
