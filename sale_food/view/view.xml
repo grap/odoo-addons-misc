@@ -248,54 +248,6 @@
             </field>
         </record>
 
-        <record id="view_product_product_food_tree" model="ir.ui.view">
-            <field name="model">product.product</field>
-            <field name="arch" type="xml">
-                <tree string="Products (Food)" editable="bottom">
-                    <field name="name" readonly="1"/>
-                    <field name="is_mercuriale"/>
-                    <field name="label_ids" widget="many2many_tags"/>
-                    <field name="fresh_category"/>
-                    <field name="fresh_range"/>
-                    <field name="organic_notation"/>
-                </tree>
-            </field>
-        </record>
-
-        <record id="view_product_product_pricetag_tree" model="ir.ui.view">
-            <field name="model">product.product</field>
-            <field name="arch" type="xml">
-                <tree string="Products (Price Tags)" editable="bottom">
-                    <field name="name" readonly="1"/>
-                    <field name="pricetag_type_id"/>
-                    <field name="pricetag_state" />
-                </tree>
-            </field>
-        </record>
-
-        <record id="view_product_product_origin_tree" model="ir.ui.view">
-            <field name="model">product.product</field>
-            <field name="arch" type="xml">
-                <tree string="Products (Origin)" editable="bottom">
-                    <field name="name" readonly="1"/>
-                    <field name="country_id" 
-                        options="{'quick_create':false}"
-                        on_change="onchange_country_id(
-                            country_id,
-                            department_id)"/>
-                    <field name="department_id"
-                        options="{'quick_create':false}"
-                        on_change="onchange_department_id(
-                            country_id,
-                            department_id)"/>
-                    <field name="maker_description"/>
-                    <field name="origin_description"/>
-                    <field name="local_notation"/>
-                    <field name="social_notation"/>
-                </tree>
-            </field>
-        </record>
-
         <record id="view_product_product_form" model="ir.ui.view">
             <field name="model">product.product</field>
             <field name="inherit_id" ref="product.product_normal_form_view" />

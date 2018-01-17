@@ -20,16 +20,6 @@
 <openerp>
     <data>
 
-<!-- Model: product.product -->
-        <record id="action_product_product" model="ir.actions.act_window">
-            <field name="name">Products (eShop)</field>
-            <field name="res_model">product.product</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree</field>
-            <field name="context">{'search_default_eshop_setup':1}</field>
-            <field name="view_id" ref="view_product_product_tree" />
-        </record>
-
 <!-- Model: res.partner -->
         <record id="action_res_partner" model="ir.actions.act_window">
             <field name="name">Customers (eShop)</field>

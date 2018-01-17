@@ -34,10 +34,5 @@
             groups="sale_eshop.res_groups_eshop_user"
             action="action_res_partner"/>
 
-        <menuitem id="menu_product_product_3"
-            parent="base.menu_product" sequence="3"
-            groups="sale_eshop.res_groups_eshop_user"
-            action="action_product_product"/>
-
     </data>
 </openerp>
