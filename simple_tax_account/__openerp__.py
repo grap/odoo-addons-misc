@@ -6,7 +6,7 @@
 {
     'name': 'Account - Simple Tax',
     'summary': 'Easy Switch between VAT Excluded and VAT Included',
-    'version': '8.0.1.0.0',
+    'version': '8.0.2.0.0',
     'category': 'Account',
     'author': 'GRAP',
     'website': 'http://www.grap.coop',
@@ -18,12 +18,14 @@
         'views/view_res_partner.xml',
         'views/view_account_invoice.xml',
         'views/view_account_tax.xml',
+        'views/view_account_tax_template.xml',
     ],
     'demo': [
-        'demo/res_groups.yml',
-        'demo/account_tax.yml',
-        'demo/res_partner.yml',
-        'demo/product_product.yml',
+        'demo/res_groups.xml',
+        'demo/account_tax.xml',
+        'demo/account_tax_template.xml',
+        'demo/res_partner.xml',
+        'demo/product_product.xml',
     ],
     'installable': True,
 }

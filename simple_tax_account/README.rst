@@ -20,8 +20,8 @@ This module is useful in the following case:
 Technical Information
 ---------------------
 
-* On account.tax, add a new field 'simple_tax_id' that is the according VAT
-  with or without TAX included. Sample:
+* On account.tax, add a new field 'simple_tax_id' that is the according tax
+  with or without tax included. Sample:
     * TAX A: VAT 10% included
     * TAX B : VAT 10% excluded
     * TAX A and TAX B will be linked together
@@ -47,6 +47,10 @@ Technical Information
 
 .. image:: /simple_tax_account/static/description/invoice_mixed_taxes.png
 
+* on account.tax.template, add a new field 'simple_template_id' that is
+  the according template with of without tax included.
+
+.. image:: /simple_tax_account/static/description/tax_template_setting.png
 
 Related Modules
 ---------------
@@ -54,16 +58,6 @@ Related Modules
 * This following modules provide the same behouviour:
     * 'simple_tax_sale' for sale module;
     * 'simple_tax_purchase' for purchase module;
-
-Installation
-============
-
-Normal installation.
-
-Configuration
-=============
-
-No configuration is needed.
 
 Credits
 =======
