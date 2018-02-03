@@ -53,11 +53,17 @@ class product_template(Model):
                 # product template creation mode
                 company_id = vals.get('company_id', False)
                 if 'supplier_taxes_id' in vals.keys():
-                    supplier_tax_ids = vals['supplier_taxes_id'][0][2]
+                    if vals['supplier_taxes_id'][0][0] == 4:
+                        supplier_tax_ids = [vals['supplier_taxes_id'][0][1]]
+                    else:
+                        supplier_tax_ids = vals['supplier_taxes_id'][0][2]
                 else:
                     supplier_tax_ids = []
                 if 'taxes_id' in vals.keys():
-                    customer_tax_ids = vals['taxes_id'][0][2]
+                    if vals['supplier_taxes_id'][0][0] == 4:
+                        customer_tax_ids = [vals['taxes_id'][0][1]]
+                    else:
+                        customer_tax_ids = vals['taxes_id'][0][2]
                 else:
                     customer_tax_ids = []
             else:
