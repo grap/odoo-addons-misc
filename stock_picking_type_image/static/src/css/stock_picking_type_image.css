@@ -1,0 +1,10 @@
+@charset "utf-8";
+
+
+.openerp .oe_kanban_view .oe_kanban_stock_picking_type_image{
+    min-height: 170px !important;
+}
+
+.openerp .oe_kanban_view .oe_kanban_stock_picking_type_image a.oe_kanban_action{
+    font-size: 16px;
+}
