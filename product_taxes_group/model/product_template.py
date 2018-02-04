@@ -60,7 +60,7 @@ class product_template(Model):
                 else:
                     supplier_tax_ids = []
                 if 'taxes_id' in vals.keys():
-                    if vals['supplier_taxes_id'][0][0] == 4:
+                    if vals['taxes_id'][0][0] == 4:
                         customer_tax_ids = [vals['taxes_id'][0][1]]
                     else:
                         customer_tax_ids = vals['taxes_id'][0][2]
