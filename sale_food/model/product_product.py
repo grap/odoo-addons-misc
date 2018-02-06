@@ -187,35 +187,6 @@ class product_product(Model):
                 res[pp.id] = _("Not From Organic Farming")
         return res
 
-    def _get_extra_food_info(self, cr, uid, ids, name, arg, context=None):
-        """Return extra information about food for legal documents"""
-        res = {}
-        if context is None:
-            context = {}
-        for pp in self.browse(cr, uid, ids, context=context):
-            if pp.country_id:
-                res[pp.id] += _(' - Country: ')\
-                    + pp.country_id.name
-            if pp.fresh_category:
-                res[pp.id] += _(" - Category: ") + pp.fresh_category
-            label = False
-            for label in pp.label_ids:
-                if label.mandatory_on_invoice:
-                    if label:
-                        label = True
-                        res[pp.id] += _(" - Label: ")
-                    res[pp.id] += label.name
-        return res
-
-    def _get_labels_description(self, cr, uid, ids, name, arg, context=None):
-        res = {}
-        for pp in self.browse(cr, uid, ids, context=context):
-            if pp.label_ids:
-                res[pp.id] = _(' / ').join([x.name for x in pp.label_ids])
-            else:
-                res[pp.id] = False
-        return res
-
     _columns = {
         'is_mercuriale': fields.boolean(
             'Mercuriale Product', help="A product in mercuriale has price"
@@ -299,16 +270,6 @@ class product_product(Model):
         'pricetag_image': fields.function(
             _get_pricetag_image, type='binary',
             string='Image on the label printed'),
-        'extra_food_info': fields.function(
-            _get_extra_food_info, type='char',
-            string='Extra information for invoices'),
-        'labels_description': fields.function(
-            _get_labels_description, type='char',
-            string='Labels Description', store={
-                'product.product': (
-                    lambda self, cr, uid, ids, context=None: ids, [
-                        'label_ids',
-                    ], 10)}),
     }
 
     # Default Section
