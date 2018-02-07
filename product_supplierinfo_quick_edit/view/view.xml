@@ -79,6 +79,7 @@
                <form string="Create Purchase Orders" version="7.0">
                     <group>
                         <label string="This will create a purchase order for each supplier concerned by your previous selection." colspan="4"/>
+                        <field name="purchase_disabled_products" />
                     </group>
                     
                     <footer>

@@ -1,99 +1,66 @@
-# -*- encoding: utf-8 -*-
-##############################################################################
-#
-#    Product - Supplier Info Quick Edit module for Odoo
-#    Copyright (C) 2015-Today GRAP (http://www.grap.coop)
-#    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# coding: utf-8
+# Copyright (C) 2015 - Today: GRAP (http://www.grap.coop)
+# @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp.tools.translate import _
-from openerp.osv.orm import TransientModel
+from openerp import _, api, fields, models
 
 
-class product_supplierinfo_create_purchase_order(TransientModel):
+class ProductSupplierinfoCreatePurchaseOrder(models.TransientModel):
     _name = 'product.supplierinfo.create.purchase.order'
 
-    def _get_product_from_template(
-            self, cr, uid, template_ids, context=None):
-        """
-        Return product.product ids according to the template_ids given.
-        By default, return all the products linked to the templates.
-        Note 1:
-        This function exists mainly to be easily overloaded.
-        Note 2:
-        This function exists because Odoo set a dummy link between template
-        and supplierinfo, that is rather moronic. (should be product.product).
-        Maybe in Odoo V43, this will be fixed, making this function useless.
-        """
-        product_obj = self.pool['product.product']
-        return product_obj.search(
-            cr, uid, [('product_tmpl_id', 'in', template_ids)],
-            context=context)
+    purchase_disabled_products = fields.Boolean(
+        string='Purchase Disabled Products', default=True)
 
-    def create_purchase_order(self, cr, uid, ids, context=None):
-        supplierinfo_ids = context.get('active_ids', [])
-        supplierinfo_obj = self.pool['product.supplierinfo']
-        order_obj = self.pool['purchase.order']
-        line_obj = self.pool['purchase.order.line']
+    @api.multi
+    def create_purchase_order(self):
+        self.ensure_one()
+        order_obj = self.env['purchase.order']
+        line_obj = self.env['purchase.order.line']
+        product_obj = self.env['product.product']
+        supplierinfo_obj = self.env['product.supplierinfo']
+        supplierinfos = supplierinfo_obj.browse(
+            self.env.context.get('active_ids', []))
 
+        # Create a dict of partner / product_ids
         create_data = {}
-        order_ids = []
-
-        # Get supplier and products
-        for supplierinfo in supplierinfo_obj.browse(
-                cr, uid, supplierinfo_ids, context=context):
-            product_ids = self._get_product_from_template(
-                cr, uid, [supplierinfo.product_tmpl_id.id], context=context)
+        for supplierinfo in supplierinfos:
+            products = product_obj.with_context(
+                active_test=not self.purchase_disabled_products).search(
+                [('product_tmpl_id', '=', supplierinfo.product_tmpl_id.id)])
             if supplierinfo.name.id in create_data:
-                create_data[supplierinfo.name.id] += product_ids
+                create_data[supplierinfo.name.id] += products.ids
             else:
-                create_data[supplierinfo.name.id] = product_ids
+                create_data[supplierinfo.name.id] = products.ids
 
-        # Create Purchase Orders
+        # Create a Purchase order for each partner
+        order_ids = []
         for partner_id, product_ids in create_data.iteritems():
-            order_data = order_obj._add_missing_default_values(
-                cr, uid, {}, context=context)
+            order_data = order_obj._add_missing_default_values({})
             order_data['partner_id'] = partner_id
-            order_data.update(order_obj.onchange_partner_id(
-                cr, uid, False, partner_id, context=context)['value'])
+            order_data.update(
+                order_obj.onchange_partner_id(partner_id)['value'])
 
             # Get default stock location
-            order_data['picking_type_id'] = order_obj._get_picking_in(
-                cr, uid, context=context)
+            order_data['picking_type_id'] = order_obj._get_picking_in()
             order_data['location_id'] = order_obj.onchange_picking_type_id(
-                cr, uid, False, order_data['picking_type_id'],
-                context=context)['value']['location_id']
+                order_data['picking_type_id'])['value']['location_id']
 
             order_data['order_line'] = []
             for product_id in product_ids:
                 line_data = {'product_id': product_id}
                 line_data.update(line_obj.onchange_product_id(
-                    cr, uid, ids, order_data['pricelist_id'], product_id, 1,
+                    order_data['pricelist_id'], product_id, 1,
                     False, order_data['partner_id'],
-                    fiscal_position_id=order_data['fiscal_position'],
-                    context=context)['value'])
+                    fiscal_position_id=order_data['fiscal_position'])['value'])
                 line_data['taxes_id'] = [[6, False, line_data['taxes_id']]]
                 order_data['order_line'].append([0, False, line_data])
 
-            order_id = order_obj.create(cr, uid, order_data, context=context)
+            order = order_obj.create(order_data)
 
-            order_ids.append(str(order_id))
+            order_ids.append(str(order.id))
 
-        return {
+        res = {
             'domain': "[('id','in', [" + ','.join(order_ids) + "])]",
             'name': _('Purchase Orders'),
             'view_type': 'form',
@@ -102,3 +69,4 @@ class product_supplierinfo_create_purchase_order(TransientModel):
             'view_id': False,
             'type': 'ir.actions.act_window',
         }
+        return res

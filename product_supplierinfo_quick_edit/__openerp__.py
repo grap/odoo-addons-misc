@@ -23,7 +23,7 @@
 {
     'name': 'Product - Supplier Info Quick Edit',
     'summary': 'Provides Wizard to manage easily Supplierinfo',
-    'version': '0.2',
+    'version': '8.0.3.0.0',
     'category': 'Product',
     'description': """
 Provides Wizard to manage easily Supplierinfo
