@@ -4,6 +4,8 @@ Copyright (C) 2015-Today GRAP (http://www.grap.coop)
  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 */
 
+"use strict";
+
 openerp.pos_tare = function(instance){
     var module = instance.point_of_sale;
     _t = instance.web._t;
@@ -43,91 +45,76 @@ openerp.pos_tare = function(instance){
         previous_screen: 'products',
         show_leftpane: false,
 
-        init: function(parent, options) {
-            this._super(parent, options);
-            this.gross_weight = 0;
-            this.tare_weight = 0;
-            this.net_weight = 0;
-        },
-
         show: function(){
-            this.current_product = this.get_product();
-            this.current_product_name = this.get_product().display_name;
-            this.current_unit_price = this.get_product().price;
             this._super();
             this.renderElement();
             var self = this;
-            this.gross_weight = 0;
-            this.tare_weight = 0;
+
+            // Initialize values
             this.net_weight = 0;
+            this.current_product = this.get_product();
+            this.$('#product-name').html(this.get_product().display_name);
+            this.$('#unit-price').html(this.format_currency(this.get_product().price));
 
+            // Add a 'next' Button
             this.add_action_button({
-                    label: _t('Back'),
-                    icon: '/point_of_sale/static/src/img/icons/png48/go-previous.png',
-                    click: function(){  
-                        self.pos_widget.screen_selector.set_current_screen(self.previous_screen);
-                    },
-                });
-
+                label: _t('Back'),
+                icon: '/point_of_sale/static/src/img/icons/png48/go-previous.png',
+                click: function(){  
+                    self.pos_widget.screen_selector.set_current_screen(self.previous_screen);
+                },
+            });
             this.order_button = this.add_action_button({
-                    label: _t('Order'),
-                    icon: '/point_of_sale/static/src/img/icons/png48/go-next.png',
-                    click: function() { self.order_product_click(); },
-                });
+                label: _t('Order'),
+                icon: '/point_of_sale/static/src/img/icons/png48/go-next.png',
+                click: function() { self.order_product_click(); },
+            });
+
+            // Initialize Display
+            this.onChangeGrossWeightTareWeight();
+
+            this.$('#gross-weight').keyup(function(event){
+                self.onChangeGrossWeightTareWeight(event);
+            });
+            this.$('#tare-weight').keyup(function(event){
+                self.onChangeGrossWeightTareWeight(event);
+            });
 
             // Focus on Gross Weight
             this.$('#gross-weight').focus();
 
-            // Disable Validate Button
-            this.updateInvalidNetWeight();
         },
 
-        renderElement: function() {
-            this._super();
-            var self = this;
-            this.$('#gross-weight').keyup(function(event){
-                self.changeGrossWeight(event);
-            });
-            this.$('#tare-weight').keyup(function(event){
-                self.changeTareWeight(event);
-            });
-        },
-
-        changeGrossWeight: function(event) {
-            var newGrossWeight = event.currentTarget.value;
-            grossWeight = parseFloat(newGrossWeight.replace(',', '.'));
-            if(!isNaN(grossWeight) && newGrossWeight.trim() != ''){
-                this.gross_weight = grossWeight;
-                this.updateValidNetWeight();
+        sanitize_value: function (input_name){
+            var res = this.$(input_name)[0].value.replace(',', '.').trim();
+            if (isNaN(res)){
+                this.$(input_name).css("background-color", "#F66");
             }
             else{
-                this.updateInvalidNetWeight();
+                this.$(input_name).css("background-color", "#FFF");
             }
+            return res;
         },
 
-        changeTareWeight: function(event) {
-            var newTareWeight = event.currentTarget.value;
-            tareWeight = parseFloat(newTareWeight.replace(',', '.'));
-            if(!isNaN(tareWeight) && newTareWeight.trim() != ''){
-                this.tare_weight = tareWeight;
-                this.updateValidNetWeight();
+        onChangeGrossWeightTareWeight: function(event){
+            var gross_weight = this.sanitize_value('#gross-weight');
+            var tare_weight = this.sanitize_value('#tare-weight');
+            var ok = false;
+
+            if (!isNaN(gross_weight) && (gross_weight !== '') && (parseFloat(gross_weight) !== 0) && !isNaN(tare_weight)){
+                this.net_weight = gross_weight - tare_weight;
+                var price = this.get_product().price * this.net_weight;
+                this.current_net_weight_text = this.net_weight.toFixed(3);
+                this.current_total_price_text = this.format_currency(price);
+                ok = true;
             }
             else{
-                this.updateInvalidNetWeight();
+                this.current_net_weight_text = '/';
+                this.current_total_price_text = '/';
             }
-        },
-
-        updateInvalidNetWeight: function(){
-            this.order_button.set_disabled(true);
-        },
-
-        updateValidNetWeight: function(){
-            // get a number without floating bug
-            this.net_weight = (this.gross_weight - this.tare_weight).toFixed(3);
-            this.$('#net-weight')[0].value = this.net_weight;
-            var price = this.current_product.price * this.net_weight;
-            this.$('#total-price')[0].value = price.toFixed(2);
-            this.order_button.set_disabled(false);
+            this.$('#net-weight').html(this.current_net_weight_text);
+            this.$('#total-price').html(this.current_total_price_text);
+            this.order_button.set_disabled(!ok);
         },
 
         get_product: function(){

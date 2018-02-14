@@ -17,6 +17,9 @@
     'data': [
         'views/templates.xml',
     ],
+    'demo': [
+        'demo/pos_config.xml',
+    ],
     'qweb': [
         'static/src/xml/pos_tare.xml',
     ],
