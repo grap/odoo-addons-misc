@@ -8,7 +8,7 @@ Copyright (C) 2015-Today GRAP (http://www.grap.coop)
 
 openerp.pos_tare = function(instance){
     var module = instance.point_of_sale;
-    _t = instance.web._t;
+    var _t = instance.web._t;
 
     /*************************************************************************
         Extend : Widget 'PosWidget'
