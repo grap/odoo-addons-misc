@@ -120,14 +120,16 @@ class InternalUseLine(models.Model):
         """
         self.ensure_one()
         return (
-            self.product_id.get_income_expense_accounts()['account_expense']
+            self.product_id.get_income_expense_accounts()['account_expense'],
+            self.product_id.supplier_taxes_id.ids,
         )
 
     @api.multi
     def _prepare_account_move_line(self, account_move_vals):
         use_case = self[0].internal_use_case_id
         total = sum(self.mapped('amount'))
-        # TODO ADD VAT ! !!!
+        tax_code_id = self[0].product_id.supplier_taxes_id and\
+            self[0].product_id.supplier_taxes_id[0].base_code_id or False
         return {
             'name': _('Expense Transfert (%s)') % (use_case.name),
             'date': account_move_vals['date'],
@@ -139,4 +141,6 @@ class InternalUseLine(models.Model):
                 'account_expense'].id,
             'credit': (total > 0) and total or 0,
             'debit': (total < 0) and -total or 0,
+            'tax_code_id': tax_code_id,
+            'tax_amount': tax_code_id and max(total, -total) or 0,
         }
