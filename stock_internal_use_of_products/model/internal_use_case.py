@@ -1,67 +1,51 @@
-# -*- encoding: utf-8 -*-
-##############################################################################
-#
-#    Stock - Internal Use Of Products for Odoo
-#    Copyright (C) 2013-Today GRAP (http://www.grap.coop)
-#    @author Julien WESTE
-#    @author Sylvain LE GAL <https://www.twitter.com/legalsylvain>
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# coding: utf-8
+# Copyright (C) 2013-Today GRAP (http://www.grap.coop)
+# @author Julien WESTE
+# @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp.osv.orm import Model
-from openerp.osv import fields
-from openerp.tools.translate import _
+from openerp import _, api, fields, models
+from openerp.exceptions import Warning as UserError
 
 
-class internal_use_case(Model):
+class InternalUseCase(models.Model):
     _name = 'internal.use.case'
 
-    # Columns Section
-    _columns = {
-        'name': fields.char(
-            'Name', required=True),
-        'company_id': fields.many2one(
-            'res.company', string='Company', required=True, select=True),
-        'location_from': fields.many2one(
-            'stock.location', string='Origin Location', required=True,
-            domain="[('usage','=','internal')]"),
-        'location_to': fields.many2one(
-            'stock.location', 'Destination Location', required=True),
-        'journal': fields.many2one(
-            'account.journal', string='Journal', required=True, help="Set"
-            " the Accounting Journal used to generate Accounting Entries."),
-        'expense_account': fields.many2one(
-            'account.account', string='Expense Account', required=True,
-            domain="[('type','=','other')]",
-            help="Expense account of the Use Case. The generated"
-            " Entries will belong the following lines:\n\n"
-            " * Debit: This Expense Account;"
-            " * Credit: The Default Expense Account of the Product;"),
-        'active': fields.boolean(
-            string='Active', help="By unchecking the active field, you may"
-            "  hide an Use Case without deleting it."),
-    }
+    # Default Section
+    def _default_company_id(self):
+        return self.env.user.company_id
 
-    # Defaults section
-    _defaults = {
-        'company_id': (
-            lambda s, cr, uid, c: s.pool['res.users']._get_company(
-                cr, uid, context=c)),
-        'active': True,
-    }
+    # Columns Section
+    name = fields.char(string='Name', required=True)
+
+    company_id = fields.Many2one(
+        comodel_name='res.company', string='Company', required=True,
+        select=True, default=_default_company_id)
+
+    active = fields.Boolean(
+        string='Active', default=True, help="By unchecking the active field,"
+        " you may hide an Use Case without deleting it.")
+
+    default_location_src_id = fields.Many2one(
+        comodel_name='stock.location', string='Origin Location', required=True,
+        domain="[('usage','=','internal')]", old_name='location_from')
+
+    default_location_dest_id = fields.many2one(
+        comodel_name'stock.location', string='Destination Location',
+        required=True, old_name='location_to')
+
+    journal_id = fields.many2one(
+        comodel_name='account.journal', string='Journal', required=True,
+        help="Set the Accounting Journal used to generate Accounting Entries",
+        old_name='journal')
+
+    account_id = fields.Many2one(
+        comodel_name'account.account', string='Expense Account', required=True,
+        domain="[('type','=','other')]", old_name='expense_account',
+        help="Expense account of the Use Case. The generated"
+        " Entries will belong the following lines:\n\n"
+        " * Debit: This Expense Account;"
+        " * Credit: The Default Expense Account of the Product;")
 
     # Constraints Section
     def _check_company_id(self, cr, uid, ids, context=None):
@@ -102,17 +86,9 @@ class internal_use_case(Model):
             ['location_from', 'location_to']),
     ]
 
-    _sql_constraints = [(
-        'name_company_id_uniq',
-        'unique(name,company_id)',
-        'Case of Internal uses name must be unique by company!')]
 
-    # Overload Section
-    def copy_data(self, cr, uid, id, default=None, context=None):
+    @api.multi
+    def copy_data(self, default=None):
         default = default and default or {}
-        default.update({
-            'name': _('%s (copy)') % (self.browse(
-                cr, uid, id, context=context).name)
-        })
-        return super(internal_use_case, self).copy_data(
-            cr, uid, id, default, context=context)
+        default['name'] = _('%s (copy)') % self.name
+        return super(InternalUseCase, self).copy_data(default)
