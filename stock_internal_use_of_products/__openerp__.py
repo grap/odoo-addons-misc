@@ -1,84 +1,37 @@
-# -*- encoding: utf-8 -*-
-##############################################################################
-#
-#    Stock - Internal Use Of Products for Odoo
-#    Copyright (C) 2013 GRAP (http://www.grap.coop)
-#    @author Julien WESTE
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# coding: utf-8
+# Copyright (C) 2018 - Today: GRAP (http://www.grap.coop)
+# @author Julien WESTE
+# @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 {
-    'name': 'Stock Internal Use of products',
-    'version': '1.0',
+    'name': 'Stock - Internal Use of products',
+    'version': '8.0.2.0.0',
     'category': 'Stock',
-    'description': """
-Allow non accountant user to declare the use of stockable products for
-specific uses (eg: gifts, tastings, etc.)
-======================================================================
-=========================================
-
-Features:
----------
-    * add a 'Internal Use' menu to register such uses
-    * add a 'Internal Use Line' menu mostly for reporting purposes
-
-Technical informations :
-------------------------
-    * add a 'Internal Use Case' menu to configure the internal use
-    possibilities
-    * for each internal_use_case, you need to define an inventory-type
-    stock_location
-
-    * Confirming an internal_use will create
-        * 1 stock.picking
-        * 1 stock.move for each internal_use.line between the 2 locations
-        defined in the internal_use_case
-        * (1 account.move if your products are defined in real_time inventory)
-        * 1 account.move to transfer the expense
-
-Copyright, Authors and Licence:
--------------------------------
-    * Copyright: 2014, GRAP: Groupement Régional Alimentaire de Proximité;
-    * Author:
-        * Julien WESTE;""",
     'author': 'GRAP',
     'website': 'http://www.grap.coop',
     'license': 'AGPL-3',
     'depends': [
-        'account',
-        'product',
-        'stock',
-        'mail',
+        'stock_account',
     ],
     'data': [
         'data/ir_sequence.xml',
         'security/ir_model_access.yml',
         'security/ir_rule.yml',
-        'views/internal_use_view.xml',
-        'views/internal_use_line_view.xml',
-        'views/internal_use_case_view.xml',
+        'views/view_internal_use.xml',
+        'views/view_internal_use_line.xml',
+        'views/view_internal_use_case.xml',
         'views/action.xml',
         'views/menu.xml',
-        'views/internal_use_mass_generate_wizard_view.xml',
+        'views/view_internal_use_mass_generate_wizard.xml',
     ],
     'demo': [
-        'demo/stock_location.yml',
-        'demo/res_groups.yml',
-        'demo/internal_use_case.yml',
-        'demo/internal_use.yml',
+        'demo/account_tax_code.xml',
+        'demo/account_tax.xml',
+        'demo/product_product.xml',
+        'demo/res_groups.xml',
+        'demo/internal_use_case.xml',
+        'demo/internal_use.xml',
     ],
     'css': [
         'static/src/css/css.css'
