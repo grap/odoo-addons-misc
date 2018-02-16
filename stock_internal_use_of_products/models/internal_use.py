@@ -48,7 +48,7 @@ class InternalUse(models.Model):
 
     state = fields.Selection(
         selection=_INTERNAL_USE_STATE, string='Status', readonly=True,
-        state='draft')
+        default='draft')
 
     line_ids = fields.One2many(
         comodel_name='internal.use.line', inverse_name='internal_use_id',

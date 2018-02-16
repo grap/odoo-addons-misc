@@ -65,10 +65,14 @@ class InternalUseLine(models.Model):
         readonly=True, store=True, select=True)
 
     # Compute section
-    @api.depends('product_qty', 'price_unit')
+    @api.depends('product_qty', 'price_unit', 'product_id', 'product_uom_id')
     def _compute_amount(self):
+        uom_obj = self.env['product.uom']
         for line in self:
-            line.amount = line.product_qty * line.price_unit
+            if not (line.product_id and line.product_uom_id):
+                continue
+            line.amount = line.price_unit * uom_obj._compute_qty_obj(
+                line.product_uom_id, line.product_qty, line.product_id.uom_id)
 
     # Views section
     @api.onchange('product_id')
@@ -88,6 +92,21 @@ class InternalUseLine(models.Model):
         for line in self:
             if not line.product_qty:
                 raise UserError(_("Line quantity can not be null"))
+
+    # Constrains Section
+    @api.constrains('product_uom_id', 'product_id')
+    def _constrains_product_qty(self):
+        for line in self:
+            if not (line.product_id and line.product_uom_id):
+                continue
+            if line.product_id.uom_id.category_id !=\
+                    line.product_uom_id.category_id:
+                raise UserError(_(
+                    "The current unit of measure '%s' of the line %s (quantity"
+                    "  %s) is not compatible with the unit of measure '%s'"
+                    " of the product") % (
+                        line.product_uom_id.name, line.product_id.name,
+                        line.product_qty, line.product_id.uom_id.name))
 
     @api.multi
     def _prepare_stock_move(self):
