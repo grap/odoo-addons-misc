@@ -48,28 +48,30 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                                         </a>
                                 </div>
                                 <div class="oe_items_list oe_kanban_ellipsis">
-                                    <div>
-                                        <a name="%(stock.action_picking_tree)d" type="action">All Operations</a>
+                                    <div class="oe_kanban_action_all">
+                                        <a name="%(stock.action_picking_tree)d" type="action" class="oe_kanban_action_all_link">All Operations</a>
                                     </div>
-                                    <div>
-                                        <a name="%(stock.action_picking_tree_ready)d" type="action">
-                                            <field name="count_picking_ready"/> Ready
-                                        </a>
-                                    </div>
-                                    <div t-if="record.count_picking_waiting.raw_value &gt; 0">
-                                        <a name="%(stock.action_picking_tree_waiting)d" type="action">
-                                            <field name="count_picking_waiting"/> Waiting Availability
-                                        </a>
-                                    </div>
-                                    <div t-if="record.count_picking_late.raw_value &gt; 0">
-                                        <a name="%(stock.action_picking_tree_late)d" type="action">
-                                            <field name="count_picking_late"/> Late
-                                        </a>
-                                    </div>
-                                    <div t-if="record.count_picking_backorders.raw_value &gt; 0">
-                                        <a name="%(stock.action_picking_tree_backorder)d" type="action">
-                                            <field name="count_picking_backorders"/> Backorders
-                                        </a>
+                                    <div class="oe_kanban_actions_picking">
+                                        <div class="oe_kanban_action_ready">
+                                            <a class="oe_kanban_action_link" name="%(stock.action_picking_tree_ready)d" type="action">
+                                                <field name="count_picking_ready"/> Ready
+                                            </a>
+                                        </div>
+                                        <div t-if="record.count_picking_waiting.raw_value &gt; 0" class="oe_kanban_action_waiting">
+                                            <a class="oe_kanban_action_link" name="%(stock.action_picking_tree_waiting)d" type="action">
+                                                <field name="count_picking_waiting"/> Awaiting
+                                            </a>
+                                        </div>
+                                        <div t-if="record.count_picking_late.raw_value &gt; 0" class="oe_kanban_action_late">
+                                            <a class="oe_kanban_action_link" name="%(stock.action_picking_tree_late)d" type="action">
+                                                <field name="count_picking_late"/> Late
+                                            </a>
+                                        </div>
+                                        <div t-if="record.count_picking_backorders.raw_value &gt; 0" class="oe_kanban_action_backorders">
+                                            <a class="oe_kanban_action_link" name="%(stock.action_picking_tree_backorder)d" type="action">
+                                                <field name="count_picking_backorders"/> Backorders
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
