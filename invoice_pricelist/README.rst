@@ -6,6 +6,8 @@
 Add Pricelist feature on invoices
 =================================
 
+**OBSOLETE Should be replace by account_invoice_pricelist (OCA repository)**
+
 * Add pricelist field on account invoices. This field is now required
 * Add price computation on each account invoice line based on pricelist
 * Possibility to group by pricelist on account.invoice view

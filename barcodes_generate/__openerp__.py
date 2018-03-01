@@ -13,6 +13,8 @@
 Generate Barcodes for Products and Customers
 ============================================
 
+**OBSOLETE Should be replace by barcodes_generator_product (OCA repository)**
+
 This module depends on a backport of the V9 modules of Odoo 'barcodes'.
 
 It expends Odoo functionnality, to allow user to generate barcode depending
