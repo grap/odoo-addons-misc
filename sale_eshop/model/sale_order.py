@@ -103,7 +103,7 @@ class SaleOrder(Model):
                 'quantity': line.product_uom_qty,
                 'changed': (quantity != line.product_uom_qty),
                 'price_subtotal': line.price_subtotal,
-                'price_subtotal_taxinc': line.price_subtotal_taxinc,
+                'price_subtotal_gross': line.price_subtotal_gross,
                 'discount': line.discount,
             }
         else:
@@ -111,7 +111,7 @@ class SaleOrder(Model):
                 'quantity': 0,
                 'changed': False,
                 'price_subtotal': 0,
-                'price_subtotal_taxinc': 0,
+                'price_subtotal_gross': 0,
                 'discount': 0,
             }
             if current_line_id:
