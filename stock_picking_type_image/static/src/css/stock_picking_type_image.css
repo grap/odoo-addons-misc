@@ -10,10 +10,6 @@
     font-size: 16px;
 }
 
-.openerp .oe_kanban_view .oe_kanban_content{
-    color: white;
-}
-
 /* Link actions : All Operations */
 .openerp .oe_kanban_view .oe_kanban_stock_picking_type_image .oe_kanban_action_all{
     display: block;
@@ -29,32 +25,30 @@
     line-height: 2em;
     padding: 0.4em 2.8em;
     text-decoration: none !important;
-    color : white;
 }
 
 .openerp .oe_kanban_view .oe_kanban_stock_picking_type_image .oe_kanban_action_all_link:hover{
-    color: #bac3d4;
+    text-decoration: underline;
 }
 
 /* Link actions : Ready, Wainting, Late etc.. */
-.openerp .oe_kanban_view .oe_kanban_stock_picking_type .oe_items_list a:hover {
+.openerp .oe_kanban_view .oe_kanban_stock_picking_type_image .oe_items_list a:hover {
     text-decoration: none !important;
 }
 
-.openerp .oe_kanban_view .oe_kanban_stock_picking_type .oe_kanban_actions_picking div {
+.openerp .oe_kanban_view .oe_kanban_stock_picking_type_image .oe_kanban_actions_picking div {
     display: inline;
     width: 14em;
     text-align: center;
     border-radius: 4px;
     top : 10px;
-    color : white;
 }
 
 .openerp .oe_kanban_view .oe_kanban_ellipsis {
     height: 10em;
 }
 
-.openerp .oe_kanban_view .oe_kanban_stock_picking_type .oe_items_list div {
+.openerp .oe_kanban_view .oe_kanban_stock_picking_type_image .oe_items_list div {
     height: 2.5em;
     width: unset;
     display: inline-block;
@@ -65,7 +59,7 @@
     cursor: default !important;
 }
 
-.openerp .oe_kanban_view .oe_kanban_stock_picking_type .oe_dropdown_kanban span {
+.openerp .oe_kanban_view .oe_kanban_stock_picking_type_image .oe_dropdown_kanban span {
     cursor: pointer !important;
 }
 
@@ -75,38 +69,19 @@
 
 
 /*  Link actions : Ready, Wainting, Late etc.. */
-.openerp .oe_kanban_view .oe_kanban_stock_picking_type .oe_kanban_actions_picking .oe_kanban_action_ready, .openerp .oe_kanban_view .oe_kanban_stock_picking_type .oe_kanban_actions_picking .oe_kanban_action_late, .openerp .oe_kanban_view .oe_kanban_stock_picking_type .oe_kanban_actions_picking .oe_kanban_action_backorders, .openerp .oe_kanban_view .oe_kanban_stock_picking_type .oe_kanban_actions_picking .oe_kanban_action_waiting {
+.openerp .oe_kanban_view .oe_kanban_stock_picking_type_image .oe_kanban_actions_picking .oe_kanban_action_ready, .openerp .oe_kanban_view .oe_kanban_stock_picking_type_image .oe_kanban_actions_picking .oe_kanban_action_late, .openerp .oe_kanban_view .oe_kanban_stock_picking_type_image .oe_kanban_actions_picking .oe_kanban_action_backorders, .openerp .oe_kanban_view .oe_kanban_stock_picking_type_image .oe_kanban_actions_picking .oe_kanban_action_waiting {
     width: 10em;
     margin: 5px 5px !important;
     line-height: 2.5em;
     overflow: hidden;
 }
 
-.openerp .oe_kanban_view .oe_kanban_stock_picking_type .oe_kanban_actions_picking a {
-    color: white;
-}
-
-.openerp .oe_kanban_view .oe_kanban_stock_picking_type .oe_kanban_actions_picking a:hover {
-    color: #bac3d4;
-}
-
-
 /* surcharge original css */
-.openerp .oe_kanban_view .oe_kanban_stock_picking_type {
+.openerp .oe_kanban_view .oe_kanban_stock_picking_type_image {
     width: 400px;
 }
 
-.openerp .oe_kanban_view .oe_kanban_color_0 {
-    background-color: rgb(14, 108, 126) !important;
-    color : white;
-}
-
-.openerp .oe_kanban_view .oe_kanban_color_3 {
-    background-color: #A3498B !important;
-    color : white;
-}
-
-.openerp .oe_kanban_image {
+.openerp .oe_kanban_stock_picking_type_image .oe_kanban_image {
     top: 50px;
     right: 16px;
     position: relative;
