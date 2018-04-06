@@ -48,6 +48,12 @@ class ProductProduct(Model):
         return vals
 
     def create(self, cr, uid, vals, context=None):
+        # TODO FIXME.
+        # In GRAP Instance, one function (copy or copy_data) is bad
+        # designed. (api.multi? api.one?) So the vals is not a dict but
+        # a list of one dict.
+        if type(vals) is list:
+            vals = vals[0]
         vals = self.get_sale_delay_from_delivery_categ(
             cr, uid, vals, context=context)
         return super(ProductProduct, self).create(
