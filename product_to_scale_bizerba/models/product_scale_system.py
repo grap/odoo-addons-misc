@@ -65,8 +65,8 @@ class ProductScaleSystem(models.Model):
         compute='_compute_field_ids')
 
     product_id_field_id = fields.Many2one(
-        comodel_name='ir.model.fields', string='Product ID Field', domain="["
-        "('model', 'in', ['product.product', 'product.template'])]",
+        comodel_name='ir.model.fields', string='Product ID Field',
+        domain=[('model', '=', 'product.product')], required=True,
         help="Set the field that will be used as the ID of the product"
         " in the extra CSV file in Bizerba and in the PLNR field.\n"
         " type of field = id")

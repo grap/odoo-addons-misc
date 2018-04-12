@@ -24,7 +24,6 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
         <field name="weight_net">0.250</field>
         <field name="uom_id" ref="product.product_uom_unit" />
         <field name="uom_po_id" ref="product.product_uom_unit" />
-        <field name="scale_group_id" ref="demo_scale_group_vegetables" />
         <field name="scale_tare_weight">0.005</field>
     </record>
 

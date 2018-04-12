@@ -3,10 +3,10 @@
 # @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp.osv import orm, fields
+from openerp import api, fields, models
 
 
-class ProductScaleLogWizard(orm.TransientModel):
+class ProductScaleLogWizard(models.TransientModel):
     _name = 'product.scale.log.wizard'
 
     _LOG_TYPE_SELECTION = [
@@ -16,36 +16,31 @@ class ProductScaleLogWizard(orm.TransientModel):
     ]
 
     # Column Section
-    _columns = {
-        'product_qty': fields.integer(
-            string='Product Quantity', readonly=True),
-        'log_type': fields.selection(
-            _LOG_TYPE_SELECTION, string='Log Type', required=True),
-    }
+    product_qty = fields.Integer(
+        string='Product Quantity', readonly=True,
+        default=lambda s: s._default_product_qty())
+
+    log_type = fields.Selection(
+        _LOG_TYPE_SELECTION, string='Log Type', required=True,
+        default='create')
 
     # Default Section
-    def _default_product_qty(self, cr, uid, context=None):
-        return len(context.get('active_ids', []))
+    @api.model
+    def _default_product_qty(self):
+        return len(self.env.context.get('active_ids', []))
 
-    _defaults = {
-        'product_qty': _default_product_qty,
-        'log_type': 'create',
-    }
-
-    def send_log(self, cr, uid, ids, context=None):
-        product_obj = self.pool['product.product']
-        for wizard in self.browse(cr, uid, ids, context=context):
-            product_ids = product_obj.search(cr, uid, [
-                ('id', 'in', context.get('active_ids', [])),
-                ('scale_group_id', '!=', False),
-            ], context=context)
-            if wizard.log_type == 'create':
-                product_obj.send_scale_create(
-                    cr, uid, product_ids, context=context)
-            elif wizard.log_type == 'write':
-                product_obj.send_scale_write(
-                    cr, uid, product_ids, context=context)
-            elif wizard.log_type == 'unlink':
-                product_obj.send_scale_unlink(
-                    cr, uid, product_ids, context=context)
-        return True
+    # View Section
+    @api.multi
+    def send_log(self):
+        self.ensure_one()
+        product_obj = self.env['product.product']
+        products = product_obj.search([
+            ('id', 'in', self.env.context.get('active_ids', [])),
+            ('scale_group_id', '!=', False),
+        ])
+        if self.log_type == 'create':
+            products.send_scale_create()
+        elif self.log_type == 'write':
+            products.send_scale_write()
+        elif self.log_type == 'unlink':
+            products.send_scale_unlink()

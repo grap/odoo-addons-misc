@@ -14,6 +14,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
         <field name="external_text_file_pattern">TEXT_MAG_0000_%Y%m%d_%H%M%S.CSV</field>
         <field name="product_text_file_pattern">ARTI_MAG_0000_%Y%m%d_%H%M%S.CSV</field>
         <field name="screen_text_file_pattern">KEYS_MAG_0000_%Y%m%d_%H%M%S.CSV</field>
+        <field name="product_id_field_id" ref="product.field_product_product_id" />
     </record>
 
 </data></openerp>

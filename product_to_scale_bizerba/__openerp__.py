@@ -45,7 +45,7 @@ Roadmap / Know Issues
         'views/menu.xml',
     ],
     'demo': [
-        'demo/res_users.xml',
+        'demo/res_groups.xml',
         'demo/product_uom.xml',
         'demo/product_scale_system.xml',
         'demo/product_scale_system_product_line.xml',
