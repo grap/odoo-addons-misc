@@ -1,13 +1,12 @@
-# -*- coding: utf-8 -*-
-# Copyright (C) 2014 GRAP (http://www.grap.coop)
+# coding: utf-8
+# Copyright (C) 2014 - Today: GRAP (http://www.grap.coop)
 # @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp.osv import fields
-from openerp.osv.orm import Model
+from openerp import fields, models
 
 
-class product_scale_system_product_line(Model):
+class ProductScaleSystemProductLine(models.Model):
     _name = 'product.scale.system.product.line'
     _order = 'scale_system_id, sequence'
 
@@ -24,61 +23,64 @@ class product_scale_system_product_line(Model):
     ]
 
     # Column Section
-    _columns = {
-        'scale_system_id': fields.many2one(
-            'product.scale.system', 'Scale System', required=True,
-            ondelete='cascade', select=True),
-        'company_id': fields.related(
-            'scale_system_id', 'company_id', type='many2one', string='Company',
-            relation='res.company', store=True),
-        'code': fields.char(string='Bizerba Code', required=True),
-        'name': fields.char(string='Name', required=True),
-        'sequence': fields.integer(string='Sequence', required=True),
-        'type': fields.selection(
-            _TYPE_SELECTION, string='Type'),
-        'field_id': fields.many2one(
-            'ir.model.fields', string='Product Field', domain="["
-            "('model', 'in', ['product.product', 'product.template'])]"),
-        # TODO Improve. Set domain, depending on the other field
-        'related_field_id': fields.many2one(
-            'ir.model.fields', string='M2M / M2O Field', help="Used only"
-            " for the x2x fields. Set here the field of the related model"
-            " that you want to send to the scale. Let empty to send the ID."),
-        'x2many_range': fields.integer(
-            string='range of the x2Many Fields', help="Used if type is"
-            " 'Many2Many Field', to mention the"
-            " range of the field  to send. Begin by 0. (used for exemple"
-            " for product logos)"),
-        'constant_value': fields.char(
-            string='Constant Value', help="Used if type is 'constant',"
-            " to send allways the same value."),
-        'multiline_length': fields.integer(
-            string='Length for Multiline',
-            help="Used if type is 'Text Field' or 'External Text Constant'"
-            ", to indicate the max length of a line. Set 0 to avoid to split"
-            " the value."),
-        'multiline_separator': fields.char(
-            string='Separator for Multiline', help="Used if type is"
-            " 'Text Field' or 'External Text Constant', to indicate wich text"
-            " will be used to mention break lines."),
-        # TODO Improve. Set contrains.
-        'numeric_coefficient': fields.float(
-            string='Numeric Coefficient', help="Used if type is"
-            " 'Numeric Field', to mention with coefficient numeric"
-            " field should be multiplyed."),
-        'numeric_round': fields.float(
-            string='Rounding Method', help="Used if type is"
-            " 'Numeric Field', to mention how the value should be rounded.\n"
-            " Do not Use 0, because it will truncate the value."),
-        'delimiter': fields.char(
-            string='Delimiter Char', help="Used to finish the column"),
-    }
+    scale_system_id = fields.Many2one(
+        comodel_name='product.scale.system', string='Scale System',
+        required=True, ondelete='cascade', select=True)
 
-    _defaults = {
-        'sequence': 10,
-        'multiline_length': 0,
-        'multiline_separator': '\n',
-        'numeric_coefficient': 1,
-        'numeric_round': 1,
-        'delimiter': '#',
-    }
+    company_id = fields.Many2one(
+        related='scale_system_id.company_id', string='Company',
+        comodel_name='res.company', store=True, select=True)
+
+    code = fields.Char(string='Bizerba Code', required=True)
+
+    name = fields.Char(string='Name', required=True)
+
+    sequence = fields.Integer(string='Sequence', default=10)
+
+    type = fields.Selection(selection=_TYPE_SELECTION, string='Type')
+
+    field_id = fields.Many2one(
+        comodel_name='ir.model.fields', string='Product Field',
+        domain=[('model', 'in', ['product.product', 'product.template'])])
+
+    # TODO Improve. Set domain, depending on the other field
+    related_field_id = fields.Many2one(
+        comodel_name='ir.model.fields',
+        string='M2M / M2O Field', help="Used only"
+        " for the x2x fields. Set here the field of the related model"
+        " that you want to send to the scale. Let empty to send the ID.")
+
+    x2many_range = fields.Integer(
+        string='range of the x2Many Fields', help="Used if type is"
+        " 'Many2Many Field', to mention the"
+        " range of the field  to send. Begin by 0. (used for exemple"
+        " for product logos)")
+
+    constant_value = fields.Char(
+        string='Constant Value', help="Used if type is 'constant',"
+        " to send allways the same value.")
+
+    multiline_length = fields.Integer(
+        string='Length for Multiline', default=0,
+        help="Used if type is 'Text Field' or 'External Text Constant', to"
+        " indicate the max length of a line. Set 0 to avoid to split the"
+        " value.")
+
+    multiline_separator = fields.Char(
+        string='Separator for Multiline', default='\n', help="Used if type is"
+        " 'Text Field' or 'External Text Constant', to indicate wich text"
+        " will be used to mention break lines.")
+
+    # TODO Improve. Set contrains.
+    numeric_coefficient = fields.Float(
+        string='Numeric Coefficient', default=1, help="Used if type is"
+        " 'Numeric Field', to mention with coefficient numeric"
+        " field should be multiplyed.")
+
+    numeric_round = fields.Float(
+        string='Rounding Method', default=1, help="Used if type is"
+        " 'Numeric Field', to mention how the value should be rounded.\n"
+        " Do not Use 0, because it will truncate the value.")
+
+    delimiter = fields.Char(
+        string='Delimiter Char', default='#', help="Used to finish the column")
