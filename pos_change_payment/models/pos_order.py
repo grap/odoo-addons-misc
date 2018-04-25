@@ -19,6 +19,7 @@ class pos_order(Model):
         for order in self:
             self.pool['pos.order'].add_payment(
                 self._cr, self._uid, order.id, data, context=self._context)
+        return True
 
     def _merge_cash_payment(self, cr, uid, ids, context=None):
         absl_obj = self.pool['account.bank.statement.line']
