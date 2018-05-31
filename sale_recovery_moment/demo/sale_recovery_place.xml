@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (C) 2014 - Today: GRAP (http://www.grap.coop)
+@author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+<openerp><data>
+
+    <record id="recovery_place_white_house" model="sale.recovery.place">
+        <field name="name">The White House</field>
+        <field name="street">1600 Pennsylvania Ave NW</field>
+        <field name="city">Washington</field>
+        <field name="zip">20500</field>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="state_id" ref="base.state_us_48"/>
+        <field name="country_id" ref="base.us"/>
+    </record>
+
+    <record id="recovery_place_elysee" model="sale.recovery.place">
+        <field name="name">L'élysée</field>
+        <field name="street">5 Rue du Faubourg Saint-Honoré</field>
+        <field name="city">Paris</field>
+        <field name="zip">75008</field>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="country_id" ref="base.fr"/>
+    </record>
+
+</data></openerp>

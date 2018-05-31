@@ -1,53 +1,35 @@
-# -*- encoding: utf-8 -*-
-##############################################################################
-#
-#    Sale - Recovery Moment Module for Odoo
-#    Copyright (C) 2014 - Today GRAP (http://www.grap.coop)
-#    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# coding: utf-8
+# Copyright (C) 2014 - Today: GRAP (http://www.grap.coop)
+# @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp.osv import fields
-from openerp.osv.orm import Model
+from openerp import api, fields, models
 
 
-class ProductPrepareCategory(Model):
+class ProductPrepareCategory(models.Model):
     _name = 'product.prepare.category'
     _order = 'sequence, name'
 
-    # Column Section
-    _columns = {
-        'name': fields.char(
-            'Name', required=True),
-        'sequence': fields.integer(
-            'Sequence', required=True),
-        'code': fields.char(
-            'Code', required=True, size=5),
-        'color': fields.char(
-            'Color', required=True),
-        'company_id': fields.many2one(
-            'res.company', string='Company', required=True),
-        'active': fields.boolean('Active'),
-        'product_ids': fields.one2many(
-            'product.product', 'prepare_categ_id', 'Products'),
-    }
+    # Default Section
+    @api.model
+    def _default_company_id(self):
+        return self.env.user.company_id.id
 
-    _defaults = {
-        'company_id': (
-            lambda s, cr, uid, c: s.pool.get('res.users')._get_company(
-                cr, uid, context=c)),
-        'active': True,
-    }
+    # Column Section
+    name = fields.Char(string='Name', required=True)
+
+    sequence = fields.Integer(string='Sequence', required=True)
+
+    code = fields.Char(string='Code', required=True, size=5)
+
+    color = fields.Char(string='Color', required=True, default='#FFFFFF')
+
+    company_id = fields.Many2one(
+        comodel_name='res.company', string='Company',
+        default=_default_company_id)
+
+    active = fields.Boolean(string='Active', default=True)
+
+    product_ids = fields.One2many(
+        comodel_name='product.product', inverse_name='prepare_categ_id',
+        string='Products')

@@ -1,3 +1,5 @@
+
+
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
@@ -20,37 +22,37 @@
 #
 ##############################################################################
 
-- !record {model: ir.model.access, id: ir_model_access_recovery_moment_reader}:
-    group_id: sale_recovery_moment.recovery_user
-    model_id: sale_recovery_moment.model_sale_recovery_moment
-    name: Recovery Moment Reader
+- !record {model: ir.model.access, id: }:
+    group_id: sale_recovery_moment.
+    model_id: sale_recovery_moment.
+    name: 
     perm_read: true
     perm_create: false
     perm_write: false
     perm_unlink: false
 
-- !record {model: ir.model.access, id: ir_model_access_recovery_moment_manager}:
-    group_id: sale_recovery_moment.recovery_manager
-    model_id: sale_recovery_moment.model_sale_recovery_moment
-    name: Recovery Moment Manager
+- !record {model: ir.model.access, id: }:
+    group_id: sale_recovery_moment.
+    model_id: sale_recovery_moment.
+    name: 
     perm_read: true
     perm_create: true
     perm_write: true
     perm_unlink: true
 
-- !record {model: ir.model.access, id: ir_model_access_recovery_moment_group_reader}:
+- !record {model: ir.model.access, id: }:
     group_id: sale_recovery_moment.recovery_user
-    model_id: sale_recovery_moment.model_sale_recovery_moment_group
-    name: Recovery Moment Group Reader
+    model_id: sale_recovery_moment.
+    name: 
     perm_read: true
     perm_create: false
     perm_write: false
     perm_unlink: false
 
-- !record {model: ir.model.access, id: ir_model_access_recovery_moment_group_manager}:
+- !record {model: ir.model.access, id: }:
     group_id: sale_recovery_moment.recovery_manager
     model_id: sale_recovery_moment.model_sale_recovery_moment_group
-    name: Recovery Moment Group Manager
+    name: 
     perm_read: true
     perm_create: true
     perm_write: true
@@ -76,38 +78,38 @@
     perm_unlink: true
 
 
-- !record {model: ir.model.access, id: ir_model_access_recovery_moment_place_reader}:
+- !record {model: ir.model.access, id: }:
     group_id: sale_recovery_moment.recovery_user
-    model_id: sale_recovery_moment.model_sale_recovery_place
-    name: Recovery Place Reader
+    model_id: sale_recovery_moment.
+    name: 
     perm_read: true
     perm_create: false
     perm_write: false
     perm_unlink: false
 
-- !record {model: ir.model.access, id: ir_model_access_recovery_moment_place_manager}:
+- !record {model: ir.model.access, id: }:
     group_id: sale_recovery_moment.recovery_manager
     model_id: sale_recovery_moment.model_sale_recovery_place
-    name: Recovery Place Manager
+    name: 
     perm_read: true
     perm_create: true
     perm_write: true
     perm_unlink: true
 
 
-- !record {model: ir.model.access, id: ir_model_access_product_prepare_category_reader}:
+- !record {model: ir.model.access, id: }:
     group_id: sale_recovery_moment.prepare_user
-    model_id: sale_recovery_moment.model_product_prepare_category
-    name: Product Prepare Category Reader
+    model_id: sale_recovery_moment.
+    name: 
     perm_read: true
     perm_create: false
     perm_write: false
     perm_unlink: false
 
 - !record {model: ir.model.access, id: ir_model_access_product_prepare_category_manager}:
-    group_id: sale_recovery_moment.prepare_manager
+    group_id: sale_recovery_moment.
     model_id: sale_recovery_moment.model_product_prepare_category
-    name: Product Prepare Category Manager
+    name: 
     perm_read: true
     perm_create: true
     perm_write: true

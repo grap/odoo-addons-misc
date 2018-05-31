@@ -1,53 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- ********************************************************************** -->
-<!--    Tools - Repository of Modules for Odoo                              -->
-<!--    Copyright (C) 2014- Today GRAP (http://www.grap.coop)               -->
-<!--    @author Sylvain LE GAL (https://twitter.com/legalsylvain)           -->
+<!--
+Copyright (C) 2014 - Today: GRAP (http://www.grap.coop)
+@author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+<openerp><data>
 
-<!--This program is free software: you can redistribute it and/or modify    -->
-<!--it under the terms of the GNU Affero General Public License as          -->
-<!--published by the Free Software Foundation, either version 3 of the      -->
-<!--License, or (at your option) any later version.                         -->
-
-<!--This program is distributed in the hope that it will be useful,         -->
-<!--but WITHOUT ANY WARRANTY; without even the implied warranty of          -->
-<!--MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           -->
-<!--GNU Affero General Public License for more details.                     -->
-
-<!--You should have received a copy of the GNU Affero General Public License-->
-<!--along with this program.  If not, see <http://www.gnu.org/licenses/>.   -->
-<!-- ********************************************************************** -->
-<openerp>
-    <data>
-
-<!-- Model: stock.picking -->
-        <record id="view_stock_picking_tree" model="ir.ui.view">
-            <field name="model">stock.picking</field>
-            <field name="inherit_id" ref="stock.vpicktree"/>
-            <field name="arch" type="xml">
-                <field name="partner_id" position="after">
-                    <field name="recovery_moment_id" groups="sale_recovery_moment.recovery_user"/>
-                    <field name="recovery_group_id" groups="sale_recovery_moment.recovery_user" invisible="1"/>
-                    <field name="delivery_moment_id" groups="sale_recovery_moment.delivery_user"/>
-                </field>
+    <record id="view_stock_picking_tree" model="ir.ui.view">
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="recovery_moment_id" groups="sale_recovery_moment.recovery_user"/>
+                <field name="recovery_group_id" groups="sale_recovery_moment.recovery_user" invisible="1"/>
             </field>
-        </record>
+        </field>
+    </record>
 
-        <record id="view_stock_picking_search" model="ir.ui.view">
-            <field name="model">stock.picking</field>
-            <field name="inherit_id" ref="stock.view_picking_internal_search"/>
-            <field name="arch" type="xml">
-                <field name="partner_id" position="after">
-                    <field name="recovery_moment_id" groups="sale_recovery_moment.recovery_user"/>
-                    <field name="recovery_group_id" groups="sale_recovery_moment.recovery_user"/>
-                    <field name="delivery_moment_id" groups="sale_recovery_moment.delivery_user"/>
-                </field>
-                <xpath expr="//filter[@string='Status']" position="after">
-                    <filter string="Recovery Group" context="{'group_by':'recovery_group_id'}" groups="sale_recovery_moment.recovery_user"/>
-                    <filter string="Recovery Moment" context="{'group_by':'recovery_moment_id'}" groups="sale_recovery_moment.recovery_user"/>
-                    <filter string="Delivery Moment" context="{'group_by':'delivery_moment_id'}" groups="sale_recovery_moment.delivery_user"/>
-                </xpath>
+    <record id="view_stock_picking_search" model="ir.ui.view">
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="recovery_moment_id" groups="sale_recovery_moment.recovery_user"/>
+                <field name="recovery_group_id" groups="sale_recovery_moment.recovery_user"/>
             </field>
-        </record>
-    </data>
-</openerp>
+            <xpath expr="//filter[@string='Status']" position="after">
+                <filter string="Recovery Group" context="{'group_by':'recovery_group_id'}" groups="sale_recovery_moment.recovery_user"/>
+                <filter string="Recovery Moment" context="{'group_by':'recovery_moment_id'}" groups="sale_recovery_moment.recovery_user"/>
+            </xpath>
+        </field>
+    </record>
+
+</data></openerp>

@@ -1,29 +1,12 @@
-# -*- encoding: utf-8 -*-
-##############################################################################
-#
-#    Sale - Recovery Moment Module for Odoo
-#    Copyright (C) 2014 GRAP (http://www.grap.coop)
-#    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# coding: utf-8
+# Copyright (C) 2014 - Today: GRAP (http://www.grap.coop)
+# @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 {
     'name': 'Sale - Recovery Moment',
-    'version': '0.2',
-    'summary': """Manage Recovery Moments and Places for Sale Order""",
+    'version': '8.0.1.0.0',
+    'summary': "Manage Recovery Moments and Places for Sale Order",
     'category': 'Sale',
     'description': """
 Manage Recovery Moments and Places for Sale Order
@@ -71,30 +54,35 @@ Copyright, Authors and Licence:
     ],
     'data': [
         'security/ir_rule.xml',
-        'security/ir_module_category.yml',
-        'security/res_groups.yml',
-        'security/ir_model_access.yml',
-        'data/ir_sequence_type.yml',
-        'data/ir_sequence.yml',
+        'security/ir_module_category.xml',
+        'security/res_groups.xml',
+        'security/ir.model.access.csv',
+        'data/ir_sequence_type.xml',
+        'data/ir_sequence.xml',
         'views/view_related.xml',
         'views/action_related.xml',
-        'views/view.xml',
+        'views/view_product_prepare_category.xml',
+        'views/view_product_product.xml',
+        'views/view_res_company.xml',
+        'views/view_sale_order.xml',
+        'views/view_sale_recovery_moment.xml',
+        'views/view_sale_recovery_moment_group.xml',
+        'views/view_sale_recovery_moment_group_wizard_duplicate.xml',
+        'views/view_sale_recovery_place.xml',
+        'views/view_stock_move.xml',
+        'views/view_stock_picking.xml',
+#        'views/view_stock_picking_reorder.xml',
         'views/action.xml',
         'views/menu.xml',
     ],
     'demo': [
-        'demo/sale_recovery_place.yml',
-        'demo/sale_recovery_moment_group.yml',
-        'demo/sale_recovery_moment.yml',
-        'demo/sale_delivery_category.yml',
-        'demo/product_delivery_category.yml',
-        'demo/product_prepare_category.yml',
-        'demo/res_partner.yml',
-        'demo/sale_order.yml',
-        'demo/res_groups.yml',
+        'demo/sale_recovery_place.xml',
+        'demo/sale_recovery_moment_group.xml',
+        'demo/sale_recovery_moment.xml',
+        'demo/product_prepare_category.xml',
+        'demo/sale_order.xml',
+        'demo/res_groups.xml',
     ],
-    'css': [
-        'static/src/css/css.css',
-    ],
+
     'installable': True,
 }

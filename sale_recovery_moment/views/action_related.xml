@@ -1,24 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- ********************************************************************** -->
-<!--    Sale - Recovery Moment Module for Odoo                              -->
-<!--    Copyright (C) 2014- Today GRAP (http://www.grap.coop)               -->
-<!--    @author Sylvain LE GAL (https://twitter.com/legalsylvain)           -->
-
-<!--This program is free software: you can redistribute it and/or modify    -->
-<!--it under the terms of the GNU Affero General Public License as          -->
-<!--published by the Free Software Foundation, either version 3 of the      -->
-<!--License, or (at your option) any later version.                         -->
-
-<!--This program is distributed in the hope that it will be useful,         -->
-<!--but WITHOUT ANY WARRANTY; without even the implied warranty of          -->
-<!--MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           -->
-<!--GNU Affero General Public License for more details.                     -->
-
-<!--You should have received a copy of the GNU Affero General Public License-->
-<!--along with this program.  If not, see <http://www.gnu.org/licenses/>.   -->
-<!-- ********************************************************************** -->
-<openerp>
-    <data>
+<!--
+Copyright (C) 2014 - Today: GRAP (http://www.grap.coop)
+@author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+<openerp><data>
 
 <!-- Model: sale.recovery.moment.group.wizard.duplicate -->
         <record id="action_sale_recovery_moment_group_wizard_duplicate" model="ir.actions.act_window">
@@ -65,23 +51,6 @@
             <field name="context">{'search_default_recovery_moment_id': active_id}</field>
         </record>
 
-        <record id="action_sale_order_delivery_moment" model="ir.actions.act_window">
-            <field name="name">Sale Orders</field>
-            <field name="res_model">sale.order</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form,graph</field>
-            <field name="context">{'search_default_delivery_moment_id': active_id}</field>
-        </record>
-
-        <record id="action_sale_order_delivery_moment_valid" model="ir.actions.act_window">
-            <field name="name">Valid Sale Orders</field>
-            <field name="res_model">sale.order</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form,graph</field>
-            <field name="domain">[('state', 'not in', ('draft', 'sent', 'cancel'))]</field>
-            <field name="context">{'search_default_delivery_moment_id': active_id}</field>
-        </record>
-
 <!-- Model: stock.picking -->
         <record id="action_stock_picking_recovery_moment_group" model="ir.actions.act_window">
             <field name="name">Delivery Orders</field>
@@ -125,26 +94,4 @@
             <field name="view_id" ref="view_stock_picking_tree"/>
         </record>
 
-        <record id="action_stock_picking_delivery_moment" model="ir.actions.act_window">
-            <field name="name">Delivery Orders</field>
-            <field name="res_model">stock.picking</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form,graph</field>
-            <field name="context">{'search_default_delivery_moment_id': active_id}</field>
-            <field name="search_view_id" ref="view_stock_picking_search"/>
-            <field name="view_id" ref="view_stock_picking_tree"/>
-        </record>
-
-        <record id="action_stock_picking_delivery_moment_valid" model="ir.actions.act_window">
-            <field name="name">Valid Delivery Orders</field>
-            <field name="res_model">stock.picking</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form,graph</field>
-            <field name="domain">[('state', 'not in', ('draft', 'cancel'))]</field>
-            <field name="context">{'search_default_delivery_moment_id': active_id}</field>
-            <field name="search_view_id" ref="view_stock_picking_search"/>
-            <field name="view_id" ref="view_stock_picking_tree"/>
-        </record>
-
-    </data>
-</openerp>
+</data></openerp>

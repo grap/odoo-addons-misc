@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_recovery_moment_reader,Recovery Moment Reader,model_sale_recovery_moment,recovery_user,1,,,
+access_recovery_moment_manager,Recovery Moment Manager,model_sale_recovery_moment,recovery_manager,1,1,1,1
+access_recovery_moment_group_reader,Recovery Moment Group Reader,model_sale_recovery_moment_group,recovery_user,1,,,
+access_recovery_moment_group_manager,Recovery Moment Group Manager,model_sale_recovery_moment_group,recovery_manager,1,1,1,1
+access_recovery_moment_place_reader,Recovery Place Reader,model_sale_recovery_place,recovery_user,1,,,
+access_recovery_moment_place_manager,Recovery Place Manager,model_sale_recovery_place,recovery_manager,1,1,1,1
+access_product_prepare_category_reader,Product Prepare Category Reader,model_product_prepare_category,prepare_user,1,,,
+,Product Prepare Category Manager,model_product_prepare_category,prepare_manager,1,1,1,1

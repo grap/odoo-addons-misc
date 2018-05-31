@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (C) 2014 - Today: GRAP (http://www.grap.coop)
+@author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+<openerp><data>
+
+    <record id="view_product_prepare_category_tree" model="ir.ui.view">
+        <field name="model">product.prepare.category</field>
+        <field name="arch" type="xml">
+            <tree string="Prepare Categories" colors="gray:active == False;">
+                <field name="sequence" widget="handle"/>
+                <field name="color" widget="color"/>
+                <field name="code"/>
+                <field name="name"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="active" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_product_prepare_category_form" model="ir.ui.view">
+        <field name="model">product.prepare.category</field>
+        <field name="arch" type="xml">
+            <form string="Prepare Categories">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h2><field name="name"/></h2>
+                    </div>
+                    <group col="4">
+                        <field name="sequence"/>
+                        <field name="code"/>
+                        <field name="color" widget="color"/>
+                        <field name="active"/>
+                        <field name="company_id" groups="base.group_multi_company"/>
+                    </group>
+                    <notebook>
+                        <page string="Products">
+                            <group col="4">
+                                <field name="product_ids" nolabel="1" colspan="4"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</data></openerp>
