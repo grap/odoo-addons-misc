@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (C) 2015 - Today: GRAP (http://www.grap.coop)
+@author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+<openerp><data>
+
+    <record id="view_stock_picking_mass_change_wizard_form" model="ir.ui.view">
+        <field name="model">stock.picking.mass.change.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group colspan="2">
+                    <group string="Selection" col="2" colspan="2">
+                        <field name="picking_qty"/>
+                    </group>
+                    <group string="Parameters" col="4" colspan="2">
+                        <field name="product_id" on_change="onchange_product_id(product_id)"/>
+                        <field name="concerned_picking_qty"/>
+                        <field name="ordered_product_qty"/>
+
+                        <field name="target_product_qty" on_change="onchange_change_setting(product_id, rounding, ordered_product_qty, change_method, target_product_qty)"/>
+                        <field name="change_method" on_change="onchange_change_setting(product_id, rounding, ordered_product_qty, change_method, target_product_qty)"/>
+                        <field name="rounding" on_change="onchange_change_setting(product_id, rounding, ordered_product_qty, change_method, target_product_qty)"/>
+                        <field name="computed_product_qty"/>
+                    </group>
+                    <group string="Lines" col="2" colspan="2">
+                        <field name="line_ids" nolabel="1">
+                            <tree editable="bottom" colors="red:target_qty == 0;">
+                                <field name="sale_id" />
+                                <field name="picking_id" />
+                                <field name="move_id" invisible="1" />
+                                <field name="partner_id" />
+                                <field name="ordered_qty" />
+                                <field name="exact_target_qty" />
+                                <field name="target_qty" />
+
+                            </tree>
+                        </field>
+                    </group>
+                    <group col="4" colspan="2">
+                        <button name="mass_change_confirm" string="Mass Change" type="object"/>
+                        <button icon="gtk-cancel" special="cancel" string="Cancel"/>
+                   </group>
+                </group>
+            </form>
+          </field>
+    </record>
+
+</data></openerp>
