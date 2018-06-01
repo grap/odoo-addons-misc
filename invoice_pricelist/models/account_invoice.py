@@ -39,7 +39,7 @@ class AccountInvoice(models.Model):
         # Overload to avoid bugs if creation is not made by UI
         if not vals.get('pricelist_id', False):
             vals['pricelist_id'] = self._compute_pricelist_id(
-                vals['type'], vals['partner_id'])
+                vals.get('type', 'out_invoice'), vals['partner_id'])
         return super(AccountInvoice, self).create(vals)
 
     # View Section
