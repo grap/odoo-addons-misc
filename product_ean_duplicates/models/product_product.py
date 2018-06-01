@@ -62,7 +62,7 @@ class ProductProduct(models.Model):
                 AND pp1.id in (%s)
             GROUP BY pp1.id
             ORDER BY pp1.id""" % (', '.join([str(id) for id in self.ids]))
-        self._cr.execute(sql_req)
+        self._cr.execute(sql_req)  # pylint: disable=invalid-commit
         return {x[0]: x[1] for x in self._cr.fetchall()}
 
     @api.multi

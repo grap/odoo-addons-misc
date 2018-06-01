@@ -100,7 +100,7 @@ class ProductProduct(Model):
             SELECT id
             FROM product_product
             WHERE %s;""" % (where)
-        cr.execute(sql_req)
+        cr.execute(sql_req)  # pylint: disable=invalid-commit
         res = cr.fetchall()
         return [('id', 'in', map(lambda x:x[0], res))]
 

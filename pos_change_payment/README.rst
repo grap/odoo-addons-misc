@@ -35,10 +35,10 @@ Bug Fixes / Improvement
 * All the cash payment are merged into a single one statement line. This
   feature is usefull if the user use OpenERP as a calculator, writing
   for a payment:
-    * Payment 1/ Cash 50 €;
-    * Payment 2/ Cash -3,56 €;
-    * With this module, the final statement line is a single line
-      Payment 1/ Cash 46,44 €
+
+1. Payment 1/ Cash 50 €;
+2. Payment 2/ Cash -3,56 €;
+3. With this module, the final statement line is a single line Payment 1/ Cash 46,44 €
 
 Installation
 ============

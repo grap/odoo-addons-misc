@@ -69,17 +69,19 @@ class MaterializedModel(Model):
         if self._is_materialized:
             _logger.info("Creating MATERIALIZED VIEW %s" % (
                 self._table_name))
-            cr.execute("""
+            sql_request = """
                 DROP MATERIALIZED VIEW IF EXISTS %s;
                 CREATE MATERIALIZED VIEW %s AS (%s);""" % (
                 self._table_name, self._table_name,
-                self._materialized_sql))
+                self._materialized_sql)
+            cr.execute(sql_request)  # pylint: disable=invalid-commit
         else:
-            cr.execute("""
+            sql_request = """
                 DROP VIEW IF EXISTS %s;
                 CREATE VIEW %s AS (%s);""" % (
                 self._table_name, self._table_name,
-                self._materialized_sql))
+                self._materialized_sql)
+            cr.execute(sql_request)  # pylint: disable=invalid-commit
 
     def _refesh_view(self, cr, uid, context=None):
         if self._is_materialized:
