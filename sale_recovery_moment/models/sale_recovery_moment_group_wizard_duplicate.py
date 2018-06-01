@@ -39,7 +39,7 @@ class SaleRecoveryMomentGroupWizardDuplicate(models.TransientModel):
     @api.multi
     def duplicate_group(self):
         self.ensure_one()
-        moment_obj = self.pool['sale.recovery.moment']
+        moment_obj = self.env['sale.recovery.moment']
         group_obj = self.env['sale.recovery.moment.group']
 
         # Create new group
@@ -69,11 +69,13 @@ class SaleRecoveryMomentGroupWizardDuplicate(models.TransientModel):
             }
             moment_obj.create(moment_vals)
 
-        res = self.env.ref(
+        action_data = self.env.ref(
             'sale_recovery_moment.action_sale_recovery_moment_group').read()[0]
-        res['views'] = [(res and res.id or False, 'form')]
-        res['res_id'] = new_group.id
-        return res
+        view = self.env.ref(
+            'sale_recovery_moment.view_sale_recovery_moment_group_form')
+        action_data['views'] = [(view.id, 'form')]
+        action_data['res_id'] = new_group.id
+        return action_data
 
     # View Section
     @api.onchange('group_id', 'day_delay')

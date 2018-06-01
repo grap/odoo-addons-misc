@@ -35,8 +35,8 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                 <button name="%(action_stock_picking_recovery_moment_group_valid)d" icon="gtk-find" string="See" type="action"/>
                 <field name="picking_qty" string="D.O. Qty"/>
                 <button name="%(action_stock_picking_recovery_moment_group)d" icon="gtk-find" string="See" type="action"/>
-                <field name="excl_total"/>
-                <field name="incl_total"/>
+                <field name="excl_total" sum="Total"/>
+                <field name="incl_total" sum="Total"/>
                 <field name="company_id" groups="base.group_multi_company"/>
                 <field name="state"/>
             </tree>

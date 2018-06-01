@@ -39,13 +39,14 @@ Functionality
 .. figure:: /sale_recovery_moment/static/description/sale_prepare_category_tree.png
    :width: 800 px
 
-The picking created can be reordered by Prepare Categories with a wizard.
+The picking created can be reordered by Prepare Categories if you install
+the extra OCA module mass_sorting.
 
 Technical Limits
 ----------------
 
-* This module displays some Total of Sale Orders; This amount will be wrong
-in a multicurrencies context for the instance;
+* This module displays some totals of Sale Orders; This amount will be wrong
+  in a multicurrencies context for the instance.
 
 
 Credits

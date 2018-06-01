@@ -14,7 +14,6 @@
     'depends': [
         'sale',
         'stock',
-        'report_webkit',
         'sale_order_dates',
         'stock_picking_reorder_lines',
         'web_widget_color',
@@ -38,7 +37,6 @@
         'views/view_sale_recovery_place.xml',
         'views/view_stock_move.xml',
         'views/view_stock_picking.xml',
-#        'views/view_stock_picking_reorder.xml',
         'views/action.xml',
         'views/menu.xml',
     ],
@@ -50,6 +48,11 @@
         'demo/sale_order.xml',
         'demo/res_groups.xml',
     ],
-
+    'images': [
+        'static/description/sale_recovery_place_tree.png',
+        'static/description/sale_recovery_moment_group_form.png',
+        'static/description/sale_recovery_moment_calendar.png',
+        'static/description/sale_prepare_category_tree.png',
+    ],
     'installable': True,
 }

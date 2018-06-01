@@ -11,4 +11,3 @@ from . import sale_recovery_moment_group_wizard_duplicate
 from . import sale_recovery_place
 from . import stock_move
 from . import stock_picking
-from . import stock_picking_reorder
