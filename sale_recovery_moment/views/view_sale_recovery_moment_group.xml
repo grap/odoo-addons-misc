@@ -11,6 +11,11 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
         <field name="arch" type="xml">
             <search>
                 <field name="name"/>
+                <filter name="futur" string="Futur" domain="[('state','=','futur')]"/>
+                <filter name="pending" string="Pending" domain="[('state','in',('pending_sale', 'finished_sale', 'pending_recovery'))]"/>
+                <filter name="not_finished" string="Not Finished"
+                    domain="[('state','in', ('futur', 'pending_sale', 'finished_sale', 'pending_recovery'))]"/>
+                <filter name="finished" string="Finished" domain="[('state','=','finished_recovery')]"/>
             </search>
         </field>
     </record>
@@ -18,7 +23,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
     <record id="view_sale_recovery_moment_group_tree" model="ir.ui.view">
         <field name="model">sale.recovery.moment.group</field>
         <field name="arch" type="xml">
-            <tree>
+            <tree colors="blue:state == 'futur';black:state == 'pending_sale'; marron:state in ('finished_sale', 'pending_recovery'); gray:state=='finished_recovery'">
                 <field name="name"/>
                 <field name="min_sale_date"/>
                 <field name="max_sale_date"/>
@@ -33,6 +38,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                 <field name="excl_total"/>
                 <field name="incl_total"/>
                 <field name="company_id" groups="base.group_multi_company"/>
+                <field name="state"/>
             </tree>
         </field>
     </record>
@@ -43,6 +49,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
             <form>
                 <header>
                     <button name="%(action_sale_recovery_moment_group_wizard_duplicate)d" string="Duplicate" type="action"/>
+                    <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>
                     <div class="oe_title">

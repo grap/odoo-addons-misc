@@ -33,7 +33,7 @@ _ESHOP_OPENERP_MODELS = {
             'eshop_category_id', 'label_ids', 'eshop_minimum_qty',
             'eshop_rounded_qty', 'origin_description', 'maker_description',
             'fresh_category', 'eshop_description', 'country_id',
-            'department_id', 'default_code', 'delivery_categ_id',
+            'department_id', 'default_code',
             'eshop_taxes_description', 'eshop_unpack_qty',
             'eshop_unpack_surcharge'],
     },
@@ -47,7 +47,7 @@ _ESHOP_OPENERP_MODELS = {
             'eshop_google_plus_url', 'eshop_instagram_url',
             'eshop_home_image', 'eshop_image_small',
             'eshop_vat_included', 'eshop_register_allowed',
-            'manage_delivery_moment', 'manage_recovery_moment',
+            'manage_recovery_moment',
             'eshop_manage_unpacking',
         ],
     },
@@ -56,7 +56,7 @@ _ESHOP_OPENERP_MODELS = {
         'fields': [
             'name', 'lang', 'email', 'eshop_active', 'eshop_state',
             'phone', 'mobile', 'street', 'street2', 'zip', 'city',
-            'delivery_categ_id', 'simple_tax_type',
+            'simple_tax_type',
         ],
     },
     'eshop.category': {
@@ -64,10 +64,6 @@ _ESHOP_OPENERP_MODELS = {
         'fields': [
             'name', 'available_product_qty', 'child_qty', 'image_medium',
             'type', 'parent_id', 'product_ids', 'complete_name'],
-    },
-    'product.delivery.category': {
-        'type': 'single',
-        'fields': ['name'],
     },
 
     # 'multiple' type Models

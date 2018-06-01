@@ -13,7 +13,6 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
             <notebook position="inside">
                 <page string="Recovery Settings">
                     <group name="recovery" string="Recovery Sale">
-                        <field name="reminder_template"/>
                         <field name="manage_recovery_moment"/>
                     </group>
                 </page>

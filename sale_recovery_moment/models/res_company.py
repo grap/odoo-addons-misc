@@ -9,7 +9,4 @@ from openerp import fields, models
 class ResCompany(models.Model):
     _inherit = 'res.company'
 
-    reminder_template = fields.Many2one(
-        comodel_name='email.template', string='Template of Reminder Mail')
-
     manage_recovery_moment = fields.Boolean(string='Manage Recovery Moment')

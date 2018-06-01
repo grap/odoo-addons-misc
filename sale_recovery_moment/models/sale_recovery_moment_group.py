@@ -3,6 +3,8 @@
 # @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+from datetime import datetime
+
 from openerp import _, api, fields, models
 from openerp.exceptions import Warning as UserError, ValidationError
 
@@ -12,6 +14,14 @@ import openerp.addons.decimal_precision as dp
 class SaleRecoveryMomentGroup(models.Model):
     _name = 'sale.recovery.moment.group'
     _order = 'min_sale_date desc, name'
+
+    _STATE_SELECTION = [
+        ('futur', 'Futur'),
+        ('pending_sale', 'Pending Sale'),
+        ('finished_sale', 'Finished Sale'),
+        ('pending_recovery', 'Pending Recovery'),
+        ('finished_recovery', 'Finished Recovery')
+    ]
 
     # Defaults Section
     @api.model
@@ -78,6 +88,10 @@ class SaleRecoveryMomentGroup(models.Model):
         digits_compute=dp.get_precision('Account'),
         string='Total (VAT Included)')
 
+    state = fields.Selection(
+        compute='_compute_state', string='State', search='_search_state',
+        selection=_STATE_SELECTION)
+
     # Compute Section
     @api.multi
     @api.depends(
@@ -126,6 +140,74 @@ class SaleRecoveryMomentGroup(models.Model):
         for moment_group in self:
             moment_group.name = '%s - %s' % (
                 moment_group.code, moment_group.short_name)
+
+    @api.multi
+    def _compute_state(self):
+        now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        for moment_group in self:
+            if now < moment_group.min_sale_date:
+                moment_group.state = 'futur'
+            elif now < moment_group.max_sale_date:
+                moment_group.state = 'pending_sale'
+            elif now < moment_group.min_recovery_date:
+                moment_group.state = 'finished_sale'
+            elif now < moment_group.max_recovery_date:
+                moment_group.state = 'pending_recovery'
+            else:
+                moment_group.state = 'finished_recovery'
+
+    def _search_ean_duplicates_exist(self, operator, operand):
+        products = self.search([])
+        res = products._get_ean_duplicates()
+        if operator == '=' and operand is True:
+            product_ids = res.keys()
+        elif operator == '=' and operand is False:
+            product_ids = list(set(products.ids) - set(res.keys()))
+        else:
+            raise ValidationError(_(
+                "Operator '%s' not implemented.") % (operator))
+        return [('id', 'in', product_ids)]
+
+    # Search Functions Section
+    def _search_state(self, operator, operand):
+        now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        if operator not in ('=', 'in'):
+            raise UserError(_(
+                "The Operator %s is not implemented !") % (operator))
+        if operator == '=':
+            lst = [operand]
+        else:
+            lst = operand
+        sql_lst = []
+        if 'futur' in lst:
+            sql_lst.append(
+                "('%s' < min_sale_date)" % (now))
+        if 'pending_sale' in lst:
+            sql_lst.append((
+                "(min_sale_date < '%s'" +
+                " AND '%s' < max_sale_date)") % (now, now))
+        if 'finished_sale' in lst:
+            sql_lst.append((
+                "(max_sale_date < '%s'" +
+                " AND '%s'<min_recovery_date)") % (now, now))
+        if 'pending_recovery' in lst:
+            sql_lst.append((
+                "(min_recovery_date < '%s'" +
+                " AND '%s' < max_recovery_date)") % (now, now))
+        if 'finished_recovery' in lst:
+            sql_lst.append(
+                "(max_recovery_date < '%s')" % (now))
+
+        where = sql_lst[0]
+        for item in sql_lst[1:]:
+            where += " OR %s" % (item)
+        sql_req = """
+            SELECT id
+            FROM sale_recovery_moment_group
+            WHERE %s;""" % (where)
+        self.env.cr.execute(sql_req)
+        res = self.env.cr.fetchall()
+        return [('id', 'in', map(lambda x:x[0], res))]
 
     # Constraint Section
     @api.multi

@@ -13,7 +13,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
         <field name="color">#FF0</field>
     </record>
 
-    <record id="product_delivery_category_tough" model="product.prepare.category">
+    <record id="product_prepare_category_tough" model="product.prepare.category">
         <field name="name">Tough</field>
         <field name="code">TGH</field>
         <field name="sequence">2</field>

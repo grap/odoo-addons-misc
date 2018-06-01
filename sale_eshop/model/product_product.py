@@ -222,7 +222,6 @@ FROM (
     pp.eshop_minimum_qty,
     pp.eshop_unpack_qty,
     pp.eshop_unpack_surcharge,
-    pp.delivery_categ_id,
     array_to_string(array_agg(tax_rel.tax_id)
         OVER (PARTITION BY tax_rel.prod_id), ',') tax_ids
     FROM product_product pp
@@ -257,8 +256,6 @@ order by category_sequence, category_name, name;
                 })
             else:
                 tmp.update({'qty': 0, 'discount': 0})
-            if tmp['delivery_categ_id'] is None:
-                tmp['delivery_categ_id'] = False
             if tmp['uom_eshop_description'] is None:
                 tmp['uom_eshop_description'] = False
             tmp['category_sha1'] = hashlib.sha1(
