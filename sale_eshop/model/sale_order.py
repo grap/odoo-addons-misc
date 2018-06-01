@@ -20,8 +20,6 @@
 #
 ##############################################################################
 
-from datetime import datetime
-
 from openerp.tools.translate import _
 from openerp.osv.orm import Model
 
