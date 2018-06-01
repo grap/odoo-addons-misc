@@ -31,10 +31,5 @@
             parent="point_of_sale.menu_point_rep"
             action="action_pos_periodic_report"/>
 
-        <menuitem id="menu_pos_payment_type_report" 
-            groups="point_of_sale.group_pos_user" sequence="3"
-            parent="point_of_sale.menu_point_rep"
-            action="action_pos_payment_type_report"/>
-
     </data>
 </openerp>

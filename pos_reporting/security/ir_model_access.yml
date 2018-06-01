@@ -56,12 +56,3 @@
     perm_write: 0
     perm_create: 0
     perm_unlink: 0
-
-- !record {model: ir.model.access, id: access_pos_payment_type_report}:
-    name: POS Payment Type Report Access
-    model_id: model_pos_payment_type_report
-    group_id: point_of_sale.group_pos_user
-    perm_read: 1
-    perm_write: 0
-    perm_create: 0
-    perm_unlink: 0

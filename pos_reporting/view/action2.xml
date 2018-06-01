@@ -37,15 +37,5 @@
             <field name="view_id" ref="view_pos_periodic_report_agregate"/>
         </record>
 
-        <record id="action_pos_payment_type_report" model="ir.actions.act_window">
-            <field name="name">Payment Analysis</field>
-            <field name="res_model">pos.payment.type.report</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,graph</field>
-            <field name="search_view_id" ref="view_pos_payment_type_report_search"/>
-            <field name="context">{'search_default_group_by_journal_id': 1}</field>
-            <field name="view_id" ref="view_pos_payment_type_report_tree"/>
-        </record>
-
     </data>
 </openerp>

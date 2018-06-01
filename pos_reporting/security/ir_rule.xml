@@ -40,10 +40,5 @@
             <field name="model_id" ref="pos_reporting.model_pos_monthly_report"/>
             <field name="domain_force">[('company_id', '=', user.company_id.id)]</field>
         </record>
-        <record id="rule_pos_payment_type_report" model="ir.rule">
-            <field name="name" >POS Daily Payment Type Report Rule</field>
-            <field name="model_id" ref="pos_reporting.model_pos_payment_type_report"/>
-            <field name="domain_force">[('company_id', '=', user.company_id.id)]</field>
-        </record>
     </data>
 </openerp>

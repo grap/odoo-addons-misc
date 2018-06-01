@@ -38,16 +38,6 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: pos_reporting
-#: view:pos.payment.type.report:0
-msgid "# of Lines"
-msgstr "Nb. de Lignes"
-
-#. module: pos_reporting
-#: field:pos.payment.type.report,average:0
-msgid "Average"
-msgstr "Moyenne"
-
-#. module: pos_reporting
 #: view:board.board:0
 #: model:ir.actions.act_window,name:pos_reporting.action_pos_daily_simple_average_report
 msgid "Average Sale by Day (VAT Excl)"
@@ -95,8 +85,6 @@ msgstr "Categorie Racine"
 #: field:pos.daily.report,company_id:0
 #: field:pos.daily.simple.report,company_id:0
 #: field:pos.monthly.report,company_id:0
-#: view:pos.payment.type.report:0
-#: field:pos.payment.type.report,company_id:0
 #: field:pos.weekly.report,company_id:0
 msgid "Company"
 msgstr "Société"
@@ -119,20 +107,7 @@ msgid "Date"
 msgstr "Date"
 
 #. module: pos_reporting
-#: view:pos.payment.type.report:0
-msgid "Group By..."
-msgstr "Regrouper Par ..."
-
-#. module: pos_reporting
-#: view:pos.payment.type.report:0
-#: field:pos.payment.type.report,journal_id:0
-msgid "Journal"
-msgstr "Journal"
-
-#. module: pos_reporting
 #: field:pos.monthly.report,month:0
-#: view:pos.payment.type.report:0
-#: field:pos.payment.type.report,month:0
 msgid "Month"
 msgstr "Mois"
 
@@ -193,13 +168,6 @@ msgid "POS ordered created during current year"
 msgstr "Commandes en PdV enregistrées cette année"
 
 #. module: pos_reporting
-#: model:ir.actions.act_window,name:pos_reporting.action_pos_payment_type_report
-#: model:ir.ui.menu,name:pos_reporting.menu_pos_payment_type_report
-#: view:pos.payment.type.report:0
-msgid "Payment Analysis"
-msgstr "Analyse des Paiements"
-
-#. module: pos_reporting
 #: view:board.board:0
 #: model:ir.actions.act_window,name:pos_reporting.action_pos_periodic_report
 #: model:ir.ui.menu,name:pos_reporting.menu_pos_periodic_report
@@ -214,20 +182,9 @@ msgid "Point of Sale Orders Statistics"
 msgstr "Statistiques des commandes du point de vente"
 
 #. module: pos_reporting
-#: field:pos.payment.type.report,quantity:0
-msgid "Quantity"
-msgstr "Quantité"
-
-#. module: pos_reporting
 #: view:report.pos.order:0
 msgid "This Year"
 msgstr "Cette Année"
-
-#. module: pos_reporting
-#: view:pos.payment.type.report:0
-#: field:pos.payment.type.report,total:0
-msgid "Total"
-msgstr "Total"
 
 #. module: pos_reporting
 #: field:pos.weekly.report,week:0
@@ -259,13 +216,6 @@ msgstr "pos.daily.simple.report"
 #, python-format
 msgid "pos.monthly.report"
 msgstr "pos.monthly.report"
-
-#. module: pos_reporting
-#: code:_description:0
-#: model:ir.model,name:pos_reporting.model_pos_payment_type_report
-#, python-format
-msgid "pos.payment.type.report"
-msgstr "pos.payment.type.report"
 
 #. module: pos_reporting
 #: code:_description:0
