@@ -36,8 +36,7 @@
         </record>
 
 <!--    Model: account.invoice-->
-        <record id="invoice_form_forbid" model="ir.ui.view">
-            <field name="name">account.invoice.form.forbid</field>
+        <record id="view_account_invoice_form" model="ir.ui.view">
             <field name="model">account.invoice</field>
             <field name="priority" eval="30"/>
             <field name="inherit_id" ref="account.invoice_form"/>
@@ -59,8 +58,7 @@
             </field>
         </record>
 
-        <record id="view_invoice_customer_borbid" model="ir.ui.view">
-            <field name="name">account.invoice.customer.forbid</field>
+        <record id="view_account_invoice_customer" model="ir.ui.view">
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account_voucher.view_invoice_customer"/>
             <field name="arch" type="xml">
