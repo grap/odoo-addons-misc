@@ -1,24 +1,8 @@
-# -*- encoding: utf-8 -*-
-##############################################################################
-#
-#    Point Of Sale - Invoicing module for Odoo
-#    Copyright (C) 2013-Today GRAP (http://www.grap.coop)
-#    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# coding: utf-8
+# Copyright (C) 2013 - Today: GRAP (http://www.grap.coop)
+# @author: Julien WESTE
+# @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 import logging
 
@@ -27,7 +11,7 @@ from openerp.osv.orm import Model
 _logger = logging.getLogger(__name__)
 
 
-class pos_session(Model):
+class PosSession(Model):
     _inherit = 'pos.session'
 
     def wkf_action_close(self, cr, uid, ids, context=None):
@@ -35,7 +19,7 @@ class pos_session(Model):
         aml_obj = self.pool['account.move.line']
 
         # Call regular workflow
-        res = super(pos_session, self).wkf_action_close(
+        res = super(PosSession, self).wkf_action_close(
             cr, uid, ids, context=context)
 
         # Get All Pos Order invoiced during the current Sessions

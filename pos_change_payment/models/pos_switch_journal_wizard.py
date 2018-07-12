@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-
-# Copyright (C) 2015-Today GRAP (http://www.grap.coop)
+# coding: utf-8
+# Copyright (C) 2015 - Today: GRAP (http://www.grap.coop)
 # @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
@@ -9,7 +9,7 @@ from openerp.osv.orm import TransientModel
 from openerp.tools.translate import _
 
 
-class pos_switch_journal_wizard(TransientModel):
+class PosSwitchJournalWizard(TransientModel):
     _name = 'pos.switch.journal.wizard'
 
     def _get_new_statement_id(self, cr, uid, context=None):
@@ -45,7 +45,7 @@ class pos_switch_journal_wizard(TransientModel):
         absl_obj = self.pool['account.bank.statement.line']
         if context.get('active_model', False) != 'account.bank.statement.line':
             raise except_osv(_('Error!'), _('Incorrect Call!'))
-        res = super(pos_switch_journal_wizard, self).default_get(
+        res = super(PosSwitchJournalWizard, self).default_get(
             cr, uid, fields, context=context)
         absl = absl_obj.browse(
             cr, uid, context.get('active_id'), context=context)

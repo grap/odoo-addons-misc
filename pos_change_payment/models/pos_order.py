@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-
-# Copyright (C) 2015-Today GRAP (http://www.grap.coop)
+# coding: utf-8
+# Copyright (C) 2015 - Today: GRAP (http://www.grap.coop)
 # @author: Julien WESTE
 # @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
@@ -10,7 +10,7 @@ from openerp.osv.osv import except_osv
 from openerp.tools.translate import _
 
 
-class pos_order(Model):
+class PosOrder(Model):
     _inherit = 'pos.order'
 
     @api.multi
@@ -54,7 +54,7 @@ class pos_order(Model):
         ctx = context.copy()
         ctx['change_pos_payment'] = True
         self._merge_cash_payment(cr, uid, ids, context=ctx)
-        return super(pos_order, self).action_paid(
+        return super(PosOrder, self).action_paid(
             cr, uid, ids, context=context)
 
     # Private Function Section

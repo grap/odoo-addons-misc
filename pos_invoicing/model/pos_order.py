@@ -1,25 +1,8 @@
-# -*- encoding: utf-8 -*-
-##############################################################################
-#
-#    Point Of Sale - Invoicing module for Odoo
-#    Copyright (C) 2013-Today GRAP (http://www.grap.coop)
-#    @author Julien WESTE
-#    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# coding: utf-8
+# Copyright (C) 2013 - Today: GRAP (http://www.grap.coop)
+# @author: Julien WESTE
+# @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from openerp.osv import osv
 from openerp.osv.orm import Model
@@ -27,7 +10,7 @@ from openerp.tools.translate import _
 from openerp import netsvc
 
 
-class pos_order(Model):
+class PosOrder(Model):
     _inherit = 'pos.order'
 
     def action_invoice(self, cr, uid, ids, context=None):
@@ -46,7 +29,7 @@ class pos_order(Model):
                 raise osv.except_osv(
                     _('Error!'),
                     _("You can not invoice an empty POS Order"))
-        res = super(pos_order, self).action_invoice(
+        res = super(PosOrder, self).action_invoice(
             cr, uid, ids, context=context)
         for po in self.browse(cr, uid, ids, context=context):
             forbid_payment = po.state == 'invoiced' and\
