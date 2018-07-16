@@ -1,8 +1,9 @@
 web
-pos_01_barcodes         https://github.com/grap/pos.git                     8.0_BACKPORT_barcodes
 l10n-france
 sale-workflow
 purchase-workflow
 
 grap-odoo-incubator     https://github.com/grap/grap-odoo-incubator.git     8.0
 grap-odoo-business      https://github.com/grap/grap-odoo-business.git      8.0
+
+grap-odoo-backport      https://github.com/grap/grap-odoo-backport.git      8.0
