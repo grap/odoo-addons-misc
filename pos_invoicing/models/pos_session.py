@@ -30,7 +30,7 @@ class PosSession(Model):
         for po in po_obj.browse(cr, uid, po_ids, context=context):
             # We're searching only account Invoices that has been payed
             # In Point Of Sale
-            if not po.invoice_id.forbid_payment:
+            if not po.invoice_id.pos_pending_payment:
                 continue
 
             # Search all move Line to reconcile in Sale Journal
@@ -66,11 +66,13 @@ class PosSession(Model):
             # Try to reconcile
             if aml_payment_total != - aml_sale_total:
                 # Unable to reconcile
+                print "----- PAS BIEN"
                 _logger.warning(
                     "Unable to reconcile the payment of %s #%s."
                     "(partner : %s)" % (
                         po.name, po.id, partner.name))
             else:
+                print "!!!! BIEN !!!"
                 aml_obj.reconcile(
                     cr, uid, aml_payment_ids + aml_sale_ids, 'manual',
                     False, False, False, context=context)

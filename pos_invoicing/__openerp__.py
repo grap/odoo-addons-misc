@@ -6,23 +6,19 @@
 {
     'name': 'Point Of Sale - Invoicing',
     'summary': 'Handle invoicing from Point Of Sale',
-    'version': '2.1',
+    'version': '8.0.3.0.0',
     'category': 'Point of Sale',
     'author': 'GRAP',
     'website': 'http://www.grap.coop',
     'license': 'AGPL-3',
     'depends': [
-        'account',
-        'account_voucher',
         'point_of_sale',
     ],
     'data': [
-        'view/pos_invoice_draft_order_wizard_view.xml',
-        'view/action.xml',
-        'view/view.xml',
+        'views/view_account_invoice.xml',
     ],
     'demo': [
-        'demo/res_groups.yml',
+        'demo/res_groups.xml',
     ],
     'installable': True,
 }
