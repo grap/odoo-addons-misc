@@ -6,75 +6,65 @@
 
 import logging
 
-from openerp.osv.orm import Model
+from openerp import api, models
 
 _logger = logging.getLogger(__name__)
 
 
-class PosSession(Model):
+class PosSession(models.Model):
     _inherit = 'pos.session'
 
-    def wkf_action_close(self, cr, uid, ids, context=None):
-        po_obj = self.pool['pos.order']
-        aml_obj = self.pool['account.move.line']
+    @api.multi
+    def wkf_action_close(self):
+        move_line_obj = self.env['account.move.line']
 
-        # Call regular workflow
-        res = super(PosSession, self).wkf_action_close(
-            cr, uid, ids, context=context)
+        res = super(PosSession, self).wkf_action_close()
 
         # Get All Pos Order invoiced during the current Sessions
-        po_ids = po_obj.search(cr, uid, [
-            ('session_id', 'in', ids),
-            ('invoice_id', '!=', False),
-        ], context=context)
-        for po in po_obj.browse(cr, uid, po_ids, context=context):
-            # We're searching only account Invoices that has been payed
-            # In Point Of Sale
-            if not po.invoice_id.pos_pending_payment:
-                continue
+        orders = self.order_ids.filtered(lambda x: x.invoice_id)
 
-            # Search all move Line to reconcile in Sale Journal
-            aml_sale_ids = []
-            aml_sale_total = 0
-
+        for order in orders:
             # Get accounting partner
-            if po.partner_id.parent_id:
-                partner = po.partner_id.parent_id
-            else:
-                partner = po.partner_id
+            partner = order.partner_id.parent_id or order.partner_id
 
-            for aml in po.invoice_id.move_id.line_id:
-                if (aml.partner_id.id == partner.id and
-                        aml.account_id.type == 'receivable'):
-                    aml_sale_ids.append(aml.id)
-                    aml_sale_total += aml.debit - aml.credit
+            # Search all Sale Move Lines to reconcile in Sale Journal
+            sale_move_lines = []
+            sale_total = 0
 
-            aml_payment_ids = []
-            aml_payment_total = 0
+            for move_line in order.invoice_id.move_id.line_id:
+                if (move_line.partner_id.id == partner.id and
+                        move_line.account_id.type == 'receivable'):
+                    sale_move_lines.append(move_line)
+                    sale_total += move_line.debit - move_line.credit
+
             # Search all move Line to reconcile in Payment Journals
-            abs_ids = list(set([x.statement_id.id for x in po.statement_ids]))
-            aml_ids = aml_obj.search(cr, uid, [
-                ('statement_id', 'in', abs_ids),
+            payment_move_lines = []
+            payment_total = 0
+
+            statement_ids = order.mapped('statement_ids.statement_id').ids
+            move_lines = move_line_obj.search([
+                ('statement_id', 'in', statement_ids),
                 ('partner_id', '=', partner.id),
-                ('reconcile_id', '=', False)], context=context)
-            for aml in aml_obj.browse(
-                    cr, uid, aml_ids, context=context):
-                if (aml.account_id.type == 'receivable'):
-                    aml_payment_ids.append(aml.id)
-                    aml_payment_total += aml.debit - aml.credit
+                ('reconcile_id', '=', False)])
+            for move_line in move_lines:
+                if (move_line.account_id.type == 'receivable'):
+                    payment_move_lines.append(move_line)
+                    payment_total += move_line.debit - move_line.credit
 
             # Try to reconcile
-            if aml_payment_total != - aml_sale_total:
+            if payment_total != - sale_total:
                 # Unable to reconcile
-                print "----- PAS BIEN"
                 _logger.warning(
-                    "Unable to reconcile the payment of %s #%s."
+                    "Unable to reconcile the payment of %s #%d."
                     "(partner : %s)" % (
-                        po.name, po.id, partner.name))
+                        order.name, order.id, partner.name))
             else:
-                print "!!!! BIEN !!!"
-                aml_obj.reconcile(
-                    cr, uid, aml_payment_ids + aml_sale_ids, 'manual',
-                    False, False, False, context=context)
+                # Reconcile move lines
+                move_lines = move_line_obj.browse(
+                    [x.id for x in sale_move_lines] +
+                    [x.id for x in payment_move_lines])
+                move_lines.reconcile('manual', False, False, False)
+                # Unflag the invoice as 'PoS Pending Payment'
+                order.invoice_id.pos_pending_payment = False
 
         return res

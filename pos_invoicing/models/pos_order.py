@@ -12,7 +12,6 @@ class PosOrder(models.Model):
 
     @api.multi
     def action_invoice(self):
-        inv_obj = self.pool['account.invoice']
         res = super(PosOrder, self).action_invoice()
         self.mapped('invoice_id').write({'pos_pending_payment': True})
         self.mapped('invoice_id').signal_workflow('invoice_open')

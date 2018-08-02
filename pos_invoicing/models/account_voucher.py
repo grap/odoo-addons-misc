@@ -14,11 +14,12 @@ class AccountVoucher(models.Model):
     @api.multi
     def recompute_voucher_lines(
             self, partner_id, journal_id, price, currency_id, ttype, date):
+
+        move_line_obj = self.env['account.move.line']
+
         res = super(AccountVoucher, self).recompute_voucher_lines(
             partner_id, journal_id, price, currency_id, ttype, date)
-        move_line_obj = self.env['account.move.line']
-        inv_obj = self.pool.get('account.invoice')
-        print res
+
         for voucher_type in ['line_dr_ids', 'line_cr_ids']:
             for voucher_line in res['value'][voucher_type]:
                 move_line = move_line_obj.browse(voucher_line['move_line_id'])

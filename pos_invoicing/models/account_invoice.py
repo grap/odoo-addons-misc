@@ -12,7 +12,7 @@ class AccountInvoice(models.Model):
     _inherit = 'account.invoice'
 
     pos_pending_payment = fields.Boolean(
-        string='PoS - Pending Payment', readonly=True, 
+        string='PoS - Pending Payment', readonly=True,
         oldname='forbid_payment',
         help="Indicates an invoice for which there are pending payments in the"
         " Point of Sale. \nThe invoice will be marked as paid when the session"
@@ -23,7 +23,6 @@ class AccountInvoice(models.Model):
     def action_cancel(self):
         self._check_pos_pending_payment()
         return super(AccountInvoice, self).action_cancel()
-
 
     @api.multi
     def invoice_pay_customer(self):

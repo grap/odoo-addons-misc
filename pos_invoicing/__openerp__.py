@@ -20,5 +20,8 @@
     'demo': [
         'demo/res_groups.xml',
     ],
+    'images': [
+        'static/description/account_invoice_form.png',
+    ],
     'installable': True,
 }
