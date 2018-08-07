@@ -49,7 +49,7 @@ class StockPickingQuickEditWizard(models.TransientModel):
         # Manage move changes
         for move in picking.move_lines:
             current_move = self.current_move_ids.filtered(
-                lambda x: x.move_id== move)
+                lambda x: x.move_id == move)
             if current_move:
                 # Update Value
                 product_uos_qty = move.onchange_quantity(

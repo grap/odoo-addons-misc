@@ -3,8 +3,7 @@
 # @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp import _, api, fields, models
-from openerp.exceptions import Warning as UserError
+from openerp import api, fields, models
 import openerp.addons.decimal_precision as dp
 
 
@@ -34,7 +33,7 @@ class StockPickingQuickEditWizardNewMove(models.TransientModel):
             self.product_uom_id = self.product_id.uom_id.id
         else:
             self.product_uom_qty = 0
-            self.product_uom_id  = False
+            self.product_uom_id = False
 
     @api.multi
     def prepare_stock_move(self):
@@ -50,7 +49,6 @@ class StockPickingQuickEditWizardNewMove(models.TransientModel):
             'product_id': self.product_id.id,
             'product_uom_qty': self.product_uom_qty,
             'product_uos_qty': self.product_uom_qty,
-            'weight_uom_id': self.product_id.uom_id.id,
             'product_uom': self.product_id.uom_id.id,
         }
         # Handle lazely stock_account compatibility
