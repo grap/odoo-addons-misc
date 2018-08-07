@@ -4,8 +4,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 {
-    'name': 'Stock - Picking Quick Edit',
-    'summary': 'Possibility to edit a Delivery Order',
+    'name': 'Stock Picking - Quick Edit',
+    'summary': 'Possibility to quickly edit a stock picking',
     'version': '8.0.1.0.0',
     'category': 'Stock',
     'description': """
@@ -33,8 +33,8 @@ Copyright, Authors and Licence:
         'stock',
     ],
     'data': [
-        'views/view_stock_picking.xml',
         'views/view_stock_picking_quick_edit_wizard.xml',
+        'views/view_stock_picking.xml',
     ],
     'installable': True,
 }
