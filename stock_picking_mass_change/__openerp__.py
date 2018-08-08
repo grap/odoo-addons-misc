@@ -30,13 +30,10 @@ Copyright, Authors and Licence:
     'website': 'http://www.grap.coop',
     'license': 'AGPL-3',
     'depends': [
-        'sale',
         'stock',
     ],
     'data': [
-        'views/view_stock_picking.xml',
         'views/view_stock_picking_mass_change_wizard.xml',
-        'views/view_stock_picking_quick_edit_wizard.xml',
         'views/action.xml',
     ],
     'installable': True,
