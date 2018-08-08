@@ -21,5 +21,9 @@
         'demo/stock_picking.xml',
         'demo/stock_move.xml',
     ],
+    'images': [
+        '/static/description/wizard_form_fifo.png',
+        '/static/description/wizard_form_pro_rata.png',
+    ],
     'installable': True,
 }
