@@ -28,7 +28,10 @@ class StockPickingQuickEditWizardCurrentMove(models.TransientModel):
         comodel_name='product.uom', string='UoM',
         required=True, readonly=True)
 
+    old_product_uom_qty = fields.Float(
+        string='Previous Quantity', required=True, readonly=True,
+        digits_compute=dp.get_precision('Product UoS'))
+
     product_uom_qty = fields.Float(
-        comodel_name='product.product', string='Quantity',
-        digits_compute=dp.get_precision('Product UoS'),
-        required=True)
+        string='New Quantity', required=True,
+        digits_compute=dp.get_precision('Product UoS'))

@@ -36,6 +36,7 @@ class StockPickingQuickEditWizard(models.TransientModel):
                 'move_id': move.id,
                 'product_id': move.product_id.id,
                 'product_uom_qty': move.product_uom_qty,
+                'old_product_uom_qty': move.product_uom_qty,
                 'product_uom_id': move.product_uom.id,
             }))
         return res

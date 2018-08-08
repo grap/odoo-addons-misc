@@ -22,9 +22,10 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                 <group col="2">
                     <field name="picking_id" colspan="2" />
                     <field name="current_move_ids" nolabel="1" colspan="2">
-                        <tree string="Edit Current Moves" editable="bottom" create="false">
+                        <tree string="Edit Current Moves" editable="bottom" create="false" colors="red:product_uom_qty == 0; brown: product_uom_qty != old_product_uom_qty">
                             <field name="move_id" />
                             <field name="product_id" />
+                            <field name="old_product_uom_qty"/>
                             <field name="product_uom_qty" />
                             <field name="product_uom_id" />
                         </tree>
