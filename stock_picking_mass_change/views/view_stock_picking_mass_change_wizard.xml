@@ -48,7 +48,6 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                                 <field name="picking_date" />
                                 <field name="origin" />
                                 <field name="picking_id" />
-                                <field name="move_id" invisible="1"/>
                                 <field name="partner_id" />
                                 <field name="ordered_qty" />
                                 <field name="exact_target_qty" />

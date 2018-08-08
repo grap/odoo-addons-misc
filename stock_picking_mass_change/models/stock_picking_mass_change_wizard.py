@@ -29,23 +29,23 @@ class StockPickingMassChangeWizard(models.TransientModel):
 
     ordered_product_qty = fields.Float(
         string='Ordered Product Quantity', readonly=True,
-        digits_compute=dp.get_precision('Product Unit of Measure'))
+        digits=dp.get_precision('Product Unit of Measure'))
 
     target_product_qty = fields.Float(
-        string='Target Product Quantity', required=True, default=0,
-        digits_compute=dp.get_precision('Product Unit of Measure'))
+        string='Target Product Quantity', required=True, default=0.0,
+        digits=dp.get_precision('Product Unit of Measure'))
 
     computed_product_qty = fields.Float(
         string='Computed Product Quantity', readonly=True,
-        digits_compute=dp.get_precision('Product Unit of Measure'))
+        digits=dp.get_precision('Product Unit of Measure'))
 
     change_method = fields.Selection(
         selection=_CHANGE_METHOD_SELECTION, string='Change Method',
         required=True, default='pro_rata')
 
     rounding = fields.Float(
-        string='Rounding', required=True, default=1,
-        digits_compute=dp.get_precision('Product Unit of Measure'))
+        string='Rounding', required=True, default=1.0,
+        digits=dp.get_precision('Product Unit of Measure'))
 
     picking_qty = fields.Integer(
         string='Selected Picking Qty', readonly=True,
@@ -72,7 +72,7 @@ class StockPickingMassChangeWizard(models.TransientModel):
         concerned_picking_qty = 0
         line_vals = []
         if self.product_id:
-            self.rounding = self.product_id.uom_id.rounding
+            rounding = self.product_id.uom_id.rounding
             for picking in picking_obj.search(
                     [('id', 'in', self._default_picking_ids())],
                     order='date, id'):

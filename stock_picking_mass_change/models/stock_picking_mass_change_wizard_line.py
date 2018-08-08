@@ -29,15 +29,15 @@ class StockPickingMassChangeWizardLine(models.TransientModel):
 
     ordered_qty = fields.Float(
         string='Ordered Qty', required=True, readonly=True,
-        digits_compute=dp.get_precision('Product Unit of Measure'))
+        digits=dp.get_precision('Product Unit of Measure'))
 
     exact_target_qty = fields.Float(
         string='Theoretical Target Qty', required=True, readonly=True,
-        digits_compute=dp.get_precision('Product Unit of Measure'))
+        digits=dp.get_precision('Product Unit of Measure'))
 
     target_qty = fields.Float(
         string='Target Qty', required=True,
-        digits_compute=dp.get_precision('Product Unit of Measure'))
+        digits=dp.get_precision('Product Unit of Measure'))
 
     partner_id = fields.Many2one(
         comodel_name='res.partner', string='Partner',

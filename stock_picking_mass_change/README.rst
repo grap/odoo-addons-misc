@@ -27,6 +27,12 @@ to its customers.
    :width: 800 px
 
 
+Roadmap / Known Issues
+======================
+
+* add a new field Replacement Product, to allow user to change massively
+  from a product to another. (if UoM are coherents)
+
 Credits
 =======
 
