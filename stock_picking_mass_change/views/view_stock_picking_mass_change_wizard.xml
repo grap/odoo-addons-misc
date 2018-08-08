@@ -30,16 +30,16 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                 <group colspan="2">
                     <group string="Parameters" col="6" colspan="2">
                         <field name="product_id"/>
-                        <field name="change_method"/>
+                        <field name="change_method" attrs="{'readonly': [('product_id', '=', False)]}"/>
                         <newline/>
                         <field name="picking_qty"/>
                         <field name="concerned_picking_qty"/>
                         <newline/>
                         <field name="ordered_product_qty"/>
-                        <field name="target_product_qty"/>
+                        <field name="target_product_qty" attrs="{'readonly': [('product_id', '=', False)]}"/>
                         <field name="product_uom_id"/>
                         <newline/>
-                        <field name="rounding"/>
+                        <field name="rounding" attrs="{'readonly': [('product_id', '=', False)]}"/>
                         <field name="computed_product_qty"/>
                     </group>
                     <group string="Lines" col="2" colspan="2">
@@ -48,7 +48,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                                 <field name="picking_date" />
                                 <field name="origin" />
                                 <field name="picking_id" />
-                                <field name="move_id"/>
+                                <field name="move_id" invisible="1"/>
                                 <field name="partner_id" />
                                 <field name="ordered_qty" />
                                 <field name="exact_target_qty" />
@@ -57,7 +57,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                         </field>
                     </group>
                     <group col="4" colspan="2">
-                        <button name="button_mass_change" string="Apply" type="object" class="oe_highlight"/>
+                        <button name="button_apply" string="Apply" type="object" class="oe_highlight"/>
                         or
                         <button special="cancel" string="Cancel"/>
                    </group>

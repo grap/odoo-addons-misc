@@ -9,17 +9,18 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
     <record id="move_1_A" model="stock.move">
         <field name="name">Demo Move - Blank CD (picking 1)</field>
         <field name="picking_id" ref="picking_1"/>
-        <field name="product_id" ref="product.product_product_35" />
+        <field name="product_id" ref="product.product_product_9" />
         <field name="product_uom_qty">200</field>
+        <field name="product_uom" ref="product.product_uom_unit"/>
         <field name="location_id" ref="stock.stock_location_stock"/>
         <field name="location_dest_id" ref="stock.stock_location_customers"/>
-        <field name="product_uom" ref="product.product_uom_unit"/>
+
     </record>
 
     <record id="move_2_A" model="stock.move">
         <field name="name">Demo Move - Blank CD (picking 2)</field>
         <field name="picking_id" ref="picking_2"/>
-        <field name="product_id" ref="product.product_product_35" />
+        <field name="product_id" ref="product.product_product_9" />
         <field name="product_uom_qty">100</field>
         <field name="location_id" ref="stock.stock_location_stock"/>
         <field name="location_dest_id" ref="stock.stock_location_customers"/>

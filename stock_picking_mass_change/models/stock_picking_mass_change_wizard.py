@@ -32,7 +32,7 @@ class StockPickingMassChangeWizard(models.TransientModel):
         digits_compute=dp.get_precision('Product Unit of Measure'))
 
     target_product_qty = fields.Float(
-        string='Target Product Quantity', required=True,
+        string='Target Product Quantity', required=True, default=0,
         digits_compute=dp.get_precision('Product Unit of Measure'))
 
     computed_product_qty = fields.Float(
@@ -44,7 +44,7 @@ class StockPickingMassChangeWizard(models.TransientModel):
         required=True, default='pro_rata')
 
     rounding = fields.Float(
-        string='Rounding', required=True,
+        string='Rounding', required=True, default=1,
         digits_compute=dp.get_precision('Product Unit of Measure'))
 
     picking_qty = fields.Integer(
@@ -134,7 +134,7 @@ class StockPickingMassChangeWizard(models.TransientModel):
             return value
 
     @api.multi
-    def button_mass_change(self):
+    def button_apply(self):
         self.ensure_one()
         for line in self.line_ids:
             line.move_id.write({
