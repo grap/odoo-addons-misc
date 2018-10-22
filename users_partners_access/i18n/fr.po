@@ -1,0 +1,35 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#   * users_partners_access
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-10-22 12:46+0000\n"
+"PO-Revision-Date: 2018-10-22 12:46+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: users_partners_access
+#: model:ir.model,name:users_partners_access.model_res_partner
+msgid "Partner"
+msgstr "Partenaire"
+
+#. module: users_partners_access
+#: model:ir.model,name:users_partners_access.model_res_users
+msgid "Users"
+msgstr "Utilisateurs"
+
+#. module: users_partners_access
+#: code:addons/users_partners_access/models/res_partner.py:44
+#, python-format
+msgid "You must be part of the group Administration / Access Rights to update partners associated to users.\n"
+"- %s"
+msgstr "Vous devez membres du groupe 'Administration / Groupe d'accès' pour mettre à jour les partenaires associés aux utilisateurs.\n"
+"- %s"
+
