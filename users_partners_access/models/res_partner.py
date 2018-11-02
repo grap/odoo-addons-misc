@@ -17,7 +17,8 @@ class ResPartner(models.Model):
         self._check_users_partners_access()
         return super(ResPartner, self).write(vals)
 
-    def unlink(self, cr, uid, ids, context=None):
+    @api.multi
+    def unlink(self):
         self._check_users_partners_access()
         return super(ResPartner, self).unlink()
 
