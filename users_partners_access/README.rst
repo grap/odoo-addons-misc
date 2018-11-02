@@ -26,12 +26,12 @@ With this module:
 Technically
 -----------
 
-1. all partners associated to a user:
+All partners associated to a user:
 
 * have ``active``, ``customer``, ``supplier`` checkbox disabled;
 * have ``company_id`` empty;
 
-2. Only members of 'Administration / Access Rights' could update partners;
+Only members of 'Administration / Access Rights' could update partners;
 
 Credits
 =======
