@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-03 18:18+0000\n"
-"PO-Revision-Date: 2018-02-03 18:18+0000\n"
+"POT-Creation-Date: 2018-08-07 16:18+0000\n"
+"PO-Revision-Date: 2018-08-07 16:18+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -21,25 +21,9 @@ msgid "Apply"
 msgstr "Appliquer"
 
 #. module: stock_picking_quick_edit
-#: view:stock.picking.mass.change.wizard:stock_picking_quick_edit.view_stock_picking_mass_change_wizard_form
 #: view:stock.picking.quick.edit.wizard:stock_picking_quick_edit.view_stock_picking_quick_edit_wizard_form
 msgid "Cancel"
 msgstr "Annuler"
-
-#. module: stock_picking_quick_edit
-#: field:stock.picking.mass.change.wizard,change_method:0
-msgid "Change Method"
-msgstr "Méthode de changement"
-
-#. module: stock_picking_quick_edit
-#: field:stock.picking.mass.change.wizard,computed_product_qty:0
-msgid "Computed Product Quantity"
-msgstr "Quantité de produit calculé"
-
-#. module: stock_picking_quick_edit
-#: field:stock.picking.mass.change.wizard,concerned_picking_qty:0
-msgid "Concerned Picking Quantity"
-msgstr "Quantité de Bons concernés"
 
 #. module: stock_picking_quick_edit
 #: view:stock.picking.quick.edit.wizard:stock_picking_quick_edit.view_stock_picking_quick_edit_wizard_form
@@ -47,8 +31,6 @@ msgid "Create New Moves"
 msgstr "Créer de nouveaux mouvements"
 
 #. module: stock_picking_quick_edit
-#: field:stock.picking.mass.change.wizard,create_uid:0
-#: field:stock.picking.mass.change.wizard.line,create_uid:0
 #: field:stock.picking.quick.edit.wizard,create_uid:0
 #: field:stock.picking.quick.edit.wizard.current.move,create_uid:0
 #: field:stock.picking.quick.edit.wizard.new.move,create_uid:0
@@ -56,8 +38,6 @@ msgid "Created by"
 msgstr "Created by"
 
 #. module: stock_picking_quick_edit
-#: field:stock.picking.mass.change.wizard,create_date:0
-#: field:stock.picking.mass.change.wizard.line,create_date:0
 #: field:stock.picking.quick.edit.wizard,create_date:0
 #: field:stock.picking.quick.edit.wizard.current.move,create_date:0
 #: field:stock.picking.quick.edit.wizard.new.move,create_date:0
@@ -70,8 +50,6 @@ msgid "Delivery Order"
 msgstr "Bon de livraison"
 
 #. module: stock_picking_quick_edit
-#: field:stock.picking.mass.change.wizard,display_name:0
-#: field:stock.picking.mass.change.wizard.line,display_name:0
 #: field:stock.picking.quick.edit.wizard,display_name:0
 #: field:stock.picking.quick.edit.wizard.current.move,display_name:0
 #: field:stock.picking.quick.edit.wizard.new.move,display_name:0
@@ -84,17 +62,6 @@ msgid "Edit Current Moves"
 msgstr "Editer les mouvements existants"
 
 #. module: stock_picking_quick_edit
-#: view:stock.picking.quick.edit.wizard:stock_picking_quick_edit.view_stock_picking_quick_edit_wizard_form
-msgid "Edit Delivery Order"
-msgstr "Editer le bon de livraison"
-
-#. module: stock_picking_quick_edit
-#: code:addons/stock_picking_quick_edit/model/stock_picking_quick_edit_wizard.py:101
-#, python-format
-msgid "Error!"
-msgstr "Erreur !"
-
-#. module: stock_picking_quick_edit
 #: field:stock.picking.quick.edit.wizard.current.move,move_id:0
 msgid "Existing Move"
 msgstr "Mouvement existant"
@@ -105,13 +72,6 @@ msgid "Existing Moves"
 msgstr "Mouvements existants"
 
 #. module: stock_picking_quick_edit
-#: selection:stock.picking.mass.change.wizard,change_method:0
-msgid "First In First Served"
-msgstr "Premier arrivé, premier servi"
-
-#. module: stock_picking_quick_edit
-#: field:stock.picking.mass.change.wizard,id:0
-#: field:stock.picking.mass.change.wizard.line,id:0
 #: field:stock.picking.quick.edit.wizard,id:0
 #: field:stock.picking.quick.edit.wizard.current.move,id:0
 #: field:stock.picking.quick.edit.wizard.new.move,id:0
@@ -119,8 +79,6 @@ msgid "ID"
 msgstr "ID"
 
 #. module: stock_picking_quick_edit
-#: field:stock.picking.mass.change.wizard,__last_update:0
-#: field:stock.picking.mass.change.wizard.line,__last_update:0
 #: field:stock.picking.quick.edit.wizard,__last_update:0
 #: field:stock.picking.quick.edit.wizard.current.move,__last_update:0
 #: field:stock.picking.quick.edit.wizard.new.move,__last_update:0
@@ -128,8 +86,6 @@ msgid "Last Modified on"
 msgstr "Last Modified on"
 
 #. module: stock_picking_quick_edit
-#: field:stock.picking.mass.change.wizard,write_uid:0
-#: field:stock.picking.mass.change.wizard.line,write_uid:0
 #: field:stock.picking.quick.edit.wizard,write_uid:0
 #: field:stock.picking.quick.edit.wizard.current.move,write_uid:0
 #: field:stock.picking.quick.edit.wizard.new.move,write_uid:0
@@ -137,8 +93,6 @@ msgid "Last Updated by"
 msgstr "Last Updated by"
 
 #. module: stock_picking_quick_edit
-#: field:stock.picking.mass.change.wizard,write_date:0
-#: field:stock.picking.mass.change.wizard.line,write_date:0
 #: field:stock.picking.quick.edit.wizard,write_date:0
 #: field:stock.picking.quick.edit.wizard.current.move,write_date:0
 #: field:stock.picking.quick.edit.wizard.new.move,write_date:0
@@ -146,64 +100,9 @@ msgid "Last Updated on"
 msgstr "Last Updated on"
 
 #. module: stock_picking_quick_edit
-#: view:stock.picking.mass.change.wizard:stock_picking_quick_edit.view_stock_picking_mass_change_wizard_form
-#: field:stock.picking.mass.change.wizard,line_ids:0
-msgid "Lines"
-msgstr "Lignes"
-
-#. module: stock_picking_quick_edit
-#: view:stock.picking.mass.change.wizard:stock_picking_quick_edit.view_stock_picking_mass_change_wizard_form
-msgid "Mass Change"
-msgstr "Changement en masse"
-
-#. module: stock_picking_quick_edit
-#: model:ir.actions.act_window,name:stock_picking_quick_edit.action_stock_picking_mass_change_wizard
-#: view:stock.picking.mass.change.wizard:stock_picking_quick_edit.view_stock_picking_mass_change_wizard_form
-msgid "Mass Quantity Change"
-msgstr "Change de quantité en masse"
-
-#. module: stock_picking_quick_edit
 #: field:stock.picking.quick.edit.wizard,new_move_ids:0
 msgid "New Moves"
 msgstr "Nouveaux mouvements"
-
-#. module: stock_picking_quick_edit
-#: code:addons/stock_picking_quick_edit/model/stock_picking_mass_change_wizard.py:151
-#, python-format
-msgid "Not Implemented feature"
-msgstr "Fonctionnalité non implémentée"
-
-#. module: stock_picking_quick_edit
-#: code:addons/stock_picking_quick_edit/model/stock_picking_mass_change_wizard.py:150
-#, python-format
-msgid "Not Implemented!"
-msgstr "Non implémentée!"
-
-#. module: stock_picking_quick_edit
-#: field:stock.picking.mass.change.wizard,ordered_product_qty:0
-msgid "Ordered Product Quantity"
-msgstr "Quantité de produit demandée"
-
-#. module: stock_picking_quick_edit
-#: field:stock.picking.mass.change.wizard.line,ordered_qty:0
-msgid "Ordered Qty"
-msgstr "Quantité demandée"
-
-#. module: stock_picking_quick_edit
-#: view:stock.picking.mass.change.wizard:stock_picking_quick_edit.view_stock_picking_mass_change_wizard_form
-msgid "Parameters"
-msgstr "Paramètres"
-
-#. module: stock_picking_quick_edit
-#: field:stock.picking.mass.change.wizard.line,partner_id:0
-msgid "Partner"
-msgstr "Partenaires"
-
-#. module: stock_picking_quick_edit
-#: field:stock.picking.mass.change.wizard.line,move_id:0
-#: field:stock.picking.mass.change.wizard.line,picking_id:0
-msgid "Picking"
-msgstr "Bons"
 
 #. module: stock_picking_quick_edit
 #: model:ir.model,name:stock_picking_quick_edit.model_stock_picking
@@ -211,12 +110,6 @@ msgid "Picking List"
 msgstr "Bon de livraison"
 
 #. module: stock_picking_quick_edit
-#: selection:stock.picking.mass.change.wizard,change_method:0
-msgid "Pro Rata"
-msgstr "Pro Rata"
-
-#. module: stock_picking_quick_edit
-#: field:stock.picking.mass.change.wizard,product_id:0
 #: field:stock.picking.quick.edit.wizard.current.move,product_id:0
 #: field:stock.picking.quick.edit.wizard.new.move,product_id:0
 msgid "Product"
@@ -229,50 +122,24 @@ msgid "Quantity"
 msgstr "Quantité"
 
 #. module: stock_picking_quick_edit
+#: model:ir.actions.act_window,name:stock_picking_quick_edit.action_stock_picking_quick_edit
 #: view:stock.picking:stock_picking_quick_edit.view_stock_picking_form
 msgid "Quick Edit"
 msgstr "Edition rapide"
 
 #. module: stock_picking_quick_edit
-#: field:stock.picking.mass.change.wizard,rounding:0
-msgid "Rounding"
-msgstr "Arrondi"
-
-#. module: stock_picking_quick_edit
-#: field:stock.picking.mass.change.wizard.line,sale_id:0
-msgid "Sale Order"
-msgstr "Vente"
-
-#. module: stock_picking_quick_edit
-#: field:stock.picking.mass.change.wizard,picking_qty:0
-msgid "Selected Picking Qty"
-msgstr "Nombre de Bons sélectionnés"
-
-#. module: stock_picking_quick_edit
-#: view:stock.picking.mass.change.wizard:stock_picking_quick_edit.view_stock_picking_mass_change_wizard_form
-msgid "Selection"
-msgstr "Sélection"
-
-#. module: stock_picking_quick_edit
-#: field:stock.picking.mass.change.wizard,target_product_qty:0
-msgid "Target Product Quantity"
-msgstr "Qté de produit cible"
-
-#. module: stock_picking_quick_edit
-#: field:stock.picking.mass.change.wizard.line,target_qty:0
-msgid "Target Qty"
-msgstr "Qté Cible"
-
-#. module: stock_picking_quick_edit
-#: field:stock.picking.mass.change.wizard.line,exact_target_qty:0
-msgid "Theoretical Target Qty"
-msgstr "Qté cible théorique"
-
-#. module: stock_picking_quick_edit
-#: code:addons/stock_picking_quick_edit/model/stock_picking_quick_edit_wizard.py:102
+#: code:addons/stock_picking_quick_edit/models/stock_picking_quick_edit_wizard.py:81
 #, python-format
-msgid "Unable to quick edit a picking with stock moves in different locations!"
-msgstr "Impossible d'éditer rapidement cet élément qui contient des movements de stock dans différents emplacements !"
+msgid "Unable to quick add new lines to a picking with stock moves in different locations"
+msgstr "Impossible de rajouter rapidement de nouvelles lignes à une opération qui contient des mouvements de stock de différents emplacements"
+
+#. module: stock_picking_quick_edit
+#: code:addons/stock_picking_quick_edit/models/stock_picking_quick_edit_wizard.py:85
+#, python-format
+msgid "Unable to quick add new lines to a picking with stock moves in different states\n"
+" %s"
+msgstr "Impossible de rajouter rapidement de nouvelles lignes à une opération qui contient des mouvements de stock dans différents états\n"
+" %s"
 
 #. module: stock_picking_quick_edit
 #: field:stock.picking.quick.edit.wizard.current.move,product_uom_id:0
@@ -281,7 +148,6 @@ msgid "UoM"
 msgstr "UdM"
 
 #. module: stock_picking_quick_edit
-#: field:stock.picking.mass.change.wizard.line,wizard_id:0
 #: field:stock.picking.quick.edit.wizard.current.move,wizard_id:0
 #: field:stock.picking.quick.edit.wizard.new.move,wizard_id:0
 msgid "Wizard"

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (C) 2018 - Today: GRAP (http://www.grap.coop)
+@author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+<openerp><data>
+
+    <record id="picking_1" model="stock.picking">
+        <field name="picking_type_id" ref="stock.picking_type_out"/>
+        <field name="date" eval="(DateTime.today() - relativedelta(months=1)).strftime('%Y-%m-%d %H:%M')"/>
+    </record>
+
+    <record id="picking_2" model="stock.picking">
+        <field name="picking_type_id" ref="stock.picking_type_out"/>
+        <field name="date" eval="(DateTime.today()).strftime('%Y-%m-%d %H:%M')"/>
+    </record>
+
+</data></openerp>
+
+
