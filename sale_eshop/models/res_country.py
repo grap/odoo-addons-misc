@@ -1,23 +1,19 @@
 # coding: utf-8
-# Copyright (C) 2014 - Today: GRAP (http://www.grap.coop)
+# Copyright (C) 2018 - Today: GRAP (http://www.grap.coop)
 # @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp import api, fields, models
+from openerp import api, models
 
 
-class AccountTax(models.Model):
-    _name = 'account.tax'
-    _inherit = ['account.tax', 'eshop.mixin']
+class ResCountry(models.Model):
+    _name = 'res.country'
+    _inherit = ['res.country', 'eshop.mixin']
 
     # Inherit Section
     _eshop_invalidation_type = 'multiple'
 
-    _eshop_invalidation_fields = ['eshop_description']
-
-    # Field Section
-    eshop_description = fields.Char(
-        string='Description for the eShop', required=True, default='/')
+    _eshop_invalidation_fields = ['name']
 
     # Overload Section
     @api.multi
@@ -27,4 +23,4 @@ class AccountTax(models.Model):
         in more recent Odoo versions.
         """
         self._write_eshop_invalidate(vals)
-        return super(AccountTax, self).write(vals)
+        return super(ResCountry, self).write(vals)

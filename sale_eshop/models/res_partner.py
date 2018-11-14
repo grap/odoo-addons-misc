@@ -11,7 +11,17 @@ from openerp import api, exceptions, fields, models
 
 
 class ResPartner(models.Model):
-    _inherit = 'res.partner'
+    _name = 'res.partner'
+    _inherit = ['res.partner', 'eshop.mixin']
+
+    # Inherit Section
+    _eshop_invalidation_type = 'single'
+
+    _eshop_invalidation_fields = [
+        'name', 'lang', 'email', 'eshop_active', 'eshop_state',
+        'phone', 'mobile', 'street', 'street2', 'zip', 'city',
+        'simple_tax_type',
+    ]
 
     _PASSWORD_LENGTH = 6
     _PASSWORD_CHARS = string.ascii_letters + '23456789'
@@ -34,12 +44,23 @@ class ResPartner(models.Model):
         string='Can buy on eShop', store=True, compute='_compute_eshop_active',
         readonly=True)
 
+    # Compute Section
     @api.multi
     @api.depends('eshop_state')
     def _compute_eshop_active(self):
         for partner in self:
             partner.eshop_active =\
                 partner.eshop_state in ['first_purchase', 'enabled']
+
+    # Overload Section
+    @api.multi
+    def write(self, vals):
+        """Overload in this part, because write function is not called
+        in mixin model. TODO: Check if this weird behavior still occures
+        in more recent Odoo versions.
+        """
+        self._write_eshop_invalidate(vals)
+        return super(ResPartner, self).write(vals)
 
     # View - Section
     @api.multi
@@ -74,7 +95,6 @@ class ResPartner(models.Model):
         if len(res) == 1:
             return res[0]
         try:
-            # TODO
             ResUsers.sudo().check_credentials(password)
             res = self.search([
                 ('email', '=', login),

@@ -5,11 +5,27 @@
 
 from openerp import api, fields, models
 
-from .model import _ESHOP_OPENERP_MODELS
+# from .model import _ESHOP_OPENERP_MODELS
 
 
 class ResCompany(models.Model):
-    _inherit = 'res.company'
+    _name = 'res.company'
+    _inherit = ['res.company', 'eshop.mixin']
+
+    # Inherit Section
+    _eshop_invalidation_type = 'single'
+
+    _eshop_invalidation_fields = [
+        'eshop_home_text_logged', 'eshop_home_text',
+        'name', 'has_eshop', 'eshop_minimum_price', 'eshop_title',
+        'eshop_url', 'website', 'eshop_list_view_enabled',
+        'eshop_facebook_url', 'eshop_twitter_url', 'eshop_google_plus_url',
+        'eshop_google_plus_url', 'eshop_instagram_url',
+        'eshop_home_image', 'eshop_image_small',
+        'eshop_vat_included', 'eshop_register_allowed',
+        'manage_recovery_moment',
+        'eshop_manage_unpacking',
+    ]
 
     # Columns Section
     eshop_invalidation_cache_url = fields.Char(string='Invalidation Cache URL')
@@ -52,7 +68,18 @@ class ResCompany(models.Model):
     eshop_list_view_enabled = fields.Boolean(
         string='Provide a List view to realize quick purchase.')
 
+    # Overload Section
+    @api.multi
+    def write(self, vals):
+        """Overload in this part, because write function is not called
+        in mixin model. TODO: Check if this weird behavior still occures
+        in more recent Odoo versions.
+        """
+        self._write_eshop_invalidate(vals)
+        return super(ResCompany, self).write(vals)
+
     # Eshop APi - Section
     @api.model
     def get_eshop_model(self):
-        return _ESHOP_OPENERP_MODELS
+        return False
+        # return _ESHOP_OPENERP_MODELS

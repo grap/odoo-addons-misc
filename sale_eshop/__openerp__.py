@@ -33,6 +33,7 @@
         'views/view_res_partner.xml',
     ],
     'demo': [
+        'demo/res_company.xml',
         'demo/res_partner.xml',
         'demo/eshop_category.xml',
         'demo/product_product.xml',

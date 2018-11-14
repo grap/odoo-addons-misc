@@ -10,7 +10,21 @@ from openerp import api, fields, models
 
 
 class ProductProduct(models.Model):
-    _inherit = 'product.product'
+    _name = 'product.product'
+    _inherit = ['product.product', 'eshop.mixin']
+
+    # Inherit Section
+    _eshop_invalidation_type = 'single'
+
+    _eshop_invalidation_fields = [
+        'name', 'uom_id', 'image', 'image_medium', 'list_price',
+        'eshop_category_id', 'label_ids', 'eshop_minimum_qty',
+        'eshop_rounded_qty', 'origin_description', 'maker_description',
+        'fresh_category', 'eshop_description', 'country_id',
+        'department_id', 'default_code',
+        'eshop_taxes_description', 'eshop_unpack_qty',
+        'eshop_unpack_surcharge',
+    ]
 
     _ESHOP_STATE_SELECTION = [
         ('available', 'Available for Sale'),
@@ -82,6 +96,16 @@ class ProductProduct(models.Model):
                         product.eshop_state = 'disabled'
                 else:
                     product.eshop_state = 'available'
+
+    # Overload Section
+    @api.multi
+    def write(self, vals):
+        """Overload in this part, because write function is not called
+        in mixin model. TODO: Check if this weird behavior still occures
+        in more recent Odoo versions.
+        """
+        self._write_eshop_invalidate(vals)
+        return super(ProductProduct, self).write(vals)
 
     # API eshop Section
     @api.model

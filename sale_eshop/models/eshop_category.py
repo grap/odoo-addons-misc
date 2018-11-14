@@ -9,8 +9,17 @@ from openerp.exceptions import Warning as UserError
 
 class EshopCategory(models.Model):
     _name = 'eshop.category'
+    _inherit = ['eshop.mixin']
     _rec_name = 'complete_name'
     _order = 'sequence, complete_name'
+
+    # Inherit Section
+    _eshop_invalidation_type = 'single'
+
+    _eshop_invalidation_fields = [
+        'name', 'available_product_qty', 'child_qty', 'image_medium',
+        'type', 'parent_id', 'product_ids', 'complete_name',
+    ]
 
     _TYPE_SELECTION = [
         ('view', 'View'),
@@ -133,6 +142,16 @@ class EshopCategory(models.Model):
     #     return self.write(
     #         cr, uid, [pId], {'image': tools.image_resize_image_big(value)},
     #         context=context)
+
+    # Overload Section
+    @api.multi
+    def write(self, vals):
+        """Overload in this part, because write function is not called
+        in mixin model. TODO: Check if this weird behavior still occures
+        in more recent Odoo versions.
+        """
+        self._write_eshop_invalidate(vals)
+        return super(EshopCategory, self).write(vals)
 
     # Name Function
     @api.model

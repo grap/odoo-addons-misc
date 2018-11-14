@@ -23,70 +23,71 @@ from openerp.tools.translate import _
 #    'fields' mentions wich fields raise invalidation call.
 
 #    if type is 'single', only one invalidation will be called.
-#    if type is 'multiple', all eshop will be called.
+#    if type is 'multiple', all eshops will be called.
 _ESHOP_OPENERP_MODELS = {
     # 'single' type Models
-    'product.product': {
-        'type': 'single',
-        'fields': [
-            'name', 'uom_id', 'image', 'image_medium', 'list_price',
-            'eshop_category_id', 'label_ids', 'eshop_minimum_qty',
-            'eshop_rounded_qty', 'origin_description', 'maker_description',
-            'fresh_category', 'eshop_description', 'country_id',
-            'department_id', 'default_code',
-            'eshop_taxes_description', 'eshop_unpack_qty',
-            'eshop_unpack_surcharge'],
-    },
-    'res.company': {
-        'type': 'single',
-        'fields': [
-            'eshop_home_text_logged', 'eshop_home_text',
-            'name', 'has_eshop', 'eshop_minimum_price', 'eshop_title',
-            'eshop_url', 'website', 'eshop_list_view_enabled',
-            'eshop_facebook_url', 'eshop_twitter_url', 'eshop_google_plus_url',
-            'eshop_google_plus_url', 'eshop_instagram_url',
-            'eshop_home_image', 'eshop_image_small',
-            'eshop_vat_included', 'eshop_register_allowed',
-            'manage_recovery_moment',
-            'eshop_manage_unpacking',
-        ],
-    },
-    'res.partner': {
-        'type': 'single',
-        'fields': [
-            'name', 'lang', 'email', 'eshop_active', 'eshop_state',
-            'phone', 'mobile', 'street', 'street2', 'zip', 'city',
-            'simple_tax_type',
-        ],
-    },
-    'eshop.category': {
-        'type': 'single',
-        'fields': [
-            'name', 'available_product_qty', 'child_qty', 'image_medium',
-            'type', 'parent_id', 'product_ids', 'complete_name'],
-    },
+    # 'product.product': {
+    #     'type': 'single',
+    #     'fields': [
+    #         'name', 'uom_id', 'image', 'image_medium', 'list_price',
+    #         'eshop_category_id', 'label_ids', 'eshop_minimum_qty',
+    #         'eshop_rounded_qty', 'origin_description', 'maker_description',
+    #         'fresh_category', 'eshop_description', 'country_id',
+    #         'department_id', 'default_code',
+    #         'eshop_taxes_description', 'eshop_unpack_qty',
+    #         'eshop_unpack_surcharge'],
+    # },
+    # 'res.company': {
+    #     # 'type': 'single',
+    #     # 'fields': [
+    #     #     'eshop_home_text_logged', 'eshop_home_text',
+    #     #     'name', 'has_eshop', 'eshop_minimum_price', 'eshop_title',
+    #     #     'eshop_url', 'website', 'eshop_list_view_enabled',
+    #     #     'eshop_facebook_url', 'eshop_twitter_url',
+    #     #     'eshop_google_plus_url',
+    #     #     'eshop_google_plus_url', 'eshop_instagram_url',
+    #     #     'eshop_home_image', 'eshop_image_small',
+    #     #     'eshop_vat_included', 'eshop_register_allowed',
+    #     #     'manage_recovery_moment',
+    #     #     'eshop_manage_unpacking',
+    #     # ],
+    # },
+    # 'res.partner': {
+    #     'type': 'single',
+    #     'fields': [
+    #         'name', 'lang', 'email', 'eshop_active', 'eshop_state',
+    #         'phone', 'mobile', 'street', 'street2', 'zip', 'city',
+    #         'simple_tax_type',
+    #     ],
+    # },
+    # 'eshop.category': {
+    #     'type': 'single',
+    #     'fields': [
+    #         'name', 'available_product_qty', 'child_qty', 'image_medium',
+    #         'type', 'parent_id', 'product_ids', 'complete_name'],
+    # },
 
     # 'multiple' type Models
-    'account.tax': {
-        'type': 'multiple',
-        'fields': ['eshop_description'],
-    },
-    'product.label': {
-        'type': 'multiple',
-        'fields': ['name', 'code', 'image', 'image_small'],
-    },
-    'res.country': {
-        'type': 'multiple',
-        'fields': ['name'],
-    },
-    'res.country.department': {
-        'type': 'multiple',
-        'fields': ['name'],
-    },
-    'product.uom': {
-        'type': 'multiple',
-        'fields': ['id', 'name', 'eshop_description'],
-    },
+    # 'account.tax': {
+    #     'type': 'multiple',
+    #     'fields': ['eshop_description'],
+    # },
+    # 'product.label': {
+    #     'type': 'multiple',
+    #     'fields': ['name', 'code', 'image', 'image_small'],
+    # },
+    # 'res.country': {
+    #     'type': 'multiple',
+    #     'fields': ['name'],
+    # },
+    # 'res.country.department': {
+    #     'type': 'multiple',
+    #     'fields': ['name'],
+    # },
+    # 'product.uom': {
+    #     'type': 'multiple',
+    #     'fields': ['id', 'name', 'eshop_description'],
+    # },
 }
 
 
