@@ -1,36 +1,15 @@
-# -*- encoding: utf-8 -*-
-##############################################################################
-#
-#    Sale - eShop for Odoo
-#    Copyright (C) 2014 GRAP (http://www.grap.coop)
-#    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# coding: utf-8
+# Copyright (C) 2014 - Today: GRAP (http://www.grap.coop)
+# @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 import hashlib
-
 from datetime import datetime
 
-from openerp.osv import fields
-from openerp.osv.orm import Model
-from openerp.osv.orm import except_orm
-from openerp.tools.translate import _
+from openerp import api, fields, models
 
 
-class ProductProduct(Model):
+class ProductProduct(models.Model):
     _inherit = 'product.product'
 
     _ESHOP_STATE_SELECTION = [
@@ -39,168 +18,92 @@ class ProductProduct(Model):
         ('unavailable', 'Unavailable for Sale'),
     ]
 
-    def _eshop_state(self, cr, uid, obj, name, arg, context=None):
-        dateNow = datetime.now().strftime('%Y-%m-%d')
-        if arg[0][1] not in ('=', 'in'):
-            raise except_orm(
-                _("The Operator %s is not implemented !") % (arg[0][1]),
-                str(arg))
-        if arg[0][1] == '=':
-            lst = [arg[0][2]]
-        else:
-            lst = arg[0][2]
-        sql_lst = []
-        if 'available' in lst and len(lst) == 1:
-            sql_lst.append(
-                """((
-                        eshop_start_date is not null
-                        AND eshop_end_date is not null)
-                    AND (
-                        eshop_start_date <= '%s'
-                        AND '%s' <= eshop_end_date
-                    )
-                )""" % (dateNow, dateNow))
-            sql_lst.append(
-                """((
-                        eshop_start_date is null
-                        AND eshop_end_date is not null)
-                    AND ('%s' <= eshop_end_date)
-                )""" % (dateNow))
-            sql_lst.append(
-                """((
-                        eshop_start_date is not null
-                        AND eshop_end_date is null)
-                    AND (
-                        eshop_start_date <= '%s'
-                    )
-                )""" % (dateNow))
-            sql_lst.append(
-                """(eshop_start_date is null
-                    AND eshop_end_date is null)""")
-            for i in range(0, len(sql_lst)):
-                sql_lst[i] = """(
-                    eshop_category_id IS NOT NULL
-                    AND id in (
-                        SELECT pp.id
-                        FROM product_product pp
-                        INNER JOIN product_template pt
-                            ON pp.product_tmpl_id = pt.id
-                            AND pt.sale_ok is true)
-                    AND active is true
-                    AND (%s))""" % (sql_lst[i])
-        else:
-            raise except_orm(
-                _("This arg %s is not implemented !") % (lst.join(', ')),
-                str(arg))
+    eshop_category_id = fields.Many2one(
+        comodel_name='eshop.category', string='eShop Category',
+        domain=[('type', '=', 'normal')])
 
-        where = sql_lst[0]
-        for item in sql_lst[1:]:
-            where += " OR %s" % (item)
-        sql_req = """
-            SELECT id
-            FROM product_product
-            WHERE %s;""" % (where)
-        cr.execute(sql_req)  # pylint: disable=invalid-commit
-        res = cr.fetchall()
-        return [('id', 'in', map(lambda x:x[0], res))]
+    eshop_start_date = fields.Date(string='Start Date of Sale')
 
-    # Field function Section
-    def _get_eshop_taxes_description(
-            self, cr, uid, ids, fields_name, args, context=None):
-        res = {}
-        for pp in self.browse(cr, uid, ids, context=context):
-            if pp.taxes_id:
-                res[pp.id] = ', '.join(
-                    [x.eshop_description for x in pp.taxes_id])
-            else:
-                res[pp.id] = ''
-        return res
+    eshop_end_date = fields.Date(string='End Date of Sale')
 
-    def _get_eshop_state(self, cr, uid, ids, fields_name, args, context=None):
-        res = {}
-        for pp in self.browse(cr, uid, ids, context=context):
-            if not (pp.eshop_category_id and pp.sale_ok and pp.active):
-                res[pp.id] = 'unavailable'
+    eshop_state = fields.Selection(
+        string='eShop State', selection=_ESHOP_STATE_SELECTION,
+        compute='_compute_eshop_state', store=True)
+    # fnct_search=_eshop_state
+
+    eshop_minimum_qty = fields.Float(
+        string='Minimum Quantity for eShop', required=True, default=0)
+
+    eshop_rounded_qty = fields.Float(
+        string='Rounded Quantity for eShop', required=True, default=0)
+
+    eshop_unpack_qty = fields.Float(
+        string='Unpack Quantity for eShop', required=True, default=0)
+
+    eshop_unpack_surcharge = fields.Float(
+        string='Unpack Surcharge for eShop', required=True, default=0)
+
+    eshop_description = fields.Text(type='Text', string='Eshop Description')
+
+    eshop_taxes_description = fields.Char(
+        compute='eshop_taxes_description', string='Eshop Taxes Description')
+
+    # Compute Section
+    @api.multi
+    def _compute_eshop_taxes_description(self):
+        for product in self:
+            product.eshop_taxes_description = ', '.join(
+                product.mapped('taxes_id.eshop_description'))
+
+    @api.multi
+    def _compute_eshop_state(self):
+        for product in self:
+            if not (
+                    product.eshop_category_id and product.sale_ok and
+                    product.active):
+                product.eshop_state = 'unavailable'
             else:
                 dateNow = datetime.now().strftime('%Y-%m-%d')
-                if pp.eshop_start_date and pp.eshop_end_date:
-                    if pp.eshop_start_date <= dateNow \
-                            and dateNow <= pp.eshop_end_date:
-                        res[pp.id] = 'available'
+                if product.eshop_start_date and product.eshop_end_date:
+                    if product.eshop_start_date <= dateNow \
+                            and dateNow <= product.eshop_end_date:
+                        product.eshop_state = 'available'
                     else:
-                        res[pp.id] = 'disabled'
-                elif pp.eshop_start_date:
-                    if pp.eshop_start_date <= dateNow:
-                        res[pp.id] = 'available'
+                        product.eshop_state = 'disabled'
+                elif product.eshop_start_date:
+                    if product.eshop_start_date <= dateNow:
+                        product.eshop_state = 'available'
                     else:
-                        res[pp.id] = 'disabled'
-                elif pp.eshop_end_date:
-                    if dateNow <= pp.eshop_end_date:
-                        res[pp.id] = 'available'
+                        product.eshop_state = 'disabled'
+                elif product.eshop_end_date:
+                    if dateNow <= product.eshop_end_date:
+                        product.eshop_state = 'available'
                     else:
-                        res[pp.id] = 'disabled'
+                        product.eshop_state = 'disabled'
                 else:
-                    res[pp.id] = 'available'
-        return res
+                    product.eshop_state = 'available'
 
-    # Columns Section
-    _columns = {
-        'eshop_category_id': fields.many2one(
-            'eshop.category', 'eShop Category', domain=[
-                ('type', '=', 'normal')]),
-        'eshop_start_date': fields.date(
-            'Start Date of Sale'),
-        'eshop_end_date': fields.date(
-            'End Date of Sale'),
-        'eshop_state': fields.function(
-            _get_eshop_state, type='selection', string='eShop State',
-            selection=_ESHOP_STATE_SELECTION,
-            # fnct_search=_eshop_state,
-            store=True),
-        'eshop_minimum_qty': fields.float(
-            'Minimum Quantity for eShop', required=True),
-        'eshop_rounded_qty': fields.float(
-            'Rounded Quantity for eShop', required=True),
-        'eshop_unpack_qty': fields.float(
-            'Unpack Quantity for eShop', required=True),
-        'eshop_unpack_surcharge': fields.float(
-            'Unpack Surcharge for eShop', required=True),
-        'eshop_taxes_description': fields.function(
-            _get_eshop_taxes_description, type='char',
-            string='Eshop Taxes Description'),
-        'eshop_description': fields.text(
-            type='Text', string='Eshop Description'),
-    }
-
-    # Defaults Section
-    _defaults = {
-        'eshop_minimum_qty': 0,
-        'eshop_rounded_qty': 0,
-        'eshop_unpack_qty': 0,
-        'eshop_unpack_surcharge': 0,
-    }
-
-    # Custom Section
-    def get_current_eshop_product_list(self, cr, uid, order_id, context=None):
+    # API eshop Section
+    @api.model
+    def get_current_eshop_product_list(self, order_id=False):
         """The aim of this function is to deal with delay of response of
         the odoo-eshop, module.
         This will return a list of data, used for catalog inline view."""
-        so_obj = self.pool['sale.order']
-        ru_obj = self.pool['res.users']
+        SaleOrder = self.env['sale.order']
         res = []
         line_dict = {}
         # Get current quantities ordered
         if order_id:
-            so = so_obj.browse(cr, uid, order_id, context=context)
-            for sol in so.order_line:
-                line_dict[sol.product_id.id] = {
-                    'qty': sol.product_uom_qty,
-                    'discount': sol.discount,
+            order = SaleOrder.browse(order_id)
+            for order_line in order.order_line:
+                line_dict[order_line.product_id.id] = {
+                    'qty': order_line.product_uom_qty,
+                    'discount': order_line.discount,
                 }
 
-        company_id = ru_obj.browse(cr, uid, uid, context=context).company_id.id
+        company_id = self.env.user.company_id.id
 
-        cr.execute("""
+        self.env.cr.execute("""
 SELECT
     distinct tmp.*,
     array_to_string(array_agg(label_rel.label_id)
@@ -239,8 +142,8 @@ LEFT OUTER JOIN product_label_product_rel label_rel
     ON label_rel.product_id = tmp.id
 order by category_sequence, category_name, name;
 """ % company_id)
-        columns = cr.description
-        for value in cr.fetchall():
+        columns = self.env.cr.description
+        for value in self.env.cr.fetchall():
             product_id = value[0]
             tmp = {}
             for (index, column) in enumerate(value):
@@ -263,3 +166,68 @@ order by category_sequence, category_name, name;
             res.append(tmp)
 
         return res
+
+    # def _eshop_state(self, cr, uid, obj, name, arg, context=None):
+    #     dateNow = datetime.now().strftime('%Y-%m-%d')
+    #     if arg[0][1] not in ('=', 'in'):
+    #         raise except_orm(
+    #             _("The Operator %s is not implemented !") % (arg[0][1]),
+    #             str(arg))
+    #     if arg[0][1] == '=':
+    #         lst = [arg[0][2]]
+    #     else:
+    #         lst = arg[0][2]
+    #     sql_lst = []
+    #     if 'available' in lst and len(lst) == 1:
+    #         sql_lst.append(
+    #             """((
+    #                     eshop_start_date is not null
+    #                     AND eshop_end_date is not null)
+    #                 AND (
+    #                     eshop_start_date <= '%s'
+    #                     AND '%s' <= eshop_end_date
+    #                 )
+    #             )""" % (dateNow, dateNow))
+    #         sql_lst.append(
+    #             """((
+    #                     eshop_start_date is null
+    #                     AND eshop_end_date is not null)
+    #                 AND ('%s' <= eshop_end_date)
+    #             )""" % (dateNow))
+    #         sql_lst.append(
+    #             """((
+    #                     eshop_start_date is not null
+    #                     AND eshop_end_date is null)
+    #                 AND (
+    #                     eshop_start_date <= '%s'
+    #                 )
+    #             )""" % (dateNow))
+    #         sql_lst.append(
+    #             """(eshop_start_date is null
+    #                 AND eshop_end_date is null)""")
+    #         for i in range(0, len(sql_lst)):
+    #             sql_lst[i] = """(
+    #                 eshop_category_id IS NOT NULL
+    #                 AND id in (
+    #                     SELECT pp.id
+    #                     FROM product_product pp
+    #                     INNER JOIN product_template pt
+    #                         ON pp.product_tmpl_id = pt.id
+    #                         AND pt.sale_ok is true)
+    #                 AND active is true
+    #                 AND (%s))""" % (sql_lst[i])
+    #     else:
+    #         raise except_orm(
+    #             _("This arg %s is not implemented !") % (lst.join(', ')),
+    #             str(arg))
+
+    #     where = sql_lst[0]
+    #     for item in sql_lst[1:]:
+    #         where += " OR %s" % (item)
+    #     sql_req = """
+    #         SELECT id
+    #         FROM product_product
+    #         WHERE %s;""" % (where)
+    #     cr.execute(sql_req)  # pylint: disable=invalid-commit
+    #     res = cr.fetchall()
+    #     return [('id', 'in', map(lambda x:x[0], res))]

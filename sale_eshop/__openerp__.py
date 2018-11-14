@@ -16,6 +16,7 @@
         'sale',
         'sale_recovery_moment',
         'simple_tax_sale',
+        'sale_food',
     ],
     'data': [
         'security/ir_rule.xml',
@@ -32,12 +33,12 @@
         'views/view_res_partner.xml',
     ],
     'demo': [
-        'demo/res_partner.yml',
+        'demo/res_partner.xml',
         'demo/eshop_category.xml',
         'demo/product_product.xml',
-        'demo/product_uom.yml',
-        'demo/res_users.yml',
-        'demo/res_groups.yml',
+        'demo/product_uom.xml',
+        'demo/res_users.xml',
+        'demo/res_groups.xml',
     ],
     'installable': True,
 }

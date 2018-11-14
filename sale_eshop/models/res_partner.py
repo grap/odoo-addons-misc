@@ -7,8 +7,6 @@ import os
 import random
 import string
 
-from openerp import SUPERUSER_ID
-
 from openerp import api, exceptions, fields, models
 
 
@@ -77,7 +75,7 @@ class ResPartner(models.Model):
             return res[0]
         try:
             # TODO
-            ResUsers.check_credentials(SUPERUSER_ID, password)
+            ResUsers.sudo().check_credentials(password)
             res = self.search([
                 ('email', '=', login),
                 ('eshop_active', '=', True),
