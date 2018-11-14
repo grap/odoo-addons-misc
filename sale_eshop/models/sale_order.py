@@ -105,15 +105,17 @@ class SaleOrder(models.Model):
         res.update(self._eshop_sale_order_info(order))
         return res
 
-    def send_mail(self, cr, uid, ids, context=None):
-        context = context or {}
-        imd_obj = self.pool['ir.model.data']
-        et_obj = self.pool['email.template']
-        et = imd_obj.get_object(
-            cr, uid, 'sale', 'email_template_edi_sale')
-        for so in self.browse(cr, uid, ids, context=context):
-            et_obj.send_mail(cr, uid, et.id, so.id, True, context=context)
-        return {}
+    # TODO
+    # @api.multi
+    # def send_mail(self):
+    #     context = context or {}
+    #     imd_obj = self.pool['ir.model.data']
+    #     et_obj = self.pool['email.template']
+    #     et = imd_obj.get_object(
+    #         cr, uid, 'sale', 'email_template_edi_sale')
+    #     for so in self.browse(cr, uid, ids, context=context):
+    #         et_obj.send_mail(cr, uid, et.id, so.id, True, context=context)
+    #     return {}
 
     # Custom Section
     def _eshop_sale_order_info(self, order):
