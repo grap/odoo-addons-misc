@@ -1,62 +1,34 @@
-# -*- encoding: utf-8 -*-
-##############################################################################
-#
-#    Sale - eShop for Odoo
-#    Copyright (C) 2015-Today GRAP (http://www.grap.coop)
-#    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# coding: utf-8
+# Copyright (C) 2014 - Today: GRAP (http://www.grap.coop)
+# @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+
 
 import math
 
-from openerp.osv.orm import Model
-from openerp.tools.translate import _
+from openerp import _, api, models
 
 
-class SaleOrderLine(Model):
+class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
-    def _eshop_round_value(self, product, qty):
-        if product.eshop_unpack_qty and qty < product.eshop_minimum_qty:
-            rounded_qty = product.eshop_unpack_qty
-        else:
-            rounded_qty = product.eshop_rounded_qty
-        digit = len(str(float(rounded_qty) - int(rounded_qty)).split('.')[1])
-        division = float(qty) / rounded_qty
-        if division % 1 == 0:
-            return qty
-        else:
-            return round(math.ceil(division) * rounded_qty, digit)
-
+    # Overload Section
+    @api.multi
     def product_id_change(
-            self, cr, uid, ids, pricelist, product_id, qty=0,
+            self, pricelist, product_id, qty=0,
             uom=False, qty_uos=0, uos=False, name='', partner_id=False,
             lang=False, update_tax=True, date_order=False, packaging=False,
-            fiscal_position=False, flag=False, context=None):
+            fiscal_position=False, flag=False):
         """
         Manage minimum / rounded and unpacking quantity. (with surcharge)
         return 'info' value instead of 'warning' value to avoid blocking
         message for end users.
         """
-        is_eshop = self.pool['res.users'].has_group(
-            cr, uid, 'sale_eshop.res_groups_is_eshop')
+
+        is_eshop = self.env.user.has_group('sale_eshop.res_groups_is_eshop')
         infos = []
         computed_discount = False
-        product = self.pool['product.product'].browse(
-            cr, uid, product_id, context=context)
+        product = self.env['product.product'].browse(product_id)
         if qty and is_eshop and product_id:
             computed_discount = True
             discount = 0
@@ -107,14 +79,28 @@ class SaleOrderLine(Model):
                         qty = rounded_qty
 
         res = super(SaleOrderLine, self).product_id_change(
-            cr, uid, ids, pricelist, product_id, qty=qty, uom=uom,
+            pricelist, product_id, qty=qty, uom=uom,
             qty_uos=qty_uos, uos=uos, name=name, partner_id=partner_id,
             lang=lang, update_tax=update_tax, date_order=date_order,
             packaging=packaging, fiscal_position=fiscal_position,
-            flag=flag, context=context)
+            flag=flag)
         res['infos'] = infos
         res['value']['product_uom_qty'] =\
             res['value'].get('product_uom_qty', qty)
         if computed_discount:
             res['value']['discount'] = discount
         return res
+
+    # Custom Section
+    @api.model
+    def _eshop_round_value(self, product, qty):
+        if product.eshop_unpack_qty and qty < product.eshop_minimum_qty:
+            rounded_qty = product.eshop_unpack_qty
+        else:
+            rounded_qty = product.eshop_rounded_qty
+        digit = len(str(float(rounded_qty) - int(rounded_qty)).split('.')[1])
+        division = float(qty) / rounded_qty
+        if division % 1 == 0:
+            return qty
+        else:
+            return round(math.ceil(division) * rounded_qty, digit)

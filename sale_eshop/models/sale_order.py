@@ -1,108 +1,85 @@
-# -*- encoding: utf-8 -*-
-##############################################################################
-#
-#    Sale - eShop for Odoo
-#    Copyright (C) 2015-Today GRAP (http://www.grap.coop)
-#    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
-
-from openerp.tools.translate import _
-from openerp.osv.orm import Model
+# coding: utf-8
+# Copyright (C) 2014 - Today: GRAP (http://www.grap.coop)
+# @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 
-class SaleOrder(Model):
+from openerp import _, api, models
+
+
+class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    # Custom Section for eshop
-    def eshop_get_current_sale_order_id(
-            self, cr, uid, partner_id, context=None):
-        order_ids = self.search(cr, uid, [
+    # API Section
+    @api.model
+    def eshop_get_current_sale_order_id(self, partner_id):
+        order_ids = self.search([
             ('partner_id', '=', partner_id),
-            ('user_id', '=', uid),
-            ('state', '=', 'draft')], context=context)
-        return order_ids and order_ids[0] or False
+            ('user_id', '=', self.env.user.id),
+            ('state', '=', 'draft')])
+        return order_ids and order_ids[0].id or False
 
+    @api.model
     def eshop_set_quantity(
-            self, cr, uid, partner_id, product_id, quantity, method,
-            context=None):
-        line_obj = self.pool['sale.order.line']
-        partner_obj = self.pool['res.partner']
-        user_obj = self.pool['res.users']
+            self, partner_id, product_id, quantity, method):
+        SaleOrderLine = self.env['sale.order.line']
+        ResPartner = self.env['res.partner']
 
-        order_id = self.eshop_get_current_sale_order_id(
-            cr, uid, partner_id, context=context)
+        order_id = self.eshop_get_current_sale_order_id(partner_id)
 
         if not order_id:
             # Create Sale Order
-            partner = partner_obj.browse(cr, uid, partner_id, context=context)
+            partner = ResPartner.browse(partner_id)
             if partner.property_product_pricelist:
                 pricelist_id = partner.property_product_pricelist.id
             else:
-                user = user_obj.browse(cr, uid, uid, context=context)
-                pricelist_id = user.company_id.eshop_pricelist_id.id
-            order_id = self.create(
-                cr, uid, {
-                    'partner_id': partner_id,
-                    'partner_invoice_id': partner_id,
-                    'partner_shipping_id': partner_id,
-                    'pricelist_id': pricelist_id,
-                }, context=context)
-        order = self.browse(cr, uid, order_id, context=context)
+                pricelist_id = self.env.user.company_id.eshop_pricelist_id.id
+            order = self.create({
+                'partner_id': partner_id,
+                'partner_invoice_id': partner_id,
+                'partner_shipping_id': partner_id,
+                'pricelist_id': pricelist_id,
+            })
+        else:
+            order = self.browse(order_id)
 
         # Search Line
-        current_line_id = False
+        current_line = False
         for line in order.order_line:
             if line.product_id.id == product_id:
-                current_line_id = line.id
+                current_line = line
                 if method == 'add':
                     quantity += line.product_uom_qty
                 break
 
         if quantity != 0:
             # We set a not null quantity
-            res = line_obj.product_id_change(
-                cr, uid, False, order.pricelist_id.id, product_id,
-                qty=quantity, partner_id=partner_id, context=context)
+            res = SaleOrderLine.product_id_change(
+                False, order.pricelist_id.id, product_id,
+                qty=quantity, partner_id=partner_id)
 
-            line_data = {k: v for k, v in res['value'].items()}
+            line_vals = {k: v for k, v in res['value'].items()}
 
             # F& !! ORM
-            if line_data['tax_id']:
-                line_data['tax_id'] = [[6, False, line_data['tax_id']]]
+            if line_vals['tax_id']:
+                line_vals['tax_id'] = [[6, False, line_vals['tax_id']]]
             else:
-                line_data['tax_id'] = [[6, False, []]]
+                line_vals['tax_id'] = [[6, False, []]]
 
             # Create line if needed
-            if not current_line_id:
-                line_data['product_id'] = product_id
-                line_data['order_id'] = order_id
-                current_line_id = line_obj.create(
-                    cr, uid, line_data, context=context)
+            if not current_line:
+                line_vals['product_id'] = product_id
+                line_vals['order_id'] = order_id
+                current_line = SaleOrderLine.create(line_vals)
             else:
-                line_obj.write(
-                    cr, uid, [current_line_id], line_data, context=context)
-            line = line_obj.browse(cr, uid, current_line_id, context=context)
+                current_line.write(line_vals)
             res = {
                 'messages': res['infos'],
-                'quantity': line.product_uom_qty,
-                'changed': (quantity != line.product_uom_qty),
-                'price_subtotal': line.price_subtotal,
-                'price_subtotal_gross': line.price_subtotal_gross,
-                'discount': line.discount,
+                'quantity': current_line.product_uom_qty,
+                'changed': (quantity != current_line.product_uom_qty),
+                'price_subtotal': current_line.price_subtotal,
+                'price_subtotal_gross': current_line.price_subtotal_gross,
+                'discount': current_line.discount,
             }
         else:
             res = {
@@ -112,42 +89,21 @@ class SaleOrder(Model):
                 'price_subtotal_gross': 0,
                 'discount': 0,
             }
-            if current_line_id:
+            if current_line:
                 if len(order.order_line) == 1:
                     # We unlink the whole order
-                    self.unlink(cr, uid, [order_id], context=context)
+                    order.unlink()
                     order_id = False
                     res['messages'] = [_(
                         "The Shopping Cart has been successfully deleted.")]
                 else:
                     # We unlink the line
-                    line_obj.unlink(
-                        cr, uid, [current_line_id], context=context)
+                    current_line.unlink()
                     res['messages'] = [_(
                         "The line has been successfully deleted")]
 
-        # TODO Update amount on sale order if needed
-
-        res.update(self.eshop_sale_order_info(
-            cr, uid, order_id, context=context))
+        res.update(self._eshop_sale_order_info(order))
         return res
-
-    def eshop_sale_order_info(self, cr, uid, order_id, context=None):
-        if order_id:
-            order = self.browse(cr, uid, order_id, context=context)
-            return {
-                'amount_untaxed': order.amount_untaxed,
-                'amount_tax': order.amount_tax,
-                'amount_total': order.amount_total,
-                'order_id': order_id,
-            }
-        else:
-            return {
-                'amount_untaxed': 0,
-                'amount_tax': 0,
-                'amount_total': 0,
-                'order_id': False,
-            }
 
     def send_mail(self, cr, uid, ids, context=None):
         context = context or {}
@@ -158,3 +114,20 @@ class SaleOrder(Model):
         for so in self.browse(cr, uid, ids, context=context):
             et_obj.send_mail(cr, uid, et.id, so.id, True, context=context)
         return {}
+
+    # Custom Section
+    def _eshop_sale_order_info(self, order):
+        if order:
+            return {
+                'amount_untaxed': order.amount_untaxed,
+                'amount_tax': order.amount_tax,
+                'amount_total': order.amount_total,
+                'order_id': order.id,
+            }
+        else:
+            return {
+                'amount_untaxed': 0,
+                'amount_tax': 0,
+                'amount_total': 0,
+                'order_id': False,
+            }
