@@ -1,87 +1,87 @@
-# -*- encoding: utf-8 -*-
-##############################################################################
-#
-#    Sale - eShop for Odoo
-#    Copyright (C) 2014 GRAP (http://www.grap.coop)
-#    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# coding: utf-8
+# Copyright (C) 2014 - Today: GRAP (http://www.grap.coop)
+# @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 import os
 import random
 import string
 
 from openerp import SUPERUSER_ID
-from openerp import exceptions
-from openerp.osv import fields
-from openerp.osv.orm import Model
+
+from openerp import api, exceptions, fields, models
 
 
-class ResPartner(Model):
+class ResPartner(models.Model):
     _inherit = 'res.partner'
 
     _PASSWORD_LENGTH = 6
     _PASSWORD_CHARS = string.ascii_letters + '23456789'
 
-    _ESHOP_STATE_KEYS = [
+    _ESHOP_STATE_SELECTION = [
         ('disabled', 'Disabled'),
         ('email_to_confirm', 'EMail To Confirm'),
         ('first_purchase', 'First Purchase'),
         ('enabled', 'Enabled'),
     ]
 
-    def _get_eshop_active(
-            self, cr, uid, ids, fields_name, args, context=None):
-        res = {}
-        for rp in self.browse(cr, uid, ids, context=context):
-            res[rp.id] = rp.eshop_state in ['first_purchase', 'enabled']
-        return res
-
     # Columns Section
-    _columns = {
-        'eshop_password': fields.char('Password on eShop', readonly=True),
-        'eshop_state': fields.selection(
-            _ESHOP_STATE_KEYS, 'State on eShop', readonly=True, required=True),
-        'eshop_active': fields.function(
-            _get_eshop_active, string='Can buy on eShop', store=True,
-            readonly=True),
-    }
+    eshop_password = fields.Char(string='Password on eShop', readonly=True)
 
-    _defaults = {
-        'eshop_state': 'disabled',
-    }
+    eshop_state = fields.Selection(
+        selection=_ESHOP_STATE_SELECTION, string='State on eShop',
+        readonly=True, required=True, default='disabled')
 
-    # Public Custom Section
-    def login(self, cr, uid, login, password, context=None):
-        user_obj = self.pool['res.users']
+    eshop_active = fields.Boolean(
+        string='Can buy on eShop', store=True, compute='_compute_eshop_active',
+        readonly=True)
+
+    @api.multi
+    @api.depends('eshop_state')
+    def _compute_eshop_active(self):
+        for partner in self:
+            partner.eshop_active =\
+                partner.eshop_state in ['first_purchase', 'enabled']
+
+    # View - Section
+    @api.multi
+    def button_confirm_eshop(self):
+        self.write({'eshop_state': 'enabled'})
+
+    @api.multi
+    def button_disable_eshop(self):
+        self.write({
+            'eshop_password': False,
+            'eshop_state': 'disabled',
+        })
+
+    @api.multi
+    def button_generate_credentials(self):
+        self._generate_credentials()
+
+    def button_send_credentials(self):
+        self.send_credentials()
+
+    # Eshop API - Section
+    @api.model
+    def login(self, login, password):
+        ResUsers = self.env['res.users']
         if not password:
             return False
-        res = self.search(cr, uid, [
+        res = self.search([
             ('email', '=', login),
             ('eshop_password', '=', password),
             ('eshop_state', 'in', ['first_purchase', 'enabled']),
-        ], context=context)
+        ])
         if len(res) == 1:
             return res[0]
         try:
-            user_obj.check_credentials(cr, SUPERUSER_ID, password)
-            res = self.search(cr, uid, [
+            # TODO
+            ResUsers.check_credentials(SUPERUSER_ID, password)
+            res = self.search([
                 ('email', '=', login),
-                ('eshop_state', 'in', ['first_purchase', 'enabled']),
-            ], context=context)
+                ('eshop_active', '=', True),
+            ])
             if len(res) == 1:
                 return res[0]
             else:
@@ -89,7 +89,8 @@ class ResPartner(Model):
         except exceptions.AccessDenied:
             return False
 
-    def create_from_eshop(self, cr, uid, vals, context=None):
+    @api.model
+    def create_from_eshop(self, vals):
         vals.update({
             'name': vals['first_name'] + ' ' + vals['last_name'],
             'eshop_state': 'email_to_confirm',
@@ -97,45 +98,29 @@ class ResPartner(Model):
         vals.pop('first_name', False)
         vals.pop('last_name', False)
         # Create partner
-        res = self.create(cr, uid, vals, context=context)
+        partner = self.create(vals)
         # Send an email
-        self.send_credentials(cr, uid, [res], context=context)
+        return partner.send_credentials()
 
-    def send_credentials(self, cr, uid, ids, context=None):
-        context = context or {}
-        imd_obj = self.pool['ir.model.data']
-        et_obj = self.pool['email.template']
-        et = imd_obj.get_object(
-            cr, uid, 'sale_eshop', 'eshop_send_crendential_template')
+    @api.multi
+    def send_credentials(self):
+        # TODO
+        # imd_obj = self.pool['ir.model.data']
+        # et_obj = self.pool['email.template']
+        # et = imd_obj.get_object(
+        #     cr, uid, 'sale_eshop', 'eshop_send_crendential_template')
 
-        for rp in self.browse(cr, uid, ids, context=context):
-            et_obj.send_mail(cr, uid, et.id, rp.id, True, context=context)
+        # for rp in self.browse(cr, uid, ids, context=context):
+        #     et_obj.send_mail(cr, uid, et.id, rp.id, True, context=context)
         return True
 
-    def generate_credentials(self, cr, uid, ids, context=None):
-        for rp in self.browse(cr, uid, ids, context=context):
+    # Private Section
+    @api.multi
+    def _generate_credentials(self):
+        for partner in self:
             random.seed = (os.urandom(1024))
             password = ''.join(random.choice(
                 self._PASSWORD_CHARS) for i in range(self._PASSWORD_LENGTH))
-            self.write(cr, uid, ids, {
+            partner.write({
                 'eshop_password': password,
-                'eshop_state': 'enabled'}, context=context)
-        return True
-
-    # View Function Section
-    def button_confirm_eshop(self, cr, uid, ids, context=None):
-        self.write(cr, uid, ids, {
-            'eshop_state': 'enabled'}, context=context)
-
-    def button_disable_eshop(self, cr, uid, ids, context=None):
-        self.write(cr, uid, ids, {
-            'eshop_password': False,
-            'eshop_state': 'disabled'}, context=context)
-
-    def button_generate_credentials(self, cr, uid, ids, context=None):
-        self.generate_credentials(cr, uid, ids, context=context)
-        return True
-
-    def button_send_credentials(self, cr, uid, ids, context=None):
-        self.send_credentials(cr, uid, ids, context=context)
-        return True
+                'eshop_state': 'enabled'})

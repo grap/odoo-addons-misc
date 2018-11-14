@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (C) 2014 - Today: GRAP (http://www.grap.coop)
+    @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+<openerp><data>
+
+    <record id="view_res_company_form" model="ir.ui.view">
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form" />
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="eShop">
+                    <group string="eShop Sale Setting" col="4">
+                        <field name="has_eshop"/>
+                        <field name="eshop_url"/>
+                        <field name="eshop_title" colspan="4" />
+                        <field name="eshop_manage_unpacking"/>
+                        <field name="eshop_minimum_price"/>
+                        <field name="eshop_pricelist_id"/>
+                        <field name="eshop_vat_included"/>
+                        <field name="eshop_register_allowed" />
+                        <field name="eshop_list_view_enabled" />
+                        <field name="eshop_invalidation_cache_url" colspan="4" />
+                    </group>
+                    <group string="Social Network" col="4">
+                        <field name="eshop_instagram_url"/>
+                        <field name="eshop_twitter_url"/>
+                        <field name="eshop_facebook_url"/>
+                        <field name="eshop_google_plus_url"/>
+                    </group>
+                    <group string="Images and Texts" col="4">
+                        <field name="eshop_home_text" colspan="4" nolabel="1"/>
+                        <field name="eshop_home_text_logged" colspan="4" nolabel="1"/>
+                        <field name="eshop_image_small" widget="image" img_height="50" img_width="50"/>
+                        <field name="eshop_home_image" widget="image" img_height="250" img_width="250"/>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+</data></openerp>

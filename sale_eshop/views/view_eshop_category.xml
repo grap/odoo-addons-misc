@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (C) 2014 - Today: GRAP (http://www.grap.coop)
+    @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+<openerp><data>
+
+    <record id="action_eshop_category" model="ir.actions.act_window">
+        <field name="name">eShop Categories</field>
+        <field name="res_model">eshop.category</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="view_eshop_category_search" model="ir.ui.view">
+        <field name="model">eshop.category</field>
+        <field name="arch" type="xml">
+            <search string="eShop Categories">
+                <field name="name"/>
+                <field name="parent_id"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_eshop_category_tree" model="ir.ui.view">
+        <field name="model">eshop.category</field>
+        <field name="arch" type="xml">
+            <tree string="eShop Categories" colors="blue: type == 'view'; gray: available_product_qty == 0;">
+                <field name="sequence" widget="handle"/>
+                <field name="complete_name"/>
+                <field name="product_qty"/>
+                <field name="available_product_qty"/>
+                <field name="type"/>
+                <field name="company_id" groups="base.group_multi_company" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_eshop_category_form" model="ir.ui.view">
+        <field name="model">eshop.category</field>
+        <field name="arch" type="xml">
+            <form string="eShop Categories" version="7.0">
+                <sheet>
+                    <field name="image_medium" widget="image" class="oe_avatar oe_left"/>
+                    <div class="oe_title oe_left">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1><field name="name"/></h1>
+                        <label for="parent_id" class="oe_edit_only"/>
+                        <h2><field name="parent_id"/></h2>
+                        <group col="4">
+                            <field name="type"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </div>
+                    <div class="oe_right oe_button_box" name="buttons">
+                        <button type="action" class="oe_stat_button"
+                            icon="fa-list-ol"
+                            name="%(product.product_normal_action)d"
+                            attrs="{'invisible': [('type', '=', 'view')]}" context="{'search_default_eshop_category_id': active_id,'default_eshop_category_id': active_id}">
+                            <div>
+                                <strong><field name="product_qty"/></strong><br/>
+                                Products
+                            </div>
+                        </button>
+
+                        <button type="action" class="oe_stat_button"
+                            icon="fa-list-ul"
+                            name="%(sale_eshop.action_eshop_category)d"
+                            attrs="{'invisible': [('type', '=', 'normal')]}" context="{'search_default_parent_id': active_id,'default_parent_id': active_id}">
+                            <div>
+                                <strong><field name="child_qty"/></strong><br/>
+                                Categories
+                            </div>
+                        </button>
+
+                    </div>
+                    <notebook />
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <menuitem id="menu_eshop_category" 
+        parent="menu_eshop" sequence="1"
+        action="action_eshop_category"/>
+
+</data></openerp>
