@@ -27,9 +27,9 @@
                 <field name="eshop_active" invisible="1"/>
                 <field name="eshop_state"/>
                 <field name="eshop_password"/>
-                <button name="button_confirm_eshop"
+                <button name="button_enable_eshop"
                     string="Confirm Customer" icon="gtk-apply"
-                    type="object" attrs="{'invisible':[('eshop_state','!=', 'first_purchase')]}"/>
+                    type="object" attrs="{'invisible':[('eshop_state','=', 'enabled')]}"/>
                 <button name="button_generate_credentials"
                     string="Generate Credentials" icon="STOCK_EXECUTE"
                     type="object"/>
@@ -53,9 +53,9 @@
                         <field name="eshop_active"/>
                         <field name="eshop_state" />
                         <field name="eshop_password"/>
-                        <button name="button_confirm_eshop" colspan="2"
+                        <button name="button_enable_eshop" colspan="2"
                             string="Confirm Customer" icon="gtk-apply"
-                            type="object" attrs="{'invisible':[('eshop_state','!=', 'first_purchase')]}"/>
+                            type="object" attrs="{'invisible':[('eshop_state','=', 'enabled')]}"/>
                         <button name="button_generate_credentials" colspan="2"
                             string="Generate Credentials" icon="STOCK_EXECUTE"
                             type="object"/>

@@ -72,6 +72,9 @@ class ProductProduct(models.Model):
                 product.mapped('taxes_id.eshop_description'))
 
     @api.multi
+    @api.depends(
+        'eshop_category_id', 'sale_ok', 'active', 'eshop_start_date',
+        'eshop_end_date')
     def _compute_eshop_state(self):
         for product in self:
             if not (

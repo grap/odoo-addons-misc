@@ -29,9 +29,10 @@
             <tree string="eShop Categories" colors="blue: type == 'view'; gray: available_product_qty == 0;">
                 <field name="sequence" widget="handle"/>
                 <field name="complete_name"/>
+                <field name="child_qty"/>
                 <field name="product_qty"/>
                 <field name="available_product_qty"/>
-                <field name="type"/>
+                <field name="type" invisible="1"/>
                 <field name="company_id" groups="base.group_multi_company" />
             </tree>
         </field>
@@ -57,7 +58,18 @@
                         <button type="action" class="oe_stat_button"
                             icon="fa-list-ol"
                             name="%(product.product_normal_action)d"
-                            attrs="{'invisible': [('type', '=', 'view')]}" context="{'search_default_eshop_category_id': active_id,'default_eshop_category_id': active_id}">
+                            attrs="{'invisible': [('type', '=', 'view')]}" context="{'search_default_eshop_category_id': active_id,'default_eshop_category_id': active_id, 'search_default_filter_eshop_available': 1}">
+                            <div>
+                                <strong><field name="available_product_qty"/></strong><br/>
+                                Available Products
+                            </div>
+                        </button>
+
+                        <button type="action" class="oe_stat_button"
+                            icon="fa-list-ol"
+                            name="%(product.product_normal_action)d"
+                            attrs="{'invisible': [('type', '=', 'view')]}" context="{'search_default_eshop_category_id': active_id,'default_eshop_category_id': active_id,
+                            }">
                             <div>
                                 <strong><field name="product_qty"/></strong><br/>
                                 Products

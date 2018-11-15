@@ -64,7 +64,7 @@ class ResPartner(models.Model):
 
     # View - Section
     @api.multi
-    def button_confirm_eshop(self):
+    def button_enable_eshop(self):
         self.write({'eshop_state': 'enabled'})
 
     @api.multi
@@ -78,8 +78,9 @@ class ResPartner(models.Model):
     def button_generate_credentials(self):
         self._generate_credentials()
 
+    @api.multi
     def button_send_credentials(self):
-        self.send_credentials()
+        self._send_credentials()
 
     # Eshop API - Section
     @api.model
@@ -118,10 +119,11 @@ class ResPartner(models.Model):
         # Create partner
         partner = self.create(vals)
         # Send an email
-        return partner.send_credentials()
+        return partner._send_credentials()
 
+    # Private Section
     @api.multi
-    def send_credentials(self):
+    def _send_credentials(self):
         # TODO
         # imd_obj = self.pool['ir.model.data']
         # et_obj = self.pool['email.template']
@@ -132,7 +134,6 @@ class ResPartner(models.Model):
         #     et_obj.send_mail(cr, uid, et.id, rp.id, True, context=context)
         return True
 
-    # Private Section
     @api.multi
     def _generate_credentials(self):
         for partner in self:
