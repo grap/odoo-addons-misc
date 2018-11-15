@@ -11,10 +11,14 @@ class TestModule(TransactionCase):
     def setUp(self):
         super(TestModule, self).setUp()
         self.ResPartner = self.env['res.partner']
+        self.SaleOrder = self.env['sale.order']
         self.ProductProduct = self.env['product.product']
+        self.customer = self.env.ref('base.partner_root')
+        self.banana = self.env.ref('sale_eshop.product_banana')
+        self.apple = self.env.ref('sale_eshop.product_apple')
 
     # Test Section
-    def __test_01_login(self):
+    def test_01_login(self):
         res = self.ResPartner.login('admin@localhost', 'eshop_password')
         self.assertNotEqual(
             res, False, "Correct Credentials should be accepted")
@@ -31,3 +35,30 @@ class TestModule(TransactionCase):
         result = self.ProductProduct.get_current_eshop_product_list()
         self.assertNotEqual(
             len(result), 0, "Loading products should return a non empty list")
+
+    def test_03_sale_order_process(self):
+        # Create Order
+        self.SaleOrder.eshop_set_quantity(
+            self.customer.id, self.banana.id, 3, 'add')
+        order_id = self.SaleOrder.eshop_get_current_sale_order_id(
+            self.customer.id)
+        self.assertNotEqual(
+            order_id, False,
+            "Adding a product for a customer that don't have sale order"
+            " should create a new sale order")
+
+        # Add quantity to the same product
+        self.SaleOrder.eshop_set_quantity(
+            self.customer.id, self.banana.id, 2, 'add')
+        order = self.SaleOrder.browse(order_id)
+        order_line = order.order_line[0]
+        self.assertEqual(
+            order_line.product_uom_qty, 5,
+            "Adding a quantity should sum with the previous quantity")
+
+        # set new quantity to the same product
+        self.SaleOrder.eshop_set_quantity(
+            self.customer.id, self.banana.id, 1, 'set')
+        self.assertEqual(
+            order_line.product_uom_qty, 1,
+            "seting a quantity should erase previous quantity")

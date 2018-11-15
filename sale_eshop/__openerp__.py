@@ -11,12 +11,13 @@
     'author': 'GRAP',
     'license': 'AGPL-3',
     'depends': [
-        'product',
         'mail',
+        'product',
         'sale',
+        'sale_food',
+        'sale_order_line_price_subtotal_gross',
         'sale_recovery_moment',
         'simple_tax_sale',
-        'sale_food',
     ],
     'data': [
         'security/ir_rule.xml',

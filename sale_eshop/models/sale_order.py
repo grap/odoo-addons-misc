@@ -22,6 +22,7 @@ class SaleOrder(models.Model):
     @api.model
     def eshop_set_quantity(
             self, partner_id, product_id, quantity, method):
+        """@method : 'set' / 'add'"""
         SaleOrderLine = self.env['sale.order.line']
         ResPartner = self.env['res.partner']
 
@@ -55,7 +56,7 @@ class SaleOrder(models.Model):
         if quantity != 0:
             # We set a not null quantity
             res = SaleOrderLine.product_id_change(
-                False, order.pricelist_id.id, product_id,
+                order.pricelist_id.id, product_id,
                 qty=quantity, partner_id=partner_id)
 
             line_vals = {k: v for k, v in res['value'].items()}
@@ -69,7 +70,7 @@ class SaleOrder(models.Model):
             # Create line if needed
             if not current_line:
                 line_vals['product_id'] = product_id
-                line_vals['order_id'] = order_id
+                line_vals['order_id'] = order.id
                 current_line = SaleOrderLine.create(line_vals)
             else:
                 current_line.write(line_vals)
