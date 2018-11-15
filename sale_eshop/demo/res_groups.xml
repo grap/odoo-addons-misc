@@ -7,12 +7,12 @@
 
 <openerp><data>
 
-    <record id="res_groups_eshop_user" model="res.groups" >
+    <record id="res_groups_is_eshop" model="res.groups" >
         <field name="users" eval="[(4, ref('eshop_user'))]" />
     </record>
 
-    <record id="res_groups_is_eshop" model="res.groups" >
-        <field name="users" eval="[(4, ref('eshop_user'))]" />
+    <record id="res_groups_eshop_user" model="res.groups" >
+        <field name="users" eval="[(4, ref('base.user_demo'))]" />
     </record>
 
     <record id="res_groups_eshop_manager" model="res.groups" >

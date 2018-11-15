@@ -19,6 +19,10 @@
 
     <record id="res_groups_is_eshop" model="res.groups">
         <field name="name">Is eShop</field>
+        <field name="implied_ids" eval="[
+            (4, ref('base.group_sale_salesman')),
+        ]" />
+
     </record>
 
 </data></openerp>

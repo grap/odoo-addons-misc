@@ -6,8 +6,9 @@
 Allow connection to Odoo eShop Project
 ======================================
 
-Functionality
--------------
+This module is the 'odoo' part of the project Odoo eShop.
+
+the 'client' part is available here : https://github.com/grap/odoo-eshop
 
 * Create a new category eshop_category for products
 * Add fields on product.product
@@ -17,15 +18,8 @@ Functionality
     * 'Can purchase on eShop'
     * 'eShop password'
 
-Installation
-============
-
-Normal installation.
-
-Configuration
-=============
-
-No configuration is needed.
+.. figure:: /pos_multicompany/static/description/pos_category_tree.png
+   :width: 800 px
 
 Credits
 =======
@@ -34,3 +28,10 @@ Contributors
 ------------
 
 * Sylvain LE GAL <https://twitter.com/legalsylvain>
+
+Funders
+-------
+
+The development of this module has been financially supported by:
+
+* GRAP, Groupement Régional Alimentaire de Proximité (http://www.grap.coop)
