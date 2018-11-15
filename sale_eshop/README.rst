@@ -10,6 +10,13 @@ This module is the 'odoo' part of the project Odoo eShop.
 
 the 'client' part is available here : https://github.com/grap/odoo-eshop
 
+eShop Categories
+----------------
+
+Add a new model ``eshop.category`` to have the possibility to dispatch products
+for the eshop.
+
+
 * Create a new category eshop_category for products
 * Add fields on product.product
     * 'eShop Category': category in the eShop

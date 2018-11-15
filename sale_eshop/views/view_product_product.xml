@@ -15,6 +15,7 @@
                     groups="sale_eshop.res_groups_eshop_user"
                     domain="[('active', '=', True), ('sale_ok', '=', True), ('eshop_category_id', '!=', False)]"/>
                 <field name="eshop_category_id" groups="sale_eshop.res_groups_eshop_user"/>
+                <field name="eshop_state" groups="sale_eshop.res_groups_eshop_user"/>
             </filter>
         </field>
     </record>

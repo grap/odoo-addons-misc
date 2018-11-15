@@ -17,6 +17,8 @@ class TestModule(TransactionCase):
         self.customer = self.env.ref('base.partner_root')
         self.banana = self.env.ref('sale_eshop.product_banana')
         self.apple = self.env.ref('sale_eshop.product_apple')
+        self.product_disabled = self.env.ref('sale_eshop.product_disabled')
+        self.product_not_available = self.env.ref('stock.product_icecream')
 
     # Test Section
     def test_01_login(self):
@@ -36,6 +38,19 @@ class TestModule(TransactionCase):
         result = self.ProductProduct.get_current_eshop_product_list()
         self.assertNotEqual(
             len(result), 0, "Loading products should return a non empty list")
+
+    def test_03_product_available(self):
+        self.assertEqual(
+            self.product_not_available.eshop_state, 'unavailable',
+            "Bad state for unavailable product")
+
+        self.assertEqual(
+            self.banana.eshop_state, 'available',
+            "Bad state for available product")
+
+        self.assertEqual(
+            self.product_disabled.eshop_state, 'disabled',
+            "Bad state for disabled product")
 
     def test_03_sale_order_process(self):
         # Create Order

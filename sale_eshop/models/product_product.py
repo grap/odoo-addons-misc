@@ -6,7 +6,8 @@
 import hashlib
 from datetime import datetime
 
-from openerp import api, fields, models
+from openerp import _, api, fields, models
+from openerp.exceptions import Warning as UserError
 
 
 class ProductProduct(models.Model):
@@ -42,8 +43,7 @@ class ProductProduct(models.Model):
 
     eshop_state = fields.Selection(
         string='eShop State', selection=_ESHOP_STATE_SELECTION,
-        compute='_compute_eshop_state', store=True)
-    # fnct_search=_eshop_state
+        compute='_compute_eshop_state', search='_search_eshop_state')
 
     eshop_minimum_qty = fields.Float(
         string='Minimum Quantity for eShop', required=True, default=0)
@@ -60,10 +60,12 @@ class ProductProduct(models.Model):
     eshop_description = fields.Text(type='Text', string='Eshop Description')
 
     eshop_taxes_description = fields.Char(
-        compute='eshop_taxes_description', string='Eshop Taxes Description')
+        compute='eshop_taxes_description', string='Eshop Taxes Description',
+        store=True)
 
     # Compute Section
     @api.multi
+    @api.depends('taxes_id.eshop_description')
     def _compute_eshop_taxes_description(self):
         for product in self:
             product.eshop_taxes_description = ', '.join(
@@ -191,67 +193,65 @@ order by category_sequence, category_name, name;
 
         return res
 
-    # def _eshop_state(self, cr, uid, obj, name, arg, context=None):
-    #     dateNow = datetime.now().strftime('%Y-%m-%d')
-    #     if arg[0][1] not in ('=', 'in'):
-    #         raise except_orm(
-    #             _("The Operator %s is not implemented !") % (arg[0][1]),
-    #             str(arg))
-    #     if arg[0][1] == '=':
-    #         lst = [arg[0][2]]
-    #     else:
-    #         lst = arg[0][2]
-    #     sql_lst = []
-    #     if 'available' in lst and len(lst) == 1:
-    #         sql_lst.append(
-    #             """((
-    #                     eshop_start_date is not null
-    #                     AND eshop_end_date is not null)
-    #                 AND (
-    #                     eshop_start_date <= '%s'
-    #                     AND '%s' <= eshop_end_date
-    #                 )
-    #             )""" % (dateNow, dateNow))
-    #         sql_lst.append(
-    #             """((
-    #                     eshop_start_date is null
-    #                     AND eshop_end_date is not null)
-    #                 AND ('%s' <= eshop_end_date)
-    #             )""" % (dateNow))
-    #         sql_lst.append(
-    #             """((
-    #                     eshop_start_date is not null
-    #                     AND eshop_end_date is null)
-    #                 AND (
-    #                     eshop_start_date <= '%s'
-    #                 )
-    #             )""" % (dateNow))
-    #         sql_lst.append(
-    #             """(eshop_start_date is null
-    #                 AND eshop_end_date is null)""")
-    #         for i in range(0, len(sql_lst)):
-    #             sql_lst[i] = """(
-    #                 eshop_category_id IS NOT NULL
-    #                 AND id in (
-    #                     SELECT pp.id
-    #                     FROM product_product pp
-    #                     INNER JOIN product_template pt
-    #                         ON pp.product_tmpl_id = pt.id
-    #                         AND pt.sale_ok is true)
-    #                 AND active is true
-    #                 AND (%s))""" % (sql_lst[i])
-    #     else:
-    #         raise except_orm(
-    #             _("This arg %s is not implemented !") % (lst.join(', ')),
-    #             str(arg))
+    def _search_eshop_state(self, operator, value):
+        dateNow = datetime.now().strftime('%Y-%m-%d')
+        if operator not in ('=', 'in'):
+            raise UserError(_(
+                "The Operator %s is not implemented !" % (operator)))
+        if operator == '=':
+            lst = [value]
+        else:
+            lst = value
+        sql_lst = []
+        if 'available' in lst and len(lst) == 1:
+            sql_lst.append(
+                """((
+                        eshop_start_date is not null
+                        AND eshop_end_date is not null)
+                    AND (
+                        eshop_start_date <= '%s'
+                        AND '%s' <= eshop_end_date
+                    )
+                )""" % (dateNow, dateNow))
+            sql_lst.append(
+                """((
+                        eshop_start_date is null
+                        AND eshop_end_date is not null)
+                    AND ('%s' <= eshop_end_date)
+                )""" % (dateNow))
+            sql_lst.append(
+                """((
+                        eshop_start_date is not null
+                        AND eshop_end_date is null)
+                    AND (
+                        eshop_start_date <= '%s'
+                    )
+                )""" % (dateNow))
+            sql_lst.append(
+                """(eshop_start_date is null
+                    AND eshop_end_date is null)""")
+            for i in range(0, len(sql_lst)):
+                sql_lst[i] = """(
+                    eshop_category_id IS NOT NULL
+                    AND id in (
+                        SELECT pp.id
+                        FROM product_product pp
+                        INNER JOIN product_template pt
+                            ON pp.product_tmpl_id = pt.id
+                            AND pt.sale_ok is true)
+                    AND active is true
+                    AND (%s))""" % (sql_lst[i])
+        else:
+            raise UserError(_(
+                "This arg %s is not implemented !" % (value)))
 
-    #     where = sql_lst[0]
-    #     for item in sql_lst[1:]:
-    #         where += " OR %s" % (item)
-    #     sql_req = """
-    #         SELECT id
-    #         FROM product_product
-    #         WHERE %s;""" % (where)
-    #     cr.execute(sql_req)  # pylint: disable=invalid-commit
-    #     res = cr.fetchall()
-    #     return [('id', 'in', map(lambda x:x[0], res))]
+        where = sql_lst[0]
+        for item in sql_lst[1:]:
+            where += " OR %s" % (item)
+        sql_req = """
+            SELECT id
+            FROM product_product
+            WHERE %s;""" % (where)
+        self.env.cr.execute(sql_req)  # pylint: disable=invalid-commit
+        res = self.env.cr.fetchall()
+        return [('id', 'in', map(lambda x:x[0], res))]

@@ -142,4 +142,19 @@
         <field name="type">consu</field>
     </record>
 
+    <record model="product.product" id="product_disabled">
+        <field name="name">Product disabled for eshop</field>
+        <field name="categ_id" ref="product.product_category_all" />
+        <field name="list_price">50</field>
+        <field name="eshop_category_id" ref="category_without_image" />
+        <field name="eshop_minimum_qty">1.0</field>
+        <field name="eshop_rounded_qty">1.0</field>
+        <field name="uom_id" ref="product.product_uom_unit" />
+        <field name="uom_po_id" ref="product.product_uom_unit"/>
+        <field name="uos_id" ref="product.product_uom_unit" />
+        <field name="type">consu</field>
+        <field name="eshop_end_date"
+            eval="(DateTime.today() + relativedelta(months=-1)).strftime('%Y-%m-%d')"/>
+    </record>
+
 </data></openerp>
