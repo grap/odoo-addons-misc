@@ -9,6 +9,12 @@
 
     <record id="base.main_company" model="res.company" >
         <field name="has_eshop" eval="True"/>
+        <field name="eshop_instagram_url">https://www.instagram.com/odoo_eshop/</field>
+        <field name="eshop_twitter_url">https://twitter.com/odoo_eshop/</field>
+        <field name="eshop_facebook_url">https://www.facebook.com/odoo_eshop</field>
+        <field name="eshop_google_plus_url">https://plus.google.com/u/0/+odoo_eshop</field>
+        <field name="eshop_home_text">Home page Text</field>
+        <field name="eshop_home_text_logged">Home page Text, when the customer is logged</field>
     </record>
 
 </data></openerp>

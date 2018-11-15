@@ -68,8 +68,10 @@ The important fields are :
 
 Some of cosmectics fields are available in a wizard, to be change by end users.
 
+you have to go in 'Sale' / 'Configuration' / 'eShop Sale' / 'eShop Settings'
 
-
+.. figure:: /sale_eshop/static/description/wizard_res_company_eshop_setting.png
+   :width: 800 px
 
 Other models
 ------------
