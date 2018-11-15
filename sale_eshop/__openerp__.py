@@ -25,6 +25,7 @@
         'security/res_groups.xml',
         'security/ir.model.access.csv',
         'data/email_template.xml',
+        'data/ir_cron.xml',
         'views/menu.xml',
         'views/view_account_tax.xml',
         'views/view_eshop_category.xml',
@@ -35,12 +36,12 @@
     ],
     'demo': [
         'demo/res_company.xml',
-        'demo/res_partner.xml',
         'demo/eshop_category.xml',
         'demo/product_product.xml',
         'demo/product_uom.xml',
         'demo/res_users.xml',
         'demo/res_groups.xml',
+        'demo/res_partner.xml',
     ],
     'installable': True,
 }

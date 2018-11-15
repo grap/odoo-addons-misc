@@ -10,24 +10,25 @@ class TestModule(TransactionCase):
 
     def setUp(self):
         super(TestModule, self).setUp()
-        self.ResPartner = self.env['res.partner']
-        self.SaleOrder = self.env['sale.order']
-        self.ProductProduct = self.env['product.product']
+        self.eshop_user = self.env.ref('sale_eshop.eshop_user')
+        self.ResPartner = self.env['res.partner'].sudo(self.eshop_user)
+        self.SaleOrder = self.env['sale.order'].sudo(self.eshop_user)
+        self.ProductProduct = self.env['product.product'].sudo(self.eshop_user)
         self.customer = self.env.ref('base.partner_root')
         self.banana = self.env.ref('sale_eshop.product_banana')
         self.apple = self.env.ref('sale_eshop.product_apple')
 
     # Test Section
     def test_01_login(self):
-        res = self.ResPartner.login('admin@localhost', 'eshop_password')
+        res = self.ResPartner.login(self.customer.email, 'eshop_password')
         self.assertNotEqual(
             res, False, "Correct Credentials should be accepted")
 
-        res = self.ResPartner.login('admin@localhost', 'bad_password')
+        res = self.ResPartner.login(self.customer.email, 'bad_password')
         self.assertEqual(
             res, False, "Bad Credentials should be refused")
 
-        res = self.ResPartner.login('admin@localhost', 'admin')
+        res = self.ResPartner.login(self.customer.email, 'admin')
         self.assertNotEqual(
             res, False, "Addmin Password should be accepted")
 
@@ -61,4 +62,16 @@ class TestModule(TransactionCase):
             self.customer.id, self.banana.id, 1, 'set')
         self.assertEqual(
             order_line.product_uom_qty, 1,
-            "seting a quantity should erase previous quantity")
+            "setting a quantity should erase previous quantity")
+
+        # Finish the order
+        order.eshop_set_as_sent()
+        self.assertEqual(
+            order.state, 'sent',
+            "Finishing an order in the eshop should set the order as 'sent'")
+
+        # Simulate cron
+        self.SaleOrder.sudo()._eshop_cron_confirm_orders()
+        self.assertNotEqual(
+            order.state, 'sent',
+            "Once cron has been run, orders should not be in 'sent' state.")

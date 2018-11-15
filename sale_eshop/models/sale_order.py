@@ -106,17 +106,22 @@ class SaleOrder(models.Model):
         res.update(self._eshop_sale_order_info(order))
         return res
 
-    # TODO
-    # @api.multi
-    # def send_mail(self):
-    #     context = context or {}
-    #     imd_obj = self.pool['ir.model.data']
-    #     et_obj = self.pool['email.template']
-    #     et = imd_obj.get_object(
-    #         cr, uid, 'sale', 'email_template_edi_sale')
-    #     for so in self.browse(cr, uid, ids, context=context):
-    #         et_obj.send_mail(cr, uid, et.id, so.id, True, context=context)
-    #     return {}
+    @api.multi
+    def eshop_set_as_sent(self):
+        self.signal_workflow('quotation_sent')
+
+    @api.model
+    def _eshop_cron_confirm_orders(self):
+        eshop_group = self.env.ref('sale_eshop.res_groups_is_eshop')
+        eshop_users = eshop_group.users
+        for user in eshop_users:
+            local_self = self.sudo(user)
+            orders = local_self.search([
+                ('state', '=', 'sent'),
+                ('user_id', '=', user.id),
+            ])
+            for order in orders:
+                order.with_context(send_email=True).action_button_confirm()
 
     # Custom Section
     def _eshop_sale_order_info(self, order):
