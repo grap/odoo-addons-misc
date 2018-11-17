@@ -8,7 +8,7 @@ from openerp import api, models
 
 class ProductLabel(models.Model):
     _name = 'product.label'
-    _inherit = ['product.label', 'eshop.mixin']
+    _inherit = ['product.label', 'eshop.with.image.mixin']
 
     # Inherit Section
     _eshop_invalidation_type = 'multiple'

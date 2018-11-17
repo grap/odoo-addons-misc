@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 from . import eshop_mixin
+from . import eshop_with_image_mixin
 
 from . import account_tax
 from . import eshop_category

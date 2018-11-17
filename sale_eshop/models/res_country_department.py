@@ -7,8 +7,8 @@ from openerp import api, models
 
 
 class ResCountryDepartment(models.Model):
-    _name = 'res.country'
-    _inherit = ['res.country', 'eshop.mixin']
+    _name = 'res.country.department'
+    _inherit = ['res.country.department', 'eshop.mixin']
 
     # Inherit Section
     _eshop_invalidation_type = 'multiple'

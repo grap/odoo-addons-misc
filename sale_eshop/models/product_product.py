@@ -12,7 +12,7 @@ from openerp.exceptions import Warning as UserError
 
 class ProductProduct(models.Model):
     _name = 'product.product'
-    _inherit = ['product.product', 'eshop.mixin']
+    _inherit = ['product.product', 'eshop.with.image.mixin']
 
     # Inherit Section
     _eshop_invalidation_type = 'single'
@@ -258,3 +258,8 @@ order by category_sequence, category_name, name;
         self.env.cr.execute(sql_req)  # pylint: disable=invalid-commit
         res = self.env.cr.fetchall()
         return [('id', 'in', map(lambda x:x[0], res))]
+
+    # Overwrite section
+    @api.model
+    def _get_eshop_domain(self):
+        return [('eshop_state', '=', 'available')]

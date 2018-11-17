@@ -9,7 +9,7 @@ from openerp.exceptions import Warning as UserError
 
 class EshopCategory(models.Model):
     _name = 'eshop.category'
-    _inherit = ['eshop.mixin']
+    _inherit = ['eshop.with.image.mixin']
     _rec_name = 'complete_name'
     _order = 'sequence, complete_name'
 
@@ -40,13 +40,13 @@ class EshopCategory(models.Model):
 
     image = fields.Binary(string='Image')
 
-    image_small = fields.Binary(
-        compute='_compute_multi_image',
-        string='Small-sized image', store=True)
-
     image_medium = fields.Binary(
         compute='_compute_multi_image',
         string='Medium-sized image', store=True)
+
+    image_small = fields.Binary(
+        compute='_compute_multi_image',
+        string='Small-sized image', store=True)
 
     parent_id = fields.Many2one(
         comodel_name='eshop.category', string='Parent Category',

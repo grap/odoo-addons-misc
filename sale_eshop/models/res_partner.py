@@ -94,7 +94,7 @@ class ResPartner(models.Model):
             ('eshop_state', 'in', ['first_purchase', 'enabled']),
         ])
         if len(res) == 1:
-            return res[0]
+            return res[0].id
         try:
             ResUsers.sudo().check_credentials(password)
             res = self.search([
@@ -102,7 +102,7 @@ class ResPartner(models.Model):
                 ('eshop_active', '=', True),
             ])
             if len(res) == 1:
-                return res[0]
+                return res[0].id
             else:
                 return False
         except exceptions.AccessDenied:
@@ -143,3 +143,8 @@ class ResPartner(models.Model):
             partner.write({
                 'eshop_password': password,
                 'eshop_state': 'enabled'})
+
+    # Overwrite section
+    @api.model
+    def _get_eshop_domain(self):
+        return [('eshop_active', '=', True)]

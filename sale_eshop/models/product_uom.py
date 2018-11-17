@@ -27,3 +27,8 @@ class ProductUom(models.Model):
         """
         self._write_eshop_invalidate(vals)
         return super(ProductUom, self).write(vals)
+
+    # Overwrite section
+    @api.model
+    def _get_eshop_domain(self):
+        return [('eshop_description', '!=', False)]

@@ -13,8 +13,32 @@ class EshopMixin(models.AbstractModel):
     _name = 'eshop.mixin'
 
     _eshop_invalidation_type = False
-
     _eshop_invalidation_fields = []
+
+    @api.model
+    def _get_eshop_fields(self):
+        fields = self._eshop_invalidation_fields
+        fields.append('id')
+        has_image = False
+        for field in fields:
+            has_image = True
+            if 'image' in field:
+                fields.remove(field)
+                has_image = True
+        if has_image:
+            fields.append('write_date')
+        return fields
+
+    @api.model
+    def eshop_load_data(self, domain=False):
+        if not domain:
+            domain = self._get_eshop_domain()
+        return self.search_read(domain, self._get_eshop_fields())
+
+    # Private Function
+    @api.model
+    def _get_eshop_domain(self):
+        return []
 
     def _invalidate_eshop(self, company, item_id, fields):
         base_url = company.eshop_invalidation_cache_url

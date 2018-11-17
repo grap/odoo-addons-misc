@@ -83,3 +83,8 @@ class ResCompany(models.Model):
     def get_eshop_model(self):
         return False
         # return _ESHOP_OPENERP_MODELS
+
+    # Overwrite section
+    @api.model
+    def _get_eshop_domain(self):
+        return [('id', '=', self.env.user.company_id.id)]
