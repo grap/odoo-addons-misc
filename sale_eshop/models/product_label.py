@@ -15,6 +15,8 @@ class ProductLabel(models.Model):
 
     _eshop_invalidation_fields = ['name', 'code', 'image', 'image_small']
 
+    _eshop_image_fields = ['image', 'image_small']
+
     # Overload Section
     @api.multi
     def write(self, vals):

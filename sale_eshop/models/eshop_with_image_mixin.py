@@ -12,15 +12,30 @@ class EshopWithImageMixin(models.AbstractModel):
     _name = 'eshop.with.image.mixin'
     _inherit = 'eshop.mixin'
 
+    _eshop_image_fields = []
+
     image_write_date = fields.Datetime(
-        commpute='_compute_image_write_date', store=True)
+        readonly=True, required=True,
+        default=lambda s: s._default_image_write_date())
+
+    @api.model
+    def _default_image_write_date(self):
+        return self._get_image_write_date()
+
+    @api.model
+    def _get_image_write_date(self):
+        return datetime.now()
+
+    @api.model
+    def create(self, vals):
+        vals.update({'image_write_date': self._get_image_write_date()})
+        return super(EshopWithImageMixin, self).create(vals)
 
     @api.multi
-    @api.depends('image')
-    def _compute_image_write_date(self):
-        today = datetime.now()
-        for item in self:
-            item.image_write_date = today
+    def _write_eshop_invalidate(self, vals):
+        if list(set(self._eshop_image_fields) & set(vals.keys())):
+            vals.update({'image_write_date': self._get_image_write_date()})
+        return super(EshopWithImageMixin, self)._write_eshop_invalidate(vals)
 
     # Overload section
     @api.model

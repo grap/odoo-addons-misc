@@ -21,6 +21,8 @@ class EshopCategory(models.Model):
         'type', 'parent_id', 'product_ids', 'complete_name',
     ]
 
+    _eshop_image_fields = ['image', 'image_medium', 'image_small']
+
     _TYPE_SELECTION = [
         ('view', 'View'),
         ('normal', 'Normal'),

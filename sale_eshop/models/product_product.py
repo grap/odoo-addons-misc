@@ -27,6 +27,8 @@ class ProductProduct(models.Model):
         'eshop_unpack_surcharge',
     ]
 
+    _eshop_image_fields = ['image', 'image_medium', 'image_small']
+
     _ESHOP_STATE_SELECTION = [
         ('available', 'Available for Sale'),
         ('disabled', 'Temporarily Disabled'),
@@ -148,7 +150,8 @@ FROM (
     ec.sequence category_sequence,
     ec.name category_name,
     ec.complete_name category_complete_name,
-    ec.write_date category_write_date,
+    ec.image_write_date category_image_write_date,
+    pp.image_write_date product_image_write_date,
     pt.uom_id,
     uom.eshop_description uom_eshop_description,
     pp.eshop_minimum_qty,
@@ -188,10 +191,15 @@ order by category_sequence, category_name, name;
                 })
             else:
                 tmp.update({'qty': 0, 'discount': 0})
-            if tmp['uom_eshop_description'] is None:
-                tmp['uom_eshop_description'] = False
-            tmp['category_sha1'] = hashlib.sha1(
-                str(tmp['category_write_date'])).hexdigest()
+            if tmp['default_code'] is None:
+                tmp['default_code'] = False
+            # Handle category sha1
+            tmp['category_image_write_date_sha1'] = hashlib.sha1(
+                str(tmp['category_image_write_date'])).hexdigest()
+            # Handle product sha1
+            tmp['product_image_write_date_sha1'] = hashlib.sha1(
+                str(tmp['product_image_write_date'])).hexdigest()
+
             res.append(tmp)
 
         return res

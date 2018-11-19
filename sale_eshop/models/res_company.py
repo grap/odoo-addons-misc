@@ -10,7 +10,7 @@ from openerp import api, fields, models
 
 class ResCompany(models.Model):
     _name = 'res.company'
-    _inherit = ['res.company', 'eshop.mixin']
+    _inherit = ['res.company', 'eshop.with.image.mixin']
 
     # Inherit Section
     _eshop_invalidation_type = 'single'
@@ -26,6 +26,8 @@ class ResCompany(models.Model):
         'manage_recovery_moment',
         'eshop_manage_unpacking',
     ]
+
+    _eshop_image_fields = ['eshop_home_image', 'eshop_image_small']
 
     # Columns Section
     eshop_invalidation_cache_url = fields.Char(string='Invalidation Cache URL')

@@ -16,7 +16,8 @@ class ProductUom(models.Model):
     _eshop_invalidation_fields = ['id', 'name', 'eshop_description']
 
     # Fields Section
-    eshop_description = fields.Char('Description for the eShop')
+    eshop_description = fields.Char(
+        string='Description for the eShop', required=True)
 
     # Overload Section
     @api.multi
