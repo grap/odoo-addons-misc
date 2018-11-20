@@ -3,6 +3,7 @@
 # @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+import hashlib
 from datetime import datetime
 
 from openerp import api, fields, models
@@ -18,6 +19,18 @@ class EshopWithImageMixin(models.AbstractModel):
         readonly=True, required=True,
         default=lambda s: s._default_image_write_date())
 
+    image_write_date_hash = fields.Char(
+        compute='_compute_image_write_date_hash', store=True)
+
+    # Compute Section
+    @api.multi
+    @api.depends('image_write_date')
+    def _compute_image_write_date_hash(self):
+        for item in self:
+            item.image_write_date_hash = hashlib.sha1(
+                str(item.image_write_date)).hexdigest()
+
+    # Default Part
     @api.model
     def _default_image_write_date(self):
         return self._get_image_write_date()
@@ -45,4 +58,5 @@ class EshopWithImageMixin(models.AbstractModel):
             if 'image' in field:
                 fields.remove(field)
         fields.append('image_write_date')
+        fields.append('image_write_date_hash')
         return fields

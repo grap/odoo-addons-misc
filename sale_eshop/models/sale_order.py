@@ -109,6 +109,7 @@ class SaleOrder(models.Model):
     @api.multi
     def eshop_set_as_sent(self):
         self.signal_workflow('quotation_sent')
+        return True
 
     @api.model
     def _eshop_cron_confirm_orders(self):

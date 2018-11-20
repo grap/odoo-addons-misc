@@ -18,7 +18,6 @@
                 </group>
                 <group string="Texts">
                     <field name="eshop_home_text" nolabel="1"/>
-                    <field name="eshop_home_text_logged" nolabel="1"/>
                 </group>
                 <footer>
                     <button name="button_apply_setting" string="Apply Settings" type="object" class="oe_highlight"/>

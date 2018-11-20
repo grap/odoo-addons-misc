@@ -16,30 +16,33 @@ class ResCompany(models.Model):
     _eshop_invalidation_type = 'single'
 
     _eshop_invalidation_fields = [
-        'eshop_home_text_logged', 'eshop_home_text',
+        'eshop_home_text',
         'name', 'has_eshop', 'eshop_minimum_price', 'eshop_title',
         'eshop_url', 'website', 'eshop_list_view_enabled',
         'eshop_facebook_url', 'eshop_twitter_url', 'eshop_google_plus_url',
         'eshop_google_plus_url', 'eshop_instagram_url',
-        'eshop_home_image', 'eshop_image_small',
+        'eshop_image_small',
         'eshop_vat_included', 'eshop_register_allowed',
-        'manage_recovery_moment',
+        'eshop_manage_recovery_moment',
         'eshop_manage_unpacking',
     ]
 
-    _eshop_image_fields = ['eshop_home_image', 'eshop_image_small']
+    _eshop_image_fields = ['eshop_image_small']
 
     # Columns Section
-    eshop_invalidation_cache_url = fields.Char(string='Invalidation Cache URL')
+    eshop_invalidation_key = fields.Char(string='Invalidation Key')
 
     has_eshop = fields.Boolean(string='Has eShop')
 
     eshop_pricelist_id = fields.Many2one(
-        comodel_name='product.pricelist', string='Pricelist Used on eShop')
+        comodel_name='product.pricelist', string='Pricelist Used')
 
     eshop_minimum_price = fields.Float(string='Minimum Price by eShop')
 
-    eshop_manage_unpacking = fields.Boolean(string='Manage Unpacking on eShop')
+    eshop_manage_unpacking = fields.Boolean(string='Manage Unpacking')
+
+    eshop_manage_recovery_moment = fields.Boolean(
+        string='Manage recvoery Moment')
 
     eshop_title = fields.Char(string='eShop Title')
 
@@ -55,14 +58,9 @@ class ResCompany(models.Model):
 
     eshop_home_text = fields.Html(string='Text for the eShop Home Page')
 
-    eshop_home_text_logged = fields.Html(
-        string='Text for the eShop Home Page, when logged')
-
-    eshop_home_image = fields.Binary(string='Image for the eShop Home Page')
-
     eshop_image_small = fields.Binary(string='Small Image for the eShop Menu')
 
-    eshop_vat_included = fields.Boolean(string='VAT Included for eShop')
+    eshop_vat_included = fields.Boolean(string='VAT Included')
 
     eshop_register_allowed = fields.Boolean(
         string='Allow new customer to register on eShop')

@@ -3,7 +3,6 @@
 # @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-import hashlib
 from datetime import datetime
 
 from openerp import _, api, fields, models
@@ -151,7 +150,9 @@ FROM (
     ec.name category_name,
     ec.complete_name category_complete_name,
     ec.image_write_date category_image_write_date,
+    ec.image_write_date_hash category_image_write_date_hash,
     pp.image_write_date product_image_write_date,
+    pp.image_write_date_hash product_image_write_date_hash,
     pt.uom_id,
     uom.eshop_description uom_eshop_description,
     pp.eshop_minimum_qty,
@@ -193,12 +194,6 @@ order by category_sequence, category_name, name;
                 tmp.update({'qty': 0, 'discount': 0})
             if tmp['default_code'] is None:
                 tmp['default_code'] = False
-            # Handle category sha1
-            tmp['category_image_write_date_sha1'] = hashlib.sha1(
-                str(tmp['category_image_write_date'])).hexdigest()
-            # Handle product sha1
-            tmp['product_image_write_date_sha1'] = hashlib.sha1(
-                str(tmp['product_image_write_date'])).hexdigest()
 
             res.append(tmp)
 

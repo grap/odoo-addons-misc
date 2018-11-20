@@ -38,7 +38,7 @@ class ResPartner(models.Model):
 
     eshop_state = fields.Selection(
         selection=_ESHOP_STATE_SELECTION, string='State on eShop',
-        readonly=True, required=True, default='disabled')
+        readonly=True, default='disabled')
 
     eshop_active = fields.Boolean(
         string='Can buy on eShop', store=True, compute='_compute_eshop_active',

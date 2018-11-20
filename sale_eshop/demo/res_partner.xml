@@ -9,6 +9,11 @@
 
     <record id="base.partner_root" model="res.partner" >
         <field name="email">admin@odoo-eshop.org</field>
+        <field name="zip">69001</field>
+        <field name="city">Lyon</field>
+        <field name="street">14 rue Lemot</field>
+        <field name="street2">Digicode, 1111X</field>
+        <field name="mobile">+33 6 01 23 45 67</field>
         <field name="eshop_state">first_purchase</field>
         <field name="eshop_password">eshop_password</field>
     </record>

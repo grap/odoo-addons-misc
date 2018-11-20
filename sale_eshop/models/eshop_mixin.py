@@ -3,10 +3,13 @@
 # @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+import logging
 import requests
+from requests.compat import urljoin
 
-from openerp import _, api, models
-from openerp.exceptions import Warning as UserError
+from openerp import api, models
+
+_logger = logging.getLogger(__name__)
 
 
 class EshopMixin(models.AbstractModel):
@@ -41,16 +44,28 @@ class EshopMixin(models.AbstractModel):
         return []
 
     def _invalidate_eshop(self, company, item_id, fields):
-        base_url = company.eshop_invalidation_cache_url
-        if base_url:
-            url = base_url + self._name + '/' + str(item_id) + '/'\
-                + ','.join(fields) + '/'
-            req = requests.get(url, verify=False)
-            if req.status_code != 200:
-                raise UserError(_('Error !'), _(
-                    "You can not change this values because the"
-                    " eShop datas can not be updated."
-                    " \n - Code : %s") % (req.status_code))
+
+        base_url = company.eshop_url
+        private_key = company.eshop_invalidation_key
+        if base_url and private_key:
+            url = urljoin(base_url, "invalidation_cache/%s/%s/%d/" % (
+                private_key, self._name, item_id))
+            try:
+                req = requests.get(url, verify=False)
+                if req.status_code != 200:
+                    _logger.error(
+                        "Error when calling invalidation url '%s' "
+                        " status Code : %s (company #%d)" % (
+                            url, req.status_code, company.id))
+            except:
+                _logger.error(
+                    "Unable to call the invalidation url '%s' "
+                    "(company #%d)" % (url, company.id))
+        else:
+            _logger.info(
+                "Invalidation has not been possible because"
+                " eshop_url and or eshop_invalidation_key is not available"
+                " for company %d" % company.id)
 
     @api.multi
     def _write_eshop_invalidate(self, vals):

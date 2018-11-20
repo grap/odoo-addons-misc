@@ -36,10 +36,6 @@ class WizardResCompanyEshopSetting(models.TransientModel):
         string='Text for the eShop Home Page',
         default=lambda s: s._default_eshop_home_text())
 
-    eshop_home_text_logged = fields.Html(
-        string='Text for the eShop Home Page, when logged',
-        default=lambda s: s._default_eshop_home_text_logged())
-
     # Default Section
     @api.model
     def _default_company_id(self):
@@ -65,10 +61,6 @@ class WizardResCompanyEshopSetting(models.TransientModel):
     def _default_eshop_home_text(self):
         return self.env.user.company_id.eshop_home_text
 
-    @api.model
-    def _default_eshop_home_text_logged(self):
-        return self.env.user.company_id.eshop_home_text_logged
-
     # View Section
     @api.multi
     def button_apply_setting(self):
@@ -79,5 +71,4 @@ class WizardResCompanyEshopSetting(models.TransientModel):
             'eshop_instagram_url': self.eshop_instagram_url,
             'eshop_google_plus_url': self.eshop_google_plus_url,
             'eshop_home_text': self.eshop_home_text,
-            'eshop_home_text_logged': self.eshop_home_text_logged,
         })
