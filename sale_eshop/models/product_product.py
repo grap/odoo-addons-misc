@@ -61,8 +61,8 @@ class ProductProduct(models.Model):
     eshop_description = fields.Text(type='Text', string='Eshop Description')
 
     eshop_taxes_description = fields.Char(
-        compute='eshop_taxes_description', string='Eshop Taxes Description',
-        store=True)
+        compute='_compute_eshop_taxes_description',
+        string='Eshop Taxes Description')
 
     # Compute Section
     @api.multi

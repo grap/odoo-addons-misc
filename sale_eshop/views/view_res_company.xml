@@ -17,6 +17,7 @@
                         <field name="eshop_url"/>
                         <field name="eshop_title" colspan="4" />
                         <field name="eshop_manage_unpacking"/>
+                        <field name="eshop_manage_recovery_moment"/>
                         <field name="eshop_minimum_price"/>
                         <field name="eshop_pricelist_id"/>
                         <field name="eshop_vat_included"/>

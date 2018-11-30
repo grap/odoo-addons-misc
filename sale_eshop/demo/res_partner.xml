@@ -20,6 +20,7 @@
 
     <record id="sale_eshop.eshop_user_res_partner" model="res.partner" >
         <field name="email">eshop_user@odoo-eshop.org</field>
+        <field name="tz">Europe/Brussels</field>
     </record>
 
 </data></openerp>

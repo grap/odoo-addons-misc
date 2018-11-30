@@ -21,6 +21,8 @@
         <field name="name">Is eShop</field>
         <field name="implied_ids" eval="[
             (4, ref('base.group_sale_salesman')),
+            (4, ref('res_groups_eshop_user')),
+            (4, ref('sale_recovery_moment.recovery_user')),
         ]" />
 
     </record>
