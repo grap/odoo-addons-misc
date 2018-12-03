@@ -43,15 +43,17 @@ class TestModule(TransactionCase):
                 'price_unit': price_1 + price_2,
             }]],
         })
-        payment = self.PosMakePayment.create({
+        payment = self.PosMakePayment.with_context(active_id=order.id).create({
             'journal_id': journal_1.id,
             'amount': price_1,
         })
+        payment.with_context(active_id=order.id).check()
         if journal_2:
-            self.PosMakePayment.create({
-                'journal_id': journal_2.id,
-                'amount': price_2,
-            })
+            payment = self.PosMakePayment.with_context(
+                active_id=order.id).create({
+                    'journal_id': journal_2.id,
+                    'amount': price_2,
+                })
         payment.with_context(active_id=order.id).check()
         return order
 
@@ -130,3 +132,26 @@ class TestModule(TransactionCase):
         self.assertEqual(
             self.check_statement.balance_end, 90,
             "Bad recompute of the balance for the new statement")
+
+    def test_03_merge_statement(self):
+        # Make a sale with multiple cash payement
+        order = self._sale(
+            self.session, self.cash_journal, 100,
+            journal_2=self.cash_journal, price_2=200)
+        # Check that statement has been merged
+        self.assertEqual(
+            len(order.statement_ids), 1,
+            "Adding many cash statement for an order should merge them.")
+
+        self.assertEqual(
+            order.statement_ids[0].amount, 300,
+            "Invalid total amount for merged cash statements")
+
+        # Make a sale with multiple check payement
+        order = self._sale(
+            self.session, self.check_journal, 100,
+            self.check_journal, 200)
+        # Check that statement has been merged
+        self.assertEqual(
+            len(order.statement_ids), 2,
+            "Adding many check statement for an order should not merge them.")

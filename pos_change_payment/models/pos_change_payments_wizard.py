@@ -10,6 +10,19 @@ from openerp.exceptions import Warning as UserError
 class PosChangePaymentsWizard(models.TransientModel):
     _name = 'pos.change.payments.wizard'
 
+    # Column Section
+    order_id = fields.Many2one(
+        comodel_name='pos.order', string='Order', readonly=True)
+
+    session_id = fields.Many2one(
+        comodel_name='pos.session', string='Session', readonly=True)
+
+    line_ids = fields.One2many(
+        comodel_name='pos.change.payments.wizard.line',
+        inverse_name='wizard_id', string='Payment Lines')
+
+    amount_total = fields.Float(string='Total', readonly=True)
+
     # View Section
     @api.model
     def default_get(self, fields):
@@ -21,17 +34,7 @@ class PosChangePaymentsWizard(models.TransientModel):
         res.update({'amount_total': order.amount_total})
         return res
 
-    # Column Section
-    order_id = fields.Many2one(
-        comodel_name='pos.order', string='Order', readonly=True)
-    session_id = fields.Many2one(
-        comodel_name='pos.session', string='Session', readonly=True)
-    line_ids = fields.One2many(
-        comodel_name='pos.change.payments.wizard.line',
-        inverse_name='wizard_id', string='Payment Lines')
-    amount_total = fields.Float(string='Total', readonly=True)
-
-    # Action section
+    # View section
     @api.multi
     def button_change_payments(self):
         self.ensure_one()
