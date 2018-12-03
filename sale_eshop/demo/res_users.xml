@@ -7,7 +7,7 @@
 
 <openerp><data>
 
-    <record id="eshop_user" model="res.users" >
+    <record id="eshop_user" model="res.users" context="{'no_reset_password': True}">
         <field name="name">Eshop User</field>
         <field name="login">eshop_user</field>
         <field name="password">demo</field>
