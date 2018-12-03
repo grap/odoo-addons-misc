@@ -3,8 +3,8 @@
 # @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp import fields, models, _, api
-from openerp.osv.osv import except_osv
+from openerp import _, api, fields, models
+from openerp.exceptions import Warning as UserError
 
 
 class PosChangePaymentsWizard(models.TransientModel):
@@ -42,14 +42,13 @@ class PosChangePaymentsWizard(models.TransientModel):
         for line in wizard.line_ids:
             total += line.amount
         if total != wizard.amount_total:
-            raise except_osv(
-                _('Error!'),
-                _("""Differences between the two values for the POS"""
-                    """ Order '%s':\n\n"""
-                    """ * Total of all the new payments %s;\n"""
-                    """ * Total of the POS Order %s;\n\n"""
-                    """Please change the payments.""" % (
-                        order.name, total, order.amount_total)))
+            raise UserError(_(
+                "Differences between the two values for the POS"
+                " Order '%s':\n\n"
+                " * Total of all the new payments %s;\n"
+                " * Total of the POS Order %s;\n\n"
+                "Please change the payments." % (
+                    order.name, total, order.amount_total)))
 
         # Check if change payments is allowed
         order._allow_change_payments()
