@@ -254,10 +254,8 @@ order by category_sequence, category_name, name;
         where = sql_lst[0]
         for item in sql_lst[1:]:
             where += " OR %s" % (item)
-        sql_req =\
-            "SELECT id"\
-            " FROM product_product"\
-            " WHERE %s;" % (where)
+        sql_req = "SELECT id FROM product_product"
+        sql_req += " WHERE %s;" % (where)
         self.env.cr.execute(sql_req)
         res = self.env.cr.fetchall()
         return [('id', 'in', map(lambda x:x[0], res))]
