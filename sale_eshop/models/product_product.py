@@ -133,7 +133,7 @@ class ProductProduct(models.Model):
 
         company_id = self.env.user.company_id.id
 
-        req = """
+        self.env.cr.execute("""
 SELECT
     distinct tmp.*,
     array_to_string(array_agg(label_rel.label_id)
@@ -174,8 +174,7 @@ FROM (
 LEFT OUTER JOIN product_label_product_rel label_rel
     ON label_rel.product_id = tmp.id
 order by category_sequence, category_name, name;
-""" % company_id  # pylint: disable=sql-injection
-        self.env.cr.execute(req)
+""", (company_id,))
         columns = self.env.cr.description
         for value in self.env.cr.fetchall():
             product_id = value[0]
@@ -255,10 +254,10 @@ order by category_sequence, category_name, name;
         where = sql_lst[0]
         for item in sql_lst[1:]:
             where += " OR %s" % (item)
-        sql_req = """
-            SELECT id
-            FROM product_product
-            WHERE %s;""" % (where)  # pylint: disable=sql-injection
+        sql_req =\
+            "SELECT id"\
+            " FROM product_product"\
+            " WHERE %s;" % (where)
         self.env.cr.execute(sql_req)
         res = self.env.cr.fetchall()
         return [('id', 'in', map(lambda x:x[0], res))]
