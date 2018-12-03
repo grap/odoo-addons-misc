@@ -15,7 +15,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                     <field name="order_id" />
                     <field name="statement_line_id" />
                     <field name="old_journal_id" />
-                    <field name="new_journal_id" />
+                    <field name="new_journal_id" widget="selection"/>
                     <field name="amount" />
                 </group>
                 <footer>

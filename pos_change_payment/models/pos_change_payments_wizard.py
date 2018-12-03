@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 # Copyright (C) 2015-Today GRAP (http://www.grap.coop)
 # @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
@@ -34,14 +34,14 @@ class PosChangePaymentsWizard(models.TransientModel):
     # Action section
     @api.multi
     def button_change_payments(self):
-        wizard = self[0]
-        order = wizard.order_id
+        self.ensure_one()
+        order = self.order_id
 
         # Check if the total is correct
         total = 0
-        for line in wizard.line_ids:
+        for line in self.line_ids:
             total += line.amount
-        if total != wizard.amount_total:
+        if total != self.amount_total:
             raise UserError(_(
                 "Differences between the two values for the POS"
                 " Order '%s':\n\n"
@@ -57,9 +57,9 @@ class PosChangePaymentsWizard(models.TransientModel):
         order.statement_ids.with_context(change_pos_payment=True).unlink()
 
         # Create new payment
-        for line in wizard.line_ids:
+        for line in self.line_ids:
             order.add_payment_v8({
-                'journal': int(line.bank_statement_id.journal_id.id),
+                'journal': line.new_journal_id.id,
                 'amount': line.amount,
             })
 

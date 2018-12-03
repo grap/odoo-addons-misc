@@ -4,7 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from openerp.tests.common import TransactionCase
-# from openerp.exceptions import Warning as UserError
+from openerp.exceptions import Warning as UserError
 
 
 class TestModule(TransactionCase):
@@ -16,6 +16,9 @@ class TestModule(TransactionCase):
         self.PosOrder = self.env['pos.order']
         self.PosMakePayment = self.env['pos.make.payment']
         self.PosSwitchJournalWizard = self.env['pos.switch.journal.wizard']
+        self.PosChangePaymentsWizard = self.env['pos.change.payments.wizard']
+        self.PosChangePaymentsWizardLine =\
+            self.env['pos.change.payments.wizard.line']
         self.product = self.env.ref('product.product_product_3')
         self.pos_config = self.env.ref('point_of_sale.pos_config_main')
         self.check_journal = self.env.ref('account.check_journal')
@@ -65,6 +68,7 @@ class TestModule(TransactionCase):
             })
         wizard.button_switch_journal()
 
+        # Check Order
         self.assertEqual(
             len(order.statement_ids.filtered(
                 lambda x: x.journal_id == self.cash_journal)), 0,
@@ -74,3 +78,55 @@ class TestModule(TransactionCase):
             len(order.statement_ids.filtered(
                 lambda x: x.journal_id == self.check_journal)), 1,
             "Altered order should have the final payment journal")
+
+        # Check Session
+        self.assertEqual(
+            self.cash_statement.balance_end, 0,
+            "Bad recompute of the balance for the old statement")
+
+        self.assertEqual(
+            self.check_statement.balance_end, 100,
+            "Bad recompute of the balance for the new statement")
+
+    def test_02_pos_change_payment(self):
+        # Make a sale with 35 in cash journal and 65 in check
+        order = self._sale(
+            self.session, self.cash_journal, 35, self.check_journal, 65)
+
+        # Switch to check journal
+        wizard = self.PosChangePaymentsWizard.with_context(
+            active_id=order.id).create({})
+        self.PosChangePaymentsWizardLine.with_context(
+            active_id=order.id).create({
+                'wizard_id': wizard.id,
+                'new_journal_id': self.cash_journal.id,
+                'amount': 10,
+            })
+        self.PosChangePaymentsWizardLine.with_context(
+            active_id=order.id).create({
+                'wizard_id': wizard.id,
+                'new_journal_id': self.check_journal.id,
+                'amount': 40,
+            })
+
+        with self.assertRaises(UserError):
+            # Should not work if total is not correct
+            wizard.button_change_payments()
+
+        # Finish payement
+        self.PosChangePaymentsWizardLine.with_context(
+            active_id=order.id).create({
+                'wizard_id': wizard.id,
+                'new_journal_id': self.check_journal.id,
+                'amount': 50,
+            })
+        wizard.button_change_payments()
+
+        # check Session
+        self.assertEqual(
+            self.cash_statement.balance_end, 10,
+            "Bad recompute of the balance for the old statement")
+
+        self.assertEqual(
+            self.check_statement.balance_end, 90,
+            "Bad recompute of the balance for the new statement")

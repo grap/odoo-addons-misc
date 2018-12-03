@@ -3,7 +3,7 @@
 # @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp import fields, models
+from openerp import api, fields, models
 
 
 class PosChangePaymentsWizardLine(models.TransientModel):
@@ -11,6 +11,15 @@ class PosChangePaymentsWizardLine(models.TransientModel):
 
     wizard_id = fields.Many2one(
         comodel_name='pos.change.payments.wizard', ondelete='cascade')
-    bank_statement_id = fields.Many2one(
-        comodel_name='account.bank.statement', string='Journal')
-    amount = fields.Float(string='Amount')
+
+    new_journal_id = fields.Many2one(
+        comodel_name='account.journal', string='Journal', required=True,
+        domain=lambda s: s._domain_new_journal_id())
+
+    amount = fields.Float(string='Amount', required=True)
+
+    @api.model
+    def _domain_new_journal_id(self):
+        PosOrder = self.env['pos.order']
+        order = PosOrder.browse(self.env.context.get('active_id'))
+        return [('id', 'in', order.session_id.journal_ids.ids)]

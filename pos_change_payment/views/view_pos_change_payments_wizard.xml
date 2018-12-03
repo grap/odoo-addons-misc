@@ -18,8 +18,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                     <newline />
                     <field name="line_ids" colspan="4">
                         <tree string="Payment Lines" editable="bottom">
-                            <field name="bank_statement_id"
-                                domain="[('pos_session_id', '=', parent.session_id)]" widget="selection"/>
+                            <field name="new_journal_id" widget="selection"/>
                             <field name="amount" />
                         </tree>
                     </field>
