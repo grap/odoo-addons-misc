@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (C) 2018 - Today: GRAP (http://www.grap.coop)
+    @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+
+<openerp><data>
+
+    <record id="base.main_company" model="res.company" >
+        <field name="has_eshop" eval="True"/>
+        <field name="eshop_url">http://127.0.0.1:8080/</field>
+        <field name="eshop_title">My Odoo eShop</field>
+        <field name="eshop_instagram_url">https://www.instagram.com/odoo_eshop/</field>
+        <field name="eshop_twitter_url">https://twitter.com/odoo_eshop/</field>
+        <field name="eshop_facebook_url">https://www.facebook.com/odoo_eshop</field>
+        <field name="eshop_google_plus_url">https://plus.google.com/u/0/+odoo_eshop</field>
+        <field name="eshop_home_text">Home page Text</field>
+        <field name="eshop_manage_recovery_moment" eval="True"/>
+        <field name="eshop_list_view_enabled" eval="True"/>
+        <field name="eshop_register_allowed" eval="True"/>
+        <field name="eshop_image_small" type="base64" file="sale_eshop/static/src/img/demo/res_company/image_small.png"/>
+    </record>
+
+</data></openerp>

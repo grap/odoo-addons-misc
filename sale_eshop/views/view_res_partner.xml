@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (C) 2014 - Today: GRAP (http://www.grap.coop)
+    @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+<openerp><data>
+
+    <record id="view_res_partner_search" model="ir.ui.view">
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <filter name="customer" position="before">
+                <filter string="Set On eShop" name="eshop_setup" domain="[('eshop_active', '=', True)]"/>
+                <separator/>
+            </filter>
+        </field>
+    </record>
+
+    <record id="view_res_partner_tree" model="ir.ui.view">
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <tree string="Customers (eShop)"
+                    colors="brown:eshop_state == 'email_to_confirm'; blue:eshop_state == 'first_purchase'; gray: eshop_state == 'disabled'">
+                <field name="name" readonly="1"/>
+                <field name="email"/>
+                <field name="eshop_active" invisible="1"/>
+                <field name="eshop_state"/>
+                <field name="eshop_password"/>
+                <button name="button_enable_eshop"
+                    string="Confirm Customer" icon="gtk-apply"
+                    type="object" attrs="{'invisible':[('eshop_state','=', 'enabled')]}"/>
+                <button name="button_generate_credentials"
+                    string="Generate Credentials" icon="STOCK_EXECUTE"
+                    type="object"/>
+                <button name="button_send_credentials"
+                    string="Send Credentials" icon="terp-mail-message-new"
+                    type="object"/>
+                <button name="button_disable_eshop"
+                    string="Prevent User to use eShop" icon="gtk-cancel"
+                    type="object" attrs="{'invisible':[('eshop_state','=', 'disabled')]}"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_res_partner_form" model="ir.ui.view">
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="eShop Sale">
+                    <group name="eShop" col="4">
+                        <field name="eshop_active"/>
+                        <field name="eshop_state" />
+                        <field name="eshop_password"/>
+                        <button name="button_enable_eshop" colspan="2"
+                            string="Confirm Customer" icon="gtk-apply"
+                            type="object" attrs="{'invisible':[('eshop_state','=', 'enabled')]}"/>
+                        <button name="button_generate_credentials" colspan="2"
+                            string="Generate Credentials" icon="STOCK_EXECUTE"
+                            type="object"/>
+                        <button name="button_send_credentials" colspan="2"
+                            string="Send Credentials" icon="terp-mail-message-new"
+                            type="object"/>
+                        <button name="button_disable_eshop" colspan="2"
+                            string="Prevent User to use eShop" icon="gtk-cancel"
+                            type="object" attrs="{'invisible':[('eshop_state','=', 'disabled')]}"/>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+    <record id="action_res_partner" model="ir.actions.act_window">
+        <field name="name">Customers (eShop)</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_eshop_setup':1}</field>
+        <field name="view_id" ref="view_res_partner_tree" />
+    </record>
+
+    <menuitem id="menu_res_partner_3"
+        parent="base.menu_sales" sequence="20"
+        groups="sale_eshop.res_groups_eshop_user"
+        action="action_res_partner"/>
+
+</data></openerp>

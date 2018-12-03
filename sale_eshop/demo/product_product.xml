@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (C) 2014 - Today: GRAP (http://www.grap.coop)
+    @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
 
 <openerp><data>
+
     <record model="product.product" id="product_banana">
         <field name="name">Banana</field>
         <field name="categ_id" ref="product.product_category_all" />
@@ -14,6 +20,9 @@
         <field name="description_sale">Description of Banana</field>
         <field name="type">consu</field>
         <field name="image" type="base64" file="sale_eshop/static/src/img/demo/product_product/product_banana.jpg"/>
+        <field name="label_ids" eval="[
+            (4, ref('sale_food.label_agriculture_biologique')),
+            ]"/>
     </record>
 
     <record model="product.product" id="product_strawberry">
@@ -29,6 +38,9 @@
         <field name="description_sale">Description of Strawberry. 250 gram container</field>
         <field name="type">consu</field>
         <field name="image" type="base64" file="sale_eshop/static/src/img/demo/product_product/product_strawberry.jpg"/>
+        <field name="label_ids" eval="[
+            (4, ref('sale_food.label_agriculture_biologique')),
+            ]"/>
     </record>
 
     <record model="product.product" id="product_apple">
@@ -46,6 +58,9 @@
         <field name="description_sale">Description of Apple</field>
         <field name="type">consu</field>
         <field name="image" type="base64" file="sale_eshop/static/src/img/demo/product_product/product_apple.jpg"/>
+        <field name="label_ids" eval="[
+            (4, ref('sale_food.label_agriculture_biologique')),
+            ]"/>
     </record>
 
     <record model="product.product" id="product_potato">
@@ -76,6 +91,10 @@
         <field name="description_sale">Description of Leek</field>
         <field name="type">consu</field>
         <field name="image" type="base64" file="sale_eshop/static/src/img/demo/product_product/product_leek.jpg"/>
+        <field name="label_ids" eval="[
+            (4, ref('sale_food.label_agriculture_biologique')),
+            (4, ref('sale_food.label_max_havelaar'))
+            ]"/>
     </record>
 
     <record model="product.product" id="product_onion">
@@ -134,6 +153,21 @@
         <field name="uom_po_id" ref="product.product_uom_unit"/>
         <field name="uos_id" ref="product.product_uom_unit" />
         <field name="type">consu</field>
+    </record>
+
+    <record model="product.product" id="product_disabled">
+        <field name="name">Product disabled for eshop</field>
+        <field name="categ_id" ref="product.product_category_all" />
+        <field name="list_price">50</field>
+        <field name="eshop_category_id" ref="category_without_image" />
+        <field name="eshop_minimum_qty">1.0</field>
+        <field name="eshop_rounded_qty">1.0</field>
+        <field name="uom_id" ref="product.product_uom_unit" />
+        <field name="uom_po_id" ref="product.product_uom_unit"/>
+        <field name="uos_id" ref="product.product_uom_unit" />
+        <field name="type">consu</field>
+        <field name="eshop_end_date"
+            eval="(DateTime.today() + relativedelta(months=-1)).strftime('%Y-%m-%d')"/>
     </record>
 
 </data></openerp>

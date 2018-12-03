@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (C) 2015 - Today: GRAP (http://www.grap.coop)
+    @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+<openerp><data noupdate="1">
+
+    <record forcecreate="True" id="cron_confirm_eshop_orders" model="ir.cron">
+        <field name="name">Eshop - Confirm Orders</field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">5</field>
+        <field name="interval_type">minutes</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+        <field name="model" eval="'sale.order'" />
+        <field name="function" eval="'_eshop_cron_confirm_orders'" />
+        <field name="args" eval="'()'" />
+    </record>
+
+</data></openerp>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (C) 2014 - Today: GRAP (http://www.grap.coop)
+    @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+
+<openerp><data>
+
+    <record id="base.partner_root" model="res.partner" >
+        <field name="email">admin@odoo-eshop.org</field>
+        <field name="zip">69001</field>
+        <field name="city">Lyon</field>
+        <field name="street">14 rue Lemot</field>
+        <field name="street2">Digicode, 1111X</field>
+        <field name="mobile">+33 6 01 23 45 67</field>
+        <field name="eshop_state">first_purchase</field>
+        <field name="eshop_password">eshop_password</field>
+    </record>
+
+    <record id="sale_eshop.eshop_user_res_partner" model="res.partner" >
+        <field name="email">eshop_user@odoo-eshop.org</field>
+        <field name="tz">Europe/Brussels</field>
+    </record>
+
+</data></openerp>
